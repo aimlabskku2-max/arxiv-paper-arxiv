@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arXiv 논문 정리 — 2026-07-18</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']],
+            displayMath: [['$$','$$'],['\\[','\\]']], processEscapes: true },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --bg:#f8fafc; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    line-height:1.7; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+  header.top { background:linear-gradient(135deg,#1e293b,#334155); color:#fff; padding:42px 20px 36px; }
+  header.top .inner { max-width:1100px; margin:0 auto; }
+  header.top .home-link { display:inline-block; margin-bottom:14px; color:#cbd5e1; text-decoration:none;
+    font-size:13.5px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+    padding:6px 14px; border-radius:999px; }
+  header.top .home-link:hover { background:rgba(255,255,255,.2); color:#fff; }
+  header.top h1 { margin:0 0 8px; font-size:30px; letter-spacing:-.5px; }
+  header.top .sub { opacity:.85; font-size:15px; }
+  header.top .chips { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  header.top .chip { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    padding:5px 12px; border-radius:999px; font-size:13px; }
+  .layout { display:grid; grid-template-columns:260px 1fr; gap:32px; margin-top:32px; }
+  nav.toc { position:sticky; top:20px; align-self:start; font-size:13.5px; max-height:90vh; overflow:auto; }
+  nav.toc h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 12px; }
+  .toc-group { margin-bottom:16px; }
+  .toc-badge { display:inline-block; color:#fff; font-size:11.5px; padding:3px 9px; border-radius:6px; margin-bottom:6px; font-weight:600; }
+  nav.toc ul { list-style:none; padding:0 0 0 4px; margin:6px 0 0; }
+  nav.toc li { margin:4px 0; }
+  nav.toc a { color:var(--ink); text-decoration:none; }
+  nav.toc a:hover { color:#6366f1; text-decoration:underline; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:26px;
+    overflow:hidden; box-shadow:0 1px 3px rgba(15,23,42,.05); scroll-margin-top:20px; }
+  .card-head { padding:22px 26px 18px; border-left:6px solid; background:#fcfcfd; }
+  .topic-tag { display:inline-block; color:#fff; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:6px; }
+  .card-head h2 { margin:10px 0 6px; font-size:21px; letter-spacing:-.3px; }
+  .lead { margin:6px 0 10px; font-size:14.5px; color:#334155; font-weight:500;
+    border-left:3px solid var(--line); padding-left:12px; }
+  .authors { color:var(--muted); font-size:13px; margin-bottom:10px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { font-size:12.5px; text-decoration:none; color:#475569; background:#f1f5f9; border:1px solid var(--line);
+    padding:3px 10px; border-radius:999px; }
+  .pill.pdf { background:#fee2e2; border-color:#fecaca; color:#b91c1c; }
+  .pill:hover { filter:brightness(.96); }
+  .card-body { padding:8px 26px 24px; }
+  .card-body h3.sec { font-size:16.5px; margin:22px 0 8px; padding-bottom:6px; border-bottom:2px solid var(--line);
+    color:#0f172a; }
+  .card-body h4.subsec { font-size:14.5px; margin:16px 0 6px; color:#334155; }
+  .card-body p { margin:8px 0; }
+  .card-body ul, .card-body ol { margin:8px 0; padding-left:22px; }
+  .card-body li { margin:4px 0; }
+  .card-body code { background:#f1f5f9; padding:1px 6px; border-radius:5px; font-size:13px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; }
+  .card-body strong { color:#0f172a; }
+  .tbl-wrap { overflow-x:auto; margin:12px 0; -webkit-overflow-scrolling:touch; }
+  .card-body table { border-collapse:collapse; width:100%; font-size:13px; min-width:340px; }
+  .card-body thead th { background:#f1f5f9; color:#0f172a; text-align:left; font-weight:700;
+    padding:8px 12px; border-bottom:2px solid #cbd5e1; white-space:nowrap; vertical-align:bottom; }
+  .card-body tbody td { padding:7px 12px; border-bottom:1px solid var(--line); text-align:left;
+    vertical-align:top; }
+  .card-body tbody tr:nth-child(even) { background:#f8fafc; }
+  .card-body th.num, .card-body td.num { text-align:right; font-variant-numeric:tabular-nums;
+    font-family:"SF Mono",Menlo,Consolas,monospace; white-space:nowrap; }
+  .fig { margin:14px 0; text-align:center; }
+  .fig img { max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px;
+    background:#fff; }
+  .fig figcaption { margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .pubinfo { margin:6px 0 2px; font-size:12.5px; color:var(--muted); display:flex;
+    flex-wrap:wrap; gap:4px 12px; }
+  .pubinfo .pub-venue { color:#0f172a; font-weight:600; }
+  footer { text-align:center; color:var(--muted); font-size:13px; margin-top:40px; }
+  @media (max-width:820px) { .layout { grid-template-columns:1fr; } nav.toc { position:static; max-height:none; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <a class="home-link" href="../index.html">← 전체 주차 목록(홈)</a>
+  <h1>📚 arXiv 논문 주간 정리</h1>
+  <div class="sub">2026-07-18 · 총 6편 · 주제별 균형 정리</div>
+  <div class="chips">
+    <span class="chip">Egocentric Vision · 2편</span><span class="chip">Hand-Object Interaction · 2편</span><span class="chip">Spatial Audio · 2편</span>
+  </div>
+</div></header>
+<div class="wrap">
+  <div class="layout">
+    <nav class="toc">
+      <h3>목차</h3>
+      <div class="toc-group"><span class="toc-badge" style="background:#0ea5e9">Egocentric Vision</span><ul><li><a href="#paper1">EgoPhys: Learning Generalizable Physics Models of Deformable Objects from Egocentric Video</a></li><li><a href="#paper2">Ego-1K – A Large-Scale Multiview Video Dataset for Egocentric Vision</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#10b981">Hand-Object Interaction</span><ul><li><a href="#paper3">Improving and Evaluating Hand-Object Interaction Detection</a></li><li><a href="#paper4">CHOIR: Contact-aware 4D Hand-Object Interaction Reconstruction</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#6366f1">Spatial Audio</span><ul><li><a href="#paper5">Probing Spatial Structure in Pretrained Audio Representations</a></li><li><a href="#paper6">Towards Streaming Synchronized Spatial Audio Generation via Autoregressive Diffusion Transformer</a></li></ul></div>
+    </nav>
+    <main>
+      
+<article class="card" id="paper1">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>EgoPhys: Learning Generalizable Physics Models of Deformable Objects from Egocentric Video</h2>
+    <p class="lead">사람이 물체를 직접 만지며 촬영한 1인칭(egocentric) RGB 영상 한 편만으로 변형 물체(deformable object, 형태가 바뀌는 물체)의 물리적 디지털 트윈(physical digital twin, 실제 물체의 물리 거동을 그대로 재현하는 가상 모델)을 만들고, 코드북(codebook) 기반 물리 프라이어를 통해 처음 보는 물체에도 스프링별 재최적화 없이 곧바로 적용되는 물리 모델을 학습하는 프레임워크다.</p>
+    <div class="authors">Hyunjin Kim, Ri-Zhao Qiu, Guangqi Jiang, Xiaolong Wang (UC San Diego)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-06-15</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2606.16202" target="_blank">arXiv:2606.16202</a> <a class="pill pdf" href="https://arxiv.org/pdf/2606.16202" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2606.16202" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2606.16202v1/x1.png" alt="1인칭 상호작용 영상 한 편에서 재사용 가능한 물리 프라이어를 학습해, 처음 보는 변형 물체의 스프링 강성 필드를 촘촘하게(dense) 예측하는 EgoPhys 파이프라인" loading="lazy"><figcaption>1인칭 상호작용 영상 한 편에서 재사용 가능한 물리 프라이어를 학습해, 처음 보는 변형 물체의 스프링 강성 필드를 촘촘하게(dense) 예측하는 EgoPhys 파이프라인</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<p>로봇이 옷, 수건, 인형 같은 변형 물체를 다루려면 힘을 받았을 때 어떻게 변형될지 예측하는 세계 모델(world model)이 필요하다. 기존 연구는 크게 두 갈래로 나뉜다. (1) 생성 모델(generative model) 기반 방법은 시각적으로 그럴듯한 미래 영상을 만들어낸다. (2) 물리 기반(physics-based) 방법은 스프링-질량(spring-mass) 그래프 같은 명시적 물리 모델을 데이터에 맞춰, 해석이 가능하고 행동 조건부(action-conditioned) 예측까지 되는 트윈을 만든다. 이 논문은 후자를 대표하는 <a href="https://arxiv.org/abs/2503.17973" target="_blank">PhysTwin</a>, <a href="https://arxiv.org/abs/2403.09434" target="_blank">Spring-Gaus</a> 계열을 토대로 삼는다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>기존 방법은 관측 조건과 일반화라는 두 측면에서 한계를 보인다. (1) 생성 모델은 명시적 물리가 없어 해석이 어렵고 행동 조건부 예측도 힘들다. (2) 물리 기반 방법은 미리 스캔한 기하 정보, 깨끗한 포인트 클라우드, depth 센싱과 정밀 캘리브레이션까지 갖춘 통제된 3인칭(third-person) 촬영을 요구하고, 대부분 강체(rigid, 형태가 변하지 않는 물체)나 관절체(articulated)에만 적용된다. 게다가 물체마다 스프링별(per-spring) 테스트 타임 최적화를 다시 돌려야 해서 비용이 크고 새로운 물체로는 일반화되지 않는다. 이 때문에 사람이 물체를 자연스럽게 다루며 남기는 흔한 데이터, 즉 웨어러블 카메라 영상을 그대로 쓰지 못하고, 변형 물체 조작을 위한 확장 가능한 world model을 확보하기도 어렵다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문은 &quot;사람이 물체를 다루며 자연스럽게 촬영한 데이터만으로 변형 물체의 물리 트윈을 만들 수 있는가?&quot;라는 질문을 던진다. 다시 말해 카메라가 흔들리고 손이 물체를 자주 가리는(hand-object occlusion, 손이 물체를 가려 안 보이는 현상) 1인칭 RGB 영상 한 편이라는 열악한 조건에서 물리 파라미터를 복원하고, 나아가 물체마다 다시 최적화하지 않고도 처음 보는 물체에 바로 적용되는(zero-shot) 물리 프라이어를 학습하는 것이 목표다. 통제된 다중 시점과 depth 환경을 전제하고 물체별 최적화에 의존하던 기존 물리 기반 방법과 달리, 이 논문은 egocentric RGB만 쓰는 입력과 재사용 가능한 재질 프라이어라는 두 축을 새롭게 내세운다.</p>
+<h3 class="sec">연구 방법</h3>
+<p>전체 파이프라인은 세 단계로 이뤄진다.</p>
+<ol>
+<li><strong>Egocentric 4D 재구성(Reconstruction)</strong>: 입력은 웨어러블 카메라(Meta Project Aria)로 찍은 RGB 프레임 시퀀스 한 편이다. <a href="https://arxiv.org/abs/2503.11651" target="_blank">VGGT</a>로 3D로 끌어올리고, <a href="https://arxiv.org/abs/2410.11831" target="_blank">CoTracker3</a>로 추적하고, Grounded-SAM2로 세그멘테이션을 한 뒤 confidence 필터링과 기하 완성을 거친다. 이 과정에서 카메라 움직임과 손-물체 가림을 처리해 시간적으로 일관된(temporally coherent) 4D 포인트 클라우드를 얻는다.</li>
+</ol>
+<ol>
+<li><strong>물체별 물리 초기화(Per-Object Physics Initialization)</strong>: 재구성한 포인트 클라우드를 입력으로 받아 물체를 스프링-질량 그래프로 나타내고, CMA-ES(covariance matrix adaptation evolution strategy)로 피팅한다. 기하와 모션의 불일치를 최소화해 그래프 토폴로지와 전역 물리 파라미터의 대략적인(coarse) 추정값을 얻는다.</li>
+</ol>
+<ol>
+<li><strong>코드북 기반 물리 프라이어(Codebook-Based Physics Prior)</strong>: 정적 그래프 특징과 동적 변형 특징을 입력받아, 인장과 압축(tension/compression)에 각각 대응하는 두 프로토타입 뱅크 $C^{+}, C^{-}$에 대한 soft assignment를 거쳐 스프링마다 촘촘한(dense) 강성(stiffness) 값을 내놓는다. 코드북은 여러 물체에 걸쳐 학습하는데, 물체별 역물리(inverse-physics) 해를 dense log-stiffness 목표로 삼는 증류(distillation) 손실에 롤아웃(rollout) 재구성 손실과 모션 손실을 더해 함께 최적화한다. 테스트 타임에는 CMA로 대략 초기화한 뒤 코드북이 스프링별 그래디언트 정제 없이 dense 강성을 곧바로 예측하므로, 비싼 물체별 최적화를 없애고 처음 보는 물체에도 zero-shot으로 일반화할 수 있다.</li>
+</ol>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<ul>
+<li><strong>데이터셋</strong>: 인형, 수건, 천, 가방 등 변형 물체를 들기, 당기기, 밀기, 접기(lifting, pulling, pushing, folding)하는 동작을 담은 19개 egocentric 상호작용 시퀀스(각 약 7초). 학습 8개, held-out 평가 11개로 7:3 시간 분할(temporal train/test split)을 썼다.</li>
+<li><strong>베이스라인</strong>: egocentric 입력에 맞게 손본 PhysTwin, Spring-Gaus.</li>
+<li><strong>평가 지표</strong>: Chamfer distance, track error, IoU, PSNR, SSIM, LPIPS.</li>
+<li><strong>결과</strong>: 재구성(reconstruction)과 미래 예측(future prediction) 모두에서 손본 베이스라인을 앞섰고, 특히 물리적 일관성(physical consistency) 지표에서 크게 개선됐다. 처음 보는 물체로의 zero-shot 일반화도 이뤄냈으며, ablation 실험에서 코드북 설계가 MLP를 바로 쓰는 방식보다 낫다는 점을 확인했다.</li>
+<li><strong>연구 의의</strong>: 학습한 트윈을 실제 xArm6 매니퓰레이터에 sim-to-real로 옮겨, 변형 물체 계획(planning)을 위한 world model로 쓸 수 있음을 실제로 보였다. 통제된 촬영 없이 사람의 자연스러운 1인칭 영상만으로 재사용 가능한 변형 물체 물리 모델을 만들 수 있다는 것을 입증한 셈이다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<p>논문이 밝힌 한계는 다음과 같다. (1) 데이터셋 규모가 작다(19개 시퀀스). (2) 촬영할 때 변형이 눈에 보여야 한다(visible deformation에 의존). (3) 재구성 품질에 민감하다. (4) 매우 복잡한 재질 거동은 파라미터 공간이 넓어 다루기 어려울 수 있다. 여기에 더해, egocentric 영상 특유의 가림과 통제되지 않은 손 상호작용에서 생기는 들쭉날쭉한 접촉 기하(contact geometry)도 풀어야 할 과제로 꼽는다.</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Egocentric Vision</strong>: 이 연구는 웨어러블 카메라(Project Aria)로 찍은 RGB 영상 한 편에서 손-물체 가림과 카메라 움직임을 처리하며 4D 구조를 복원하는 파이프라인(VGGT, CoTracker3, Grounded-SAM2)을 제시한다. 따라서 egocentric 영상에서 물리적으로 의미 있는 3D/4D 표현을 뽑아내려는 연구에 곧바로 참고가 된다.</li>
+<li><strong>Hand-Object Interaction</strong>: 사람이 물체를 만져 변형시키는 상호작용을 물리 파라미터(강성 필드) 추정의 단서로 삼는다. 이 점에서 HOI를 단순한 자세나 접촉 인식을 넘어 물체의 물리적 성질을 추론하는 쪽으로 넓히는 관점과 이어질 여지가 있다.</li>
+<li><strong>Spatial Audio</strong>: 논문에 직접 언급된 내용은 없다. 다만 접촉이나 변형 이벤트를 오디오 같은 다른 모달리티로 보강해, 가림이 심한 상황에서의 물리 추정을 개선하는 방향으로 활용해 볼 여지를 상상해 볼 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper2">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>Ego-1K – A Large-Scale Multiview Video Dataset for Egocentric Vision</h2>
+    <p class="lead">사용자가 쓴 VR 헤드셋(카메라 4개)을 동기화된 카메라 12개로 빙 둘러싼 커스텀 rig로 촬영해, 시간이 맞춰진 egocentric(1인칭 시점) multiview 비디오 약 1,000개를 모은 데이터셋이다. neural 3D/4D video synthesis와 동적 장면 이해를 위한 벤치마크로 쓸 수 있다.</p>
+    <div class="authors">Jae Yong Lee, Daniel Scharstein, Akash Bapat, Hao Hu, Andrew Fu, Haoru Zhao, Paul Sammut, Xiang Li, Stephen Jeapes, Anik Gupta, Lior David, Saketh Madhuvarasu, Jay Girish Joshi, Jason Wither (전원 Meta Reality Labs 소속)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-03-14</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2603.13741" target="_blank">arXiv:2603.13741</a> <a class="pill pdf" href="https://arxiv.org/pdf/2603.13741" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2603.13741" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2603.13741v1/figs/teaser.jpg" alt="fisheye 카메라 12개와 Quest 3 헤드셋(카메라 4개)을 결합한 동기화 multi-camera rig, 그리고 이 rig로 담은 동적 egocentric multiview 캡처 예시" loading="lazy"><figcaption>fisheye 카메라 12개와 Quest 3 헤드셋(카메라 4개)을 결합한 동기화 multi-camera rig, 그리고 이 rig로 담은 동적 egocentric multiview 캡처 예시</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<p>지금까지 egocentric 및 3D 재구성 연구는 크게 두 갈래의 데이터를 기반으로 발전해 왔다. 하나는 object-centric(물체 중심) multiview 데이터셋으로, 정지한 물체를 고정 카메라 여러 대로 찍어 novel view synthesis(NVS, 새로운 시점 영상 합성)를 학습하고 평가하는 흐름이다. 다른 하나는 카메라를 고정 배열(fixed-pose multiview video)로 두고 움직이는 장면을 찍는 흐름으로, Spacetime Gaussians, K-Planes, 3D Gaussian Splatting(3DGS) 같은 4D 재구성 기법이 여기서 나왔다. Egocentric vision 분야에서는 헤드마운트 카메라로 찍은 대규모 비디오 데이터셋이 hand-object interaction(손과 물체의 상호작용)과 일상 행동을 담아 왔다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>문제는 기존 데이터셋과 기법이 대부분 (1) object-centric이거나 (2) 카메라가 고정된 rig를 전제로 만들어졌다는 점이다. 하지만 실제 egocentric 환경에서는 <strong>rig egomotion(착용자의 머리·몸 움직임)</strong> 과 <strong>손처럼 카메라에 바짝 붙은 동적 물체</strong>가 동시에 나타난다. 카메라 가까이에서 물체가 움직이면 disparity(양안 시차)와 image motion이 커지는데, 이 때문에 기존 3D/4D NVS 기법을 그대로 쓰기가 어렵다. 결국 egomotion과 근거리 손 상호작용이 뒤섞인 이 영역을 제대로 담아내고 평가할 만한, 대규모이면서 시간이 동기화된 다시점 데이터가 없었다는 것이 핵심이다. 이는 AR/VR 헤드셋에서 실시간 3D 장면 재구성과 hand-object interaction 이해를 가로막는 직접적인 걸림돌이 된다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문은 egomotion과 근거리 동적 hand-object interaction이 함께 존재하는 조건에서 <strong>egocentric multiview 3D/4D novel view synthesis와 동적 장면 재구성</strong>을 어떻게 풀 것인가라는 문제를 새롭게 부각한다. 이를 위해 시간이 동기화된 대규모 multiview egocentric 데이터셋(Ego-1K)을 만들고, 이 영역에 맞는 표준 평가 프로토콜을 제안한다.</p>
+<h3 class="sec">연구 방법</h3>
+<p><strong>수집 rig (input 관점)</strong>: 카메라 16개를 60 Hz로 동기화했다. 바깥쪽 12개는 fisheye 카메라(8 MP, $2848 \times 2848$, global shutter, 대각 190° FOV, 스트리밍 시 6 MP $2448 \times 2448$로 크롭)로, 이들이 Quest 3 헤드셋의 카메라 4개(RGB rolling-shutter 2개 $2328 \times 1748$@60Hz, grayscale global-shutter SLAM 2개 $512 \times 640$@30Hz)를 둘러싼다. 여기에 Lucid Helios2 Wide iToF 센서 2개($640 \times 480$@30Hz)를 더했다. rig 무게는 약 6 kg으로, 백팩에 장착한 crane으로 받치고 wireless LTC timestamp로 동기화한다.</p>
+<p><strong>데이터 규모/구성</strong>: operator 5명이 lab, office, living room, bedroom, rooftop 등 다양한 환경에서 촬영했다. 처음 999개 중 43개를 버리고 최종 956개를 남겼다. 영상 하나는 8–10초, 카메라당 약 450–550 frame이다. 조명은 51–75 lux부터 1001 lux 이상까지 6개 illumination bin으로 다양하게 잡았다. 손 제스처, 타이핑, 물체 조작 같은 hand-object interaction이 중심이다.</p>
+<p><strong>처리/캘리브레이션</strong>: 원시 데이터는 초당 약 15 GB(uncompressed)로 쏟아지며, recording 하나당 평균 약 19 GB다. 대형 평면 Calibu 타깃 5개로 offline 캘리브레이션을 한 뒤, 여러 주에 걸친 촬영 동안 주기적으로 다시 캘리브레이션했다. Online calibration으로 recording마다 카메라 회전과 초점거리를 보정해 median absolute deviation(MAD)을 35% 줄였다. rig와 헤드셋 RGB 스트림 사이에는 global color matching을 적용했다.</p>
+<p><strong>연구용 데이터셋 (output 관점)</strong>: fisheye 영상은 rectified stereo pair(pinhole) 6개로 dewarp했으며, 해상도는 $1280 \times 1280$, 수평 130° FOV다. frame별 calibration과 pose를 담은 PNG로 제공한다. 연구용 17.5 TB를 공개하고, raw 88 TB는 요청 시 제공한다. recording마다 조명, 장면 유형·레이아웃, operator의 행동·의상, 든 물체·착용한 액세서리, 머리 움직임, 다른 사람의 등장 여부 등을 텍스트 라벨(메타데이터)로 붙였다. 데이터셋은 <a href="https://huggingface.co/datasets/facebook/ego-1k" target="_blank">https://huggingface.co/datasets/facebook/ego-1k</a> 에서 공개했다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p><strong>Stereo consistency 평가</strong> (MAD, SD 기준): Foundation Stereo가 가장 좋아서 주 depth source로 골랐다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">MAD (mm)</th><th class="num">MAD&lt;1mm 비율</th><th class="num">SD (mm)</th></tr></thead><tbody><tr><td>Foundation Stereo</td><td class="num">1.6</td><td class="num">74.0%</td><td class="num">42.5</td></tr><tr><td>StereoAnywhere</td><td class="num">1.7</td><td class="num">-</td><td class="num">-</td></tr><tr><td>BiDAStereo</td><td class="num">2.2</td><td class="num">-</td><td class="num">-</td></tr><tr><td>Selective-Stereo</td><td class="num">8.0</td><td class="num">-</td><td class="num">-</td></tr></tbody></table></div>
+<p><strong>4D Novel View Synthesis 평가</strong> (target pair는 카메라 3–4번, 나머지 카메라 10개로 학습, 데이터셋의 10%인 96개 recording으로 평가):</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">PSNR (dB)</th><th class="num">SSIM</th><th class="num">LPIPS</th></tr></thead><tbody><tr><td>3DGS + stereo guidance</td><td class="num">29.12</td><td class="num">0.830</td><td class="num">0.115</td></tr><tr><td>Spacetime Gaussians</td><td class="num">24.76</td><td class="num">0.780</td><td class="num">0.270</td></tr><tr><td>3DGS (per-frame)</td><td class="num">21.22</td><td class="num">0.709</td><td class="num">0.260</td></tr><tr><td>K-Planes</td><td class="num">16.46</td><td class="num">0.597</td><td class="num">0.443</td></tr></tbody></table></div>
+<p>Stereo depth guidance를 준 3DGS는 기본 3DGS보다 PSNR이 +7.9 dB, Spacetime Gaussians보다 +4.4 dB, K-Planes보다 +12.7 dB 높았다. 정리하면 (1) 기존 3D/4D NVS 기법은 이 egocentric 영역에서 크게 고전하고, (2) <strong>stereo depth guidance를 주면 재구성 품질이 확실히 크게 좋아진다</strong>는 것이다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li>iToF 센서 스트림은 motion과 phase ambiguity 탓에 신뢰도가 낮아 실험에서 뺐다.</li>
+<li>Quest 3 헤드셋 카메라는 shutter 방식, 해상도, color profile이 달라, 일관성을 위해 연구용 데이터셋에서 뺐다.</li>
+<li>기존 3D/4D NVS 기법은 object-centric이거나 고정 pose multiview를 전제로 만들어져서, egomotion과 동적 hand interaction이 뒤섞인 이 영역에는 역부족이다.</li>
+<li>성능은 멀리 있는 인물보다 가까이서 움직이는 물체(손)에서 더 크게 떨어진다.</li>
+<li>Future work: multiview/multi-baseline stereo로 고품질 per-frame depth(pseudo GT) 만들기, 카메라 subset ablation, HOI 중심 task 평가, stereo baseline 변화에 대한 robustness, temporal stability 벤치마크, pairwise consistency 기반 semantic·person segmentation 평가 등을 제안한다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Egocentric Vision</strong>: rig egomotion과 시간 동기화된 multiview를 함께 갖춘 대규모 데이터셋이라, egocentric 3D 재구성과 novel view synthesis 연구의 학습·평가 기반으로 바로 쓸 수 있다.</li>
+<li><strong>Hand-Object Interaction</strong>: 데이터 자체가 hand motion과 hand-object interaction을 중심으로 설계됐고, 저자들도 HOI-focused task 평가를 future work로 밝혔다. 가까운 손을 동적으로 재구성하는 어려운 문제를 정량적으로 평가할 벤치마크로서 HOI 연구에 쓸모가 크다.</li>
+<li><strong>Spatial Audio</strong>: 이 데이터셋은 시각·기하(멀티뷰 영상, depth, calibration/pose)가 중심이고, audio 모달리티는 논문에서 따로 언급하지 않는다. 다만 정확한 카메라 pose와 정밀한 공간 기하 정보는, 앞으로 spatial/binaural audio를 결합할 때 sound source의 3D 위치를 시각·기하와 맞추는 참조 기준으로 활용될 여지가 있다(잠재적 관점).</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper3">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>Improving and Evaluating Hand-Object Interaction Detection</h2>
+    <p class="lead">Transformer 기반 HOI-DETR 하나로 손, 손이 직접 잡은 물체(1st object), 도구를 거쳐 조작되는 물체(2nd object)와 이들 사이의 상호작용 관계까지 한꺼번에 검출하고, 여기에 정제한 데이터셋과 프레임/비디오 단위 평가 프로토콜을 함께 제안한다.</p>
+    <div class="authors">Ahmad Darkhalil (University of Bristol), Dima Damen (University of Bristol), David Fouhey (New York University)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-06-16</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2606.17384" target="_blank">arXiv:2606.17384</a> <a class="pill pdf" href="https://arxiv.org/pdf/2606.17384" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2606.17384" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2606.17384v1/x1.png" alt="HOI-DETR: 손·1st object·2nd object와 손→1st, 1st→2nd 상호작용을 통합 검출하는 zero-shot 예시" loading="lazy"><figcaption>HOI-DETR: 손·1st object·2nd object와 손→1st, 1st→2nd 상호작용을 통합 검출하는 zero-shot 예시</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<p>그동안 Hand-Object Interaction(HOI, 손-물체 상호작용) 연구는 손 검출(hand detection), 손-물체 분할(hand-object segmentation), 3D 재구성, 비디오 단위 분석 등 여러 갈래로 나뉘어 발전했다. 손 검출은 딥러닝 덕분에 성능이 크게 좋아졌지만, 정작 대부분의 HOI 방법은 오래되고 성능이 떨어지는 detector를 그대로 썼다. 게다가 일부 연구는 손이나 손에 쥔 물체(held object)만 다루다 보니 상호작용 전체를 포괄적으로 이해하는 데까지는 이르지 못했다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>일반적인 object detection은 물체가 무엇인지, 즉 semantic category(의미 범주)를 맞히는 데 집중한다. 반면 HOI detection은 물체가 상호작용 안에서 맡는 <strong>맥락적 역할(contextual role)</strong>까지 알아야 한다. 같은 물체라도 상황에 따라 background가 되기도 하고, 손이 직접 잡은 1st object가 되기도 하며, 도구를 거쳐 조작되는 2nd object가 되기도 하기 때문이다. 그런데 기존 방법들은 방법론과 데이터셋, 평가 어느 하나에 치우쳐 균형이 맞지 않았고, transformer 기반 최신 detector도 활용하지 못했다. 데이터셋마저 중복 박스 같은 오류를 안고 있어 믿을 만한 평가가 힘들었다. HOI는 action recognition, robotics, 3D 재구성 같은 응용의 토대가 되는 만큼 이 공백은 그냥 넘길 수 없는 문제다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문은 <strong>&quot;HOI Detection을 어떻게 개선하고 평가할 것인가&quot;</strong>라는 문제를 정면으로 파고든다. 손-물체뿐 아니라 물체-물체(1st→2nd) 관계까지 아우르는 상호작용 인식에 초점을 두고, (1) 방법론(최초의 transformer 기반 HOI detector), (2) 데이터셋(기존 데이터 정제와 신규 벤치마크), (3) 평가 프로토콜(프레임과 비디오의 시공간 일관성)이라는 세 축을 한꺼번에 다룬다.</p>
+<h3 class="sec">연구 방법</h3>
+<p><strong>Input/Output</strong>: 이미지 한 장을 입력받아, 역할 기반 클래스(hands, 1st object, 2nd object, background) 검출 결과와 함께 방향이 있는 유효 상호작용 쌍(hand→1st object, 1st object→2nd object)을 내놓는다.</p>
+<p><strong>모델 구조 (Co-DETR 확장, HOI-DETR)</strong>:</p>
+<ul>
+<li>Backbone/Encoder: Vision Transformer(ViT-L/16)로 패치 임베딩을 만든 뒤, multi-scale deformable attention으로 특징을 다듬어 latent representation(잠재 표현) $F$를 얻는다.</li>
+<li>Decoder: 디코더 6개 layer의 self/cross-attention으로 역할 기반 클래스를 예측하고, Hungarian matching으로 예측을 정답(GT)에 짝지운다. 예측은 의미(semantic)가 아니라 상호작용을 인식(interaction-aware)하도록 설계했다.</li>
+<li>Interaction Module(핵심 기여): 짝지은 디코더 임베딩 $[h_i \| h_j]$을 MLP head에 넣어 유효한 상호작용 쌍인지 아닌지를 이진 분류(binary classification)한다. 유효한 쌍은 hand→1st object와 1st object→2nd object뿐이고, hand→2nd object는 반드시 1st object를 거쳐야 하므로 제외한다.</li>
+</ul>
+<p><strong>학습 목표</strong>: encoder supervision(one-to-many 할당으로 공간 변별력 확보), decoder supervision(one-to-one 할당, classification+regression loss), interaction loss(유효 쌍에 focal loss), 그리고 auxiliary head를 함께 묶어 학습한다. loss 가중치는 $\lambda_1=1.0$, $\lambda_2=3.0$(interaction), $\lambda_3=2.0$(encoder)로 둔다. 추론할 때는 softmax scoring과 greedy thresholding, multi-class NMS를 거쳐 남은 검출에만 interaction module을 적용한다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>여러 벤치마크에서 mAP를 20%p 넘게 끌어올리며 state-of-the-art를 기록했다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>벤치마크</th><th>지표</th><th class="num">HOI-DETR</th><th class="num">비교 대상</th></tr></thead><tbody><tr><td>Refined Hands23</td><td>전체 mAP</td><td class="num">86.1</td><td class="num">63.6 (baseline)</td></tr><tr><td>Refined Hands23</td><td>1st object mAP</td><td class="num">86.5</td><td class="num">+25p</td></tr><tr><td>Refined Hands23</td><td>2nd object mAP</td><td class="num">78.7</td><td class="num">-</td></tr><tr><td>Refined Hands23</td><td>interaction F1</td><td class="num">95.5</td><td class="num">-</td></tr><tr><td>HD-EPIC-HOI (신규 비디오 벤치마크)</td><td>Frame-AP</td><td class="num">72.6</td><td class="num">46.9 (Hands23)</td></tr><tr><td>HD-EPIC-HOI (신규 비디오 벤치마크)</td><td>Video-AP</td><td class="num">60.2</td><td class="num">16.1 (HOIST)</td></tr><tr><td>HD-EPIC-HOI (신규 비디오 벤치마크)</td><td>LTC</td><td class="num">61.0</td><td class="num">27.2 (HOIST)</td></tr><tr><td>FineBio (out-of-distribution)</td><td>전체 mAP</td><td class="num">71.2</td><td class="num">50.2 (baseline)</td></tr><tr><td>FineBio (out-of-distribution)</td><td>1st object mAP</td><td class="num">55.8</td><td class="num">+29.8p</td></tr><tr><td>HOIST</td><td>1st object mAP</td><td class="num">76.6</td><td class="num">70.7 (HOIST)</td></tr><tr><td>Hand detection (zero-shot 평균)</td><td>AP</td><td class="num">82.4</td><td class="num">-</td></tr></tbody></table></div>
+<ul>
+<li><strong>Hand detection 일반화</strong>: HOI에 맞춰 최적화했는데도 6개 데이터셋 중 4개에서 hand-only 검출 최고 성능을 냈다(평균 zero-shot 82.4 AP).</li>
+</ul>
+<p>데이터셋 측면에서는 Hands23의 중복 박스를 손으로 일일이 정제했고(26.2k 이미지, 그중 56.2%가 수정 대상, 중복 박스쌍 16,208개 제거), 새 벤치마크 HD-EPIC-HOI(검증 시퀀스 768개, 35.3k 이미지, 1st object 주석 22.2k개, SAM2 마스크 전파 정확도 97.83%)를 새로 만들었다. Ablation 결과, pretraining을 빼면 mAP가 33.4 떨어지고 encoder를 동결하면 14.5 떨어졌으며, 학습형 MLP가 IoU 휴리스틱보다 낫고(1st→2nd에서 F1 +19.2%), end-to-end 학습이 따로따로 학습하는 방식보다 나았다(hand→1st +14.4%, 1st→2nd +19.1%). 이렇게 각 설계 선택의 근거를 하나씩 입증했다. 요컨대 역할 기반의 상호작용 인식 transformer 검출과 믿을 수 있는 데이터·평가를 갖추면 HOI 성능이 크게 오른다는 것이 이 논문의 메시지다.</p>
+<h3 class="sec">한계</h3>
+<p>논문이 직접 밝힌 실패 사례와 한계는 다음과 같다.</p>
+<ul>
+<li>작거나 길쭉한 물체에서는 같은 물체를 중복 검출한다.</li>
+<li>빠르게 움직이면 motion blur(움직임 흐림) 때문에 검출을 놓친다.</li>
+<li>조명이나 색이 비슷하면 손과 1st object를 헷갈린다.</li>
+<li>실제로 닿지 않았는데 공간적으로 가까이 있는 물체를 false positive로 잡는다(세밀한 연결 판단이 어렵다).</li>
+<li>복잡한 양손(bimanual) 상호작용이나 many-to-many 상호작용을 제대로 평가할 벤치마크가 없다(모델은 여러 물체나 악수 같은 복잡한 상황도 처리하지만, 이를 평가할 자원이 부족하다).</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Hand-Object Interaction</strong>: 이 논문의 핵심 주제라 곧바로 연결된다. 손-물체와 물체-물체(도구 매개) 관계를 역할 기반으로 모델링하는 방식, 그리고 프레임/비디오 평가 프로토콜을 HOI 연구의 baseline이자 평가 기준으로 그대로 가져다 쓸 수 있다.</li>
+<li><strong>Egocentric Vision</strong>: HD-EPIC-HOI에 egocentric 시퀀스가 들어 있고 평가 스위트가 egocentric과 exocentric을 모두 아우르므로, 1인칭 시점 상호작용 검출·추적 연구와 이어진다.</li>
+<li><strong>Spatial Audio</strong>: 논문에서 직접 언급하지는 않는다. 다만 손-물체 접촉 시점(contact start/end)과 시공간 tube 정보를 오디오 이벤트에 맞춰 정렬하는 audio-visual 확장은 충분히 시도해 볼 만하다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper4">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>CHOIR: Contact-aware 4D Hand-Object Interaction Reconstruction</h2>
+    <p class="lead">한 대의 카메라로 찍은 단안(monocular) RGB 영상만으로 손의 관절 움직임, 물체의 형상과 6D 포즈 궤적, 접촉(손이 물체에 닿는 지점)을 한꺼번에 복원한다. 이때 접촉을 손과 물체를 잇는 명시적 신호로 삼아 둘의 정렬과 물리적 자연스러움을 끌어올리는 open-world 4D Hand-Object Interaction 복원 프레임워크다.</p>
+    <div class="authors">Hao Xu (The Chinese University of Hong Kong), Yilin Liu (University College London), Yinqiao Wang (The Chinese University of Hong Kong), Chi-Wing Fu (The Chinese University of Hong Kong), Niloy J. Mitra (University College London, Adobe Research)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-05-20</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2605.20992" target="_blank">arXiv:2605.20992</a> <a class="pill pdf" href="https://arxiv.org/pdf/2605.20992" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2605.20992" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>메인(teaser) 그림은 CHOIR이 한 편의 단안 RGB 영상에서 3D 손 움직임, 3D 물체 형상, 6D 포즈 궤적, 접촉 증거를 open-world in-the-wild 장면에 대해 복원한 결과를 보여주고, 손과 물체의 접촉을 히트맵으로 시각화한다. (arXiv HTML의 이미지 경로가 표준 형식이 아니어서 믿을 만한 절대 URL을 확정하지 못해 이미지 임베드는 생략했다.)</p>
+<h3 class="sec">선행 연구</h3>
+<p>기존 Hand-Object Interaction(HOI) 복원 연구는 크게 두 갈래다. 하나는 물체 템플릿을 미리 알거나 촬영 환경이 통제됐다고 가정하고 손과 물체를 따로따로 추정하는 방식이고, 다른 하나는 HaMeR(손 복원), SAM-3D-Objects(물체 형상), Dyn-HaMR(손 4D tracking) 같은 범용·특화 모델을 조합해 3D 초기값을 뽑는 방식이다. 비교 대상이 되는 최신 연구로는 HOLD, EasyHOI, MagicHOI 등이 있는데, 손과 물체를 따로 최적화하거나 특정 조건에서만 정렬을 맞춘다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>저자들은 in-the-wild 단안 영상에서 HOI를 복원할 때 서로 얽혀 있는 세 가지 어려움을 짚는다.</p>
+<ul>
+<li><strong>2D 인식 격차</strong>: 범용 모델은 HOI의 의미(semantics)를 이해하지 못하고, 특화 검출기는 처음 보는 상황(unseen scenario)에서 무너진다.</li>
+<li><strong>3D 공간 모호성</strong>: 단안 depth가 불확실하고 가림(occlusion)까지 겹쳐서, 손과 물체를 따로 추정하면 서로 어긋난다.</li>
+<li><strong>4D 물리적 복잡성</strong>: 시간축 내내 물리적으로 자연스러운 접촉을 유지하면서 이미지 정렬까지 함께 맞춰야 한다.</li>
+<p>핵심 통찰은 두 가지다. 접촉(contact)은 손과 물체의 결합을 알려주는 &quot;드물지만 강력한 단서(sparse but strong cue)&quot;라는 점, 그리고 이 단서는 공간 보정을 마친 뒤에야 믿을 수 있다는 점이다. 보정 전에 접촉을 그대로 쓰면 오히려 잘못된 정렬을 굳혀버리므로, 언제 접촉을 믿을지가 관건이 된다.</p>
+</ul>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문이 푸는 문제는 물체를 미리 알거나 장면이 통제됐다고 가정하지 않는 <strong>open-world 4D HOI 복원</strong>이다. 특히 접촉을 단순한 결과물이 아니라 손과 물체를 정렬시키는 <strong>명시적 결합 신호(coupling signal)</strong>로 보고, 공간 보정을 거친 뒤 접촉을 믿을 만한 제약으로 다시 끌어들이는 점을 새롭게 내세운다.</p>
+<h3 class="sec">연구 방법</h3>
+<ul>
+<li><strong>입력(input)</strong>: 단안 RGB 비디오.</li>
+<li><strong>출력(output)</strong>: 관절이 있는 손의 4D 움직임, 물체 형상 + 6D 포즈 궤적, 그리고 접촉 증거(contact evidence).</li>
+<li><strong>구조(module)</strong>: 3단계 순차 파이프라인.</li>
+<ul>
+<li><strong>Stage 1 — Open-World HOI Analysis</strong>: 2D 상호작용 단서(손 bbox·관절·좌우 구분, 물체 bbox, modal/amodal mask)를 뽑고 → HaMeR/SAM-3D-Objects로 3D를 초기화한 뒤 → Dyn-HaMR(손)과 guarded pose tracking(물체)으로 4D tracking을 하고 → 손과 물체를 각각 따로 coarse fitting한다. 손 isolation loss는 $\mathcal{L}_{h}^{\mathrm{iso}}=\mathcal{L}_{2D}^{h}+\lambda_{\mathrm{depth}}\mathcal{L}_{\mathrm{depth}}^{h}+\lambda_{\mathrm{anat}}\mathcal{L}_{\mathrm{anat}}^{h}+\lambda_{\mathrm{prior}}\mathcal{L}_{\mathrm{prior}}^{h}+\lambda_{\mathrm{temp}}^{h}\mathcal{L}_{\mathrm{temp}}^{h}$ (이미지 정렬·depth 일관성·해부학·prior·시간 항)이고, 물체는 $\mathcal{L}_{o}^{\mathrm{iso}}=\lambda_{\mathrm{rep}}\mathcal{L}_{\mathrm{rep}}+\lambda_{\mathrm{attr}}\mathcal{L}_{\mathrm{attr}}+\lambda_{\mathrm{temp}}^{o}\mathcal{L}_{\mathrm{temp}}^{o}+\lambda_{\mathrm{stat}}\mathcal{L}_{\mathrm{stat}}^{o}$이다.</li>
+<li><strong>Stage 2 — Generative HOI Spatial Rectification</strong>: flow-matching 기반 생성 모델이 ray-depth 보정값을 예측해 공간 모호성을 바로잡는다. 물리 필터링을 거친 합성 grasping 데이터로 학습하고, depth 방향 불확실성을 부각하는 anisotropic perturbation을 모델링하며, 물체 mesh 위 barycentric anchor로 프레임마다 접촉 대응을 잡아준다. 보정 흐름은 $\frac{\mathrm{d}z_{\tau}}{\mathrm{d}\tau}=v_{\theta}(z_{\tau},\tau\mid\mathbf{J}^{h},\mathbf{r},s,\mathbf{P}^{o},\mathbf{n}^{o})$로 나타낸다.</li>
+<li><strong>Stage 3 — Contact-Aware HOI Optimization</strong>: 보정된 초기값에서 손과 물체 궤적을 함께 최적화하고, 최적화 도중 soft contact cache를 동적으로 다시 만든다. 목적 함수는 $\mathcal{L}_{\mathrm{HOI}}=\lambda_{\mathrm{con}}\mathcal{L}_{\mathrm{con}}+\lambda_{\mathrm{pen}}\mathcal{L}_{\mathrm{pen}}+\lambda_{\mathrm{sil}}\mathcal{L}_{\mathrm{sil}}+\lambda_{\mathrm{anc}}\mathcal{L}_{\mathrm{anc}}+\lambda_{\mathrm{temp}}\mathcal{L}_{\mathrm{temp}}$ (접촉·관통 penalty·silhouette·anchor·시간 항)이다.</li>
+</ul>
+<li><strong>학습 목표(큰 그림)</strong>: 먼저 개별 fitting으로 좋은 초기값을 만들고(Stage 1), 생성 모델로 공간 어긋남을 바로잡은 뒤(Stage 2), 이제 믿을 수 있게 된 접촉을 제약으로 삼아 물리적으로 자연스럽고 이미지에 잘 맞는 4D 상호작용을 얻는다(Stage 3).</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<ul>
+<li><strong>학습/평가 데이터</strong>: 학습에는 physics 필터링으로 걸러낸 안정적 grasp 데이터(<a href="https://arxiv.org/abs/2210.02697" target="_blank">DexGraspNet</a> 기반 합성)를 쓴다. 평가는 통제 환경인 HO3D와 in-the-wild(TASTE-Rob + 직접 촬영한 100개 비디오)에서 진행한다.</li>
+<li><strong>HO3D (Table 1)</strong>: CHOIR은 형상 정확도와 물리적 타당성을 동시에 잡는다. MagicHOI은 CD는 낮지만 penetration이 크고, HOLD은 CD와 penetration 모두 CHOIR보다 나쁘다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">Chamfer Distance (cm)</th><th class="num">Penetration ratio (%)</th><th class="num">F5 (%)</th><th class="num">F10 (%)</th><th class="num">MPJPE (mm)</th><th class="num">mIoU (%)</th><th class="num">Hand-object distance (cm)</th></tr></thead><tbody><tr><td>CHOIR</td><td class="num">0.77</td><td class="num">4.58</td><td class="num">72.33</td><td class="num">96.03</td><td class="num">5.55</td><td class="num">85.87</td><td class="num">0.06</td></tr><tr><td>MagicHOI</td><td class="num">0.87</td><td class="num">14.11</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr><tr><td>HOLD</td><td class="num">1.31</td><td class="num">17.72</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr></tbody></table></div>
+<ul>
+<li><strong>In-the-Wild (Table 2, 100개 비디오)</strong>: CHOIR 자체 성능은 mIoU 76.65%(median 70.13%), penetration ratio 5.91%, hand-object distance 0.10 cm, hand acceleration 0.42 cm/fr², object acceleration 0.12 cm/fr²이다. mIoU에서 비교 방법들을 큰 차이로 앞선다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>비교 (subset)</th><th class="num">CHOIR mIoU (%)</th><th class="num">비교 방법 mIoU (%)</th></tr></thead><tbody><tr><td>HOLD 유효 30개 subset</td><td class="num">78.85</td><td class="num">27.19 (HOLD)</td></tr><tr><td>MagicHOI 유효 22개 subset</td><td class="num">77.89</td><td class="num">23.20 (MagicHOI)</td></tr></tbody></table></div>
+<ul>
+<li><strong>Ablation (Table 3)</strong>: Stage 2 rectification을 빼면 hand-object distance가 나빠져, 공간 보정 단계가 정렬에 반드시 필요함을 보여준다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>설정</th><th class="num">Hand-object distance (cm)</th></tr></thead><tbody><tr><td>CHOIR (full)</td><td class="num">0.10</td></tr><tr><td>w/o Stage 2 rectification</td><td class="num">0.22</td></tr></tbody></table></div>
+<ul>
+<li><strong>메시지</strong>: 공간 보정을 마친 뒤 접촉을 믿을 만한 결합 신호로 다시 끌어들이는 설계 덕분에, 통제 환경은 물론 open-world에서도 정렬·물리적 타당성·시간적 일관성이 함께 좋아진다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<ul>
+<li>물체를 형태가 변하지 않는 강체(rigid)로 가정한다.</li>
+<li>가림이 극심하거나 물체 형상이 비정형일 때는 실패하는 경우가 있다(자세한 내용은 supplementary에 있다).</li>
+<li>Future work으로 형태가 변하는(deformable) 물체, 양손(bimanual) 상호작용, 더 복잡한 장면으로의 확장을 꼽는다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Hand-Object Interaction</strong>: 우리 주제와 곧바로 맞닿는다. 접촉을 결과가 아니라 최적화의 결합 신호로 쓰고 공간 보정을 마친 뒤에야 접촉을 믿는 &quot;언제 접촉을 믿을지&quot;라는 관점은, 손-물체 상호작용을 복원하고 이해하는 연구에 바로 적용할 수 있는 설계 원리다.</li>
+<li><strong>Egocentric Vision</strong>: 논문 자체는 일반 단안 영상을 다루지만, 단안·가림·open-world 조건에서 손과 물체를 복원하는 파이프라인은 1인칭 영상(손이 자주 프레임에 잡히고 occlusion이 심함)으로 넓힐 여지가 크다(논문에 egocentric에 대한 직접 언급은 없으며, 우리 쪽에서 본 잠재적 접점이다).</li>
+<li><strong>Spatial Audio</strong>: 논문에 직접 언급은 없다. 다만 접촉 이벤트(contact evidence)가 물체를 잡거나 놓는 순간과 맞물린다는 점에서, 접촉 타이밍을 소리 이벤트와 엮는 멀티모달 확장을 잠재적 관점으로만 생각해 볼 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper5">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>Probing Spatial Structure in Pretrained Audio Representations</h2>
+    <p class="lead">사전학습된 오디오 모델의 frozen embedding에 공간(spatial) 정보가 얼마나 담겨 있는지를, 가벼운 linear probing(표현 안에 어떤 정보가 들어 있는지 진단하는 방법)으로 요인별로 나눠 측정하는 SARL(Spatial Audio Representation Learning) 벤치마크를 제안한다.</p>
+    <div class="authors">Chuyang Chen, Sivan Ding, Adrian S. Roman, Juan Pablo Bello (Music and Audio Research Laboratory, New York University, USA) — Chen, Ding, Roman은 공동 1저자</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-06-04</span> · <span class="pub-venue">🏛 Interspeech 2026</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2606.05544" target="_blank">arXiv:2606.05544</a> <a class="pill pdf" href="https://arxiv.org/pdf/2606.05544" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2606.05544" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>메인 그림(Figure 1)은 7개 공간 task(azimuth, elevation, distance, class, RT60, volume, shape)에서 각 사전학습 인코더의 probing 성능을 random predictor 대비 얼마나 좋아졌는지로 나타내며, 모델을 입력 포맷별(왼쪽)과 학습 패러다임별(오른쪽)로 정렬해 보여준다. (믿을 만한 절대 이미지 URL을 구하지 못해 이미지는 넣지 않고 설명으로 대신한다.)</p>
+<h3 class="sec">선행 연구</h3>
+<p>기존 오디오 representation 벤치마크(HEAR, SUPERB, X-ARES, MARBLE)는 대부분 monaural(단일 채널) 신호와 semantic task(이벤트 분류 등)에만 집중했고, 공간 정보는 거의 평가하지 않았다. 반대로 공간 오디오 쪽 벤치마크(DCASE, LOCATA, CHiME, REVERB)는 있지만, 이들은 end-to-end 시스템 전체의 성능만 재기 때문에 representation 자체의 품질을 따로 떼어 보지 못한다. 본 논문은 mono, stereo, binaural, First-Order Ambisonics(FOA) 같은 여러 입력 포맷과 self-supervised / supervised / codec 기반 학습 패러다임으로 사전학습된 공간 오디오 인코더 13개(예: <a href="https://arxiv.org/abs/2207.06405" target="_blank">A-MAE</a>, SELD-S/F, <a href="https://arxiv.org/abs/2210.13438" target="_blank">EnCodec</a>, <a href="https://arxiv.org/abs/2402.01591" target="_blank">Spatial-AST</a>, <a href="https://arxiv.org/abs/2509.23238" target="_blank">wav-JEPA</a>, <a href="https://arxiv.org/abs/2506.00934" target="_blank">GRAM-B/F</a>, AVSA, EINv2 등)를 평가한다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>두 갈래 모두 한계가 뚜렷하다. Semantic 중심 벤치마크는 sound source의 azimuth·elevation·distance나 room의 잔향 특성 같은 공간 속성을 거의 건드리지 않고, 공간 벤치마크는 시스템 전체 성능만 보기 때문에 &quot;모델의 내부 표현에 실제로 어떤 공간 속성이 담겨 있는가&quot;를 직접 확인할 방법이 없다. 그러다 보니 어떤 입력 포맷과 학습 방식이 공간 구조를 더 잘 담는지, source 속성과 room 속성 중 무엇이 더 잘 표현되는지가 여전히 불분명하다. spatial audio는 immersive media, robotics, embodied AI, acoustic scene understanding에서 핵심 역할을 하므로, 사전학습 표현이 공간 구조를 얼마나 담는지 진단할 수 있는 근거가 꼭 필요하다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>사전학습된 오디오 모델의 frozen embedding에서 공간 속성을 얼마나 읽어낼(decodable) 수 있는지를, 통제된 조건에서 요인별로 나눠 평가하자는 것이 이 논문의 핵심이다. 저자들은 평가의 초점을 task 중심 benchmarking에서 probing 기반 분석으로 옮겨야 한다고 주장하며, source-level 속성(azimuth, elevation, distance, event class)과 room-level 속성(RT60, volume, shape)을 나눠, 입력 포맷과 학습 패러다임에 따라 공간 인코딩이 어떻게 달라지는지를 밝힌다.</p>
+<h3 class="sec">연구 방법</h3>
+<ul>
+<li><strong>Input</strong>: mono/stereo/binaural/FOA 같은 multi-channel audio를 각 encoder의 native sampling rate로 넣고, 인코더는 frozen 상태로 그대로 둔다.</li>
+<li><strong>Output</strong>: frozen embedding을 mean-pooling해 scene-level 표현으로 모은 뒤, 그 위에 linear classifier만 얹어 학습한다.</li>
+<li><strong>데이터</strong>: source 요인과 room 요인을 고르게 바꿔 가며 만든 시뮬레이션 기반 통제형 spatial audio 데이터셋(single-source scene)을 구축한다. 연속 factor는 구간으로 나눈다(azimuth 36 bins, elevation 12 bins, distance 20 bins, RT60 29 bins, volume 5 bins). 범주형 factor는 discrete하게 처리한다(event class 7 categories, room shape 4 categories).</li>
+<li><strong>Probing 학습/평가</strong>: linear classifier는 cross-entropy로 학습하고, Adam optimizer, $lr = 1 \times 10^{-4}$, cosine decay, 20 epochs를 쓴다. 연속형 요인에는 Gaussian soft label, 범주형 요인에는 one-hot을 쓴다. 평가는 연속형에 normalized MAE, 범주형에 macro-F1을 쓰고, 집계할 때 baseline normalization을 적용한다.</li>
+<li><strong>Sensitivity 분석</strong>: 한 factor 그룹만 다르게 한 scene embedding 쌍(paired scenes)의 cosine similarity를 random embedding 쌍 기준으로 정규화해, 표현이 각 공간 요인의 변화에 얼마나 민감하게 반응하는지 살펴본다.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<ul>
+<li><strong>입력 포맷 효과</strong>: FOA 모델이 전반적으로 가장 좋은 성능을 내고, 특히 elevation과 room-level task에서 앞선다. 다만 공간 채널이 없는 mono 기반 A-MAE도 room-level task에서는 만만치 않은 결과를 낸다.</li>
+<li><strong>학습 패러다임 효과</strong>: supervised localization 모델은 azimuth에서 뛰어나지만(direction-of-arrival을 명시적으로 학습한 결과) room factor에는 약하고, self-supervised 방식은 더 균형 잡힌 표현을 만든다.</li>
+<li><strong>Source–Room 격차</strong>: 모든 인코더에서 source factor가 room factor보다 한결같이 잘 읽히며, localization·semantic 쪽 개선폭이 room 쪽 개선폭을 크게 앞선다.</li>
+<li><strong>Sensitivity 패턴</strong>: 거의 모든 모델에서 source를 바꿨을 때가 room을 바꿨을 때보다 embedding이 더 크게 변하고, 성능이 강한 모델일수록 전체적인 sensitivity 크기는 오히려 작아지는 경향이 있다.</li>
+<li><strong>메시지</strong>: 입력 구성과 학습 방식이 공간 인코딩을 크게 좌우하며, 지금의 사전학습 표현은 source 정보에 비해 room(공간·음향 환경) 정보를 상대적으로 덜 담고 있다는 것을, architecture에 얽매이지 않는 진단 프로토콜로 보여준다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<ul>
+<li>통제된 합성 환경의 single-source scene만 다뤄, 실제 음향 환경의 복잡함(다중 음원, 실제 녹음)을 단순화했다.</li>
+<li>linear probing은 embedding에서 선형적으로 뽑아낼 수 있는 정보만 재기 때문에, 비선형적으로 담긴 정보는 잡아내지 못한다.</li>
+<li>평가 대상 모델들을 원래 학습 조건과 다른 분포에서 평가했다.</li>
+<li>Future work으로는 실제 녹음과 다중 음원 환경으로의 확장, 그리고 다른 probing 전략을 제안한다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Spatial Audio</strong>: 우리 연구의 핵심 주제와 곧바로 이어진다. azimuth/elevation/distance와 RT60/room 속성을 얼마나 읽어낼 수 있는지, FOA와 binaural 입력 포맷 비교, source와 room 표현의 격차 같은 결과는, 공간 오디오 표현을 다루는 연구에서 사전학습 인코더를 고르고 진단(probing) 프로토콜을 설계할 때 좋은 참고가 된다.</li>
+<li><strong>Egocentric Vision / Hand-Object Interaction</strong>: 논문에 직접 언급은 없다(우리가 볼 수 있는 잠재적 연결점). Egocentric 환경에서 착용자 주변 음원의 방향·거리를 파악하는 spatial audio는 시각과 합쳐 장면 이해나 상호작용 추론을 보강할 수 있고, 이 논문의 probing 방법론은 egocentric multimodal 표현이 공간 정보를 담는지 진단하는 틀로 넓혀 쓸 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper6">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>Towards Streaming Synchronized Spatial Audio Generation via Autoregressive Diffusion Transformer</h2>
+    <p class="lead">360도 파노라마 비디오와 텍스트를 입력받아 4채널 FOA(First-Order Ambisonics, 1차 앰비소닉스) 공간 음향을 낮은 지연으로 스트리밍 생성하는 causal autoregressive diffusion transformer 프레임워크 SwanSphere를 제안한다.</p>
+    <div class="authors">Ke Lei, Yu Zhang, Changhao Pan, Xueyi Pu, Wenxiang Guo, Ruiqi Li, Zhou Zhao (Zhejiang University 등; 제공된 본문 excerpt에는 개별 소속이 명시적으로 표기되어 있지 않음)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-05</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2605.30940" target="_blank">arXiv:2605.30940</a> <a class="pill pdf" href="https://arxiv.org/pdf/2605.30940" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2605.30940" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2605.30940v1/x1.png" alt="SwanSphere 전체 개요: 파노라마 비디오와 텍스트를 받아 동기화된 FOA 공간 음향을 스트리밍으로 만들어내는 파이프라인" loading="lazy"><figcaption>SwanSphere 전체 개요: 파노라마 비디오와 텍스트를 받아 동기화된 FOA 공간 음향을 스트리밍으로 만들어내는 파이프라인</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>Video-to-Audio (V2A) 생성</strong>: latent diffusion 기반에서 autoregressive token 기반 방식으로 발전해 왔다. 최근 SoundReactor 등은 causal modeling을 써서 프레임 단위 온라인 V2A를 시도했다.</li>
+<li><strong>공간 음향(spatial audio) 생성</strong>: 예전에는 mono를 먼저 합성한 뒤 spatialization을 덧붙이는 2단계 파이프라인을 썼지만, 이후 OmniAudio, ViSAGe처럼 파노라마 비디오에서 FOA를 바로 생성하는 end-to-end 방식으로 넘어갔다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>기존 공간 음향 합성에는 두 가지 핵심 병목이 있는데, 이는 실시간 상호작용이 필요한 immersive(VR/AR) 응용에 치명적이다.</p>
+<ol>
+<li><strong>품질-지연 trade-off</strong>: discrete codebook 방식은 양자화 손실(quantization loss)을 낳고, self-attention 기반 diffusion transformer는 multi-step denoising 탓에 연산이 오래 걸리며 첫 프레임 지연(first-frame latency)도 커서 실시간 스트리밍에 맞지 않는다.</li>
+<li><strong>약한 cross-modal 정합</strong>: CLIP 기반 encoder는 소리에 대한 감각(acoustic awareness)이 부족하고, global pooling이 음원 위치 파악에 필요한 spatial cue까지 걸러내 방향 정합이 약하다. (게다가 파노라마 비디오-공간 음향 짝 데이터셋도 부족하다.)</li>
+</ol>
+<h3 class="sec">연구 주제</h3>
+<p>파노라마 비디오/텍스트에 동기화된 고품질 FOA 공간 음향을 양자화 손실 없이 낮은 첫 프레임 지연으로 스트리밍 생성하는 문제. 특히 azimuth(수평각)/elevation(수직각) 방향까지 정확히 맞추는, 방향을 인지하며 동기화된 생성을 새롭게 강조한다.</p>
+<h3 class="sec">연구 방법</h3>
+<ul>
+<li><strong>입력</strong>: 360도 파노라마 비디오 및/또는 텍스트 caption. <strong>출력</strong>: 방향 정보를 담은 4채널 FOA 오디오.</li>
+<li><strong>분할 정복(divide-and-conquer) 2단계 구조</strong>:</li>
+<ul>
+<li>Stage 1 (Semantic Planning): causal language model이 video feature와 caption embedding을 조건으로 semantic embedding을 만든다.</li>
+<li>Stage 2 (Local Rendering): Local Diffusion Transformer(LocDiT)가 앞 patch의 boundary context를 받아 patch 내부를 flow matching으로 고품질 합성한다. 이렇게 단계를 나눈 덕분에 전체 시퀀스에 attention을 걸지 않고도 스트리밍이 가능하다.</li>
+</ul>
+<li><strong>주요 모듈</strong>:</li>
+<ul>
+<li><strong>Spatial Video-Audio Contrastive Learning (SVAC)</strong>: 서로 보완하는 4가지 목적으로 정합을 유도한다 — instance exchange(semantic), temporal offset(오디오를 시간 이동시킨 negative로 동기화), audio rotation(3D FOA 회전으로 만든 spatial negative), video rotation(파노라마 회전 기반 geometric consistency). symmetric InfoNCE loss를 쓴다.</li>
+<li><strong>Multi-Objective Online DPO (ODPO)</strong>: post-training 단계에서 병렬로 뽑은 8개 sample을 가중 reward로 순위 매긴다. reward는 spatial feedback(azimuth/elevation error), semantic similarity(ImageBind), fidelity(Audiobox aesthetics)로 이뤄지며 가중치는 spatial $0.4$, semantic $0.4$, fidelity $0.2$이다.</li>
+<li><strong>VAE</strong>: fine-tuning한 Stable Audio VAE가 4채널 FOA를 21.5 FPS, 프레임당 $d=128$짜리 continuous latent로 인코딩한다.</li>
+<li><strong>Curriculum Learning</strong>: 약 100만 개의 non-spatial audio를 pseudo-FOA로 바꿔 사전학습에 활용한다.</li>
+</ul>
+<li><strong>데이터셋(SwanSphere Corpus)</strong>: Sphere360(288h), YT-Ambigen(142h), 새로 수집한 YouTube(138h)를 합쳐 약 165,000개의 video-FOA pair, 총 458h를 구성했다. spatial caption 약 3,100개는 acoustic intensity vector 분석을 기반으로 MLLM이 자동 annotation해 만들었다.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<ul>
+<li><strong>Video-to-Spatial 정량 비교</strong> (품질, 방향 정합, 자연스러움 모두에서 앞선다):</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Metric</th><th class="num">SwanSphere</th><th class="num">OmniAudio</th><th class="num">ViSAGe</th></tr></thead><tbody><tr><td>FD ↓</td><td class="num">120.28</td><td class="num">157.67</td><td class="num">232.17</td></tr><tr><td>KL ↓</td><td class="num">1.36</td><td class="num">1.93</td><td class="num">2.67</td></tr><tr><td>Angular Error ↓</td><td class="num">1.03°</td><td class="num">1.27°</td><td class="num">1.59°</td></tr><tr><td>MOS-SQ ↑</td><td class="num">4.32±0.15</td><td class="num">4.12±0.18</td><td class="num">3.82±0.20</td></tr><tr><td>MOS-AF ↑</td><td class="num">4.44±0.20</td><td class="num">4.27±0.17</td><td class="num">3.78±0.26</td></tr></tbody></table></div>
+<ul>
+<li><strong>속도</strong>: full-sequence DiT보다 약 30배 빠르다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Metric</th><th class="num">SwanSphere</th><th class="num">Full-sequence DiT</th></tr></thead><tbody><tr><td>First-chunk latency ↓</td><td class="num">0.21s</td><td class="num">6.47s</td></tr><tr><td>Inference time ↓</td><td class="num">0.21s</td><td class="num">9.13s</td></tr></tbody></table></div>
+<ul>
+<li><strong>Text-to-Spatial</strong>:</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Metric</th><th class="num">SwanSphere</th><th class="num">Tango2+AS</th></tr></thead><tbody><tr><td>FD ↓</td><td class="num">142.80</td><td class="num">235.71</td></tr><tr><td>MOS-SQ ↑</td><td class="num">4.31±0.18</td><td class="num">—</td></tr></tbody></table></div>
+<ul>
+<li><strong>Ablation</strong>: SVAC는 angular error를 1.09° 낮추고, ODPO는 FD를 13.63 낮춘다. 모델 크기도 영향을 주는데, SwanSphere-S(0.43B)는 SwanSphere-L(1.09B)보다 성능이 눈에 띄게 떨어진다.</li>
+<li><strong>메시지</strong>: 분할 정복형 causal AR diffusion에 방향을 인지하는 contrastive/preference 학습을 결합하면, 양자화 손실 없이도 저지연 스트리밍과 고품질, 정확한 방향성을 한꺼번에 달성할 수 있음을 보인다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<ul>
+<li>저자들이 밝힌 한계: spatial caption이 대부분 가장 두드러진 음원만 기술하다 보니, 여러 악기가 동시에 연주되는 콘서트처럼 음원이 많은 상황을 충분히 모델링하지 못하고 세밀한 spatial disentanglement에도 제약이 있다.</li>
+<li>향후 과제: 음원이 여러 개인 장면을 위한 데이터셋 확장, 학습에서 보지 못한 녹음 환경/설정에도 잘 일반화하는 방법 연구.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Spatial Audio</strong>: 파노라마 비디오 기반 FOA 생성, azimuth/elevation 방향 정합, FOA rotation으로 만든 spatial negative를 쓰는 contrastive learning은 우리의 공간 음향 생성/정합 연구와 곧바로 이어진다. 스트리밍, 저지연 설계는 실시간 immersive(AR/VR) 응용에 그대로 쓸 수 있다.</li>
+<li><strong>Egocentric Vision / Hand-Object Interaction</strong>: 논문에서 직접 언급하지는 않는다. 다만 egocentric 환경의 음원(손-물체 상호작용 등)에 대한 방향성 있고 동기화된 음향을 생성하거나 추론하는 문제로 확장한다면, 이 논문의 video-audio 동기화(temporal offset)와 방향 정합(SVAC) 아이디어를 참고할 만하다.</li>
+</ul>
+  </div>
+</article>
+      <footer>생성: 2026-07-19 05:52 · 적합성은 abstract로 판단, 요약은 논문 전문 기반 작성</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

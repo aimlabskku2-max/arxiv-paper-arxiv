@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "video-to-audio",
+    "title": "Video-to-Audio Generation — Core Lineage",
+    "desc": "Diff-Foley 계보를 중심으로 한 V2A 핵심 논문 계보 서베이",
+    "count": null,
+    "path": "topics/video-to-audio/video-to-audio_survey.html"
+  },
+  {
+    "slug": "greatest-hits-foley",
+    "title": "Greatest Hits / Impact-Sound Foley",
+    "desc": "임팩트 사운드 Foley 동기화 연구 계보",
+    "count": null,
+    "path": "topics/greatest-hits-foley/greatest-hits-foley_survey.html"
+  },
+  {
+    "slug": "egocentric-spatial-avqa",
+    "title": "Egocentric Spatial Audio-Visual VQA",
+    "desc": "1인칭 공간 오디오-비주얼 QA 서베이",
+    "count": 15,
+    "path": "topics/egocentric-spatial-avqa/egocentric-spatial-avqa_survey.html"
+  },
+  {
+    "slug": "tactile-representation",
+    "title": "Tactile Representation Learning — Genealogy",
+    "desc": "촉각 표현 학습 계보 서베이",
+    "count": 19,
+    "path": "topics/tactile-representation/tactile-representation_survey.html"
+  }
+]
