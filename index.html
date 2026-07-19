@@ -43,6 +43,9 @@
     border-radius:20px; }
   .card p { margin:0; color:var(--muted); font-size:13.5px; }
   .weekly { display:flex; flex-direction:column; gap:8px; }
+  .wmonth { font-size:12.5px; font-weight:700; color:var(--muted); letter-spacing:.03em;
+    margin:14px 0 2px; padding-left:2px; }
+  .wmonth:first-child { margin-top:0; }
   .wrow { display:flex; align-items:center; gap:14px; background:var(--card);
     border:1px solid var(--line); border-radius:12px; padding:14px 16px;
     text-decoration:none; color:inherit; transition:border-color .12s, transform .12s; }
@@ -93,6 +96,7 @@
     <section>
       <h2>Weekly Digests</h2>
       <div class="weekly">
+      <div class="wmonth">2026년 7월</div>
       <a class="wrow" href="weekly/2026-07-18/2026-07-18_paper_summary.html">
         <span class="wdate">2026-07-18</span>
         <span class="wchips"><span class="chip" style="background:#0ea5e9">Egocentric Vision</span> <span class="chip" style="background:#10b981">Hand-Object Interaction</span> <span class="chip" style="background:#6366f1">Spatial Audio</span></span>

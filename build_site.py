@@ -82,10 +82,16 @@ for s in surveys:
         <p>{html.escape(s.get('desc',''))}</p>
       </a>''')
 
-# ---- 주간 디제스트 행 ----
+# ---- 주간 디제스트 행 (월별 그룹) ----
 weekly_rows = []
+cur_month = None
 for w in weekly:
     date = w["date"]
+    month = date[:7]  # YYYY-MM
+    if month != cur_month:
+        cur_month = month
+        y, m = month.split("-")
+        weekly_rows.append(f'      <div class="wmonth">{y}년 {int(m)}월</div>')
     tops = w.get("topics") or topics_from_report(w.get("path", ""))
     exists = os.path.exists(os.path.join(BASE, w.get("path", "")))
     cnt = w.get("count")
@@ -147,6 +153,9 @@ HTML = f'''<!DOCTYPE html>
     border-radius:20px; }}
   .card p {{ margin:0; color:var(--muted); font-size:13.5px; }}
   .weekly {{ display:flex; flex-direction:column; gap:8px; }}
+  .wmonth {{ font-size:12.5px; font-weight:700; color:var(--muted); letter-spacing:.03em;
+    margin:14px 0 2px; padding-left:2px; }}
+  .wmonth:first-child {{ margin-top:0; }}
   .wrow {{ display:flex; align-items:center; gap:14px; background:var(--card);
     border:1px solid var(--line); border-radius:12px; padding:14px 16px;
     text-decoration:none; color:inherit; transition:border-color .12s, transform .12s; }}
