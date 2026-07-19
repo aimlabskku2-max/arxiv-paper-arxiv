@@ -1,0 +1,4 @@
+arXiv ID: 2601.18322
+abs: https://arxiv.org/abs/2601.18322
+pdf: https://arxiv.org/pdf/2601.18322
+html: https://arxiv.org/html/2601.18322

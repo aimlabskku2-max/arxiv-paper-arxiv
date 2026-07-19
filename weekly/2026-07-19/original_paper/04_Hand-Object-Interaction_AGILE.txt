@@ -1,0 +1,4 @@
+arXiv ID: 2602.04672
+abs: https://arxiv.org/abs/2602.04672
+pdf: https://arxiv.org/pdf/2602.04672
+html: https://arxiv.org/html/2602.04672
