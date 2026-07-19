@@ -1,0 +1,4 @@
+arXiv ID: 2606.16353
+abs: https://arxiv.org/abs/2606.16353
+pdf: https://arxiv.org/pdf/2606.16353
+html: https://arxiv.org/html/2606.16353

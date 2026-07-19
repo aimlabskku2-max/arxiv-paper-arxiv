@@ -1,0 +1,4 @@
+arXiv ID: 2606.11628
+abs: https://arxiv.org/abs/2606.11628
+pdf: https://arxiv.org/pdf/2606.11628
+html: https://arxiv.org/html/2606.11628
