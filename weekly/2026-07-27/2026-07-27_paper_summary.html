@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arXiv 논문 정리 — 2026-07-27</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']],
+            displayMath: [['$$','$$'],['\\[','\\]']], processEscapes: true },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --bg:#f8fafc; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    line-height:1.7; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+  header.top { background:linear-gradient(135deg,#1e293b,#334155); color:#fff; padding:42px 20px 36px; }
+  header.top .inner { max-width:1100px; margin:0 auto; }
+  header.top .home-link { display:inline-block; margin-bottom:14px; color:#cbd5e1; text-decoration:none;
+    font-size:13.5px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+    padding:6px 14px; border-radius:999px; }
+  header.top .home-link:hover { background:rgba(255,255,255,.2); color:#fff; }
+  header.top h1 { margin:0 0 8px; font-size:30px; letter-spacing:-.5px; }
+  header.top .sub { opacity:.85; font-size:15px; }
+  header.top .chips { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  header.top .chip { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    padding:5px 12px; border-radius:999px; font-size:13px; }
+  .layout { display:grid; grid-template-columns:260px 1fr; gap:32px; margin-top:32px; }
+  nav.toc { position:sticky; top:20px; align-self:start; font-size:13.5px; max-height:90vh; overflow:auto; }
+  nav.toc h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 12px; }
+  .toc-group { margin-bottom:16px; }
+  .toc-badge { display:inline-block; color:#fff; font-size:11.5px; padding:3px 9px; border-radius:6px; margin-bottom:6px; font-weight:600; }
+  nav.toc ul { list-style:none; padding:0 0 0 4px; margin:6px 0 0; }
+  nav.toc li { margin:4px 0; }
+  nav.toc a { color:var(--ink); text-decoration:none; }
+  nav.toc a:hover { color:#6366f1; text-decoration:underline; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:26px;
+    overflow:hidden; box-shadow:0 1px 3px rgba(15,23,42,.05); scroll-margin-top:20px; }
+  .card-head { padding:22px 26px 18px; border-left:6px solid; background:#fcfcfd; }
+  .topic-tag { display:inline-block; color:#fff; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:6px; }
+  .card-head h2 { margin:10px 0 6px; font-size:21px; letter-spacing:-.3px; }
+  .lead { margin:6px 0 10px; font-size:14.5px; color:#334155; font-weight:500;
+    border-left:3px solid var(--line); padding-left:12px; }
+  .authors { color:var(--muted); font-size:13px; margin-bottom:10px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { font-size:12.5px; text-decoration:none; color:#475569; background:#f1f5f9; border:1px solid var(--line);
+    padding:3px 10px; border-radius:999px; }
+  .pill.pdf { background:#fee2e2; border-color:#fecaca; color:#b91c1c; }
+  .pill:hover { filter:brightness(.96); }
+  .card-body { padding:8px 26px 24px; }
+  .card-body h3.sec { font-size:16.5px; margin:22px 0 8px; padding-bottom:6px; border-bottom:2px solid var(--line);
+    color:#0f172a; }
+  .card-body h4.subsec { font-size:14.5px; margin:16px 0 6px; color:#334155; }
+  .card-body p { margin:8px 0; }
+  .card-body ul, .card-body ol { margin:8px 0; padding-left:22px; }
+  .card-body li { margin:4px 0; }
+  .card-body code { background:#f1f5f9; padding:1px 6px; border-radius:5px; font-size:13px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; }
+  .card-body strong { color:#0f172a; }
+  .tbl-wrap { overflow-x:auto; margin:12px 0; -webkit-overflow-scrolling:touch; }
+  .card-body table { border-collapse:collapse; width:100%; font-size:13px; min-width:340px; }
+  .card-body thead th { background:#f1f5f9; color:#0f172a; text-align:left; font-weight:700;
+    padding:8px 12px; border-bottom:2px solid #cbd5e1; white-space:nowrap; vertical-align:bottom; }
+  .card-body tbody td { padding:7px 12px; border-bottom:1px solid var(--line); text-align:left;
+    vertical-align:top; }
+  .card-body tbody tr:nth-child(even) { background:#f8fafc; }
+  .card-body th.num, .card-body td.num { text-align:right; font-variant-numeric:tabular-nums;
+    font-family:"SF Mono",Menlo,Consolas,monospace; white-space:nowrap; }
+  .fig { margin:14px 0; text-align:center; }
+  .fig img { max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px;
+    background:#fff; }
+  .fig figcaption { margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .pubinfo { margin:6px 0 2px; font-size:12.5px; color:var(--muted); display:flex;
+    flex-wrap:wrap; gap:4px 12px; }
+  .pubinfo .pub-venue { color:#0f172a; font-weight:600; }
+  footer { text-align:center; color:var(--muted); font-size:13px; margin-top:40px; }
+  @media (max-width:820px) { .layout { grid-template-columns:1fr; } nav.toc { position:static; max-height:none; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <a class="home-link" href="../../index.html">← 전체 주차 목록(홈)</a>
+  <h1>📚 arXiv 논문 주간 정리</h1>
+  <div class="sub">2026-07-27 · 총 6편 · 주제별 균형 정리</div>
+  <div class="chips">
+    <span class="chip">Egocentric Vision · 2편</span><span class="chip">Hand-Object Interaction · 2편</span><span class="chip">Spatial Audio · 2편</span>
+  </div>
+</div></header>
+<div class="wrap">
+  <div class="layout">
+    <nav class="toc">
+      <h3>목차</h3>
+      <div class="toc-group"><span class="toc-badge" style="background:#0ea5e9">Egocentric Vision</span><ul><li><a href="#paper1">S-EMBER: A Large-Scale Benchmark for Streaming Egocentric Memory Retrieval</a></li><li><a href="#paper2">LIME: Learning Intent-aware Camera Motion from Egocentric Video</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#10b981">Hand-Object Interaction</span><ul><li><a href="#paper3">TOUCH: Text-guided Controllable Generation of Free-Form Hand-Object Interactions</a></li><li><a href="#paper4">HORT: Monocular Hand-held Objects Reconstruction with Transformers</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#6366f1">Spatial Audio</span><ul><li><a href="#paper5">ViSAudio: End-to-End Video-Driven Binaural Spatial Audio Generation</a></li><li><a href="#paper6">SpatialV2A: Visual-Guided High-fidelity Spatial Audio Generation</a></li></ul></div>
+    </nav>
+    <main>
+      
+<article class="card" id="paper1">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>S-EMBER: A Large-Scale Benchmark for Streaming Egocentric Memory Retrieval</h2>
+    <p class="lead">Ray-Ban Meta 스마트 안경으로 촬영한 388시간짜리 1인칭 영상에 기반해, AI가 &quot;스트리밍&quot; 상황에서 과거 경험을 떠올리고(episodic memory) 그 근거가 되는 영상 구간까지 정확히 짚어내야 하는 새로운 벤치마크 S-EMBER를 제안한 논문이다.</p>
+    <div class="authors">Xiaodong Wang, Xuanyi Zhao, Pedro Rodriguez, Devendra Singh Sachan, Barlas Oguz, Seungwhan Moon, Shang-Wen Li, Gargi Ghosh, Xin Dong, Wen-Tau Yih 외 (FAIR, Meta / Reality Labs, Meta)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-07-02</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2607.02689" target="_blank">arXiv:2607.02689</a> <a class="pill pdf" href="https://arxiv.org/pdf/2607.02689" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2607.02689" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2607.02689v1/x1.png" alt="S-EMBER 벤치마크 주석 개요" loading="lazy"><figcaption>S-EMBER 벤치마크 주석 개요</figcaption></figure>
+<p>5~20분 길이의 1인칭 영상에서 특정 시점(스트리밍 상황)에 메모리 질문이 던져지고, 서로 다른 세 명의 작성자가 짧은/중간/긴 답변을 달며, 각 답변에는 근거가 되는 영상 구간 $[t_{start}, t_{end}]$(visual proof)이 표시되는 주석 구조를 보여준다.</p>
+<h3 class="sec">선행 연구</h3>
+<p>1인칭(egocentric) 비디오 이해 분야는 Ego4D(<a href="https://arxiv.org/abs/2110.07058" target="_blank">arXiv:2110.07058</a>)가 대규모 1인칭 활동 데이터를 제공하며 발전을 이끌었고, EgoSchema(<a href="https://arxiv.org/abs/2308.09126" target="_blank">arXiv:2308.09126</a>), EgoTempo, AMEGO 등이 그 위에서 시간적 인지와 장기 추론(long-range reasoning)을 평가해 왔다. 긴 영상 추론(long-form video reasoning)에서는 Video-MME, MLVU, LongVideoBench 같은 데이터셋이 수 시간짜리 영상까지 다루며 모델의 attention 한계를 밀어붙였다. 또한 StreamingBench, SVBench, MovieChat-1K 같은 스트리밍(streaming) 벤치마크는 &quot;질문 시점까지의 과거와 현재만 볼 수 있다&quot;는 인과적 제약(causal constraint)을 도입했다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>기존 벤치마크 대부분은 영상 파일 전체에 접근할 수 있는 오프라인(offline) 평가 방식이라, 웨어러블 기기가 실제로 겪는 &quot;스트리밍&quot; 현실을 반영하지 못한다. 즉, 상시 녹화되는 1인칭 영상에서 &quot;지금 필요한 정보를 과거의 어느 시점에서 찾아야 하는가&quot;를 능동적으로(active recall) 다루지 못한다. 또한 기존 1인칭 데이터셋은 연구용 대형 장비나 액션캠으로 촬영되어 실제 스마트 안경의 시선(자연스러운 gaze, 머리 방향 시야)과 다르고, 답을 맞혔더라도 그 근거가 실제 영상에 있는지(hallucination 여부)를 대규모로 검증할 수단이 없었다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>논문은 <strong>Grounded Streaming Episodic Retrieval (GSER)</strong>라는 새로운 과제를 정의한다. 이는 (1) 스트리밍 상황(질문 시점까지의 영상만 보고) 답을 생성하고, 동시에 (2) 답의 근거가 되는 시간 구간 $[t_{start}, t_{end}]$를 정확히 예측(temporal grounding)해야 하는 과제다. 여기서 &quot;grounded&quot;란 모델의 추론이 언어적 상식이나 추측이 아니라 실제 영상 근거에 anchor(고정)되어 있음을 요구한다는 뜻이다.</p>
+<h3 class="sec">연구 방법</h3>
+<ul>
+<li><strong>데이터</strong>: Ray-Ban Meta 스마트 안경으로 613명의 사용자가 촬영한 3,141개 영상(총 388시간, 평균 7.4분, 5~20분 분포)을 사용한다. 스크립트 없는 일상의 &quot;사이사이 순간&quot;(in-between moments)을 우선 수집해 episodic memory가 자연스럽게 필요한 상황을 담았다.</li>
+<li><strong>주석 파이프라인(3단계, causal-first)</strong>: (1) 실시간으로 영상을 보다가 &quot;과거를 돌아봐야만&quot; 답할 수 있는 질문 생성(현재 프레임만으로는 답 불가), (2) 세 그룹(surgeon-간결/chef-균형/architect-상세)이 서로 다른 상세도의 tri-tiered 정답 작성 + 근거 구간 표시, (3) 전문가 검수와 Blind-LLM(o3) 감사로 텍스트만으로 풀리는 지름길(shortcut) 질문 제거. 근거 구간은 핵심 증거 앞뒤 여유를 &quot;증거 길이의 15% 또는 15초 중 작은 값&quot;으로 엄격히 제한해 넓게 잡아 우연히 맞히는 것을 방지했다.</li>
+<li><strong>8개 인지 범주 taxonomy</strong>: Visual Detail Recall, Sequential Action, Time Duration, Counting, Temporal Ordering, Object Comparison, Location Trace, Spatial Reasoning. 오디오는 시각 추론 격리를 위해 생성·답변 단계 모두에서 음소거된다.</li>
+<li><strong>두 평가 과제와 지표</strong>: (1) Streaming Answer Generation — LLM-as-a-Judge로 tri-tiered 정답과 비교. clean accuracy($Acc_{cl}$, 근거 없는 정보에 페널티)와 overall accuracy($Acc_{ov}$, 부수적 세부는 허용)로 신뢰도의 상·하한을 잰다. 판정 편향을 줄이기 위한 5지선다(MCQ) 변형도 제공. (2) Temporal Grounding Retrieval — mIoU, Recall@1(IoU≥$\tau$), 그리고 정답과 정확한 근거 구간을 모두 요구하는 GQ@$\tau$(NExT-GQA에서 차용).</li>
+<li><strong>평가 대상</strong>: Blind LLM(GPT-4o, 시각 없음), Socratic 파이프라인(0.2fps 프레임 캡션을 이어 붙여 long-context LLM으로 답), 그리고 native 멀티모달 모델들(Gemini 3.1 Pro, GPT-5.4, GPT-4o, InternVL3.5, Qwen3VL, LLaVA-OneVision) 및 인간 성능.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>핵심 발견은 <strong>localization paradox(위치 특정의 역설)</strong>다. 모델 규모를 키우거나 프레임을 더 넣으면 &quot;무슨 일이 있었는지&quot;를 이해하는 의미 추론(semantic reasoning)은 좋아지지만, &quot;언제 일어났는지&quot;를 짚는 시간적 grounding은 거의 정체된다.</p>
+<ul>
+<li>규모 스케일링: InternVL3.5를 4B→38B로 키우면 정확도 19.7%→26.1%, Qwen3VL 4B→32B는 21.8%→24.1%로 오르지만 grounding 개선은 미미.</li>
+<li>프레임 밀도: Qwen3VL 프레임 32→768로 늘리면 정확도 8.8%→24.1%(약 3배)로 로그적 상승하나 grounding은 최대 2.5%에 머묾.</li>
+<li>해상도: 240p→720p로 올리면 정확도 14.4%→24.2%로 오르지만 grounding은 완전히 평평(flat).</li>
+<li>Memory recency: 증거와 질문 사이 시간 간격이 커질수록 보편적 recall decay 발생. Gemini 3.1 Pro는 즉시 회상(0~30초) 50%에서 10분 이전 사건 22%로 하락하고, GPT-4o는 10분 지점에서 0%로 붕괴.</li>
+</ul>
+<p>주요 모델 비교 (Table 3, 값이 클수록 좋음. Halluc.는 낮을수록 좋음):</p>
+<div class="tbl-wrap"><table><thead><tr><th>모델</th><th class="num">Clean Acc ($Acc_{cl}$)</th><th class="num">Overall Acc ($Acc_{ov}$)</th><th class="num">Halluc.(↓)</th><th class="num">MCQ Acc</th><th class="num">mIoU</th><th class="num">R@1≥.5</th><th class="num">GQ@.5</th></tr></thead><tbody><tr><td>Human Ceiling</td><td class="num">91.43%</td><td class="num">91.43%</td><td class="num">0.00%</td><td class="num">–</td><td class="num">0.777</td><td class="num">0.858</td><td class="num">0.698</td></tr><tr><td>Gemini 3.1 Pro</td><td class="num">42.88%</td><td class="num">47.83%</td><td class="num">40.17%</td><td class="num">54.41%</td><td class="num">0.479</td><td class="num">0.503</td><td class="num">0.297</td></tr><tr><td>GPT-5.4</td><td class="num">23.77%</td><td class="num">37.92%</td><td class="num">58.90%</td><td class="num">41.82%</td><td class="num">0.333</td><td class="num">0.313</td><td class="num">0.117</td></tr><tr><td>InternVL3.5-38B</td><td class="num">25.86%</td><td class="num">26.10%</td><td class="num">25.51%</td><td class="num">36.84%</td><td class="num">0.077</td><td class="num">0.059</td><td class="num">0.024</td></tr><tr><td>Socratic Baseline</td><td class="num">23.04%</td><td class="num">32.25%</td><td class="num">54.36%</td><td class="num">31.21%</td><td class="num">0.393</td><td class="num">0.406</td><td class="num">0.129</td></tr><tr><td>GPT-4o</td><td class="num">22.06%</td><td class="num">26.46%</td><td class="num">39.33%</td><td class="num">29.02%</td><td class="num">0.111</td><td class="num">0.096</td><td class="num">0.021</td></tr><tr><td>Qwen3VL-32B</td><td class="num">19.75%</td><td class="num">24.19%</td><td class="num">47.44%</td><td class="num">31.21%</td><td class="num">0.047</td><td class="num">0.025</td><td class="num">0.011</td></tr><tr><td>LLaVA-OneVision-7B</td><td class="num">16.62%</td><td class="num">18.55%</td><td class="num">47.35%</td><td class="num">29.56%</td><td class="num">0.104</td><td class="num">0.078</td><td class="num">0.005</td></tr><tr><td>Blind LLM</td><td class="num">2.68%</td><td class="num">5.18%</td><td class="num">82.47%</td><td class="num">20.17%</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr></tbody></table></div>
+<p>Blind LLM이 clean accuracy 2.68%에 그친 것은 이 벤치마크가 언어적 지름길을 성공적으로 걸러냈음을 보여준다. 최고 모델 Gemini 3.1 Pro조차 인간 천장(91.43%)과 GQ@.5(0.297 vs 0.698)에서 큰 격차를 보인다. 즉 상당수 모델이 &quot;틀린 이유로 맞히는&quot;(correct for the wrong reasons) 방식으로, 전역 장면 맥락과 언어적 사전지식에 의존해 답만 맞히고 근거 구간은 못 짚는다. 의의는 스마트 안경이라는 실제 하드웨어 기반으로, 차세대 웨어러블 AI를 위한 grounded·신뢰 가능한 episodic memory 연구의 진단적 토대를 제공한 데 있다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>단일 모달리티</strong>: 모달리티 격리를 위해 오디오를 영구 삭제(redact)했기 때문에, 실제 AI 비서에 중요한 음향 단서(acoustic cue)를 활용하는 능력이나 멀티모달 통합은 평가하지 못한다.</li>
+<li><strong>LLM-as-a-Judge 근사</strong>: 인간 전문가와 높은 상관을 보이지만 여전히 근사치이며, verbosity bias(장황함 편향)나 미세한 뉘앙스를 놓칠 수 있어 평가 아티팩트 가능성이 남는다.</li>
+<li>논문은 벤치마크·진단 연구이므로, 위 grounding 병목을 실제로 해결하는 새 아키텍처 제안까지는 나아가지 않는다(future work로 adaptive temporal indexing, hierarchical memory buffer, verification-aware 모델 등을 제시).</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p>(Egocentric Vision / Hand-Object Interaction / Spatial Audio 관심 독자 관점)</p>
+<ul>
+<li><strong>Egocentric Vision</strong>: 연구용 리그가 아닌 소비자용 스마트 안경(Ray-Ban Meta)의 자연스러운 머리 중심 시야로 촬영된 대규모 데이터라, 실제 착용 환경에서의 gaze·시야 정합성을 다루는 연구에 직접 활용 가능한 자원이다. Location Trace, Spatial Reasoning, Object Comparison 등 8개 범주는 hand-object interaction 이후의 &quot;물건을 어디에 뒀는지&quot; 같은 장기 추적 과제와 자연스럽게 맞닿는다.</li>
+<li><strong>Temporal Grounding</strong>: &quot;답은 맞혀도 언제인지 못 짚는&quot; localization paradox는, 손-물체 상호작용의 정확한 시점 구간을 특정해야 하는 우리 관심 과제와 동일한 병목이다. adaptive temporal indexing과 생성 토큰-시간 인덱스를 잇는 cross-modal attention 방향은 참고할 만하다.</li>
+<li><strong>Spatial Audio</strong>: 이 벤치마크는 오디오를 의도적으로 제거한 시각 전용 설정이다. 저자들도 한계로 명시했듯, 여기에 spatial audio를 결합해 소리 근거(acoustic evidence) 기반의 episodic recall을 평가·강화하는 것은 우리 연구가 채울 수 있는 명확한 빈틈이다. 즉 S-EMBER의 GSER 프레임(스트리밍 + 근거 구간 예측)을 오디오-비주얼로 확장하는 후속 연구의 출발점으로 삼을 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper2">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>LIME: Learning Intent-aware Camera Motion from Egocentric Video</h2>
+    <p class="lead">사람이 찍은 일상 1인칭(egocentric) 영상만으로, &quot;자연어로 표현된 의도(intent)에 맞게 카메라를 어디로 움직여야 다음 관측이 더 유용한지&quot;를 학습하는 vision-language 모델 LIME을 제안한다. 즉 카메라 움직임 자체를 하나의 독립된 행동(action)으로 다룬다.</p>
+    <div class="authors">Boyang Sun, Jiajie Li, Yung-Hsu Yang, Chenyangguang Zhang, Tim Engelbracht, Sunghwan Hong, Cesar Cadena, Marc Pollefeys, Hermann Blum (ETH Zurich, Microsoft, University of Bonn)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-07-02</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2607.02417" target="_blank">arXiv:2607.02417</a> <a class="pill pdf" href="https://arxiv.org/pdf/2607.02417" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2607.02417" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2607.02417v1/image/teaser_v2.jpg" alt="LIME: 수동적 인간 영상에서 의도 기반 카메라 모션을 학습해 로봇으로 전이" loading="lazy"><figcaption>LIME: 수동적 인간 영상에서 의도 기반 카메라 모션을 학습해 로봇으로 전이</figcaption></figure>
+<p>현재 시점 이미지와 자연어 의도가 주어지면, LIME은 의도에 맞는 시각 증거를 얻기 위한 상대적 목표 카메라 자세(relative target camera pose)를 생성한다. 학습은 수동적으로 촬영된 인간 1인칭 영상에서 이뤄지고, 이를 로봇에 전이한다.</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>Active perception(능동적 지각)</strong>: 더 좋은 관측을 얻기 위해 센서를 어떻게 움직일지 오래 연구되어 왔다. 다만 대부분 exploration(탐색), reconstruction(복원), object search(물체 탐색) 같은 미리 정해진 목표(task-specific utility)를 최적화한다.</li>
+<li><strong>Vision-Language Navigation(VLN, 시각-언어 내비게이션)</strong>: 자연어 지시로 경로·목적지·랜드마크를 지정하고, 로봇의 이동(base motion)에 따라 시점이 부수적으로 바뀐다. 예: <a href="https://arxiv.org/abs/2412.06224" target="_blank">Uni-NaVid</a>.</li>
+<li><strong>Vision-Language-Action(VLA, 시각-언어-행동) 조작 모델</strong>: 시각 관측으로 로봇 팔·그리퍼 제어를 조건화한다. 카메라 움직임은 몸체나 실행 정책에 종속된다. 예: <a href="https://arxiv.org/abs/2406.09246" target="_blank">OpenVLA</a>, <a href="https://arxiv.org/abs/2307.15818" target="_blank">RT-2</a>, <a href="https://arxiv.org/abs/2410.24164" target="_blank">$\pi_0$</a>.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>기존 연구에서 &quot;카메라를 어떻게 움직일까&quot;는 항상 내비게이션이나 조작의 부산물이었지, 그 자체가 일급 행동(first-class action)으로 다뤄지지 않았다. 하지만 사람은 가림막 뒤를 보려고 몸을 기울이거나, 작은 디테일을 확인하려 다가가거나, 모퉁이를 돌기 전 살짝 들여다보는 등, <strong>의도를 해소하기 위해 먼저 시점을 바꾼다.</strong> 핵심 난점은 두 가지다.</p>
+<ol>
+<li><strong>의도 의존성</strong>: 같은 장면이라도 물체를 자세히 볼지, 가려진 영역을 드러낼지, 방에 들어갈지에 따라 움직여야 할 방향이 다르다.</li>
+<li><strong>다중 해(multi-hypothesis)</strong>: 같은 의도라도 유용한 증거를 주는 유효한 목표 자세가 여러 개일 수 있다. 따라서 이는 하나의 정답을 맞히는 회귀(regression) 문제가 아니라, 목표 카메라 자세들에 대한 <strong>언어 조건부 분포(language-conditioned distribution)</strong>를 예측하는 문제다.</li>
+</ol>
+<p>게다가 이런 능동 지각 시연(teleoperated active-perception demonstration)은 수집 비용이 매우 커서 지도학습 데이터가 부족하다.</p>
+<h3 class="sec">연구 주제</h3>
+<p><strong>Language-conditioned camera motion generation(언어 조건부 카메라 모션 생성)</strong>을 새롭게 정식화한다. 현재 RGB 관측 $I_s$와 자유형 자연어 의도 $x$가 주어지면, 다음 관측을 얻기 위한 상대적 $SE(3)$ 목표 카메라 자세 $T_{gs}$의 분포를 예측한다($SE(3)$는 3D 병진 + 회전을 함께 표현하는 공간). 동시에 그 시점이 무엇을 새로 드러낼지 자연어로 요약한 <strong>observation-gain(관측 이득) 설명 $g$</strong>도 예측한다. 모델이 학습하는 것은:</p>
+<p>$$p_{\theta}(g\mid I_s,x),\qquad p_{\theta,\phi}(T_{gs}\mid I_s,x,g)$$</p>
+<h3 class="sec">연구 방법</h3>
+<p><strong>1) 수동 영상에서 능동 지각 지도(supervision) 채굴</strong></p>
+<p>원격조작 시연 없이, 사람 1인칭 영상에서 시간적으로 떨어진 두 프레임 $(I_s, I_g)$을 짝지어 학습 신호를 만든다. 두 프레임 사이의 상대 카메라 변환이 모션 목표가 되고(자세가 없으면 <a href="https://arxiv.org/abs/2511.10647" target="_blank">Depth Anything 3</a> 같은 도구로 복원), 사후(hindsight)에 목표 프레임과 상대 모션을 특권 정보(privileged context)로 준 VLM 라벨러가 그럴듯한 의도 집합 $\mathcal{X}_{s,g}=\{x_i\}$와 관측 이득 $g$를 생성한다. 라벨러에게 자유형 캡션 대신 <strong>대조적 필드(motion type, 새로 보이는 물체/영역, 기존 내용의 개선된 뷰, 두 뷰 사이 공간 앵커 등)</strong>를 요구해 실제 카메라 움직임에 근거를 묶는다. 이렇게 RoomTour3D(방 규모 walkthrough)와 Nymeria(신체 규모 1인칭 상호작용)에서 약 <strong>3M(300만)개</strong>의 의도 조건부 학습 예시를 만든다.</p>
+<p><strong>2) LIME 모델 구조</strong></p>
+<ul>
+<li><strong>VLM 백본</strong>: Qwen3-VL-4B-Instruct를 사용. vision encoder는 freeze하고 multimodal projector, 언어 모델, pose head를 학습.</li>
+<li><strong>언어 인터페이스(autoregressive)</strong>: VLM 디코더가 관측 이득 $g$를 자기회귀적으로 생성. 이는 &quot;이 움직임이 무엇을 드러낼지&quot;를 VLM 고유의 출력 공간에 담아 hidden representation이 미래 시점의 증거를 미리 예상하도록 돕는 보조 지도 역할.</li>
+<li><strong>연속 pose head(flow-matching)</strong>: 행동을 언어 토큰으로 표현하지 않고 별도의 연속 flow-matching head를 붙여 $SE(3)$ 기하 정보를 보존하고 여러 유효 목표 자세의 다중 분포를 모델링한다. 목표 변환은 3D 병진 + 회전 행렬 앞 두 열을 쓰는 연속 6D 표현으로 $y\in\mathbb{R}^9$로 파라미터화. flow time $t\sim\mathcal{U}(0,1)$과 노이즈로 $z_t=(1-t)\epsilon+t y$를 만들고, x-prediction 방식으로 깨끗한 목표 $\hat{y}_\phi$를 예측한다.</li>
+<li><strong>손실</strong>: $\mathcal{L}=\mathcal{L}_{\mathrm{gain}}+\lambda_{\mathrm{pose}}\mathcal{L}_{\mathrm{pose}}$ (관측 이득의 next-token 예측 + pose의 flow matching). pose loss는 detach된 VLM hidden state를 써서 flow head와 투영만 갱신.</li>
+<li><strong>학습 비용</strong>: 16 × NVIDIA GH200 GPU에서 bf16 1 epoch, 약 30시간. 추론 시 생성한 gain 토큰의 hidden state를 캐시해 재사용하여 VLM forward를 두 번 돌리지 않는다.</li>
+</ul>
+<p><strong>3) 벤치마크</strong></p>
+<p>InteriorGS(약 1K개 실내 3DGS 장면)에서 임의 카메라 자세로 photorealistic 렌더링이 가능한 벤치마크를 구축. 총 <strong>425개</strong> 예시를 세 의도 계열로 나눈다: Target-approaching(대상 접근), Exploration(탐색), Perspective-shift(시점 전환). 평가는 6m 병진 + 600도 회전의 공유 모션 예산 안에서 다단계로 진행하고, 성공은 &quot;의도를 만족하는 뷰를 획득했는가&quot;로 정의(정답 자세와의 일치가 아님). Gemini-3.1-Pro-Preview가 판정하며, 이동 경로가 점군에서 0.15m 이상 떨어져 충돌 없이 진행했는지도 요구하는 <strong>CA-SR(Collision-Aware Success Rate)</strong>을 함께 보고.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>주요 지표는 성공률 SR(%)과 충돌 인지 성공률 CA-SR(%)이며, 3회 실행의 평균 ± 표준편차다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>Target SR</th><th>Target CA-SR</th><th>Exploration SR</th><th>Exploration CA-SR</th><th>Perspective SR</th><th>Perspective CA-SR</th><th>All SR</th><th>All CA-SR</th></tr></thead><tbody><tr><td>JanusVLN</td><td>2.0±0.0</td><td>1.3±0.0</td><td>34.5±0.6</td><td>27.5±0.6</td><td>31.3±0.6</td><td>31.3±0.6</td><td>21.9±0.2</td><td>19.3±0.3</td></tr><tr><td>Uni-NaVid</td><td>0.0±0.0</td><td>0.0±0.0</td><td>13.4±2.5</td><td>11.0±1.8</td><td>26.5±1.4</td><td>26.2±1.3</td><td>12.6±0.8</td><td>11.8±0.5</td></tr><tr><td>VG-AVS</td><td>8.6±0.0</td><td>6.6±0.0</td><td>30.0±0.9</td><td>11.7±0.9</td><td>36.4±0.4</td><td>33.1±1.0</td><td>24.3±0.2</td><td>16.5±0.0</td></tr><tr><td>VLMnav</td><td>0.0±0.0</td><td>0.0±0.0</td><td>4.5±0.7</td><td>3.8±0.7</td><td>8.4±0.6</td><td>8.4±0.6</td><td>4.1±0.3</td><td>3.8±0.3</td></tr><tr><td><strong>Ours (LIME)</strong></td><td><strong>45.8±1.6</strong></td><td><strong>31.8±2.2</strong></td><td><strong>51.4±0.6</strong></td><td><strong>32.6±1.4</strong></td><td><strong>45.8±1.1</strong></td><td><strong>39.4±1.0</strong></td><td><strong>47.7±0.1</strong></td><td><strong>34.4±0.2</strong></td></tr></tbody></table></div>
+<ul>
+<li>LIME이 세 의도 계열과 전체에서 모두 최고 성능. 전체 SR 47.7%로 2위 VG-AVS(24.3%)의 약 2배.</li>
+<li>벤치마크 장면에 대한 fine-tuning 없이 <strong>오직 1인칭 영상으로만</strong> 학습했는데도 렌더링 평가 환경에서 강하게 작동. CA-SR에서도 우위를 유지해, 1인칭 모션 지도가 통행 가능성(traversability) bias까지 제공함을 시사.</li>
+<li>Gemini 자동 판정은 90개 예시(450개 궤적 라벨)에 대한 인간 판정과 전체 91.3% 일치(계열별 85.3~98.0%).</li>
+<li>같은 현재 이미지에서 언어 의도만 바꾸면 flow-matching head가 뽑는 5개 목표 자세 샘플이 서로 다른 의도 관련 증거 쪽으로 이동 → 장면 prior가 아니라 <strong>의도에 조건화</strong>됨을 확인. 목표가 시야에 있으면 샘플이 모이고, &quot;방 나가기&quot;처럼 모호하면 여러 방향으로 퍼져 불확실성도 포착.</li>
+<li><strong>실로봇 전이</strong>: 팔 달린 Boston Dynamics Spot에 경량 LoRA 체크포인트로 배치해 &quot;물체 아래 보기&quot;, &quot;오븐 왼쪽 확인&quot; 등 언어 조건부 시점 변경 성공. 조작 정책 <a href="https://arxiv.org/abs/2503.07135" target="_blank">VidBot</a>과 결합해, 대상이 시야 밖일 때 LIME이 먼저 대상을 드러낸 뒤 조작을 수행하고 결과를 검증. 재사용 가능한 active-perception 모듈로서 manipulation, embodied QA, 다단계 로봇 행동을 지원함을 보임.</li>
+</ul>
+<p><strong>의의</strong>: 평범한 인간 1인칭 영상을 능동 지각 행동의 지도 데이터로 바꿔, 카메라 모션을 재사용 가능한 독립 행동 primitive로 학습한 첫 정식화 중 하나.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li>논문 본문(Conclusion)이 HTML에서 잘려 저자가 명시한 한계 목록은 확보하지 못함. 아래는 방법·설정에서 드러나는 구조적 제약이다.</li>
+<li><strong>판정의 VLM 의존</strong>: 성공 여부를 Gemini-3.1-Pro-Preview가 판정하므로 판정 모델의 편향이 지표에 반영될 수 있다(인간 일치 91.3%로 검증하긴 함).</li>
+<li><strong>자세 복원 의존</strong>: 데이터셋에 카메라 자세가 없으면 off-the-shelf 복원 도구에 의존하며, 그 정확도가 모션 목표의 품질을 좌우.</li>
+<li><strong>실로봇은 LoRA 적응 필요</strong>: 렌더링 벤치마크 학습본을 실제 로봇에 쓰려면 별도 LoRA 적응 체크포인트가 필요했고, 실험도 정성적 시연 수준.</li>
+<li><strong>평가가 렌더링/실내 중심</strong>: InteriorGS·ScanNet++ 등 실내 3DGS 위주로, 실외·동적 환경 일반화는 검증 범위 밖.</li>
+<li><strong>의도 라벨의 사후 생성</strong>: 학습 의도가 VLM 라벨러의 hindsight 추정이라, 실제 인간 의도와 다를 수 있는 라벨 노이즈 가능성.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>1인칭 영상을 행동 지도로 재활용</strong>: 수동적으로 촬영된 egocentric video에서 &quot;무엇을 하려 했는가(intent)&quot;와 &quot;그 결과 무엇이 새로 보였는가(observation gain)&quot;를 대조적으로 라벨링하는 방식은, egocentric vision에서 의도/attention을 모델링할 때 그대로 응용 가능한 데이터 큐레이션 전략이다.</li>
+<li><strong>언어 인터페이스 + 연속 행동 head의 결합</strong>: VLM의 자기회귀 언어 출력(설명 가능한 중간 표현)과 flow-matching 연속 head(기하적으로 정확한 다중 분포 행동)를 분리·결합한 설계는, 시선/시점 예측이나 gaze-guided 태스크에 다중 가설 예측이 필요할 때 참고할 만한 아키텍처 패턴이다.</li>
+<li><strong>평가 프로토콜</strong>: &quot;정답 자세 일치&quot;가 아니라 &quot;의도 만족 뷰 획득&quot;으로 성공을 정의하고, 공유 모션 예산 + 충돌 인지 지표(CA-SR)로 서로 다른 행동 인터페이스를 공정 비교하는 방식은, 정답이 여러 개인 능동 지각/시점 선택 문제를 평가할 때 유용한 틀이다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper3">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>TOUCH: Text-guided Controllable Generation of Free-Form Hand-Object Interactions</h2>
+    <p class="lead">기존 손-물체 상호작용(HOI) 생성이 &quot;안정적으로 쥐기(grasping)&quot;에만 갇혀 있던 한계를 넘어, 밀기·찌르기·돌리기 같은 자유로운 일상 상호작용을 세밀한 텍스트 지시로 제어해 생성하는 새 과제(Free-Form HOI Generation)와, 이를 위한 인터넷 영상 기반 3D 데이터셋 WildO2, 그리고 접촉(contact)을 명시적으로 모델링하는 3단계 프레임워크 TOUCH를 제안한 연구다.</p>
+    <div class="authors">Guangyi Han, Wei Zhai, Yuhang Yang, Yang Cao, Zheng-Jun Zha (University of Science and Technology of China, USTC)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2025-10-16</span> · <span class="pub-venue">🏛 프리프린트 (OpenReview 공개, 심사 중)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2510.14874" target="_blank">arXiv:2510.14874</a> <a class="pill pdf" href="https://arxiv.org/pdf/2510.14874" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2510.14874" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>(Figure 1) 왼쪽은 기존 연구가 다루던 실험실 &quot;grasp(쥐기)&quot; 중심의 제한된 HOI를, 오른쪽은 밀기·찌르기·돌리기 등 일상 속 다양한 자유형(free-form) HOI를 대비해 보여준다. 인터넷 영상에서 구축한 WildO2 데이터셋과 세밀한 텍스트 의도 조건을 통해 다양한 손 자세를 제어 생성할 수 있음을 나타내는 티저 그림이다.</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>HOI 데이터셋</strong>: 기존 3D HOI 데이터셋은 대부분 통제된 실험실 환경에서 모션캡처나 물리 시뮬레이션으로 수집되어(GRAB, HO-3D, ContactPose 등) 카메라 세팅·참가자·물체 종류가 제한적이라 다양성이 부족하다. 반대로 대규모 in-the-wild 영상(EPIC-Kitchens, Ego4D 등)은 상호작용은 풍부하지만 고품질 3D 라벨이 없다.</li>
+<li><strong>HOI 생성</strong>: 제어 방식이 grasp type(잡는 유형) → object-conditioned(물체 조건) → task/action-level intent(작업·행동 의도)로 발전해 왔다. 물리적 타당성을 위해 penetration loss(관통 방지 손실)와 해부학적 제약이 널리 쓰였고, 손 부위 분할과 접촉 관계를 명시적으로 모델링한 <a href="https://arxiv.org/abs/2310.03740" target="_blank">ContactGen (Liu et al., 2023)</a>, 텍스트로 HOI 모션을 만드는 <a href="https://arxiv.org/abs/2404.00562" target="_blank">Text2HOI (Cha et al., 2024)</a> 등이 대표적이다.</li>
+<li><strong>LLM 기반 제어</strong>: 최근에는 상세 자연어(LLM 활용)로 grasp를 유도하는 연구들이 나왔지만, 모델 설계와 표현 자체가 여전히 &quot;쥐기&quot; 중심으로 편향되어 있다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>기존 연구는 모두 <strong>grasp-centric paradigm(쥐기 중심 패러다임)</strong>에 갇혀 있다. force closure(물체를 안정적으로 감싸는 힘의 조건) 같은 물리 사전지식이나 verb-noun(동사-명사) 수준의 거친 지시로 제어하다 보니, 모델이 &quot;안정적으로 쥐는&quot; 자세로 강하게 쏠리는 inductive bias(귀납적 편향)를 갖게 되어 일상 상호작용의 다양성을 담지 못한다. 아무리 정교한 자연어를 써도, 미는·찌르는·돌리는 등 <strong>잡지 않는(non-grasping) 상호작용</strong>의 세밀한 손 자세, 접촉 디테일, 미묘한 의도를 표현할 능력이 근본적으로 없다. 게다가 이런 다양한 상호작용을 학습할 3D 데이터가 부족하다는 것도 큰 장벽이다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>논문은 <strong>Free-Form HOI Generation</strong>이라는 과제를 새로 정의한다. 세밀한 의도(fine-grained intent)를 조건으로 받아 <strong>제어 가능하고(controllable), 다양하며(diverse), 물리적으로 타당한(physically plausible)</strong> HOI를 생성하되, 그 범위를 쥐기에서 밀기·찌르기·돌리기 등 자유형 상호작용으로 확장하는 것이 목표다. 핵심 난제는 두 가지로 정리된다.</p>
+<ul>
+<li><strong>무엇을 생성할까 (spatial plausibility)</strong>: grasp 사전지식(손바닥 위치·방향, 접촉 영역 가정)에서 벗어나 넓지만 물리적으로 유효한 상호작용 공간을 탐색해야 한다. → 저자들은 <strong>접촉 관계(contact)</strong>를 이 고차원 공간을 제약하는 강력한 단서로 삼는다.</li>
+<li><strong>어떻게 생성할까 (semantic controllability)</strong>: 세밀한 텍스트 지시를 구체적인 손 형태와 접촉 영역으로 정확히 매핑해야 한다. → LLM의 사전지식을 안내자로 활용한다.</li>
+</ul>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">데이터셋 WildO2</h4>
+<p>인터넷 영상(Something-Something V2)에서 3D HOI를 복원하는 반자동 파이프라인을 만들었다. 핵심은 <strong>O2HOI(Object-only to Hand-Object Interaction) 프레임 쌍</strong> 전략으로, 물체가 가려지지 않은 프레임 $I_{ref}$와 손이 상호작용하는 프레임 $I_{hoi}$를 짝짓는다. $I_{ref}$에서 SAM2로 물체를 분할하고 dense matching(RoMa)으로 마스크를 $I_{hoi}$에 옮겨, 손에 가려진 영역도 복원할 수 있게 한다(확산 기반 인페인팅의 기하학적 불일치를 피함).</p>
+<p>3단계로 3D를 복원한다.</p>
+<ol>
+<li><strong>초기화</strong>: $I_{ref}$에서 image-to-3D 모델(InstantMesh)로 물체 메시를, $I_{hoi}$에서 MANO 손 파라미터를 추정.</li>
+<li><strong>카메라 정렬</strong>: 미분 가능 렌더링으로 카메라 파라미터를 최적화해 물체와 손을 같은 좌표계로 통일. $\min_{K,R,t} L_{cam} = L_{mask} + L_{sinkhorn} + L_{edge} + \lambda_{fine}(L_{depth} + L_{rgb})$.</li>
+<li><strong>손-물체 정밀화</strong>: 접촉이 물리적으로 타당하도록 손 파라미터를 최적화. $\min_{H} L_{align} = L_{mask}^{H} + L_{j2d} + L_{icp} + L_{phy}$.</li>
+</ol>
+<p>결과적으로 <strong>4,414개</strong>의 고품질 3D HOI 샘플을 얻었고, 92개 intent와 610개 물체 카테고리를 아우른다. 어노테이션은 4만4천여 개로, 접촉 맵(contact map), 두 수준의 텍스트(템플릿 기반 SSC / VLM이 생성한 상세 DSC), 그리고 손을 <strong>17개 부위</strong>로 나눈 세밀한 분할(손가락 패드·손톱·관절·손바닥·손등 포함, 기존의 손 안쪽만 보던 방식을 넘어섬)을 담는다.</p>
+<h4 class="subsec">프레임워크 TOUCH (3단계)</h4>
+<ol>
+<li><strong>Contact Map Prediction</strong>: 두 개의 독립적인 CVAE로 물체(점 3000개)와 손(점 778개)의 이진 접촉 맵을 예측. PointNet 기하 특징과 Qwen-7B 텍스트 특징을 조건으로 사용. 손실은 $L_{contact} = L_{focal} + L_{dice} + \beta L_{KL}$.</li>
+<li><strong>Multi-Level Conditioned Diffusion</strong>: Transformer 기반 DDPM이 손 자세를 생성하되 노이즈 대신 원본 $\hat{x}_0$를 직접 예측. <strong>coarse-to-fine(거친 것에서 세밀한 것으로)</strong> 조건 주입이 핵심으로, 초기 8개 블록 중 앞부분(i&lt;4)에는 거친 텍스트(SSC)와 전역 기하를, 뒷부분(4≤i&lt;8)에는 세밀한 텍스트(DSC)와 접촉 지점 국소 특징을 주입한다. 전역 조건은 FiLM으로 변조하고 국소 조건은 cross-attention으로 결합한다. 보조 손실로 전역 자세 손실과 거리 맵 손실을 더한다.</li>
+<li><strong>Physical Constraints Refinement</strong>: 손이 물체에 닿지 못하고 떠버리는 global pose drift 문제를 refiner 네트워크로 교정. 한 번의 forward pass로 전역 위치를 잡고, test-time optimization(TTA)으로 손가락 접촉을 미세 조정. 자기지도 <strong>cycle-consistency loss</strong>($L_{cyc}$)로 손→물체, 물체→손 매핑의 양방향 일관성을 강제한다.</li>
+</ol>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>WildO2 데이터셋에서 약 3.7k 학습 / 677 테스트로 분할해 평가했다. 지표는 접촉 정확도(P-IoU, P-F1), 물리적 타당성(MPVPE, 관통 깊이 PD, 관통 부피 PV), 다양성(엔트로피 Ent., 클러스터 크기 CS), 의미 일관성(P-FID, VLM 평가, 사용자 지각 점수 PS) 네 축이다. 힘-폐쇄(grasping) 위주 연구와 달리 물리엔진 기반 안정성 시뮬레이션은 쓰지 않았는데, 다루는 상호작용 범위가 force-closure grasp보다 넓기 때문이다.</p>
+<p>WildO2 테스트셋 정량 비교 (↑ 높을수록, ↓ 낮을수록 좋음):</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">P-IoU↑</th><th class="num">P-F1↑</th><th class="num">MPVPE↓</th><th class="num">PD↓</th><th class="num">PV↓</th><th class="num">Ent.↑</th><th class="num">CS↑</th><th class="num">P-FID↓</th><th class="num">VLM↑</th><th class="num">PS↑</th></tr></thead><tbody><tr><td>Text2HOI</td><td class="num">0.711</td><td class="num">0.795</td><td class="num">4.69</td><td class="num">1.239</td><td class="num">4.93</td><td class="num">2.85</td><td class="num">5.20</td><td class="num">15.72</td><td class="num">6.5</td><td class="num">7.5</td></tr><tr><td>Ours (TOUCH)</td><td class="num">0.776</td><td class="num">0.844</td><td class="num">2.97</td><td class="num">0.932</td><td class="num">2.67</td><td class="num">2.93</td><td class="num">5.40</td><td class="num">4.13</td><td class="num">7.1</td><td class="num">8.8</td></tr></tbody></table></div>
+<p>(ContactGen도 베이스라인으로 비교했으나 원문 표에서 해당 행 수치가 판독되지 않아 생략함.) TOUCH가 대부분 지표에서 베이스라인을 앞섰고, 특히 의미 일관성 P-FID(15.72 → 4.13)에서 큰 폭으로 개선됐다.</p>
+<ul>
+<li><strong>Ablation</strong>: 접촉 가이드(hoc.), 다단계 구조(mul.), refiner를 제거하면 접촉 정확도가 크게 떨어진다. 저자들은 접촉 지표를 우선시해야 한다고 주장하는데, refiner를 뺀 변형은 손이 물체에서 떨어져 상호작용을 안 하는 탓에 PD/PV만 낮게 나오는 &quot;기만적&quot; 결과를 보인다. 텍스트 인코더 비교에서는 Qwen-7B가 CLIP/BERT/MPNet보다 세밀한 의미 포착에 유리했다.</li>
+<li><strong>동일 물체 다양 제어</strong>: 같은 물체(예: 볼펜)에 접촉 영역과 의도를 바꿔 주면 서로 다른 타당한 손 자세를 생성한다(Fig. 8).</li>
+<li><strong>일반화</strong>: OakInk-Shape 데이터셋에서도 두 베이스라인 대비 P-IoU/P-F1/MPVPE/P-FID에서 우수한 성능을 보였다(Table 4).</li>
+<li><strong>의의</strong>: HOI 생성 패러다임을 단순 grasp에서 의미적으로 풍부한 일상 상호작용 전반으로 확장했고, 인터넷 영상으로 자동 3D HOI 데이터를 구축하는 파이프라인과 자원(WildO2)을 제공했다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>정적 스냅샷 한계</strong>: 현재 프레임워크는 정적인 HOI 스냅샷만 다뤄, 상호작용 과정의 <strong>시간적 동역학(temporal dynamics)</strong>을 담지 못한다. 향후 대규모 영상과 6-DoF 물체 자세 추정을 결합해 동적 시퀀스로 확장할 계획이다.</li>
+<li><strong>데이터 규모</strong>: 파이프라인이 빠른 확장을 지원하긴 하지만 현재 데이터셋 규모(4.4k)는 더 키울 여지가 있다.</li>
+<li><strong>복원 성공률</strong>: in-the-wild 영상 복원 성공률이 약 55%에 그치며, 주된 실패 원인은 3D 메시 기하 복원 실패다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>접촉을 명시적 조건으로 쓰는 설계</strong>: 고차원 상호작용 공간을 좁히기 위해 손·물체 표면의 접촉 맵을 먼저 예측하고 이를 확산 모델의 조건으로 삼는 구조는, 손-물체 관계를 다루는 어떤 생성/복원 연구에도 이식 가능한 아이디어다.</li>
+<li><strong>coarse-to-fine 텍스트·기하 조건 주입</strong>: 거친 의도(SSC)와 세밀한 묘사(DSC)를 확산 단계별로 나눠 넣는 계층적 제어는 텍스트 기반 3D/모션 생성의 세밀한 제어 문제에 참고할 만하다.</li>
+<li><strong>인터넷 2D 영상 → 3D HOI 자동 라벨링 파이프라인</strong>: 모션캡처 없이 웹 영상에서 3D 상호작용 데이터를 확보하는 O2HOI 전략은 3D HOI 학습 데이터가 부족한 연구에 실용적 대안이 된다.</li>
+<li><strong>자기지도 cycle-consistency 정합</strong>: 접촉면의 양방향 매핑 일관성으로 물리적 접촉을 정교화하는 손실은 접촉/정합 품질을 높이는 후처리 아이디어로 활용 가능하다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper4">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>HORT: Monocular Hand-held Objects Reconstruction with Transformers</h2>
+    <p class="lead">한 장의 RGB 이미지만으로 손에 쥔 물체의 3D 점군(point cloud, 물체 표면을 점들의 집합으로 나타낸 것)을 트랜스포머로 빠르고 정확하게 복원하는 방법으로, 성긴 점군에서 조밀한 점군으로 단계적으로 다듬는(coarse-to-fine) 전략과 손 기하 정보를 함께 활용해 기존 최고 성능(SOTA)을 능가하면서도 훨씬 빠른 추론 속도를 달성한다.</p>
+    <div class="authors">Zerui Chen, Shizhe Chen, Cordelia Schmid (Inria, École normale supérieure, CNRS, PSL Research University), Rolandos Alexandros Potamias (Imperial College London)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2025-03-27</span> · <span class="pub-venue">🏛 ICCV 2025</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2503.21313" target="_blank">arXiv:2503.21313</a> <a class="pill pdf" href="https://arxiv.org/pdf/2503.21313" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2503.21313" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2503.21313v1/x1.png" alt="Figure 1: ObMan 데이터셋에서의 추론 속도와 복원 품질 비교. HORT는 빠른 속도와 높은 품질을 동시에 달성한다." loading="lazy"><figcaption>Figure 1: ObMan 데이터셋에서의 추론 속도와 복원 품질 비교. HORT는 빠른 속도와 높은 품질을 동시에 달성한다.</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<p>손에 쥔 물체(hand-held object)를 3D로 복원하는 연구는 크게 두 갈래로 나뉜다.</p>
+<ul>
+<li><strong>최적화 기반(optimization-based)</strong>: 다중 시점 이미지, 비디오, 깊이 센서, 또는 이미 알려진 CAD 메시(mesh, 물체를 삼각형 면들로 표현한 것) 같은 추가 3D 입력을 이용해 물체의 6D 자세(pose)나 형상을 최적화한다. 정확하지만 복잡한 목적 함수와 반복 계산이 필요해 수 시간이 걸리고 실시간에 부적합하다. 최근 EasyHOI 등은 파운데이션 모델을 활용해 zero-shot 성능을 보였다.</li>
+<li><strong>학습 기반(learning-based)</strong>: 신경망이 이미지에서 물체를 직접 복원한다. 초기 Hasson et al.(HO)이나 Tse et al.은 AtlasNet으로 물체를 메시 꼭짓점 집합으로 복원했으나 해상도가 낮았다. 이후 SDF(Signed Distance Function, 표면까지의 부호 있는 거리)나 DDF 같은 <strong>암시적 함수(implicit function)</strong> 기반 방법(AlignSDF, gSDF, DDF-HO 등)이 등장했다. 가장 최근의 SOTA인 D-SCO는 <strong>확산 모델(diffusion model)</strong>로 고해상도 물체 점군을 직접 복원한다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>기존 학습 기반 방법들의 두 가지 한계가 이 논문의 출발점이다.</p>
+<ul>
+<li><strong>암시적 함수 방법</strong>은 표면이 지나치게 매끄럽게(overly smooth) 나와 세밀한 기하 디테일을 살리지 못한다. 게다가 학습된 암시적 필드에서 실제 3D 메시를 뽑아내려면 Marching Cubes 같은 후처리가 추가로 필요해 속도가 느려진다(그림 1에서 약 2초 소요).</li>
+<li><strong>확산 모델 방법(D-SCO)</strong>은 품질은 좋지만, 여러 단계의 노이즈 제거(multi-step denoising)를 거쳐야 해서 고해상도 복원 시 매우 느리다. 복원 한 번에 13초 이상 걸려 암시적 방법보다도 느리다.</li>
+</ul>
+<p>즉, 복원 <strong>품질</strong>과 <strong>추론 속도</strong>를 동시에 만족하는 방법이 없다는 것이 핵심 문제다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>단일 모노큘러(monocular, 단일 카메라) RGB 이미지에서 손에 쥔 물체의 <strong>조밀한 3D 점군을 효율적으로(빠르게) 복원</strong>하는 문제를 다룬다. 확산 모델의 반복적 디노이징 없이, 트랜스포머의 피드포워드(feed-forward, 한 번의 순전파) 방식으로 고해상도 복원과 빠른 속도를 함께 얻는 것이 목표다.</p>
+<h3 class="sec">연구 방법</h3>
+<p>HORT는 네 개의 모듈로 구성되며 end-to-end로 함께 학습된다.</p>
+<ul>
+<li><strong>이미지 인코더(Image Encoder)</strong>: 입력 이미지($224 \times 224$)를 DINOv2(large)로 인코딩해 257개의 시각 토큰($f_v \in \mathbb{R}^{257 \times 1024}$)을 얻는다. 사전학습 지식을 유지하면서 도메인에 적응시키기 위해 앞쪽 층은 동결(freeze)하고 마지막 12개 트랜스포머 층만 미세조정(fine-tune)한다.</li>
+<li><strong>손 인코더(Hand Encoder)</strong>: 기성 손 자세 추정 모델로 MANO 손 메시(꼭짓점 $v_h \in \mathbb{R}^{778 \times 3}$)와 카메라 파라미터를 얻는다. 손 꼭짓점을 16개 관절 + 5개 손끝 + 1개 손바닥, 총 22개의 국소 좌표계로 변환하고 절대 꼭짓점 인덱스를 붙여 풍부한 기하 표현을 만든 뒤, PointNet으로 손 특징 $f_h \in \mathbb{R}^{1024}$를 추출한다. 손 형상이 물체 기하·위치에 대한 암시적 단서를 주기 때문에 이 정보로 모노큘러 복원의 모호성을 줄인다.</li>
+<li><strong>성긴 점군 디코더(Sparse Point Cloud Decoder)</strong>: 물체 복원을 (1) 정준(canonical) 물체 점군 생성과 (2) 손바닥 기준 물체 위치 추정으로 분리한다. 회전은 물체 대칭성 때문에 ill-posed라 예측하지 않고 3D 이동(translation $t_o \in \mathbb{R}^3$)만 예측한다. 1개의 이동 토큰 + $N^s_p = 2{,}048$개의 점 토큰을 하나의 트랜스포머(self-attention 후 이미지·손 특징에 대한 cross-attention)로 처리해 물체 자세와 성긴 점군을 <strong>동시에</strong> 예측한다.</li>
+<li><strong>조밀 점군 디코더(Dense Point Cloud Decoder)</strong>: 성긴 점군을 업샘플링해 $N^d_p = 16{,}384$개의 조밀 점군으로 만든다. 예측 카메라 파라미터로 각 점을 이미지 평면에 투영해 <strong>픽셀 정렬(pixel-aligned) 특징</strong>을 가져오고($f_o = F(\pi(p^s_o + t_p + t_o, K_{cam}), f^r_v)$), kNN($k=16$) 기반 국소 self-attention으로 손-물체 맥락을 통합한 뒤 각 점의 3D offset을 예측한다(2배, 4배 순차 업샘플).</li>
+</ul>
+<p>학습 손실은 물체 이동에 대한 $\ell_1$ 손실과 성긴·조밀 점군에 대한 Chamfer Distance 손실을 결합한다: $L = \lambda_1 \times L_{pose} + \lambda_2 \times L^s_{cd} + L^d_{cd}$ ($\lambda_1 = \lambda_2 = 2$). ObMan에서 A100 4장으로 약 50시간 학습한다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>합성 데이터셋 ObMan과 실제 데이터셋 HO3D, DexYCB, MOW 네 가지에서 평가했다. 지표는 Chamfer Distance(CD, cm², 낮을수록 좋음)와 F-score(FS@5, FS@10, 높을수록 좋음), 그리고 상호작용 지표인 Contact Ratio, Penetration Depth를 사용한다.</p>
+<p>ObMan에서 예측 손(predicted hand) 기준 SOTA 비교:</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">FS@5 ↑</th><th class="num">FS@10 ↑</th><th class="num">CD ↓</th></tr></thead><tbody><tr><td>HO</td><td class="num">0.23</td><td class="num">0.56</td><td class="num">6.4</td></tr><tr><td>gSDF</td><td class="num">0.44</td><td class="num">0.66</td><td class="num">8.8</td></tr><tr><td>DDF-HO</td><td class="num">0.55</td><td class="num">0.67</td><td class="num">1.4</td></tr><tr><td>D-SCO</td><td class="num">0.61</td><td class="num">0.81</td><td class="num">1.1</td></tr><tr><td>HORT (Ours)</td><td class="num">0.66</td><td class="num">0.88</td><td class="num">1.0</td></tr></tbody></table></div>
+<p>실제 데이터셋에서도 일관되게 우수하다. HO3D에서 D-SCO 대비 FS@10 14.3%, CD 23.5% 상대 개선을 보였다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Dataset</th><th>Method</th><th class="num">FS@5 ↑</th><th class="num">FS@10 ↑</th><th class="num">CD ↓</th></tr></thead><tbody><tr><td>HO3D</td><td>D-SCO</td><td class="num">0.41</td><td class="num">0.63</td><td class="num">3.4</td></tr><tr><td>HO3D</td><td>HORT</td><td class="num">0.45</td><td class="num">0.72</td><td class="num">2.6</td></tr><tr><td>DexYCB</td><td>D-SCO</td><td class="num">0.63</td><td class="num">0.82</td><td class="num">1.3</td></tr><tr><td>DexYCB</td><td>HORT</td><td class="num">0.63</td><td class="num">0.85</td><td class="num">1.1</td></tr></tbody></table></div>
+<p>MOW에서도 두 학습 설정 모두 최고 성능을 기록했다(ObMan 파인튜닝 시 CD 10.2, 다중 데이터셋 학습 시 CD 5.4).</p>
+<p>속도·효율 면에서 특히 강점이 크다. ObMan 기준 HORT는 258 GFLOPs만 사용하며 손+물체 복원을 포함해 <strong>16.9 fps</strong>(메시화 포함 시 4.8 fps)로 동작한다. 반면 암시적 방법들은 6000 GFLOPs 이상, D-SCO는 0.08 fps에 그친다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">GFLOPs ↓</th><th class="num">fps ↑</th><th class="num">CD ↓</th></tr></thead><tbody><tr><td>gSDF</td><td class="num">6.7k</td><td class="num">0.44</td><td class="num">8.8</td></tr><tr><td>DDF-HO</td><td class="num">8.9k</td><td class="num">0.35</td><td class="num">1.4</td></tr><tr><td>D-SCO</td><td class="num">-</td><td class="num">0.08</td><td class="num">1.1</td></tr><tr><td>HORT (Ours)</td><td class="num">0.25k</td><td class="num">16.9</td><td class="num">1.0</td></tr></tbody></table></div>
+<p>절제 실험(ablation)에서 손 인코더 추가(FS@5 0.45→0.53), 다중 관절 좌표계 인코딩(0.53→0.60), 자세·형상 공동 디코딩, 조밀 디코더의 픽셀 정렬 특징과 손 특징 통합이 각각 성능을 끌어올림을 확인했다. 또한 CORe50 및 휴대폰 촬영 등 in-the-wild 이미지에도 잘 일반화된다.</p>
+<p>의의: 확산 모델 없이 단일 피드포워드 트랜스포머로 고해상도 점군 복원의 품질과 속도를 동시에 달성했고, 그 결과가 최적화 기반 방법의 강력한 초기값으로도 쓰일 수 있다는 점을 보였다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li>회전이 대칭성 때문에 ill-posed라는 이유로 물체의 3D <strong>회전을 예측하지 않고 이동만</strong> 복원한다. 즉 정준 좌표계 기준 형상과 손 상대 위치만 복원하며, 완전한 6D 자세는 다루지 않는다.</li>
+<li>기성 손 자세 추정 모델의 출력에 의존하므로, 손 추정 품질이 물체 복원 정확도에 영향을 준다(실험에서도 예측 손보다 정답 손 사용 시 성능이 더 높다).</li>
+<li>파라미터 수가 366M로 비교 방법들(24~35M)보다 훨씬 크다.</li>
+<li>폐색(occlusion) 강건성과 실패 사례 분석은 본문이 아닌 부록으로 미룬다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li>손 기하 정보를 물체 복원의 강력한 사전(prior)으로 쓰는 설계는, hand-object interaction 관련 연구에서 손 추정 결과를 물체·장면 추론에 재활용하는 파이프라인에 직접 응용할 수 있다.</li>
+<li>확산 모델의 다단계 디노이징을 트랜스포머 피드포워드 + coarse-to-fine 업샘플링으로 대체해 속도를 크게 끌어올린 접근은, 실시간이 필요한 상호작용/로봇 조작(manipulation) 응용에서 참고할 만한 효율화 전략이다.</li>
+<li>픽셀 정렬(pixel-aligned) 특징으로 3D 점을 이미지 관측에 다시 붙여 국소 디테일을 보강하는 기법은 단일 이미지 기반 3D 복원 전반에 재사용 가능한 모듈이다.</li>
+<li>점군 복원 결과가 후속 최적화의 초기값으로 유용하다는 점은, 정확도가 더 중요한 태스크에서 HORT를 전처리 단계로 결합하는 하이브리드 설계를 시사한다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper5">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>ViSAudio: End-to-End Video-Driven Binaural Spatial Audio Generation</h2>
+    <p class="lead">무음 영상만 보고 곧바로 좌우 두 귀에 맞는 입체 음향(binaural spatial audio, 두 귀로 듣는 것처럼 방향감이 있는 소리)을 만들어 내는 최초의 end-to-end 프레임워크로, 기존의 &quot;먼저 모노 소리를 만들고 나중에 공간화하는&quot; 2단계 방식이 겪던 오차 누적과 시공간 불일치 문제를 해결한다.</p>
+    <div class="authors">Mengchen Zhang(Zhejiang University, Shanghai AI Laboratory), Qi Chen(Shanghai Jiao Tong University, Shanghai Innovation Institute), Tong Wu(Stanford University), Zihan Liu(Beihang University, Shanghai AI Laboratory), Dahua Lin(Shanghai AI Laboratory, The Chinese University of Hong Kong)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2025-12-02</span> · <span class="pub-venue">🏛 프리프린트 (arXiv, cs.CV)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2512.03036" target="_blank">arXiv:2512.03036</a> <a class="pill pdf" href="https://arxiv.org/pdf/2512.03036" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2512.03036" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>(대표 이미지 URL 확보 실패 — arXiv HTML의 실제 <code>&lt;img&gt;</code> 경로를 신뢰성 있게 확인할 수 없어 링크 대신 텍스트로 서술한다.)</p>
+<p>Figure 1 개요: (왼쪽) BiAudio 데이터셋은 360도 영상과 FOA(First-Order Ambisonics, 1차 앰비소닉스; 3D 음장을 4채널로 기록한 포맷) 오디오를 다양한 카메라 회전 궤적을 적용해 일반 시야(perspective) 영상과 바이노럴 오디오 쌍으로 변환한다. (가운데) end-to-end 파이프라인은 conditional flow matching과 dual-branch 생성 구조에 conditional spacetime module을 결합해 멀티모달 입력으로부터 공간감 있는 바이노럴 오디오를 만든다. (오른쪽) 생성 예시. 파도가 왼쪽에서 부서지는 장면에서는 왼쪽 채널이 더 크게 재생되고, 카메라가 오른쪽으로 회전하면 마림바 소리가 왼쪽으로 이동해 왼쪽 채널 진폭이 커지는 등 시점 변화에 동적으로 적응한다.</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>Video-to-Audio(V2A) 생성</strong>: 초기에는 SpecVQGAN 같은 auto-regressive 모델이 개방형 도메인 V2A를 열었고, 이후 diffusion(Diff-Foley 등)과 flow matching(Frieren, MMAudio 등) 기반 모델이 발전을 이끌었다. 다만 이들은 대부분 <strong>모노(mono) 오디오</strong> 생성에 집중했다.</li>
+<li><strong>영상 기반 공간 음향 생성</strong>: 크게 두 갈래다. (1) 영상에서 음원을 찾아 추적해 공간 음향을 합성하는 방식, (2) UNet 계열 구조로 모노 오디오에서 좌우 바이노럴 채널을 직접 예측하는 방식. 둘 다 <strong>미리 만들어진 모노 오디오에 의존하는 2단계 파이프라인</strong>이다.</li>
+<li><strong>최근의 end-to-end 공간 음향</strong>: OmniAudio는 360도 영상에서 FOA를 생성하고, ViSAGe는 FoV(Field-of-View, 일반 시야각) 영상에서 카메라 방향을 조건으로 FOA를 생성한다. 그러나 이들은 360도 입력이나 카메라 방향 같은 추가 파라미터가 필요하다.</li>
+</ul>
+<p>주요 참고 연구: <a href="https://arxiv.org/abs/2412.15322" target="_blank">MMAudio</a>, <a href="https://arxiv.org/abs/2504.04728" target="_blank">ViSAGe</a></p>
+<h3 class="sec">문제 제기</h3>
+<ul>
+<li>기존 바이노럴 생성은 &quot;모노 생성 → 별도 공간화&quot;의 <strong>2단계 방식</strong>에 묶여 있어, 1단계 출력 품질에 성능이 좌우되고 <strong>오차가 누적</strong>되며 영상과의 시공간 정합이 어긋난다.</li>
+<li>공간화 단계는 대개 <strong>화면에 보이는 음원(visible)만</strong> 고려하고, 화면 밖 소리(off-screen)나 위치를 특정할 수 없는 환경 소음(environmental noise)을 무시한다.</li>
+<li>end-to-end 방식이 등장했지만 360도 영상이나 카메라 방향에 의존해 <strong>일반 시야(perspective) 영상에서 곧바로 공간 단서를 추출하는 방향은 거의 탐구되지 않았다</strong>.</li>
+<li>결정적으로 <strong>데이터 희소성</strong>: 기존 실세계 영상-바이노럴 데이터셋은 규모가 작고, 거리나 음악 같은 좁은 환경에 치우쳐 있으며, 대부분 카메라 시점이 고정되어 있다.</li>
+</ul>
+<h3 class="sec">연구 주제</h3>
+<p><strong>무음 영상(과 선택적 텍스트)으로부터 직접, end-to-end로 바이노럴 공간 음향을 생성하는 과제</strong>를 새롭게 정의한다. 생성된 소리는 공간적 몰입감을 주면서도 영상과 시공간적으로 일치해야 하고, 시점 변화, 음원의 움직임, 다양한 음향 환경에 적응해야 한다.</p>
+<h3 class="sec">연구 방법</h3>
+<p><strong>1) BiAudio 데이터셋 구축 (반자동 파이프라인)</strong></p>
+<ul>
+<li>Sphere360 데이터셋의 FOA 오디오와 360도 영상을 재료로, 360도 영상을 90도 시야로 투영하고 FOA를 HRIR(Head-Related Impulse Response, 머리 모양에 따른 소리 전달 특성) 컨볼루션으로 바이노럴 신호로 렌더링한다.</li>
+<li><strong>공간 단서 강화(Spatial Cue Enhancement)</strong>: 구면 조화 분해(spherical harmonics decomposition)로 음향 에너지가 최대인 방향을 계산해 카메라 초기 방향을 주요 음원 쪽으로 맞추고, 무작위 드리프트를 준 <strong>다양한 카메라 회전 궤적</strong>을 생성한다. 좌우 채널 차이가 0.01 미만인(공간감이 약한) 샘플은 버린다.</li>
+<li><strong>캡션 주석(2단계)</strong>: Qwen2.5-Omni로 화면 안 소리와 배경음을 모두 서술한 뒤, Qwen3-Instruct-2507로 &quot;Visible sound: &lt;...&gt;, Invisible sound: &lt;...&gt;&quot; 형식의 간결한 캡션으로 정제한다.</li>
+<li>규모: 약 97,000쌍, 각 8초, 총 215시간. 실세계 개방형 도메인, 카메라가 움직이는(Moving) 최초·최대 규모의 FoV 바이노럴 데이터셋이다.</li>
+</ul>
+<p><strong>2) ViSAudio 모델</strong> — 사전학습된 MMAudio를 파인튜닝해 강한 오디오 생성 능력을 물려받는다.</p>
+<ul>
+<li><strong>Conditional Flow Matching(CFM)</strong>: 노이즈 $x_0$를 오디오 latent $x_1$로 점진 변환하는 속도장(velocity field)을 학습한다. 경로는 최적수송 보간 $x_t = t x_1 + (1-t) x_0$, 속도장은 $u = x_1 - x_0$. 학습 목표는 좌/우 채널로 확장되어 $\sum_{a \in \{l,r\}} \mathbb{E}\,\|v_\theta^a(t,\mathcal{C},x_t^a) - (x_1^a - x_0^a)\|^2$ 을 최소화한다.</li>
+<li><strong>Dual-Branch Audio Generation</strong>: 스테레오 VAE가 공간 정보를 뭉개는 문제를 피하기 위해, 좌/우 채널의 latent $x_l, x_r$을 <strong>서로 상관된 두 표현</strong>으로 학습한다. $N_1$개의 Multimodal Joint Transformer Block에서 두 채널을 순차 갱신해 시간·의미 일관성을 유지하고, $N_2$개의 Single-Modal Branch Transformer Block(FLUX 스타일)에서 채널별 공간·시간 디테일을 다듬는다.</li>
+<li><strong>Conditional Spacetime Module</strong>: 공간적으로 튜닝한 Perception Encoder로 좌/우 각각의 위치 임베딩($\mathbf{E}^l, \mathbf{E}^r$)을 활용해 정밀한 공간 특징 $F_{pe}$를 얻고, 이를 Synchformer 기반 동기화 특징 $F_{sync}$ 및 전역 컨디셔닝과 결합해 전역 시공간 특징 $F_{sp}$를 만든 뒤 adaLN으로 branch에 주입한다. 이로써 채널 일관성과 공간적 구별성을 동시에 확보한다.</li>
+<li>특징 추출: CLIP(텍스트·시각 의미), Synchformer(사운드 이벤트 타이밍), Perception Encoder(공간 위치).</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<ul>
+<li>평가: In-distribution(BiAudio, MUSIC-21)과 Out-of-distribution(FAIR-Play). 지표는 분포 유사도 FD(VGGish/PANN)·KL(PANN), 시청각 동기 DeSync, 의미 정합 IB-Score. 비교군은 ThinkSound, AudioX(둘 다 공간 정보를 무시하는 스테레오 V2A), ViSAGe, See2Sound.</li>
+<li><strong>모든 데이터셋·모든 지표에서 SOTA</strong>. BiAudio 테스트셋 주요 수치는 아래와 같다(↓는 낮을수록, ↑는 높을수록 좋음).</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">FD_VGG^avg ↓</th><th class="num">KL_PANN^avg ↓</th><th class="num">DeSync ↓</th><th class="num">IB-Score ↑</th></tr></thead><tbody><tr><td>ThinkSound</td><td class="num">5.949</td><td class="num">2.480</td><td class="num">0.903</td><td class="num">0.191</td></tr><tr><td>AudioX</td><td class="num">3.811</td><td class="num">2.165</td><td class="num">1.157</td><td class="num">0.235</td></tr><tr><td>ViSAGe</td><td class="num">14.432</td><td class="num">3.483</td><td class="num">1.159</td><td class="num">0.123</td></tr><tr><td>See2Sound</td><td class="num">9.904</td><td class="num">3.427</td><td class="num">1.244</td><td class="num">0.088</td></tr><tr><td>ViSAudio (Ours)</td><td class="num">2.479</td><td class="num">1.360</td><td class="num">0.788</td><td class="num">0.299</td></tr></tbody></table></div>
+<ul>
+<li><strong>주관 평가(User Study, MOS 1~5, 전문가 12명)</strong>: 5개 항목 모두에서 최고. Spatial Impression 4.133, Spatial Consistency 4.100, Temporal Alignment 4.275, Semantic Alignment 4.292, Audio Realism 4.158로 baseline을 크게 앞선다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Spatial Impression ↑</th><th class="num">Spatial Consistency ↑</th><th class="num">Temporal Align. ↑</th><th class="num">Semantic Align. ↑</th><th class="num">Audio Realism ↑</th></tr></thead><tbody><tr><td>ThinkSound</td><td class="num">3.250</td><td class="num">2.875</td><td class="num">3.483</td><td class="num">3.400</td><td class="num">3.067</td></tr><tr><td>AudioX</td><td class="num">3.050</td><td class="num">2.792</td><td class="num">2.867</td><td class="num">3.367</td><td class="num">3.258</td></tr><tr><td>ViSAGe</td><td class="num">1.658</td><td class="num">1.517</td><td class="num">1.700</td><td class="num">1.725</td><td class="num">1.492</td></tr><tr><td>See2Sound</td><td class="num">2.033</td><td class="num">1.517</td><td class="num">1.742</td><td class="num">1.725</td><td class="num">1.650</td></tr><tr><td>ViSAudio (Ours)</td><td class="num">4.133</td><td class="num">4.100</td><td class="num">4.275</td><td class="num">4.292</td><td class="num">4.158</td></tr></tbody></table></div>
+<ul>
+<li><strong>Ablation(BiAudio)</strong>: Pretrained(모노 복제) → Dual-Branch 추가 → Spacetime Module 추가 순으로 개선. Dual-Branch가 바이노럴 분포 학습으로 공간 생성 능력을 크게 끌어올리고(FD 4.482→2.803, U-SI 2.775→4.017), Spacetime Module은 시간 정합을 약간 희생하는 대신 공간 지각을 더 강화(U-SC 3.658→4.233, +0.575)한다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Model</th><th class="num">FD_VGG^avg ↓</th><th class="num">DeSync ↓</th><th class="num">IB-S ↑</th><th class="num">U-SI ↑</th><th class="num">U-SC ↑</th></tr></thead><tbody><tr><td>Pretrained</td><td class="num">4.482</td><td class="num">0.793</td><td class="num">0.285</td><td class="num">2.775</td><td class="num">2.817</td></tr><tr><td>w/ Dual only</td><td class="num">2.803</td><td class="num">0.766</td><td class="num">0.289</td><td class="num">4.017</td><td class="num">3.658</td></tr><tr><td>Dual+Spt</td><td class="num">2.479</td><td class="num">0.788</td><td class="num">0.299</td><td class="num">4.333</td><td class="num">4.233</td></tr></tbody></table></div>
+<ul>
+<li>의의: 학습에 쓰지 않은 FAIR-Play에서도 우수해 <strong>일반화 능력</strong>을 입증했고, 2단계 방식을 우회한 end-to-end 시청각-공간음향 생성의 길을 열었다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<ul>
+<li>현재 <strong>짧은 클립(8초)</strong>만 처리해 장기 시간 의존성과 복잡한 음향 이벤트를 담기 어렵다. 향후 더 긴 시퀀스로 확장 예정.</li>
+<li>BiAudio가 실세계 녹음 기반이라 오디오의 <strong>배경 잡음이 생성 결과에 아티팩트</strong>를 유발할 수 있다.</li>
+<li>출력은 바이노럴 2채널에 한정되며, 향후 FOA 같은 <strong>다채널 오디오 직접 생성</strong>으로 확장을 계획.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>모노를 넘어선 공간 음향 생성</strong>: 시점 변화·음원 이동을 반영하는 좌우 채널 차이를 end-to-end로 학습하는 설계는, 시청각 공간 추론(audio-visual spatial reasoning)이나 몰입형 콘텐츠 생성 연구에서 공간 단서를 직접 다루려는 방향과 맞닿아 있다.</li>
+<li><strong>데이터 구축 파이프라인</strong>: FOA→바이노럴 렌더링(HRIR), 구면 조화 분해로 음원 방향 추정, 카메라 회전 궤적 다양화, 그리고 visible/invisible 소리를 구분하는 캡션 주석은 공간 음향 데이터셋을 만들 때 그대로 참고할 만한 반자동 레시피다.</li>
+<li><strong>flow matching + 멀티모달 조건화</strong>: MMAudio를 파인튜닝하며 CLIP·Synchformer·Perception Encoder로 의미·동기·공간 특징을 분리해 주입하는 방식은, 생성 모델에 공간 정보를 결합하려는 후속 연구의 모듈 설계에 응용 가능하다.</li>
+<li>FOA/360도나 별도 카메라 파라미터 없이 <strong>일반 시야 영상만으로</strong> 공간 단서를 뽑아낸다는 점에서, 실사용 시나리오(일반 촬영 영상)에 바로 붙이기 좋은 접근이다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper6">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>SpatialV2A: Visual-Guided High-fidelity Spatial Audio Generation</h2>
+    <p class="lead">영상을 보고 소리를 만드는 Video-to-Audio(V2A, 영상→오디오 생성) 기술이 지금까지 놓쳤던 &quot;공간감(spatial perception)&quot;을 정면으로 다룬 연구다. 대규모 양이(binaural, 좌·우 두 채널로 방향감을 주는) 데이터셋 BinauralVGGSound를 새로 만들고, 영상 속 소리 위치 단서를 활용해 의미·시간 정합을 유지하면서도 입체적인 양이 오디오를 생성하는 SpatialV2A 프레임워크를 제안한다.</p>
+    <div class="authors">Yanan Wang, Linjie Ren, Zihao Li, Junyi Wang, Tian Gan (School of Computer Science and Technology, Shandong University / 산둥대학교)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-01-21</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2601.15017" target="_blank">arXiv:2601.15017</a> <a class="pill pdf" href="https://arxiv.org/pdf/2601.15017" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2601.15017" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>Figure 1: 기존 V2A와 제안 방법 SpatialV2A의 비교. (a) 전통적 V2A는 방향·위치 단서가 없는 mono(단일 채널) 오디오를 생성해 공간감을 전달하지 못한다. (b) SpatialV2A는 영상과 공간적으로 일치하는 binaural(양이) 오디오를 생성하여, 소리가 화면 속 사건의 위치·움직임과 맞물리도록 한다. (원문 HTML의 그림 이미지는 변환 아티팩트 경로로만 제공되어 유효한 절대 URL을 확보하지 못해 텍스트로 서술한다.)</p>
+<h3 class="sec">선행 연구</h3>
+<p>V2A 생성 연구는 그동안 두 가지 정합(alignment)을 개선하는 데 집중해 왔다.</p>
+<ul>
+<li><strong>의미 정합(semantic alignment)</strong>: 생성된 소리가 영상 속 사물·행동·장면과 맞는지. Im2Wav, MMAudio는 CLIP 인코더로 시각-텍스트 의미를 정렬하고, Diff-Foley는 대조학습(contrastive) 기반 오디오-비주얼 사전학습을 사용한다.</li>
+<li><strong>시간 정합(temporal alignment)</strong>: 소리가 화면 사건과 시간적으로 동기화되는지. SpecVQGAN, Diff-Foley, Synchformer(어텐션 기반 세밀 동기화) 등이 대표적이며, V-AURA·MMAudio가 Synchformer를 통합해 효과를 검증했다.</li>
+</ul>
+<p>한편 소리를 입체적으로 만드는 갈래로는, 시각 정보로 장면 기하와 음원 위치를 추론해 mono를 binaural로 바꾸는 <strong>오디오 공간화(audio spatialization)</strong> 연구가 있다. PseudoBinaural은 시각 정보로부터 양이 간 레벨차(ILD)·시간차(ITD)를 예측해 그럴듯한 스테레오/양이 오디오를 합성한다. 또한 음원 위치 추정(sound source localization)에서 ACL은 음원 위치뿐 아니라 프레임 단위 히트맵으로 소리 나는 영역의 상대 강도·분포까지 예측한다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>기존 V2A는 대부분 <strong>mono 오디오</strong>만 생성해 방향·위치 단서가 없어 실감 나는 공간감을 주지 못한다. 근본 원인은 학습에 쓰는 데이터셋(예: VGGSound)이 mono 오디오라 시각→공간 오디오 매핑을 배울 양이 정보 자체가 없기 때문이다. 반대로 See-2-Sound 같은 시각 기반 공간 오디오 생성 방법은 실제 오디오 신호를 활용하지 않고 시각만으로 공간 오디오를 만들어, 소리와 시각 장면 간 의미·시간 정합이 약하다.</p>
+<p>즉 <strong>의미 충실도 + 시간 일관성 + 공간 실재감</strong>을 동시에 만족하는 V2A 프레임워크가 없다는 것이 핵심 문제다. 이를 풀려면 두 가지 난제를 넘어야 한다. (1) 시각 장면에서 공간 음향 단서를 직접 추론하는 명시적 공간화 모듈이 필요하고, (2) 대규모 양이 데이터셋이 부족한데 실제 양이 녹음은 전용 장비와 큰 비용이 들어 확장이 어렵다.</p>
+<h3 class="sec">연구 주제</h3>
+<p><strong>공간 인지가 가능한(spatially aware) V2A 생성</strong>을 목표로 한다. 구체적으로, 영상 입력으로부터 세밀한 공간 표현을 모델링해 좌·우 두 채널의 양이 스테레오 오디오를 생성하되, 기존 V2A가 확보한 의미·시간 정합을 훼손하지 않는 것을 지향한다.</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">1) 데이터셋 구축: BinauralVGGSound</h4>
+<p>실제 양이 녹음의 높은 비용을 우회하기 위해, 기존 mono 데이터셋 VGGSound를 시각 기반 공간화로 양이 오디오로 변환한다. 파이프라인은 두 부분이다.</p>
+<ul>
+<li><strong>데이터 전처리</strong>: (1) 10초 미만 클립 제거(충분한 시간 맥락 확보), (2) 오디오 활동 검출로 80% 이상이 무음인 영상 제거, (3) Meta Audiobox Aesthetics Toolkit으로 품질 낮은 오디오 필터링.</li>
+<li><strong>Mono→Binaural 변환</strong>: mono 신호 $s(t)$를 구면 조화(Spherical Harmonic, SH) 영역으로 표현해 가상 방향 성분 $s'_m(t)=(D^\top D)^{-1}D^\top \Psi(t)$로 투영한 뒤, HRIR(Head-Related Impulse Response, 머리 형상에 따른 소리 전달 특성) 기반 렌더링으로 의사 양이(pseudo-binaural) 신호를 만든다: $\hat{l}(t)=\sum_{m=1}^{M} h_l(\vartheta'_m)*s'_m(t)$, $\hat{r}(t)=\sum_{m=1}^{M} h_r(\vartheta'_m)*s'_m(t)$. 이 의사 양이 신호를 지도로 삼아 PseudoBinaural 방식(STFT 영역 U-Net 백본 + ResNet-18 시각 특징 주입 + APNet 분리 모듈)의 시각 기반 양이 생성 모델을 학습하고, 이를 VGGSound 전체에 적용해 최종 데이터셋을 만든다.</li>
+</ul>
+<p>기존 데이터셋 대비 규모·다양성이 강점이다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>데이터셋</th><th>타입</th><th class="num">클립 수</th><th class="num">총 길이</th><th class="num">클래스 수</th><th>캡션</th></tr></thead><tbody><tr><td>Fair-Play</td><td>Binaural</td><td class="num">1.9k</td><td class="num">5.2h</td><td class="num">-</td><td>없음</td></tr><tr><td>SimBinaural</td><td>Binaural</td><td class="num">22k</td><td class="num">116.1h</td><td class="num">11</td><td>없음</td></tr><tr><td>YouTube-Binaural</td><td>Binaural</td><td class="num">0.4k</td><td class="num">27h</td><td class="num">-</td><td>없음</td></tr><tr><td>VGGSound</td><td>Mono</td><td class="num">199k</td><td class="num">550h</td><td class="num">309</td><td>있음</td></tr><tr><td><strong>BinauralVGGSound (제안)</strong></td><td><strong>Binaural</strong></td><td class="num"><strong>187k</strong></td><td class="num"><strong>519h</strong></td><td class="num"><strong>309</strong></td><td><strong>있음</strong></td></tr></tbody></table></div>
+<p>데이터 검증에서 양이 변환 후에도 원본 VGGSound와 비슷하거나 약간 높은 오디오 품질(CE/CU/PQ)을 유지하며, mono에는 전혀 없던 공간 지표(IACC, ILD, ITD, ISD, IPD)가 뚜렷하게 나타남을 확인했다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>데이터셋</th><th class="num">CE↑</th><th class="num">CU↑</th><th class="num">PQ↑</th><th class="num">IACC↓</th><th class="num">ILD↑</th><th class="num">ITD↑</th><th class="num">ISD↑</th><th class="num">IPD↑</th></tr></thead><tbody><tr><td>VGGSound</td><td class="num">3.71</td><td class="num">5.39</td><td class="num">6.07</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr><tr><td>BinauralVGGSound (제안)</td><td class="num">3.74</td><td class="num">5.44</td><td class="num">6.09</td><td class="num">0.93</td><td class="num">3.08</td><td class="num">1.70</td><td class="num">0.07</td><td class="num">0.32</td></tr></tbody></table></div>
+<h4 class="subsec">2) 프레임워크: SpatialV2A</h4>
+<p><strong>Conditional Flow Matching(CFM)</strong> 위에 시각 기반 공간 단서를 결합한 이중 분기(dual-branch) 구조다. CFM은 단순한 사전 분포에서 목표 데이터 분포로 샘플을 옮기는 조건부 속도장(velocity field)을 학습한다. 표준 CFM은 하나의 속도장 $v_\theta(x_t,t,\mathbf{C})$를 학습하지만, 여기서는 좌·우 채널별로 두 속도장 $v_\theta^l$, $v_\theta^r$을 학습한다. 양이 목표 $x_1=(x_1^l,x_1^r)$에 대해 채널별 중간 상태 $x_t^a=(1-t)x_0^a+tx_1^a$ ($a\in\{l,r\}$)를 두고, 목적함수는 다음과 같다:</p>
+<p>$$\sum_{a\in\{l,r\}} \mathbb{E}\,\|v_\theta^a(x_t^a,t,\mathbf{C})-u(x_t^a\mid x_0^a,x_1^a)\|^2.$$</p>
+<ul>
+<li><strong>다중모달 결합 표현(Multimodal Joint Representation)</strong>: MMAudio 설계를 따라 텍스트 $F_{\text{text}}$, 시각 $F_{\text{vis}}$, 동기화 $F_{\text{sync}}$ 특징(CLIP, Synchformer 사용)으로 의미·시간 정합의 공유 조건을 만든다. 전역 조건 $C_g=F_{\text{text}}\oplus F_{\text{vis}}\oplus e(t)$, 프레임 조건 $C_f=F_{\text{sync}}\oplus C_g$.</li>
+<li><strong>단일모달 이중 채널 표현(Unimodal Dual-Channel)</strong>: 다중모달 단계 이후 좌·우 분기로 분리해 각 채널 고유의 공간 특성을 독립적으로 합성한다.</li>
+<li><strong>시각 기반 오디오 공간화 모듈(Visual-guided Audio Spatialization)</strong>: 사전학습 ACL로 소리 나는 영역·마스크·히트맵을 뽑아 5개 공간 특징을 계산한다 — 수평 위치 $S_h$, 소리 영역 비율 $S_{\text{area}}$, 히트맵 분산 $S_{\text{var}}$, 좌우 에너지 편향 $S_{LR}$, 분포 형태 $S_{\text{shape}}$. 이를 이어붙인 $S_{\text{sound}}$를 ConvMLP+업샘플로 잠재 공간에 투영·정규화해 공간 조건 $C_s$를 만들고 flow-matching 과정에 주입한다.</li>
+</ul>
+<p>학습·추론은 오디오를 사전학습 VAE로 잠재로 인코딩한 뒤 양이 CFM으로 학습하고, 추론 시 좌·우 채널을 가우시안 노이즈에서 시작해 양이 잠재로 변환한 후 VAE 디코딩 → BigVGAN 보코더로 파형을 만든다. 다중모달 결합 블록 $N_1=6$개, 단일모달 이중 채널 블록 $N_2=12$개, 16 kHz 샘플링, RTX 6000 3장에서 300K 스텝 학습.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>VGGSound 테스트에서 무작위 추출한 3,000개 영상(BinauralVGGSound와 동일 ID)으로 SOTA V2A들과 비교했다.</p>
+<p><strong>분포 정합 · 시간 · 의미 정합 (Table 3)</strong>: SpatialV2A는 KL 발산과 DeSync(시간 비동기)에서 최저치를 기록하고 분포 지표에서 1위 또는 2위를 유지하며, MOS-T(주관적 시간 정합) 최고, MOS-Sem(주관적 의미 정합) 2위를 달성했다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">$KL_{PaSST}$↓</th><th class="num">$KL_{PANNs}$↓</th><th class="num">IB↑</th><th class="num">DeSync↓</th><th class="num">MOS-Sem↑</th><th class="num">MOS-T↑</th></tr></thead><tbody><tr><td>ReWaS</td><td class="num">2.47</td><td class="num">2.51</td><td class="num">0.18</td><td class="num">1.19</td><td class="num">2.31</td><td class="num">2.21</td></tr><tr><td>Frieren</td><td class="num">2.62</td><td class="num">2.60</td><td class="num">0.22</td><td class="num">0.85</td><td class="num">3.40</td><td class="num">2.78</td></tr><tr><td>Seeing&amp;Hearing</td><td class="num">2.66</td><td class="num">2.78</td><td class="num">0.36</td><td class="num">1.20</td><td class="num">2.60</td><td class="num">2.53</td></tr><tr><td>MMAudio</td><td class="num">1.57</td><td class="num">1.59</td><td class="num">0.29</td><td class="num">0.51</td><td class="num">4.11</td><td class="num">4.05</td></tr><tr><td>SEE-2-SOUND</td><td class="num">3.36</td><td class="num">4.39</td><td class="num">0.07</td><td class="num">1.27</td><td class="num">1.60</td><td class="num">1.51</td></tr><tr><td><strong>SpatialV2A (제안)</strong></td><td class="num"><strong>1.56</strong></td><td class="num"><strong>1.55</strong></td><td class="num">0.28</td><td class="num"><strong>0.49</strong></td><td class="num">4.08</td><td class="num"><strong>4.14</strong></td></tr></tbody></table></div>
+<p>(Seeing&amp;Hearing이 IB 최고인 것은 추론 시 ImageBind 유사도를 직접 최적화하기 때문이라고 저자가 설명한다.)</p>
+<p><strong>오디오 품질 · 공간 정합 (Table 4)</strong>: SpatialV2A가 IS·CE·CU·PQ 등 품질 지표 전반에서 최고이며, 다른 baseline은 대부분 mono/비공간 오디오라 공간 지표 자체가 적용되지 않는다. 주관 평가에서 MOS-AQ 4.21, MOS-S(공간 인상) 3.90으로 가장 높다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">$IS_{PaSST}$↑</th><th class="num">CE↑</th><th class="num">CU↑</th><th class="num">PQ↑</th><th class="num">MOS-AQ↑</th><th class="num">MOS-S↑</th></tr></thead><tbody><tr><td>ReWaS</td><td class="num">7.86</td><td class="num">3.54</td><td class="num">4.82</td><td class="num">5.34</td><td class="num">2.29</td><td class="num">1.26</td></tr><tr><td>Frieren</td><td class="num">9.10</td><td class="num">3.65</td><td class="num">5.26</td><td class="num">5.85</td><td class="num">3.15</td><td class="num">1.29</td></tr><tr><td>Seeing&amp;Hearing</td><td class="num">5.39</td><td class="num">3.06</td><td class="num">4.49</td><td class="num">5.25</td><td class="num">2.42</td><td class="num">1.50</td></tr><tr><td>MMAudio</td><td class="num">11.86</td><td class="num">3.88</td><td class="num">5.14</td><td class="num">5.71</td><td class="num">3.87</td><td class="num">1.78</td></tr><tr><td>SEE-2-SOUND</td><td class="num">1.52</td><td class="num">3.03</td><td class="num">4.83</td><td class="num">5.39</td><td class="num">1.74</td><td class="num">2.49</td></tr><tr><td><strong>SpatialV2A (제안)</strong></td><td class="num"><strong>14.36</strong></td><td class="num"><strong>4.09</strong></td><td class="num"><strong>5.77</strong></td><td class="num"><strong>6.07</strong></td><td class="num"><strong>4.21</strong></td><td class="num"><strong>3.90</strong></td></tr></tbody></table></div>
+<p><strong>Ablation (Table 5)</strong>: 공간화 모듈을 끄면(w/o Spat.) FAD는 약간 좋아지지만, 의미 정합(IB), 시간 동기(DeSync), 지각 품질(IS), 양이 공간 지표(IACC, ILD)는 전 항목에서 열화된다. 즉 시각 기반 공간화가 약간의 분포 변동을 감수하는 대신 시간·의미·공간 실재감을 크게 끌어올린다는 것을 보인다.</p>
+<p><strong>의의</strong>: V2A에서 소홀히 다뤄진 공간 인지를 정면으로 다뤄, 대규모 양이 데이터셋과 이중 분기 프레임워크로 의미·시간·공간 정합을 동시에 만족하는 고품질 양이 오디오 생성을 실증했다. 데이터셋·코드·체크포인트를 공개할 예정(데모: <a href="https://github.com/renlinjie868-web/SpatialV2A" target="_blank">https://github.com/renlinjie868-web/SpatialV2A</a>).</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>의사 양이 지도(pseudo-binaural supervision)의 근본적 한계</strong>: 실제 양이 녹음이 아니라 PseudoBinaural로 mono에서 합성한 신호를 학습 목표(ground-truth)로 삼는다. 따라서 데이터의 공간 정보는 시각 기반 추정과 SH/HRIR 렌더링 품질에 의존하며, 실제 물리적 양이 녹음이 가진 정확도와는 차이가 있을 수 있다.</li>
+<li><strong>의미 근거(semantic grounding)의 개선 여지</strong>: 저자 스스로 WavCaps, AudioCaps 같은 캡션 데이터셋을 추가해 의미 근거를 강화하는 것을 향후 과제로 제시한다.</li>
+<li><strong>장기 시간 모델링 미해결</strong>: 긴 영상에서 일관된 양이 합성을 위한 장기 시간 모델링용 고급 아키텍처 탐색이 future work로 남아 있다.</li>
+<li>짧은(10초 미만) 클립을 걸러내 학습해, 짧은 구간에 대한 일반화는 확인되지 않았다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>공간 오디오 생성 파이프라인 설계</strong>: 실제 양이 녹음 없이도 mono 대규모 데이터를 시각 기반 공간화로 양이로 확장하는 전략은, 데이터 확보가 어려운 공간 오디오 과제에서 재사용 가능한 데이터 부트스트래핑 방법론이다.</li>
+<li><strong>시각 단서의 명시적 공간 조건화</strong>: ACL 히트맵에서 수평 위치·영역 비율·분산·좌우 에너지 편향·분포 형태 5개 특징을 뽑아 생성 모델에 조건으로 주입하는 설계는, 시각-오디오 정렬을 다루는 연구에서 &quot;공간 조건 표현&quot;을 어떻게 구성할지에 대한 구체적 레시피가 된다.</li>
+<li><strong>CFM의 이중 채널 확장</strong>: 단일 속도장을 좌·우 채널별 속도장으로 나눈 이중 분기 flow-matching은, 다채널/멀티스트림 생성으로 확장할 때 참고할 수 있는 구조적 아이디어다.</li>
+<li><strong>평가 지표 세트</strong>: 분포(FAD/KL), 의미(IB), 시간(DeSync), 품질(IS/CE/CU/PQ), 공간(IACC/ILD/ITD/ISD/IPD) + MOS 주관 평가로 이어지는 다차원 평가 프로토콜은 공간 오디오 연구의 벤치마크 설계에 바로 활용 가능하다.</li>
+</ul>
+  </div>
+</article>
+      <footer>생성: 2026-07-27 15:17 · 적합성은 abstract로 판단, 요약은 논문 전문 기반 작성</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+arXiv ID: 2601.15017
+abstract: https://arxiv.org/abs/2601.15017
+pdf: https://arxiv.org/pdf/2601.15017
+html: https://arxiv.org/html/2601.15017

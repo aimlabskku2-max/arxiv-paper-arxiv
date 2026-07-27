@@ -1,0 +1,4 @@
+arXiv ID: 2512.03036
+abstract: https://arxiv.org/abs/2512.03036
+pdf: https://arxiv.org/pdf/2512.03036
+html: https://arxiv.org/html/2512.03036

@@ -1,0 +1,4 @@
+arXiv ID: 2510.14874
+abstract: https://arxiv.org/abs/2510.14874
+pdf: https://arxiv.org/pdf/2510.14874
+html: https://arxiv.org/html/2510.14874
