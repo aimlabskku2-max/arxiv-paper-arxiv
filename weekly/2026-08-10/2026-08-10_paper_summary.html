@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arXiv 논문 정리 — 2026-08-10</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']],
+            displayMath: [['$$','$$'],['\\[','\\]']], processEscapes: true },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --bg:#f8fafc; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    line-height:1.7; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+  header.top { background:linear-gradient(135deg,#1e293b,#334155); color:#fff; padding:42px 20px 36px; }
+  header.top .inner { max-width:1100px; margin:0 auto; }
+  header.top .home-link { display:inline-block; margin-bottom:14px; color:#cbd5e1; text-decoration:none;
+    font-size:13.5px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+    padding:6px 14px; border-radius:999px; }
+  header.top .home-link:hover { background:rgba(255,255,255,.2); color:#fff; }
+  header.top h1 { margin:0 0 8px; font-size:30px; letter-spacing:-.5px; }
+  header.top .sub { opacity:.85; font-size:15px; }
+  header.top .chips { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  header.top .chip { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    padding:5px 12px; border-radius:999px; font-size:13px; }
+  .layout { display:grid; grid-template-columns:260px 1fr; gap:32px; margin-top:32px; }
+  nav.toc { position:sticky; top:20px; align-self:start; font-size:13.5px; max-height:90vh; overflow:auto; }
+  nav.toc h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 12px; }
+  .toc-group { margin-bottom:16px; }
+  .toc-badge { display:inline-block; color:#fff; font-size:11.5px; padding:3px 9px; border-radius:6px; margin-bottom:6px; font-weight:600; }
+  nav.toc ul { list-style:none; padding:0 0 0 4px; margin:6px 0 0; }
+  nav.toc li { margin:4px 0; }
+  nav.toc a { color:var(--ink); text-decoration:none; }
+  nav.toc a:hover { color:#6366f1; text-decoration:underline; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:26px;
+    overflow:hidden; box-shadow:0 1px 3px rgba(15,23,42,.05); scroll-margin-top:20px; }
+  .card-head { padding:22px 26px 18px; border-left:6px solid; background:#fcfcfd; }
+  .topic-tag { display:inline-block; color:#fff; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:6px; }
+  .card-head h2 { margin:10px 0 6px; font-size:21px; letter-spacing:-.3px; }
+  .lead { margin:6px 0 10px; font-size:14.5px; color:#334155; font-weight:500;
+    border-left:3px solid var(--line); padding-left:12px; }
+  .authors { color:var(--muted); font-size:13px; margin-bottom:10px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { font-size:12.5px; text-decoration:none; color:#475569; background:#f1f5f9; border:1px solid var(--line);
+    padding:3px 10px; border-radius:999px; }
+  .pill.pdf { background:#fee2e2; border-color:#fecaca; color:#b91c1c; }
+  .pill:hover { filter:brightness(.96); }
+  .card-body { padding:8px 26px 24px; }
+  .card-body h3.sec { font-size:16.5px; margin:22px 0 8px; padding-bottom:6px; border-bottom:2px solid var(--line);
+    color:#0f172a; }
+  .card-body h4.subsec { font-size:14.5px; margin:16px 0 6px; color:#334155; }
+  .card-body p { margin:8px 0; }
+  .card-body ul, .card-body ol { margin:8px 0; padding-left:22px; }
+  .card-body li { margin:4px 0; }
+  .card-body code { background:#f1f5f9; padding:1px 6px; border-radius:5px; font-size:13px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; }
+  .card-body strong { color:#0f172a; }
+  .tbl-wrap { overflow-x:auto; margin:12px 0; -webkit-overflow-scrolling:touch; }
+  .card-body table { border-collapse:collapse; width:100%; font-size:13px; min-width:340px; }
+  .card-body thead th { background:#f1f5f9; color:#0f172a; text-align:left; font-weight:700;
+    padding:8px 12px; border-bottom:2px solid #cbd5e1; white-space:nowrap; vertical-align:bottom; }
+  .card-body tbody td { padding:7px 12px; border-bottom:1px solid var(--line); text-align:left;
+    vertical-align:top; }
+  .card-body tbody tr:nth-child(even) { background:#f8fafc; }
+  .card-body th.num, .card-body td.num { text-align:right; font-variant-numeric:tabular-nums;
+    font-family:"SF Mono",Menlo,Consolas,monospace; white-space:nowrap; }
+  .fig { margin:14px 0; text-align:center; }
+  .fig img { max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px;
+    background:#fff; }
+  .fig figcaption { margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .pubinfo { margin:6px 0 2px; font-size:12.5px; color:var(--muted); display:flex;
+    flex-wrap:wrap; gap:4px 12px; }
+  .pubinfo .pub-venue { color:#0f172a; font-weight:600; }
+  footer { text-align:center; color:var(--muted); font-size:13px; margin-top:40px; }
+  @media (max-width:820px) { .layout { grid-template-columns:1fr; } nav.toc { position:static; max-height:none; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <a class="home-link" href="../../index.html">← 전체 주차 목록(홈)</a>
+  <h1>📚 arXiv 논문 주간 정리</h1>
+  <div class="sub">2026-08-10 · 총 6편 · 주제별 균형 정리</div>
+  <div class="chips">
+    <span class="chip">Egocentric Vision · 2편</span><span class="chip">Hand-Object Interaction · 2편</span><span class="chip">Spatial Audio · 2편</span>
+  </div>
+</div></header>
+<div class="wrap">
+  <div class="layout">
+    <nav class="toc">
+      <h3>목차</h3>
+      <div class="toc-group"><span class="toc-badge" style="background:#0ea5e9">Egocentric Vision</span><ul><li><a href="#paper1">EgoEverything: A Benchmark for Human Behavior—Inspired Long-Context Egocentric Video Understanding in AR Environment</a></li><li><a href="#paper2">EgoTraj: Real-World Egocentric Human Trajectory Dataset for Multimodal Prediction</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#10b981">Hand-Object Interaction</span><ul><li><a href="#paper3">Towards in-the-wild Egocentric 3D Hand-Object Pose Estimation</a></li><li><a href="#paper4">EgoForce: Forearm-Guided Camera-Space 3D Hand Pose from a Monocular Egocentric Camera</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#6366f1">Spatial Audio</span><ul><li><a href="#paper5">HRTFformer: A Spatially-Aware Transformer for Individual HRTF Upsampling in Immersive Audio Rendering</a></li><li><a href="#paper6">Spatial Interpolation of Room Impulse Responses based on Deeper Physics-Informed Neural Networks with Residual Connections</a></li></ul></div>
+    </nav>
+    <main>
+      
+<article class="card" id="paper1">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>EgoEverything: A Benchmark for Human Behavior—Inspired Long-Context Egocentric Video Understanding in AR Environment</h2>
+    <p class="lead">사람이 실제로 &quot;무엇을 봤는지(시선, gaze)&quot;를 반영해 질문을 만든, AR 환경용 장시간 1인칭(egocentric) 영상 이해 벤치마크로, 5,000개 넘는 객관식 문항과 100시간 이상 영상으로 최신 비전-언어 모델(VLM)이 아직 사람에 크게 못 미침을 보인다.</p>
+    <div class="authors">Qiance Tang, Ziqi Wang (New York University), Jieyu Lin, Ziyun Li, Barbara De Salvo (Meta Reality Labs), Sai Qian Zhang (New York University)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-04-09</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2604.08342" target="_blank">arXiv:2604.08342</a> <a class="pill pdf" href="https://arxiv.org/pdf/2604.08342" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2604.08342" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>(대표 그림인 Figure 1은 두 장면으로 구성된다. (a) AR 헤드셋(HMD)을 쓴 사용자가 운전 중 잠깐 식당을 쳐다보고, 10분 뒤 &quot;우리가 10분 전에 지나친 식당 이름이 뭐였지?&quot;라고 묻는 실제 AR 장기 문맥 이해(LEU, Long-context Egocentric video Understanding) 시나리오를 보여준다. (b) 주방을 걷는 사용자의 시선이 컵에 집중되면 이후 그 컵에 대해 질문할 가능성이 높고, 주변의 다른 물체는 옅은 박스로 표시되어 주목도가 낮아 질문 대상이 될 확률이 낮다는 점을 시각화한다. 즉 &quot;사람의 주의(attention)가 향한 곳이 곧 질문 대상이 된다&quot;는 이 논문의 핵심 가정을 그림 하나로 요약한다. HTML 원문의 이미지가 안정적 절대 URL로 확인되지 않아 링크 대신 텍스트로 서술한다.)</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li>장시간 1인칭 영상 이해(LEU)는 최근 활발한 연구 분야로, EgoSchema, HourVideo, X-LeBench, LongVideoBench, NExT-QA 등 여러 벤치마크가 나왔다.</li>
+<li>대부분 사람이 쓴 카메라 영상을 쓰지만, 질문은 주로 &quot;영상 안의 시각적 세부 사항&quot;이나 &quot;장면 개요&quot;를 묻는 일반적(generic) 형태에 치우쳐 있다.</li>
+<li>구조적 표현 흐름도 있다. 영상 구간을 활동 단위(activity thread)로 묶거나, 물체-사용자 관계를 담는 1인칭 장면 그래프(egocentric scene graph)로 만들어 메모리처럼 저장하고 VLM으로 답하는 방식(AMEGO, VideoMind-Palace 등)이 대표적이다.</li>
+<li>인지과학 쪽에서는 시선(gaze)이 &quot;스포트라이트&quot;처럼 특정 지점에 집중되며 그 주의 강도가 2D 가우시안(Gaussian, 중심에서 멀어질수록 약해지는 종 모양 분포)으로 감소하고, 시선이 이후의 기억 회상·질문 행동을 잘 예측한다는 연구가 축적돼 있다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>기존 LEU 벤치마크는 실제 AR 사용 방식과 세 가지가 어긋난다.</p>
+<ol>
+<li><strong>사람의 주의를 반영하지 못함</strong>: 실제 사용자는 자기가 (전부 또는 일부라도) 쳐다본 물체/사건을 주로 묻는데, 기존 데이터셋은 시선을 고려하지 않고 일반적 질문을 만든다.</li>
+<li><strong>자연어답지 않음</strong>: &quot;영상에서 불이 꺼져 있나요?&quot; 같은 템플릿 기반의 딱딱한 질문이 많다. 실제로는 &quot;내가 불 끄는 걸 깜빡했나?&quot;처럼 맥락 있고 주의 기반의 질문을 한다.</li>
+<li><strong>상호작용 순간과 어긋남</strong>: 대부분 클립이 &quot;끝난 뒤&quot;에만 질문하게 하지만, 실제 사용자는 활동이 진행되는 &quot;도중&quot;에 질문해 부분 관측 스트림에 대한 실시간 추론이 필요하다.</li>
+</ol>
+<h3 class="sec">연구 주제</h3>
+<p>사람의 행동(특히 시선으로 추상화한 주의 신호)을 질문 생성 단계에 명시적으로 반영해, AR 안경으로 겪는 현실적 상호작용을 시뮬레이션하는 LEU 벤치마크 EgoEverything을 만드는 것. 목표는 VLM이 실제 AR 장기 문맥 이해에서 얼마나 잘/못하는지를 현실적으로 평가하는 환경을 제공하는 것이다.</p>
+<h3 class="sec">연구 방법</h3>
+<p>시선 주석이 있는 실제 1인칭 영상 데이터셋 <strong>AEA(Aria Everyday Activities, 143클립·7.3시간·실내 5개 환경)</strong>와 <strong>Nymeria(약 300시간·실내외 약 50개 장면)</strong>를 바탕으로, 다중 AI 에이전트 기반 VQA 파이프라인을 3단계로 구성한다.</p>
+<ul>
+<li><strong>1단계 VSSC (Video Stream Summary and Clustering)</strong>: 연속 프레임을 ResNet-50 특징으로 k-means 군집화한 뒤(대부분 2~8초 구간), VLM 캡셔닝으로 구간별 행동 요약과 타임스탬프를 만들고 이어 붙여 Action Summary를 생성한다. 이후 사람이 명백한 오류를 걸러낸다.</li>
+<li><strong>2단계 GOTS (Gaze-Oriented Target Sampling)</strong>: VLM으로 각 구간의 물체 박스·레이블을 검출하고, 인접 프레임의 중복을 없애기 위해 CLIP 임베딩 기반 재식별(ReID)로 같은 물체를 하나로 합친다. 그다음 각 물체 중심과 시선 위치 $f$ 사이 유클리드 거리를 재고, Perception Sampler $S_\theta(\cdot)$로 목표 물체(Target Object)를 뽑는다. 샘플러는 2D 가우시안 $S_{\theta}(\cdot)\propto \exp\left(-\frac{\|o-f\|^2}{2\theta^2}\right)$ 로, 시선에서 멀수록 선택 확률이 낮아진다($\theta$가 감소 속도를 조절). 이로써 주의가 집중된 질문과 주변부(periphery) 세부 질문을 함께 만든다.</li>
+<li><strong>3단계 QGMC (Question Generation and Manual Curation)</strong>: 목표 프레임 시각 $t_0$ 이후 회상 간격(recall interval) $\Delta$를 둔 질문 시각 $t_q \in [t_0+\Delta, T]$를 무작위로 잡아, 진행 중 질문을 흉내 낸다. <strong>Synthesizer Agent(SA)</strong>는 전체 영상을 다 보지 않고 GetFrame(고해상도 정지 프레임)·GetSegment(다운샘플 구간 영상) API를 호출하며 목표 물체에 대한 객관식(MCQ)을 만들고, <strong>Validator Agent(VA)</strong>는 목표 물체 정보 없이 사실성·모호성·명료성을 검증하고 최소 1개의 추가 근거를 요구하며 피드백한다. 2라운드 안에 통과 못 하면 폐기한다.</li>
+<li><strong>필터링·검수</strong>: 벽/천장/바닥/촬영자 신체 등 부적절 대상, &quot;video&quot;·타임스탬프 언급 등 AR답지 않은 질문을 규칙으로 제거한다. 12명의 학습된 주석자가 웹 도구로 약 21,600개 문항을 약 400시간 검수하고(정답 비공개로 5지선다 선택), 유사 정답과 일치하는 것만 남긴다. 마지막으로 영상 없이 텍스트만으로 LLM이 맞히면 제외하는 <strong>블라인드 필터링</strong>으로 언어적 편법 풀이를 차단한다.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<ul>
+<li>규모: 5,000개 이상 MCQ, 100시간 이상 영상, 질문 8개 범주(Item Presence, Appearance, Event/State Verification, Spatial–Spatial, Direct Location, Temporal–Spatial, Others 등), 목표 물체 28개 범주. 생성 설정은 $\theta=400$ 픽셀, $\Delta=3$분. 검수 채택률 약 70%, 규칙·블라인드 필터 통과율 약 50%.</li>
+<li>VLM들은 사람(평균 83.5%)에 크게 못 미친다. 전체 해상도(FR) 기준 정확도:</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>모델</th><th class="num">FR</th><th class="num">AD</th><th class="num">GC</th><th class="num">GM</th><th class="num">VMP</th><th class="num">AMEGO</th></tr></thead><tbody><tr><td>Videollama3-7b</td><td class="num">49.1</td><td class="num">46.1</td><td class="num">42.4</td><td class="num">35.2</td><td class="num">20.2</td><td class="num">19.5</td></tr><tr><td>Videollama3-2b</td><td class="num">46.5</td><td class="num">44.9</td><td class="num">40.5</td><td class="num">34.5</td><td class="num">21.3</td><td class="num">19.4</td></tr><tr><td>Gemini 1.5 pro</td><td class="num">63.1</td><td class="num">58.4</td><td class="num">52.7</td><td class="num">37.7</td><td class="num">33.2</td><td class="num">18.3</td></tr><tr><td>LongVA</td><td class="num">34.6</td><td class="num">31.6</td><td class="num">28.9</td><td class="num">22.2</td><td class="num">NA</td><td class="num">NA</td></tr><tr><td>Llava-Video</td><td class="num">42.6</td><td class="num">36.6</td><td class="num">32.9</td><td class="num">26.0</td><td class="num">NA</td><td class="num">NA</td></tr></tbody></table></div>
+<p>(FR=Full Resolution 원본, GC=Gaze Crop 시선 주변 약 10%만, GM=Gaze Mask 시선 주변을 제외한 나머지, AD=Average Downsampling 10% 해상도로 균일 축소)</p>
+<ul>
+<li>입력 가공 방식은 모두 FR보다 성능이 떨어진다. GC&gt;GM인 이유는 질문이 시선 중심으로 생성돼 핵심 정보가 시선 근처에 있기 때문이고, 흥미롭게도 AD가 GC보다 나은데 이는 시선 중심뿐 아니라 답에 필요한 주변부 정보까지 보존하기 때문이다. 구조화 텍스트로 변환해 LLM으로만 추론하는 VMP·AMEGO는 상호작용 물체만 검출하고 활동과 무관한 물체를 놓쳐 최하위 성능을 보인다.</li>
+<li>텍스트만 주는 블라인드 설정에서 정확도가 급락(Videollama3-7b 22.9%, Gemini 1.5 pro 35.9%, LongVA 21.8%)해, 문항을 텍스트만으로는 못 푼다는 점(진짜 영상 이해가 필요함)을 확인한다.</li>
+<li>설계 근거를 뒷받침하는 세부 분석: 회상 간격 $\Delta$가 커질수록 정확도가 49% → 33.3%로 하락(질문 시점 무작위화의 타당성), 시선-물체 거리가 멀수록 55% → 30%로 하락(주변부 질문이 더 어려움), 물체 크기가 클수록 정확도가 오름(작은 물체를 자주 놓침).</li>
+<li>의의: 시선 기반 주의를 질문 생성에 통합한 최초급 LEU 벤치마크로, 현행 VLM이 실제 AR의 주의 중심·자연어·진행 중 질문에 취약함을 정량적으로 드러내고, 주의 인지형(attention-aware) 데이터셋과 모델의 필요성을 제시한다.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<ul>
+<li>시선을 사용자 주의의 대리 지표로 가정하지만, 청각 입력이나 인지 상태 같은 다중 모달 주의의 복잡성을 전부 담지는 못한다.</li>
+<li>기반 영상(AEA·Nymeria)이 주로 일상 활동이라 산업·의료 등 특수 AR 도메인이 빠져 있고, 질문이 모두 영어다.</li>
+<li>Perception Sampler가 고정된 2D 가우시안($\theta=400$ 픽셀)이라 모든 과제·개인에 일반화되지 않을 수 있다. 향후 추가 모달리티, 적응형 주의 모델링, 개방형(open-ended)·다국어 질문 확장이 과제로 남는다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Egocentric Vision</strong>: 시선 신호를 질문 생성의 1급 요소로 끌어올린 설계는 1인칭 영상 이해 연구에 직접적으로 유용하다. 특히 &quot;주변부 물체일수록 어렵다&quot;, &quot;질문 시점이 멀수록 성능이 떨어진다&quot;는 결과는 장기 메모리·검색 모듈을 평가·설계할 때 참고할 진단 축이 된다.</li>
+<li><strong>Hand-Object Interaction</strong>: 이 벤치마크는 시선-물체 거리로 대상 물체를 뽑지만, 실제 조작(손-물체 상호작용) 순간은 주의와 강하게 결부된다. GOTS의 시선 기반 샘플링을 손-물체 접촉/조작 신호로 확장하면 &quot;무엇을 만졌는가&quot; 중심의 더 정밀한 질문·평가가 가능할 것으로 보인다(현재 논문은 손 신호를 직접 다루지 않으므로 잠재적 확장 관점).</li>
+<li><strong>Spatial Audio</strong>: 저자들도 한계에서 청각 입력을 주의의 미포함 요소로 명시했다. 공간 음향(spatial audio) 단서를 주의 모델에 결합하면 시야 밖 사건까지 포괄하는 질문 생성이 가능해질 수 있어, 우리의 공간 음향 관점과 자연스럽게 이어진다(논문 내 실험 근거는 없는 잠재적 연결).</li>
+</ul>
+<p>--- 참고: <a href="https://arxiv.org/abs/2409.10917" target="_blank">AMEGO (Active Memory from long EGOcentric videos)</a>, <a href="https://arxiv.org/abs/2402.13349" target="_blank">Aria Everyday Activities dataset</a></p>
+  </div>
+</article>
+<article class="card" id="paper2">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>EgoTraj: Real-World Egocentric Human Trajectory Dataset for Multimodal Prediction</h2>
+    <p class="lead">Meta Quest Pro 헤드셋을 쓴 75명이 실제 도심을 자유롭게 걸으며 수집한, 6DoF 머리 자세·3D 시선(gaze)·에고센트릭 RGB 영상·장면 주석을 시간 동기화해 담은 최초 규모의 1인칭(egocentric) 보행 궤적 예측 데이터셋을 공개하고, 여러 최신 예측 모델을 벤치마킹한 연구다.</p>
+    <div class="authors">Ahmad Yehia, Tianyi Wang, Jiseop Byeon, Kun Qian, Christian Claudel (UT Austin 토목·건축·환경공학과), Junfeng Jiao (UT Austin 건축대학), Abduallah Mohamed (Meta Reality Labs)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-05-18</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2605.19004" target="_blank">arXiv:2605.19004</a> <a class="pill pdf" href="https://arxiv.org/pdf/2605.19004" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2605.19004" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2605.19004v1/egotraj_intro.png" alt="EgoTraj 개요: (a) Meta Quest Pro로 RGB 영상·6DoF 머리 자세·시선을 동기 기록하는 프로토콜, (b) 횡단보도 등 사회적 상호작용이 있는 대표 에고센트릭 프레임, (c) 시각장애인 보조 내비게이션 등 응용" loading="lazy"><figcaption>EgoTraj 개요: (a) Meta Quest Pro로 RGB 영상·6DoF 머리 자세·시선을 동기 기록하는 프로토콜, (b) 횡단보도 등 사회적 상호작용이 있는 대표 에고센트릭 프레임, (c) 시각장애인 보조 내비게이션 등 응용</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<p>사람의 이동 궤적을 예측하는 연구는 오랫동안 발전해 왔지만, 대부분 <strong>조감도(bird&#x27;s-eye view, BEV)</strong>나 고정 카메라로 찍은 3인칭(third-person) 데이터셋에 의존했다. ETH/UCY는 보행자 궤적 예측의 표준 벤치마크가 되었고, Stanford Drone Dataset, inD, nuScenes, Waymo Open, JRDB 등은 규모와 대상 다양성을 넓혔다. 하지만 이들은 본질적으로 &quot;사람이 어디로 움직였는가&quot;만 기록할 뿐, &quot;사람이 장면을 어떻게 인식하고 시선·주의가 미래 행동을 어떻게 좌우하는가&quot;는 담지 못한다.</p>
+<p>한편 1인칭 시각(egocentric vision) 쪽에서는 Ego4D, Aria Digital Twin, Aria Everyday Activities, Nymeria 같은 대규모 데이터셋이 나왔지만, 대개 행동 인식(action recognition)이나 영상 이해가 목적이어서 착용자 본인의 이동 궤적 예측에는 초점이 약하다. 궤적 예측을 겨냥한 에고센트릭 데이터셋(KrishnaCam, EgoMotion, FPL, EgoNav, LookOut, EgoCogNav 등)도 등장했지만, 규모가 작거나 단일 참가자에 그치거나 실내로 제한되거나 의도(intent) 추론에 필요한 동기화 시선 데이터가 빠져 있는 한계가 있었다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>기존 3인칭 데이터는 보행자의 <strong>인식·계획·행동 개시</strong>를 1인칭 관점에서 모델링하지 못한다. 그래서 대부분의 예측 방법은 과거 궤적과 장면 맥락에만 의존하고, 정작 의도와 직결되는 단서(시선, 주의)를 활용하지 못한다. 시각신경과학에서는 시선이 이동 행동보다 1~2초 앞서 목표 지점(방향 전환점, 장애물, 횡단 기회)을 향한다는 사실이 알려져 있는데, 이런 예측적(anticipatory) 신호를 담은 실세계 데이터가 없었다.</p>
+<p>또한 AR 안경 같은 실제 착용 기기는 빠른 자기운동(ego-motion), 시점 변화, 불안정한 영상, 저전력 센서라는 현실적 난관을 동반하는데, 기존 에고센트릭 궤적 데이터셋 중 이런 AR 스타일 센싱을 쓴 것은 극소수였다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>실세계 도심에서 수집한 <strong>멀티모달 에고센트릭 보행 궤적 예측</strong> 데이터셋의 부재를 메우는 것이 핵심 주제다. 저자들은 6DoF 머리 자세, 프레임별 3D 시선 벡터, 에고센트릭 RGB 영상, 장면 주석을 동기화해 함께 제공하는 첫 대규모 데이터셋 EgoTraj를 제안하고, 이를 통해 시선 기반(gaze-informed) 궤적 예측을 자연스러운 보행 환경에서 연구할 수 있게 한다.</p>
+<h3 class="sec">연구 방법</h3>
+<p><strong>데이터 수집.</strong> 참가자는 Meta Quest Pro(MQPro)를 풀컬러 패스스루 모드로 착용한다. 헤드셋의 패스스루 RGB 카메라, 적외선 시선 추적 카메라 2개, inside-out 추적 카메라 4개, 6축 IMU를 활용하고, 커스텀 Unity 앱이 내장 시각-관성 SLAM과 연동해 6DoF 머리 자세, 3D 시선 원점·방향, RGB 영상을 $30\,\text{Hz}$로 시간 동기 기록한다.</p>
+<p><strong>녹화 프로토콜.</strong> 도심에 정의된 7개 waypoint(랜드마크) 중 두 곳을 오가되, 경로는 참가자가 자유롭게 선택하도록 해 자연스러운 길찾기와 즉흥적 상호작용을 유도했다. 세션은 최대 15분(평균 8분)으로 제한했다. 7개 랜드마크로 21개의 출발-도착 쌍이 생기며, 75명 중 31명은 촬영 지역이 초행이었다. 동일한 랜드마크 쌍 사이의 경로가 정해진 틀을 따르지 않았음을 동적 시간 왜곡(Dynamic Time Warping, DTW) 거리로 확인했다(쌍 내 중앙값 $122.8\,\text{m}$, 범위 $[19.3,\,379.4]\,\text{m}$).</p>
+<p><strong>참가자·윤리.</strong> $N=75$명(각 1세션, 중복 없음), 18~38세, 14개 국적, 성별 균형. IRB 승인, 서면 동의를 받았고 개인정보 보호를 위해 EgoBlur로 얼굴과 차량 번호판을 자동 검출·블러 처리했다.</p>
+<p><strong>데이터 처리.</strong> 원시 텔레메트리는 세션당 CSV로 $30\,\text{Hz}$ 기록되고, 모든 신호를 30Hz 영상 타임라인에 리샘플링해 프레임별로 가장 가까운 타임스탬프에 정렬한다. 최종적으로 pose·gaze·video 세 그룹을 담은 세션당 HDF5 파일로 패키징한다.</p>
+<p><strong>장면 주석.</strong> 비전-언어 모델(vision-language model, VLM) <strong>Qwen2.5-VL-7B-Instruct</strong>로 1fps 샘플링한 38,606 프레임에 대해 주변 맥락·교통 활동·시선 고정 대상·단기 이동 의도를 담은 구조화 서술을 생성했다. 사고연쇄(chain-of-thought)와 최대 2회 재프롬프트로 구조 준수율 96%, 사람 두 명의 교차 검토로 93% 일치율을 얻었다.</p>
+<p><strong>시선 보정.</strong> 세션별 2차(quadratic) 보정 모델로 시선 yaw-pitch 각을 영상 픽셀 좌표 $(u,v)$로 사상해, 3D 시선을 영상 평면에 직접 투영할 수 있게 했다.</p>
+<p><strong>시각화.</strong> trajectory·gaze·video·annotation 4개 뷰를 동기화한 인터랙티브 검수 도구 <strong>EgoViz Dashboard</strong>를 개발해 동기화 드리프트 탐지와 품질 관리에 활용했다.</p>
+<p><strong>벤치마킹.</strong> 관측창 $T_{\text{obs}}=1.5\,\text{s}$로 미래 $T_{\text{pred}}=3.5\,\text{s}$를 예측하며, 세션 단위 80/10/10 분할로 학습·검증·평가한다. 지표는 평균 변위 오차(Average Displacement Error, ADE), 최종 변위 오차(Final Displacement Error, FDE), 그리고 머리 회전에 대한 $L_1$ 회전 오차다. 베이스라인으로 Constant Velocity, Linear Extrapolation, Multimodal Transformer, CXA-Transformer, EgoCast를 에고센트릭 6DoF 입력에 맞게 적응시켜 비교했다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p><strong>데이터셋 규모.</strong> 75세션, 누적 10.7시간, 115만(1.15M) RGB 프레임, 누적 보행 거리 46.73km, 평균 보행 속도 $1.25\,\text{m/s}$. 기존 에고센트릭 궤적 데이터셋과 비교하면 EgoTraj는 야외 전용이면서 참가자 75명으로 가장 많고, 시선·6DoF·장면 주석을 모두 갖춘 유일한 축에 든다.</p>
+<p><strong>베이스라인 비교(Table 2, 단위 m).</strong> 신경망 시퀀스 모델이 고전적 운동학 외삽을 일관되게 앞선다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>모델</th><th class="num">ADE↓</th><th class="num">FDE↓</th><th class="num">L1 head↓</th></tr></thead><tbody><tr><td>Const_Vel</td><td class="num">0.24</td><td class="num">0.35</td><td class="num">0.82</td></tr><tr><td>Lin_Ext</td><td class="num">0.26</td><td class="num">0.39</td><td class="num">1.39</td></tr><tr><td>M_Transformer</td><td class="num">0.20</td><td class="num">0.32</td><td class="num">0.74</td></tr><tr><td>CXA-Transformer</td><td class="num">0.19</td><td class="num">0.29</td><td class="num">0.69</td></tr><tr><td>EgoCast</td><td class="num"><strong>0.16</strong></td><td class="num"><strong>0.28</strong></td><td class="num">0.78</td></tr></tbody></table></div>
+<p>EgoCast가 궤적 오차에서 최고(ADE 0.16, FDE 0.28), CXA-Transformer가 머리 회전 오차에서 최고(0.69)를 기록했다.</p>
+<p><strong>모달리티 어블레이션(Table 3, CXA-Transformer 기준).</strong> 자기운동($\mathcal{Y}$)만 쓸 때 ADE 0.19에서, 장면 분할($\mathcal{S}$) 추가로 0.16, 시선($\mathcal{G}$) 추가로 0.15까지 낮아진다. 사회적 표현 중에서는 자세(pose $\mathcal{P}$)가 바운딩 박스나 중심점보다 우수했다. 전체 조합 $\mathcal{Y}+\mathcal{P}+\mathcal{S}+\mathcal{G}$가 최고 성능(ADE 0.12, FDE 0.23, 회전 0.58)을 냈다. 시선이 풍부한 장면·사회 맥락이 있어도 추가 예측 신호를 준다는 점이 핵심이다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>모달리티</th><th class="num">ADE↓</th><th class="num">FDE↓</th><th class="num">L1 head↓</th></tr></thead><tbody><tr><td>$\mathcal{Y}$ (자기운동)</td><td class="num">0.19</td><td class="num">0.29</td><td class="num">0.69</td></tr><tr><td>$\mathcal{Y}+\mathcal{S}$ (+장면)</td><td class="num">0.16</td><td class="num">0.26</td><td class="num">0.74</td></tr><tr><td>$\mathcal{Y}+\mathcal{G}$ (+시선)</td><td class="num">0.15</td><td class="num">0.26</td><td class="num">0.69</td></tr><tr><td>$\mathcal{Y}+\mathcal{P}+\mathcal{G}$</td><td class="num">0.12</td><td class="num">0.24</td><td class="num">0.63</td></tr><tr><td>$\mathcal{Y}+\mathcal{P}+\mathcal{S}+\mathcal{G}$ (전체)</td><td class="num"><strong>0.12</strong></td><td class="num"><strong>0.23</strong></td><td class="num"><strong>0.58</strong></td></tr></tbody></table></div>
+<p><strong>일반화(Table 4).</strong> 참가자 무작위 분할 외에 waypoint 쌍 3개를 통째로 뺀 분할, 초행 참가자 8명을 뺀 분할에서도 전체 조합이 가장 강했고, ADE가 0.12 → 0.14 → 0.14로 완만하게만 증가했다. 즉 특정 경로 템플릿에 과적합하지 않고 새로운 랜드마크 쌍·초행 참가자에도 전이된다.</p>
+<p><strong>의의.</strong> EgoTraj는 AR 기반 인식·내비게이션, 시각장애인 보조 시스템 연구를 위한 도전적 벤치마크를 제공하며, 시선과 장면 맥락이 순수 운동 단서를 넘어 예측적 정보를 준다는 점을 실증했다. 데이터셋·코드·EgoViz Dashboard는 공개된다(github.com/yehiahmad/EgoTraj).</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li>도심 야외 보행에 특화되어 실내·비보행 상황은 다루지 않는다.</li>
+<li>상호작용하는 주변 사람의 자세·박스·중심점은 YOLOv8-Pose, 장면 분할은 OneFormer, 깊이는 Depth Anything V2 등 오프더셸프(off-the-shelf) 모델로 유도한 것이라 이들 추정 오차가 성능에 섞여 든다.</li>
+<li>궤적 예측 자체는 새 모델을 제안하기보다 기존 방법을 적응·비교한 벤치마킹 수준이다. 가장 근접한 EgoNav/LookOut/EgoCogNav는 코드가 공개되지 않아 직접 비교하지 못하고 대체 베이스라인을 썼다.</li>
+<li>세션당 최대 15분의 단기 예측(3.5초)에 초점을 두어 장기 내비게이션 계획은 범위 밖이다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Egocentric Vision</strong>: 6DoF 머리 자세·3D 시선·RGB·언어 주석을 프레임 단위로 동기화한 실세계 1인칭 데이터 구축·정렬·품질 관리(EgoViz Dashboard, 시선-픽셀 2차 보정) 파이프라인은, 우리가 에고센트릭 멀티모달 데이터를 다룰 때 그대로 참고할 만한 실무 레퍼런스다. 특히 시선이 행동보다 1~2초 앞서는 예측적 신호라는 관찰은 의도 인식 과제 설계에 직접 쓸 수 있다.</li>
+<li><strong>Hand-Object Interaction</strong>: 이 논문은 손-객체 상호작용을 직접 다루지 않지만, &quot;시선이 다음 행동의 목표를 미리 가리킨다&quot;는 원리는 손이 잡으려는 객체를 예측하는 문제로 옮겨 볼 수 있다. 시선 투영 좌표 $(u,v)$를 손 조작 대상 예측의 앵커로 삼는 방식이 자연스럽게 연결된다.</li>
+<li><strong>Spatial Audio</strong>: 서론에서 예측된 궤적을 시각 오버레이·햅틱·청각 안내로 사용자에게 전달하는 보조 내비게이션(물체 에코로케이션을 공간 오디오로 변환하는 안경 등)을 언급한다. EgoTraj의 6DoF 머리 자세·시선 스트림은 공간 오디오 렌더링에 필요한 머리 방향·주의 방향 정보를 제공하므로, 궤적·시선 예측을 공간 음향 기반 보행 안내로 잇는 멀티모달 연구의 실데이터 기반이 될 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper3">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>Towards in-the-wild Egocentric 3D Hand-Object Pose Estimation</h2>
+    <p class="lead">실험실 밖 자연스러운 1인칭(egocentric) 영상에서 두 손과 물체의 3D 자세를 한 번의 forward pass로 추정하기 위해, 손-물체 접촉(contact)에 기반한 대규모 실환경 데이터셋 <strong>EPIC-Contact</strong>와 손 사전정보(hand prior)로 물체 특징을 조건화하는 트랜스포머 <strong>HOPformer</strong>를 제안한다.</p>
+    <div class="authors">Siddhant Bansal, Zhifan Zhu, Jiahe Zhao, Dima Damen (University of Bristol); Shashank Tripathi, Michael J. Black (Max Planck Institute for Intelligent Systems, Tübingen)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-06-29</span> · <span class="pub-venue">🏛 ECCV 2026</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2606.30598" target="_blank">arXiv:2606.30598</a> <a class="pill pdf" href="https://arxiv.org/pdf/2606.30598" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2606.30598" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2606.30598v1/x1.png" alt="(왼쪽) 특수 장비가 필요한 실험실 MoCap 데이터셋과 달리, EPIC-Contact는 조밀하고 일대일 대응(bijective)되는 접촉 주석에서 유도한 3D 손-물체 메시를 갖춘 다양한 실환경 상호작용을 제공한다. (오른쪽) 기존 학습 기반 방법은 강한 손 사전정보를 활용하지 못해 실환경에서 일반화에 실패하는 반면, HOPformer는 물체 특징을 손 사전정보로 강화해 우수한 성능을 낸다." loading="lazy"><figcaption>(왼쪽) 특수 장비가 필요한 실험실 MoCap 데이터셋과 달리, EPIC-Contact는 조밀하고 일대일 대응(bijective)되는 접촉 주석에서 유도한 3D 손-물체 메시를 갖춘 다양한 실환경 상호작용을 제공한다. (오른쪽) 기존 학습 기반 방법은 강한 손 사전정보를 활용하지 못해 실환경에서 일반화에 실패하는 반면, HOPformer는 물체 특징을 손 사전정보로 강화해 우수한 성능을 낸다.</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>손-물체 자세 추정(Hand-Object Pose Estimation)</strong>: 손과 물체의 3D 자세를 함께 추정하는 연구는 대부분 물체 템플릿이 알려져 있다고 가정한다. 다수는 최적화 기반이고, 학습 기반으로는 ARCTIC 데이터셋의 ArcticNet-SF와 JointTransformer가 가장 가깝다. 둘 다 인코더-디코더 구조로 손과 물체 자세를 회귀하는데, ArcticNet-SF는 ResNet-50 백본을, JointTransformer는 DINOv2 백본을 쓴다.</li>
+<li><strong>손 자세 추정(Hand Pose Estimation)</strong>: HaMeR, WiLoR처럼 대규모 3D 손 데이터와 개선된 아키텍처로 다양한 장면에서 강건하게 손을 복원하는 방법들이 등장했다. 다만 이들은 손만 다룬다.</li>
+<li><strong>손-물체 접촉 주석(Contact Annotation)</strong>: 대부분의 손-물체 데이터셋은 통제된 실험실 환경에서 MoCap으로 수집됐다. 실환경 데이터셋으로는 MOW가 유일하지만 물체 자세가 대략적으로만 검증됐고 세밀한 접촉은 무시됐다. 한편 전신(body) 자세 분야의 DECO는 &quot;정점 페인팅(vertex painting)&quot; 방식으로 접촉 영역을 라벨링하고, PICO는 이를 물체로 전이하는 방법을 제시했다. 이 논문은 이 흐름을 1인칭 손-물체 이미지에 적용한다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>실환경 1인칭 RGB에서 정확한 3D 손-물체 자세를 추정하는 일은 심한 상호 가림(occlusion)과 모호한 접촉 때문에 어렵다. 근본 병목은 <strong>지도학습 신호(supervision)의 부족</strong>이다.</p>
+<ul>
+<li>실환경 상호작용을 학습·평가하려면 손과 물체 모두의 3D 정답 자세가 짝지어진 이미지가 필요하다.</li>
+<li>지금까지 이런 3D 정답은 값비싼 MoCap으로만 얻어졌고, 세심한 캘리브레이션이 필요해 널리 쓰기 어렵다. 게다가 이런 데이터는 배경이 단순하고 정돈되어 실제 1인칭 장면의 복잡함을 반영하지 못한다.</li>
+<li>또한 기존 손-물체 자세 추정 방법은 손과 물체 자세 사이의 상호작용을 제대로 모델링하지 못해 실환경에서 성능이 떨어진다.</li>
+</ul>
+<h3 class="sec">연구 주제</h3>
+<p>&quot;실환경(in-the-wild) 1인칭 3D 손-물체 자세 추정&quot;을 다룬다. 두 가지를 함께 푼다. (1) MoCap 없이도 확장 가능한 3D 지도학습 신호를 어떻게 얻을 것인가, (2) 손이 물체를 추론하도록 돕는 모델을 어떻게 설계할 것인가. 알려진 물체 카테고리를 한 손 또는 두 손이 다루는(또는 표면에 놓인) 이미지에서 각 손과 물체의 자세를 추정하는 것이 목표다.</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">1) EPIC-Contact 데이터셋</h4>
+<p>EPIC-Kitchens의 안정적 파지(stable-grasp) 구간 클립을 재료로, 손과 물체에 <strong>일대일 대응되는 3D 접촉</strong>을 수작업으로 주석한다. 세 단계로 구성된다.</p>
+<ul>
+<li><strong>손 접촉 페인팅</strong>: 표준 778개 정점 MANO 손 메시를 균일 세분해 만든 $N_V=3106$개 정점 위에 접촉 영역을 페인팅한다. 클립(영상)을 보며 주석하므로 가려진 접촉 영역까지 추론해 라벨링할 수 있다. 주석자 간 일치도는 Fleiss&#x27; Kappa $\kappa_h = 0.61$.</li>
+<li><strong>물체로의 접촉 전이</strong>: 손을 엄지·네 손가락·손바닥 세 영역으로 나누고 각 영역을 2자유도(2-DoF) &quot;접촉 축(contact axis)&quot;으로 매개화한다. 축의 시작점과 방향을 두 번 클릭하는 방식으로, 최대 여섯 번의 클릭만에 손-물체 일대일 대응을 얻는다. 물체 메시의 크기는 VLM(Gemini 2.5)으로 부위별(비등방) 스케일을 추정하며, 검증 결과 평균 절대 오차(MAE) 0.94 cm(상대 오차 5.9%)를 달성했다. 물체 접촉 주석 일치도는 $\kappa_o = 0.62$.</li>
+<li><strong>EC-fit(EPIC-Contact Fitting)</strong>: 접촉 주석을 자세가 부여된(posed) 3D 손-물체 메시로 바꾸는 최적화 파이프라인. 손은 WiLoR로 초기화하고, 물체는 무작위 자세와 카테고리 사전정보를 포함한 다중 초기화를 사용한다. 접촉 손실 $\mathcal{L}_{con}$, 가림을 고려한 마스크 손실(가려진 영역을 제외하고 IoU 정렬), 관통 손실 $\mathcal{L}_p$, 정규화 손실 $\mathcal{L}_{reg}$로 정제한다. 프레임 단위로 얻은 상대 자세는 클립 전체로 전파된다.</li>
+</ul>
+<p>결과적으로 9개 물체 카테고리(pan, plate, bowl, bottle, glass, mug, cup, can, saucepan)에 걸쳐 약 2.3K 클립(62.3K 프레임)이 만들어졌다.</p>
+<h4 class="subsec">2) HOPformer</h4>
+<p>하나의 RGB 이미지에서 두 손 자세, 물체 자세, 물체 클래스를 한 번의 forward pass로 예측하는 종단간(end-to-end) 트랜스포머.</p>
+<ul>
+<li><strong>입력 토큰</strong>: 일반 물체 토큰 $z_o$는 DINOv2(ViT-G) 인코더에서, 자세에 특화된 손 토큰 $z_h$는 WiLoR 인코더에서 얻는다.</li>
+<li><strong>교차 어텐션 디코더</strong>: 물체 토큰을 쿼리(query), 손 토큰을 메모리(key/value)로 삼아 12층(L=12) 트랜스포머 디코더에 통과시킨다. 각 층은 자기 어텐션, 손-물체 교차 어텐션, 위치별 피드포워드로 구성되어 물체 특징을 손 자세로 점진적으로 변조한다. 핵심 교차 어텐션은 $\text{CA}(X_o^{(\ell-1)}, X_h) = \delta\!\left(\frac{(X_o^{(\ell-1)}W_Q)(X_h W_K)^\top}{\sqrt{d_k}}\right)(X_h W_V)$ 형태다.</li>
+<li><strong>출력 헤드</strong>: 잔차 연결과 학습형 집계 모듈 $\mathcal{A}$로 상호작용 특징 $z_i$를 만든 뒤, DETR식으로 토큰을 분리해 오른손·왼손의 MANO 자세/형상과 물체 자세($\mathbf{R}_o \in \mathbb{R}^6$ 6D 회전, $\mathbf{T}_o \in \mathbb{R}^3$ 병진, 관절형 물체는 1D 회전)를 회귀한다.</li>
+<li><strong>물체 메시 검색</strong>: 물체 기하를 입력으로 요구하지 않기 위해, 분류 헤드로 물체 카테고리 $c$를 예측하고 사전 정의된 모델 풀 $\mathcal{M}$에서 해당 메시를 검색해 회귀된 자세를 적용한다.</li>
+<li><strong>학습 신호</strong>: 손·물체 각각에 2D/3D 키포인트, MANO 자세·형상, 약원근(weak-perspective) 카메라 손실을 두고, 물리적으로 일관된 접촉을 유도하는 접촉 기반 상호작용 손실을 결합한다. 추론 속도는 프레임당 약 107 ms로 최적화 기반 방법보다 훨씬 빠르다.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>평가는 실험실 3D 데이터셋 ARCTIC과 새로 만든 EPIC-Contact 양쪽에서 진행했으며, 비교 대상은 가장 가까운 학습 기반 방법인 ArcticNet-SF와 (현 ARCTIC 복원 SOTA) JointTransformer다.</p>
+<ul>
+<li><strong>ARCTIC(실험실)</strong>: 성공률(SR@0.05) <strong>82.4%</strong>로, 기존 SOTA 대비 <strong>+6.2 포인트</strong> 향상.</li>
+<li><strong>EPIC-Contact(실환경)</strong>: 성공률을 거의 두 배로 끌어올리면서 접촉 편차(contact deviation)를 약 75% 줄였다. 아래 표는 EPIC-Contact 벤치마크 수치다(↓ 낮을수록, ↑ 높을수록 좋음).</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">CDev ↓</th><th class="num">MRRPE_ro ↓</th><th class="num">MDev ↓</th><th class="num">MPJPE ↓</th><th class="num">SR@0.05 ↑</th><th class="num">SR@0.1 ↑</th></tr></thead><tbody><tr><td>ArcticNet-SF</td><td class="num">94.2</td><td class="num">166.7</td><td class="num">70.1</td><td class="num">44.8</td><td class="num">16.5</td><td class="num">55.9</td></tr><tr><td>JointTransformer</td><td class="num">30.1</td><td class="num">78.6</td><td class="num">20.0</td><td class="num">22.9</td><td class="num">17.6</td><td class="num">56.9</td></tr><tr><td>HOPformer (ours)</td><td class="num">20.7</td><td class="num">65.8</td><td class="num">11.4</td><td class="num">19.9</td><td class="num">29.8</td><td class="num">69.7</td></tr></tbody></table></div>
+<p>HOPformer는 접촉 편차 20.7 mm(최고), SR@0.05 29.8%(직전 최고 대비 +12.2), SR@0.1 69.7%(56.9%에서 상승) 등 거의 모든 지표에서 선두다.</p>
+<p><strong>의의</strong>: MoCap 스튜디오 없이도 접촉 기반 주석으로 실환경 3D 지도학습이 가능함을 보였고, 강한 손 사전정보를 물체 추정에 주입하면 가림이 심한 실환경에서 손·물체 자세가 함께 좋아진다는 점을 실증했다. EPIC-Contact, HOPformer 코드/체크포인트, EC-fit가 모두 공개됐다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>물체 템플릿 의존</strong>: 알려진 물체 카테고리(9종)를 가정하고 모델 풀에서 메시를 검색한다. CAD가 없는(CAD-free) 물체 복원은 시도했으나 실용적으로 만족스럽지 않아 향후 과제로 남긴다.</li>
+<li><strong>주석 파이프라인의 수작업/추정 요소</strong>: 접촉 주석은 사람이, 물체 스케일은 VLM이 추정하며(오차 존재), 최종 자세 메시도 사람이 검수·수정한다. 단안(monocular) 모호성이 근본적으로 남는다.</li>
+<li><strong>안정적 파지 구간 전제</strong>: 접촉을 한 프레임에 주석해 클립 전체로 전파하는 방식이라 안정적 파지 구간을 전제하며, 시간적 흔들림이 있으면 신뢰도가 낮게 매겨진다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Egocentric Vision</strong>: EPIC-Kitchens 1인칭 영상을 기반으로 실환경 가림·잡동사니 상황에서의 3D 손-물체 이해를 정면으로 다룬다. 1인칭 시점의 상호작용 인식/예측 연구에 바로 쓸 수 있는 대규모 접촉·자세 라벨(EPIC-Contact)과 빠른(107 ms/프레임) 추론 모델을 제공한다.</li>
+<li><strong>Hand-Object Interaction</strong>: &quot;손 사전정보로 물체 특징을 조건화한다&quot;는 교차 어텐션 설계, 그리고 손과 물체를 잇는 일대일 접촉 대응이라는 표현은 상호작용 모델링의 핵심 아이디어로, 파지·조작 분석이나 접촉 기반 의도 추정에 응용할 수 있다.</li>
+<li><strong>Spatial Audio</strong>: 손-물체 접촉 지점과 3D 자세는 소리가 발생하는 물리적 접점(예: 그릇 부딪힘, 병 놓기)의 공간적 근거가 된다. 1인칭 영상의 접촉 이벤트를 공간 오디오 단서와 결합하면, 소리의 발생 위치·시점을 시각적 접촉으로 뒷받침하는 오디오-비주얼 공간 추론 연구로 확장할 여지가 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper4">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>EgoForce: Forearm-Guided Camera-Space 3D Hand Pose from a Monocular Egocentric Camera</h2>
+    <p class="lead">머리에 쓴 단일 RGB 카메라(예: Aria 안경) 영상 하나만으로, 손의 상대 자세뿐 아니라 카메라 좌표계에서의 절대 3D 손 위치·자세(6-DoF)를 복원하는 프레임워크로, 팔뚝(forearm)을 미분 가능한 단서로 활용해 단안 깊이-스케일 모호성을 줄이고, 다양한 렌즈(원근/어안/광각 왜곡)에 하나의 네트워크로 대응한다.</p>
+    <div class="authors">Christen Millerdurai, Shaoxiang Wang, Yaxu Xie, Didier Stricker, Alain Pagani (독일인공지능연구소 DFKI, 카이저슬라우테른), Vladislav Golyanik (막스플랑크 정보학연구소 MPII, 자르브뤼켄)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-05-12</span> · <span class="pub-venue">🏛 SIGGRAPH 2026 (Conference Papers)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2605.12498" target="_blank">arXiv:2605.12498</a> <a class="pill pdf" href="https://arxiv.org/pdf/2605.12498" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2605.12498" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2605.12498v1/Teaser_V4.png" alt="EgoForce는 Aria 안경의 단안 RGB 카메라로 사용자 시점에서 양손의 절대 3D 자세와 형상을 복원한다. 하나의 통합 프레임워크로 다양한 카메라 모델을 지원하며, 정확한 3D 손 자세·형상(아래)과 자기중심 좌표계 내 절대 3D 손 위치(오른쪽 위)를 회복해 계량적으로 의미 있고 시점 일관된 3D 추적을 가능하게 한다." loading="lazy"><figcaption>EgoForce는 Aria 안경의 단안 RGB 카메라로 사용자 시점에서 양손의 절대 3D 자세와 형상을 복원한다. 하나의 통합 프레임워크로 다양한 카메라 모델을 지원하며, 정확한 3D 손 자세·형상(아래)과 자기중심 좌표계 내 절대 3D 손 위치(오른쪽 위)를 회복해 계량적으로 의미 있고 시점 일관된 3D 추적을 가능하게 한다.</figcaption></figure>
+<h3 class="sec">선행 연구</h3>
+<p>자기중심(egocentric) 단안 RGB 기반 3D 손 자세 추정은 빠르게 발전해 왔다. 대표적으로 HaMeR(Pavlakos et al., 2024), WiLoR(Potamias et al., 2024), METRO(Lin et al., 2021) 등은 트랜스포머로 손 메시를 복원하지만, 대부분 <strong>손목 같은 루트 관절 기준의 상대 자세(root-relative pose)</strong> 만 예측한다. 즉 미지의 이동(translation)과 스케일을 남긴 채 관절 좌표를 복원한다.</p>
+<p>카메라 좌표계의 절대 자세를 노리는 계열도 여러 갈래가 있다. 루트 깊이 회귀 방식(Moon et al.)은 인체 계측 가정에 의존해 불안정하고, 내부 파라미터를 아는 방식도 전역 스케일 추정이 필요하며, 암묵적 신경 표현(NVF 등)은 정확한 마스크와 수동 튜닝에 민감하다. HandDGP(Valassakis &amp; Garcia-Hernando, 2024)는 미분 가능한 전역 위치 결정을 통합했지만 여전히 핀홀 형태의 정규화된 대응 관계를 전제해, 극단적 광각 광학에서는 취약하다. 다중 뷰를 쓰는 UmeTrack(Han et al., 2022)은 VR 헤드셋용 카메라 좌표 추적을 목표로 하지만 여러 카메라가 필요하다. 월드 좌표 궤적을 추정하는 HaWoR(Zhang et al., 2025), Dyn-HaMR(Yu et al., 2025) 등은 SLAM·카메라 모션 추정·스케일 정렬에 의존해 드리프트와 스케일 불안정에 취약하다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>단안 자기중심 카메라 하나에서 절대 3D 손 자세를 얻는 일은 세 가지가 겹쳐 어렵다.</p>
+<ul>
+<li><strong>깊이-스케일 모호성</strong>: 단일 영상만으로는 손의 실제 크기와 거리를 구분할 수 없다.</li>
+<li><strong>잦은 자기 가림(self-occlusion)</strong>: 손이 서로 또는 팔에 가려진다.</li>
+<li><strong>광학 다양성</strong>: 원근·어안·원통형·구면 등 헤드셋마다 투영 모델이 달라, 하나의 단안 시스템이 여러 렌즈에 두루 일반화하기 어렵다.</li>
+</ul>
+<p>이 때문에 기존 모델은 기기별 전용 데이터셋으로 방대하게 학습해야 하는데, 이 데이터 수집은 비싸고 번거롭다. 게다가 상대 자세만으로는 물리 엔진, 파지(grasp) 계획, 충돌 회피, 손-물체 합성 같은 상호작용 중심 응용에 바로 꽂아 쓸 수 없다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문은 <strong>카메라 좌표계(camera-space)에서의 절대 3D 손 자세 추정</strong>을 다룬다. 목표는 헤드셋의 계량적 3D 좌표계에서 손의 완전한 6-DoF 자세(카메라 기준 이동 + 방향)를 단일 자기중심 카메라로부터 직접 복원하는 것이다. 핵심 통찰은 두 가지다.</p>
+<ul>
+<li>팔뚝은 강한 계량 단서를 준다. 팔뚝 길이가 전체 팔 크기와 강한 상관을 가진다는 인체 계측 통계(ANSUR 등)와 손-팔의 결합된 움직임을 이용하면, 손만 보는 방식보다 깊이-스케일 모호성을 훨씬 안정적으로 줄일 수 있다.</li>
+<li>2D 관절 관측을 픽셀 좌표가 아니라 <strong>광선(ray)</strong> 으로 표현하는 카메라 모델 불가지론적 리프팅을 쓰면, 원근·어안·왜곡 광각을 하나의 파이프라인으로 처리할 수 있다.</li>
+</ul>
+<h3 class="sec">연구 방법</h3>
+<p>전체는 단일 자기중심 RGB 프레임에서 카메라 좌표계의 손·팔뚝 메시를 복원하는 파이프라인이며, 좌/우 손-팔뚝에 독립적으로 적용된다.</p>
+<p><strong>표현 모델</strong></p>
+<ul>
+<li>손: MANO를 사용하며 자세 $\theta \in \mathbb{R}^{16\times6}$(6D 회전), 형상 $\beta \in \mathbb{R}^{10}$, 이동 $t_H \in \mathbb{R}^3$.</li>
+<li>팔뚝: 새로 제안한 미분 가능한 <strong>FARM(ForeArm Representation Model)</strong>. 형상 $\gamma \in \mathbb{R}^5$, 회전 $R \in \mathbb{R}^6$, 이동 $t_F \in \mathbb{R}^3$. FARM의 손목을 MANO 손목에 정렬해 하나의 통합 손-팔뚝 메시로 붙이고, 관통을 피하려 팔꿈치 방향으로 팔꿈치-손목 길이의 약 $3\%$ 오프셋을 준다.</li>
+</ul>
+<p><strong>HALO(Hand-Arm Latent-Shape &amp; Orientation) 아키텍처</strong></p>
+<ul>
+<li>입력: 원본 프레임에서 잘라낸 손 크롭 $224\times224$와 팔뚝 크롭 $112\times112$. 손과 팔뚝 영역을 따로 처리해 손의 미세 기하 디테일을 보존하고, 크로스 어텐션으로 둘을 융합해 운동학 구조를 포착한다.</li>
+<li><strong>크롭 내부 파라미터 토큰(CIT, Crop Intrinsics Token)</strong>: 렌즈별 비선형 왜곡을 언디스토션으로 제거한 뒤, 정규화된 크롭 기하·시야 파라미터를 토큰으로 인코딩해 각 패치 토큰에 잔차로 더한다. 이로써 서로 다른 렌즈·크롭 설정에서도 일관된 기하 추론이 가능하다.</li>
+<li>ViT 백본으로 시각 토큰을 얻고, 학습 가능한 쿼리(손 4개, 팔 3개)를 트랜스포머 디코더로 디코딩해 (i) 손·팔 2D 관절, (ii) 관절별 신뢰도, (iii) MANO 파라미터, (iv) FARM 파라미터를 예측한다.</li>
+<li><strong>팔뚝이 화면 밖일 때</strong>: 팔 토큰을 [MASK](missing-arm) 토큰으로 대체하고, 손 조건부 변분(variational) 사전분포가 그럴듯한 팔 표현을 추론해 연속성과 사실성을 유지한다.</li>
+</ul>
+<p><strong>Ray Space Solver(RSS)</strong> 루트 상대 예측을 카메라 좌표계로 올리는 폐형(closed-form) 해법. 2D-3D 대응을 원본 캘리브레이션 투영 모델의 방향 벡터(bearing vector), 즉 광선으로 두고 점-광선(point-to-ray) 제약을 푼다. 특정 픽셀 좌표계 의존을 없애 어안·왜곡 광각을 포함한 여러 카메라 모델에 일반화되며, SLAM·오도메트리·수동 스케일 보정 없이 프레임마다 안정적인 카메라 좌표 손 배치를 준다. 시간적 안정화를 위한 칼만 필터도 포함한다.</p>
+<p><strong>학습 목표</strong>: 손·팔뚝 2D 히트맵 손실, 루트 상대 3D 관절 손실, MANO 파라미터($\theta,\beta$) 손실, FARM 파라미터($\gamma,R$) 손실의 가중합으로 감독 학습한다(예: 히트맵 가중치 $\lambda_H^{\mathcal{M}}=20$, $\lambda_H^{\mathcal{F}}=100$ 등).</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>저자들은 세 개의 자기중심 벤치마크에서 EgoForce가 카메라 좌표 3D 정확도에서 최고 성능(state-of-the-art)을 달성했다고 보고한다. 핵심 수치는 다음과 같다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>지표</th><th>결과</th></tr></thead><tbody><tr><td>HOT3D에서 카메라 좌표 MPJPE(평균 관절 위치 오차)</td><td>기존 방법 대비 최대 28% 감소</td></tr><tr><td>다양한 카메라 구성 전반</td><td>하나의 통합 네트워크로 일관된 성능 유지</td></tr></tbody></table></div>
+<p>의의는 세 가지다. 첫째, 팔뚝이라는 계량 단서를 미분 가능한 형태로 통합해 단안 깊이-스케일 모호성을 손만 쓰는 방식보다 안정적으로 줄였다. 둘째, 광선 공간 해법과 CIT로 원근·어안·왜곡 광각을 기기별 재학습 없이 하나의 모델로 다룰 수 있음을 보였다. 셋째, 절대 6-DoF 손 자세를 계량 좌표계에서 직접 내주어, 물리 엔진·파지 계획·충돌 회피·손-물체 합성 등에 별도 정렬·스케일 휴리스틱 없이 바로 연결할 수 있다.</p>
+<h3 class="sec">한계</h3>
+<p>논문은 별도의 한계 절(Limitations)을 두고 있으나, 이번에 확보한 전문 범위가 방법 절까지여서 세부 문장은 확인하지 못했다. 방법 설계상 추론 가능한 제약은 다음과 같다. FARM는 팔뚝-손 크기의 통계적 상관에 기반한 소프트 인체 계측 사전분포를 쓰므로, 평균에서 크게 벗어난 체형에서는 스케일 단서가 약해질 수 있다. 또 팔뚝이 완전히 화면 밖일 때는 생성적 사전분포로 팔 방향을 추정하므로, 이 경우 절대 위치 회복의 강한 단서가 줄어들 여지가 있다. RSS는 카메라 캘리브레이션(투영 모델)이 알려져 있다고 전제한다.</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Egocentric Vision</strong>: Aria 같은 경량 스마트글라스의 단일 RGB 카메라만으로 절대 3D 손 위치를 계량 좌표계에서 복원한다는 점이, 머리 착용 기기 기반 자기중심 인식 연구와 직접 맞닿는다. CIT와 광선 공간 리프팅은 어안·광각 등 다양한 자기중심 광학을 하나의 파이프라인으로 다루는 실용적 설계 패턴이라, 자기중심 데이터에서 카메라 다양성 문제를 다룰 때 참고할 만하다.</li>
+<li><strong>Hand-Object Interaction</strong>: 상대 자세가 아닌 절대 6-DoF 손 자세를 내주므로, 손-물체 접촉·파지·충돌을 물리적으로 일관되게 다루는 상호작용 연구에 곧바로 입력으로 쓸 수 있다. 팔뚝 문맥을 손 자세 안정화에 쓰는 아이디어는 물체 조작 중 손이 부분적으로 가려지는 상황에서 특히 유용하다.</li>
+<li><strong>Spatial Audio</strong>: 직접적 관련은 없으나, 팔뚝이라는 보조 신체 단서로 단안 깊이 모호성을 푸는 접근은, 공간 오디오에서 방향/거리 단서를 보강 신호로 융합해 위치 모호성을 줄이는 멀티모달 전략과 발상이 통한다. 사용자 시점의 절대 손 위치는 향후 시청각-공간 상호작용에서 손 제스처를 3D 공간 사운드와 정합하는 앵커로 활용될 여지가 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper5">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>HRTFformer: A Spatially-Aware Transformer for Individual HRTF Upsampling in Immersive Audio Rendering</h2>
+    <p class="lead">희소하게 측정한 소수의 HRTF(머리 전달 함수, Head-Related Transfer Function)만으로 고해상도 개인 HRTF를 복원하는 문제를, 구면 조화(SH, Spherical Harmonic) 영역에서 동작하는 트랜스포머와 이웃 비유사도 손실(neighbour dissimilarity loss)로 풀어, 특히 극도로 희소한 조건에서 기존 방법 대비 음향적·지각적 정확도를 크게 끌어올린 연구다.</p>
+    <div class="authors">Xuyi Hu*, Jian Li*, Shaojie Zhang, Stefan Goetz, Lorenzo Picinali, Ozgur B. Akan, Aidan O. T. Hogg (*공동 1저자). 본문에 개별 소속 기관은 명시되지 않았으며, EU Horizon 2020 SONICOM 프로젝트(grant No. 101017743)의 지원을 받았다.</div>
+    <div class="pubinfo"><span class="pub-date">📅 2025-10-02</span> · <span class="pub-venue">🏛 IEEE Transactions on Multimedia 2026 게재 확정 (저널)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2510.01891" target="_blank">arXiv:2510.01891</a> <a class="pill pdf" href="https://arxiv.org/pdf/2510.01891" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2510.01891" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>대표 그림(HRTFformer의 업샘플링 워크플로)은 다음을 보여준다: 좌측의 저해상도 HRTF 구(sphere)를 구면 조화 변환(SHT)을 통해 SH 계수 시퀀스로 바꾸고, 트랜스포머 인코더-디코더가 전역·국소 공간 특징을 잠재 표현으로 압축·복원해 우측의 고해상도 HRTF 구를 재구성한다. 3, 5, 19, 100개 측정점의 네 가지 희소도 조건에서 강건성을 평가한다.</p>
+<h3 class="sec">선행 연구</h3>
+<p>HRTF는 개인의 머리·몸통·귓바퀴(pinna) 형태가 방향별 소리를 어떻게 필터링하는지를 담아, 공간 청취의 핵심 단서인 양이 시간차(ITD, Interaural Time Difference), 양이 레벨차(ILD, Interaural Level Difference), 그리고 귓바퀴가 만드는 단일귀(monaural) 스펙트럼 노치를 표현한다. 개인화되지 않은 일반 HRTF는 음원 위치 판단(특히 상하 방향)과 외재화(externalization)·몰입감을 떨어뜨리기 때문에 개인화가 중요하다.</p>
+<p>개인 HRTF 획득에서 직접 음향 측정이 여전히 &#x27;표준&#x27;이지만 시간·장비·무향 환경이 필요해 확장성이 낮다. 이를 완화하는 대안이 소수 측정점에서 고해상도 HRTF를 복원하는 공간 업샘플링이며, 크게 두 갈래로 나뉜다.</p>
+<ul>
+<li>보간 기반: 무게중심 보간(barycentric), SH 보간 등. 조밀한 측정에서는 잘 동작하나 희소해지면 급격히 나빠지고, 매끄러움·대칭 같은 고정된 수학적 가정 탓에 피험자별 복잡한 변이를 담기 어렵다.</li>
+<li>학습 기반: 오토인코더, 구면 CNN, 특히 GAN 계열(GEP-GAN, AE-GAN 등)이 희소 입력에서 강한 복원력을 보였다. 다만 대량의 고해상도 학습 데이터가 필요하고, 구조적 제약으로 최소 4~5개 측정점을 요구해 극희소 조건에 취약하다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>기존 ML 방법은 로그 스펙트럼 왜곡(LSD, Log-Spectral Distortion) 같은 객관 지표는 낮게 나오더라도, 그 값이 실제 지각 성능과 잘 대응하지 않는 경우가 많다. 특히 선행 연구는 고희소 조건에서 최신 기법조차 &#x27;평균적인(일반) HRTF&#x27;로 수렴해 개인화 목표에 어긋나는 경향을 지적했다. 즉, 이웃하는 음원 방향 사이의 국소 공간 변이 패턴을 장거리에 걸쳐 보존하는 능력과, 높은 업샘플링 배율에서의 일반화가 부족하다는 것이 핵심 문제다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>HRTF 공간 업샘플링을 트랜스포머의 어텐션으로 재정식화하여, SH 계수들 사이의 전역 공간 상관과 인접 방향 간 국소 연속성을 동시에 잡는 것을 목표로 한다. 이를 통해 극도로 희소한 측정 조건에서도 개인성을 유지하는 현실적인 고해상도 HRTF를 만들고자 한다.</p>
+<h3 class="sec">연구 방법</h3>
+<p><strong>입력/출력</strong>: 3차원 구면 위 HRTF를 트랜스포머가 다룰 수 있는 1차원 시퀀스로 만들기 위해 구면 조화 변환(SHT)을 적용한다. degree $l$, order $m$의 SH 계수는 $F_l^m = \int_0^{2\pi}\int_0^{\pi} f(\theta,\phi) Y_l^m(\theta,\phi)\sin(\phi)\,d\phi\,d\theta$로 구한다. 저해상도 SH 계수를 입력받아 고해상도 SH 계수를 출력한 뒤 역변환으로 HRTF를 복원한다.</p>
+<p><strong>모델 구조 (인코더-디코더)</strong>:</p>
+<ul>
+<li>인코더: 트랜스포머 블록(자기어텐션으로 계수 간 전역 관계 포착)과 합성곱 블록(국소 특징 추출 및 다운샘플링)을 번갈아 쌓아 128차원 잠재 표현 $\mathbf{z}$로 압축한다. 그룹 질의 어텐션(grouped query attention)으로 각 헤드가 서로 다른 공간 패턴에 집중하게 한다.</li>
+<li>디코더: 트랜스포머 블록의 표준 피드포워드 층을 반복 투영(iterative projection) 메커니즘으로 교체해, 반복적인 업/다운샘플링으로 저-고해상도 SH 계수 간 매핑을 안정적으로 학습한다.</li>
+<li>위치 인코딩: 저차 SH가 고차보다 중요하고 어텐션은 순서 불변이므로, 질의·키 벡터를 회전시키는 회전 위치 임베딩(RoPE, Rotary Position Embedding)을 사용한다.</li>
+<li>정규화: 평균 차감이 없는 토큰 스케일링(token scaling)을 사용해 SH 계수의 상대적 에너지 분포(물리·지각적으로 의미 있는 크기 정보)를 보존한다. $y = x / \sqrt{\frac{1}{C}\sum_{i=0}^{C-1}(x^i)^2 + \epsilon}$.</li>
+</ul>
+<p><strong>손실 함수</strong>: $\mathcal{L} = LSD + ILD + NDL$의 세 항으로 구성된다. LSD는 크기 스펙트럼 오차, ILD는 좌우 귀 응답 차이의 오차를 본다. 새로 제안한 이웃 비유사도 손실(NDL)은 각 위치의 HRTF와 상하좌우 네 이웃 평균의 편차 패턴을 목표 HRTF의 그것과 일치시켜, 인접 방향 간 크기 변화의 공간 연속성을 촉진한다. SONICOM 그리드가 고도별로 방위각이 일관되어 위치를 대략 규칙적 2D 격자로 색인할 수 있다는 근사를 이용한다.</p>
+<p><strong>학습 설정</strong>: 배치 8, 학습률 0.0002, 200 에폭, Adam, NVIDIA RTX 4090(24GB) 단일 GPU.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>SONICOM HRTF 데이터셋에서 3, 5, 19, 100개 초기 측정점의 네 희소도로 평가했고, 보간(barycentric, SH, SUpDEq)과 딥러닝(AE-GAN, Kalimotxo, GEP-GAN, IOA3D, MERL2 등) 9종을 비교했다. 지각 평가는 Barumerli 등의 베이지안 청각 정위(localization) 모델을 사용했다.</p>
+<p><strong>공간 단서 지표 (희소도 3, 낮을수록 좋음)</strong> — HRTFformer가 ITD·ILD·LSD 모두에서 최저 오차:</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">ITD</th><th class="num">ILD</th><th class="num">LSD</th></tr></thead><tbody><tr><td>HRTFformer (제안)</td><td class="num">17.50</td><td class="num">0.75</td><td class="num">4.20</td></tr><tr><td>IOA3D</td><td class="num">22.84</td><td class="num">1.00</td><td class="num">4.67</td></tr><tr><td>SYT-FSP-AE</td><td class="num">24.66</td><td class="num">1.28</td><td class="num">4.42</td></tr><tr><td>Kalimotxo</td><td class="num">30.46</td><td class="num">0.92</td><td class="num">4.49</td></tr><tr><td>SH (보간)</td><td class="num">78.61</td><td class="num">6.05</td><td class="num">9.96</td></tr><tr><td>Barycentric (보간)</td><td class="num">49.05</td><td class="num">7.50</td><td class="num">8.56</td></tr></tbody></table></div>
+<ul>
+<li>희소도 3, 5, 19에서 공간 단서와 지각 지표 모두 큰 폭으로 앞섰다. 희소도 3의 지각 평가에서 극 정확도 오차(Polar Accuracy Error)는 3.83으로 최고 성능이었다(예: GEP-GAN 5.22, Kalimotxo 10.45).</li>
+<li>다만 조밀한 입력(희소도 100)에서는 이점이 줄어 기존 최신 기법과 비슷한 수준이 된다. 저자들은 트랜스포머가 국소 디테일보다 전역 패턴을 강조하기 때문으로 본다.</li>
+<li>SH 표현 자체가 만드는 고유 오차는 전체 오차의 일부에 불과함을 분리 실험으로 보였다(ITD 30%, LSD 26%, ILD 10% 평균). 즉 남은 오차 상당 부분은 모델이 보완하며, 잔여 오차는 유한한 SH 차수의 본질적 한계에서 온다.</li>
+<li>계산 비용: HRTFformer는 270.60M 파라미터, 1041.53MB, 246.58 GFLOPs, 추론 0.15초로 GAN 계열(GEP-GAN 137.62M/0.05초 등)보다 무겁다. 그러나 HRTF 업샘플링은 오프라인 작업이라 실시간 제약이 없어 문제되지 않는다고 주장한다.</li>
+<li>절제(ablation) 연구: 인코더·디코더 양쪽 트랜스포머, RoPE, 토큰 스케일링, LSD+ILD+NDL 조합이 각각 성능에 기여함을 확인했고, 특히 NDL 추가가 국소 크기 변이 보존과 현실성 향상에 기여했다.</li>
+</ul>
+<p>의의: 객관 지표(LSD/ILD/ITD)와 지각 정위 정확도를 동시에 개선하면서, 특히 극희소 조건에서 개인성을 유지하는 HRTF 복원을 보여, 측정 부담을 줄이는 실용적 개인화 파이프라인에 한 걸음 다가섰다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li>모든 실험을 단일 데이터셋(SONICOM)으로만 수행했다. 서로 다른 측정 프로토콜의 데이터셋을 합칠 때의 일관성·호환성 문제 때문에 의도적으로 제한했으나, 데이터셋 간 일반화는 미해결 과제로 남는다.</li>
+<li>지각 평가가 실제 청취자가 아닌 계산 모델(베이지안 정위 모델)에 의존한다. 공간 현실감·외재화·개인 정위에 대한 주관 청취 실험이 아직 없다.</li>
+<li>데이터 다양성 부족으로 미지의 피험자에 대한 일반화가 제약될 수 있으며, 향후 합성 HRTF와 전이 학습으로 보완하려 한다.</li>
+<li>조밀 입력에서는 이점이 작고, 계산 비용은 GAN 계열보다 크다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li>Spatial Audio 관점: 개인 HRTF는 몰입형 공간 오디오 렌더링의 핵심으로, 소수 측정만으로 고해상도 개인화를 얻는 이 접근은 AR/VR 착용형 환경에서 사용자별 공간 음향을 구현하는 데 직접적으로 유용하다. SH 영역에서 어텐션으로 전역 공간 상관을 모델링한다는 아이디어는, 공간 오디오를 다른 모달리티와 결합하는 표현 학습에도 참고가 된다.</li>
+<li>Egocentric Vision 관점: HRTF는 착용자의 머리·귓바퀴 형태에 강하게 의존하는 1인칭(egocentric) 신호다. 헤드셋 카메라·형태 스캔 등 자기중심 시각 정보로부터 개인 해부 특징을 추정해 HRTF 개인화와 연결하면, 시청각 정합이 된 몰입형 경험을 만들 수 있다. NDL의 이웃 연속성 아이디어는 자기중심 영상의 시공간 국소 일관성 정규화와 개념적으로 통한다.</li>
+<li>Hand-Object Interaction 관점: 손-객체 상호작용에서 발생하는 소리의 방향·거리 단서를 정확히 렌더링하려면 개인화된 공간 음향이 필요하다. 시각으로 파악한 상호작용 위치와 개인 HRTF 기반 공간 오디오를 정렬하면, 상호작용 이벤트에 대한 다감각(멀티모달) 표현을 강화할 수 있다. 또한 희소 관측에서 고해상도 필드를 복원하는 트랜스포머 업샘플링 프레임은, 희소한 손-객체 접촉/자세 관측을 밀집 필드로 보간하는 문제에도 이식 가능한 방법론적 시사점을 준다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper6">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>Spatial Interpolation of Room Impulse Responses based on Deeper Physics-Informed Neural Networks with Residual Connections</h2>
+    <p class="lead">소수의 마이크 측정만으로 3차원 공간 전체의 RIR(공간 임펄스 응답, room impulse response)을 복원하기 위해, SIREN(사인 활성화 함수 기반 신경망)에 잔차 연결(residual connection)을 결합한 깊은 PINN(물리 정보 신경망, physics-informed neural network) 구조를 제안해 깊이를 늘려도 안정적으로 학습되고 반사음 성분까지 정확히 추정함을 보인 연구다.</p>
+    <div class="authors">Ken Kurata, Gen Sato, Izumi Tsunokuni, Yusuke Ikeda (도쿄전기대학 / Tokyo Denki University, Japan)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2025-12 (프리프린트)</span> · <span class="pub-venue">🏛 프리프린트 (IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences 투고)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2512.22915" target="_blank">arXiv:2512.22915</a> <a class="pill pdf" href="https://arxiv.org/pdf/2512.22915" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2512.22915" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>논문의 Fig. 2가 핵심 그림이다. 절대 이미지 URL을 확보하지 못해 텍스트로 서술한다.</p>
+<p>Fig. 2는 세 부분으로 구성된다. (a) 기존 PINN의 은닉층 구조로, 완전연결(linear) 층과 활성화 함수를 단순히 쌓은 형태다. (b) 제안하는 은닉층 구조로, ResNet-18 유형의 잔차 블록을 도입해 각 블록에서 입력을 출력에 더한 뒤 $\frac{1}{2}$을 곱해 SIREN이 요구하는 입력 범위 $[-1, 1]$을 유지한다. (c) 전체 네트워크로, 입력은 공간 좌표 $(x, y, z)$와 시간 $t$이며, $N$개의 은닉층을 통과해 각 위치·시각의 RIR $\hat{h}_m$을 출력한다. 이 출력과 측정 RIR $h_m$으로 손실을 계산하고, 파동 방정식 잔차까지 포함한 총 손실 Eq.(3)을 역전파로 최소화한다.</p>
+<h3 class="sec">선행 연구</h3>
+<p>공간 상 소수 측정점에서 RIR을 복원하는 문제는 크게 세 갈래로 연구돼 왔다.</p>
+<ul>
+<li>모델 기반 압축 센싱(compressed sensing): 음장을 평면파나 점음원의 희소(sparse) 조합으로 표현한다. 희소 등가 음원법(sparse equivalent source method), Verburg 등의 희소 평면파 모델, Koyama 등의 직접음(점음원) + 잔향(평면파 + 저계수 행렬) 분리 모델 등이 있다.</li>
+<li>커널 능형 회귀(KRR, kernel ridge regression) 기반 최소제곱 해법: Ueno 등은 헬름홀츠 방정식을 KRR에 넣어 정확도를 높였고, Ribeiro 등은 직접음/초기 반사음용 커널과 잔향용 커널을 합쳐 사용했다.</li>
+<li>딥러닝 기반: Lluís 등의 U-Net 초해상(super-resolution) 접근, Fernandez-Grande 등의 GAN 기반 복원이 있으나, 데이터 구동 방식은 대량의 학습 데이터를 필요로 한다.</li>
+</ul>
+<p>이 한계를 줄이기 위해 물리 법칙을 손실 함수에 넣는 PINN이 도입됐다. 특히 사인 활성화를 쓰는 SIREN이 RIR 추정에 널리 쓰였고(Pezzoli 등, Olivieri 등의 3D 음장 복원), 저자들도 이전 연구에서 SIREN + 잔차 연결의 얕은(은닉층 4개, 256뉴런) 2D PINN을 제안한 바 있다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>기존 PINN 기반 RIR 추정 연구는 대부분 은닉층 수가 적은 얕은 구조로 실험했고, 네트워크 깊이(depth)가 성능에 미치는 영향은 체계적으로 검증된 적이 없다. 층을 단순히 늘리면 표현력은 커지지만, PINN에서는 기울기 소실·폭발로 학습이 불안정해져 오히려 정확도가 떨어질 수 있다. 또한 이 음향 역문제(acoustic-inverse problem)에서 tanh와 sin 중 어느 활성화 함수가 더 적합한지에 대한 직접 비교도 부족하다. 즉 &quot;깊이를 늘리면 RIR 추정이 좋아지는가, 어떤 활성화가 최적인가&quot;가 미해결로 남아 있다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>음원과 회절 물체가 없는 3차원 영역 $\Omega (\subset \mathbb{R}^3)$ 내부의 RIR을 소수 측정점에서 복원하는 역문제를 다룬다. 이 영역 안에서 RIR $h(\mathbf{x}, t)$는 동차 파동 방정식(homogeneous wave equation) $\frac{1}{c^2}\frac{\partial^2 h}{\partial t^2} - \nabla^2 h = 0$을 만족한다고 가정한다. 여기에 맞춰, 잔차 연결을 가진 깊은 SIREN 기반 PINN을 설계하고 활성화 함수·깊이·잔차 연결의 효과를 정량 비교하는 것이 주제다.</p>
+<h3 class="sec">연구 방법</h3>
+<p>손실 함수는 측정점에서의 데이터 오차항과 파동 방정식 잔차항의 합이다.</p>
+<p>$$\mathcal{L} = \mathcal{L}_{err} + \lambda \mathcal{L}_{pde}$$</p>
+<ul>
+<li>$\mathcal{L}_{err}$: 측정 RIR $h_m$과 추정 RIR $\hat{h}_m$의 평균제곱오차(MSE).</li>
+<li>$\mathcal{L}_{pde}$: 추정 영역 내 임의 점에서 파동 방정식 잔차의 크기. 필요한 2차 미분은 자동 미분(automatic differentiation)으로 계산한다.</li>
+<li>$\lambda = 1.0\times10^{-6}$로 데이터 충실도와 물리 일관성의 균형을 맞춘다.</li>
+</ul>
+<p>네트워크는 좌표 기반 암묵적 표현(implicit neural representation)으로, 입력 $(t, x, y, z)$를 받아 RIR을 출력하는 MLP다. ReLU·tanh는 반복 미분 시 고차 도함수가 소실되거나 0이 되는 문제가 있어, 고차 도함수 계산에 유리한 SIREN(사인 활성화)을 채택한다.</p>
+<p>핵심 제안은 <strong>PINNs-SIREN-Res</strong>로, SIREN에 잔차 연결을 넣은 깊은 구조다. ResNet-18 유형 블록을 쓰되, SIREN의 입력 범위 $[-1,1]$ 제약을 지키기 위해 입력과 출력을 더한 뒤 $\frac{1}{2}$을 곱하는 스케일링을 추가한다($R = N/2$개의 잔차 블록). 기존 SIREN+잔차 연구와는 입력을 주입하는 위치(input-injection point)가 다르다.</p>
+<p>실험 설정:</p>
+<ul>
+<li>방 크기 $6.0 \times 4.0 \times 2.7\,\text{m}^3$, 점음원 $(0, 1.5, 1.35)$, 잔향 시간 $T_{60} = 0.38\,\text{s}$.</li>
+<li>추정 영역은 방 중앙의 $0.3\times0.3\times0.3\,\text{m}^3$ 정육면체. 마이크 $M=100$개를 반지름 0.15 m 구면에 약 0.05 m 간격으로 등간격 배치.</li>
+<li>신호 길이 400 샘플, 표본화 주파수 8000 Hz. 측정 신호에 SNR 20 dB의 백색잡음을 더함. RIR은 이미지 소스법(image source method, 7차 반사까지)으로 SFS-toolbox를 사용해 생성.</li>
+<li>층 수 $N = 6, 10, 14, 18$, 층당 256 뉴런. Adam으로 50,000 iteration, 학습률 $1.0\times10^{-4} \to 1.0\times10^{-6}$ 지수 감쇠. $\omega_0 = 7$.</li>
+<li>평가: 추정 영역을 $14\times14\times14$ 격자(2744점)로 이산화, 잡음 없는 RIR을 정답으로 NMSE(정규화 평균제곱오차) 계산.</li>
+<li>비교 대상: PINNs-tanh, PINNs-tanh-Res, PINNs-SIREN, 그리고 제안하는 PINNs-SIREN-Res.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>각 방법의 여러 깊이 중 최저 NMSE 모델을 비교했다(값이 낮을수록 정확).</p>
+<p>전체 추정 영역 NMSE (dB, 최적 깊이 모델):</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">NMSE [dB]</th></tr></thead><tbody><tr><td>PINNs-tanh</td><td class="num">-2.6</td></tr><tr><td>PINNs-tanh-Res</td><td class="num">-6.7</td></tr><tr><td>PINNs-SIREN</td><td class="num">-12.5</td></tr><tr><td>PINNs-SIREN-Res (제안)</td><td class="num">-14.2</td></tr></tbody></table></div>
+<ul>
+<li>제안 방법이 PINNs-tanh 대비 약 11.6 dB, PINNs-tanh-Res 대비 7.5 dB, PINNs-SIREN 대비 1.7 dB 우수.</li>
+<li>PINNs-SIREN은 $N=14$에서 $N=18$로 깊어질 때 성능이 약 0.2 dB 하락했으나, 제안 방법은 오히려 0.4 dB 개선돼 깊이를 늘려도 계속 좋아졌다.</li>
+<li>tanh 계열은 잔차 연결이 있어야 깊이의 이점을 얻는다(PINNs-tanh-Res는 $N=6 \to 18$에서 약 3.9 dB 개선). SIREN 계열이 tanh 계열보다 수렴이 빠르고 안정적이다.</li>
+</ul>
+<p>보간(interpolation, 마이크 구 내부) 대 보외(extrapolation, 구 외부) NMSE (dB):</p>
+<div class="tbl-wrap"><table><thead><tr><th>영역</th><th class="num">PINNs-tanh</th><th class="num">PINNs-tanh-Res</th><th class="num">PINNs-SIREN</th><th class="num">PINNs-SIREN-Res</th></tr></thead><tbody><tr><td>보간</td><td class="num">-2.6</td><td class="num">-6.7</td><td class="num">-13.1</td><td class="num">-15.0</td></tr><tr><td>보외</td><td class="num">-2.5</td><td class="num">-6.7</td><td class="num">-12.1</td><td class="num">-13.7</td></tr></tbody></table></div>
+<p>초기/후기 구간 NMSE (dB, 0.025 s 기준 분할):</p>
+<div class="tbl-wrap"><table><thead><tr><th>구간</th><th class="num">PINNs-tanh</th><th class="num">PINNs-tanh-Res</th><th class="num">PINNs-SIREN</th><th class="num">PINNs-SIREN-Res</th></tr></thead><tbody><tr><td>초기(직접음 + 초기 반사)</td><td class="num">-2.5</td><td class="num">-8.3</td><td class="num">-17.1</td><td class="num">-17.5</td></tr><tr><td>후기(후기 잔향)</td><td class="num">-2.8</td><td class="num">-3.5</td><td class="num">-7.3</td><td class="num">-9.6</td></tr></tbody></table></div>
+<p>주파수 대역별 NMSE (dB):</p>
+<div class="tbl-wrap"><table><thead><tr><th>대역 [Hz]</th><th class="num">PINNs-tanh</th><th class="num">PINNs-tanh-Res</th><th class="num">PINNs-SIREN</th><th class="num">PINNs-SIREN-Res</th></tr></thead><tbody><tr><td>0 - 1000</td><td class="num">-7.2</td><td class="num">-13.2</td><td class="num">-21.2</td><td class="num">-23.7</td></tr><tr><td>1000 - 2000</td><td class="num">-1.3</td><td class="num">-5.5</td><td class="num">-12.7</td><td class="num">-14.6</td></tr><tr><td>2000 - 3000</td><td class="num">-1.0</td><td class="num">-4.8</td><td class="num">-10.2</td><td class="num">-12.0</td></tr><tr><td>3000 - 4000</td><td class="num">-0.8</td><td class="num">-3.9</td><td class="num">-8.1</td><td class="num">-9.4</td></tr></tbody></table></div>
+<p>의의: 제안 방법은 보간·보외 양쪽, 초기·후기 구간, 모든 주파수 대역에서 가장 정확했다. 특히 잔차 연결이 후기 잔향 성분 추정을 크게 개선했고(SIREN 대비 후기 구간 2.3 dB↑), SIREN이 초기 반사음까지 강한 정확도를 제공했다. SNR 20 dB 잡음에도 추정 신호가 백색잡음 같은 변동을 보이지 않아 잡음 강인성도 확인됐다. 결론적으로 음향 역문제용 &quot;깊고 안정적인 PINN&quot;을 설계하는 실용적 지침(활성화는 sin, 깊이 확장에는 잔차 연결)을 제시한다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li>저·중주파에서는 정확하지만, 파장이 짧아지는 고주파에서는 모든 방법의 정확도가 저하된다. 공간적으로 복잡한 고주파 음장 해상이 여전히 어렵다.</li>
+<li>후기 잔향 추정 정확도는 초기 구간보다 낮아 개선 여지가 있다.</li>
+<li>추정 영역이 0.3 m 정육면체로 좁고, 더 넓은 공간 영역으로의 확장은 향후 과제다.</li>
+<li>이미지 소스법 시뮬레이션으로만 검증했고 실제 측정·실환경 적용은 검증되지 않았다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Spatial Audio</strong>: 소수 마이크로 3D 공간 전체의 RIR을 복원하는 것은 공간 오디오 렌더링과 음장 재현의 기반이다. 임의 위치의 RIR을 물리 제약으로 얻는 방식은 청취자 이동에 따른 6-DoF 공간 음향 합성이나 몰입형 오디오에 직접 활용할 수 있다.</li>
+<li><strong>Egocentric Vision / 멀티모달</strong>: 좌표 $(x,y,z,t)$를 입력받아 물리량을 출력하는 좌표 기반 암묵적 표현(SIREN)은 NeRF류 신경 장면 표현과 같은 계열이다. 1인칭 시점 영상의 3D 공간 이해(scene geometry)와 음장(RIR)을 하나의 좌표 기반 표현으로 결합하면, 시청각 공간 정합(audio-visual spatial alignment)이나 시각 정보로 음향을 보강하는 멀티모달 표현 학습으로 확장할 수 있다.</li>
+<li><strong>Hand-Object Interaction</strong>: 물리 법칙(파동 방정식)을 손실에 넣어 데이터가 적어도 물리적으로 일관된 예측을 얻는 PINN 아이디어는, 접촉·마찰 등 물리 제약이 있는 손-물체 상호작용 모델링에서 소량 데이터로 물리 타당한 궤적·힘을 추정하는 접근에 참고가 된다. 특히 깊이를 늘리면서도 잔차 연결로 학습을 안정화하는 설계 지침은 일반적인 물리 정보 신경망 응용에 폭넓게 적용 가능하다.</li>
+</ul>
+  </div>
+</article>
+      <footer>생성: 2026-08-10 15:16 · 적합성은 abstract로 판단, 요약은 논문 전문 기반 작성</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>
