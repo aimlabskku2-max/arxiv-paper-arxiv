@@ -1,0 +1,27 @@
+C2Dex: Contact-Consistent Reconstruction and Retargeting for Dexterous Manipulation from Monocular Video
+
+arXiv ID   : 2608.07045
+Abstract   : https://arxiv.org/abs/2608.07045
+PDF        : https://arxiv.org/pdf/2608.07045
+HTML 전문  : https://arxiv.org/html/2608.07045v1
+프로젝트   : https://k-jie.github.io/C2Dex/
+메인 그림  : https://arxiv.org/html/2608.07045v1/pipeline.png
+
+저자       : Jie Ren, Zhehao Jiang, Yinhong Yang, Haorui Jia, Han Jiang,
+             Ben Li, Yao Yao, Cheng Lin, Qiu Shen, Zhenshan Bing,
+             Xiao-Xiao Long, Xun Cao
+소속       : Nanjing University (Ben Li: China Mobile Research Institute)
+교신저자   : Xiao-Xiao Long (xxlong@nju.edu.cn)
+v1 제출일  : 2026-08-07 (arXiv:2608.07045v1 [cs.RO] 07 Aug 2026)
+분류       : cs.RO (primary), cs.CV
+발표처     : 프리프린트 — 본문 각주 "This work has been submitted to the
+             IEEE for possible publication."
+키워드     : Dexterous Manipulation · Imitation Learning ·
+             Deep Learning in Grasping and Manipulation
+
+비고: 본 디제스트는 arXiv HTML 전문을 읽고 작성했으나, 작업 환경의 웹 요청
+     한도(HTTP 429)로 Section III 중반(식 11) 이후 — IV Experiments 전체와
+     V Conclusion — 은 확보하지 못했다. 초록/서론에서 확인된 수치
+     (DexYCB 57.78% vs 17.78%, TACO 26.67% vs 10.00%, 실물 로봇 재생
+     8개 태스크 24개 시연)만 인용했으며, 미확인 표 수치는 기재하지 않았다.
+     대표 figure(Fig. 1)의 이미지 절대 URL은 확보 완료.

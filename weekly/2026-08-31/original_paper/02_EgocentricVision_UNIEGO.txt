@@ -1,0 +1,17 @@
+UNIEGO: Proxies as Mediators for Unified Egocentric Video Representation Learning
+
+arXiv ID   : 2606.20559
+Abstract   : https://arxiv.org/abs/2606.20559
+PDF        : https://arxiv.org/pdf/2606.20559
+HTML 전문  : https://arxiv.org/html/2606.20559v1
+코드       : https://github.com/Wenhao-Chi/UNIEGO
+
+저자       : Wenhao Chi, Arkaprava Sinha, Dominick Reilly, Hieu Le, Srijan Das
+소속       : University of North Carolina at Charlotte
+v1 제출일  : 2026-06-18 (arXiv:2606.20559v1 [cs.CV] 18 Jun 2026)
+분류       : cs.CV, cs.LG
+발표처     : 프리프린트 (본문 1페이지에 "Preprint." 표기)
+
+비고: 본 디제스트는 PDF 전문(본문 + 부록 A~F)을 읽고 작성함.
+     arXiv HTML 페이지는 본 작업 환경의 네트워크 정책으로 직접 접근이 차단되어,
+     대표 figure의 이미지 절대 URL은 확보하지 못함.

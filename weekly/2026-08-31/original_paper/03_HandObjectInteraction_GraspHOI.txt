@@ -1,0 +1,39 @@
+GraspHOI: Full-Body 3D Human-Object Reconstruction with Finger-Level Grasps
+from a Single In-the-Wild Image
+
+arXiv ID   : 2608.28386
+Abstract   : https://arxiv.org/abs/2608.28386
+PDF        : https://arxiv.org/pdf/2608.28386
+HTML 전문  : https://arxiv.org/html/2608.28386v1
+TeX Source : https://arxiv.org/src/2608.28386
+메인 그림  : https://arxiv.org/html/2608.28386v1/Home_v2.1_pdf15.png
+파이프라인 : https://arxiv.org/html/2608.28386v1/Pipeline_v2.4_outlined.png
+
+저자       : Semin Kim, Haechan Shin, Jongyoo Kim
+소속       : Yonsei University
+이메일     : {hohosemin, haechanshin, jy.kim}@yonsei.ac.kr
+v1 제출일  : 2026-08-28 (arXiv:2608.28386v1 [cs.CV] 28 Aug 2026, 14:43:38 UTC)
+분류       : cs.CV (Computer Vision and Pattern Recognition)
+발표처     : 프리프린트 — arXiv abs 페이지에 Comments/학회 표기 없음
+DOI        : https://doi.org/10.48550/arXiv.2608.28386
+코드       : "Full pipeline code will be released." (초록 명시, URL 미공개)
+
+핵심 구성요소
+  카메라 내부 파라미터 : HumanFoV (CameraHMR 부속)
+  전신              : SAM 3D Body (MHR) -> SMPL-H 피팅
+  손                : HOI-DETR (손 박스 + 상호작용 링크) + WiLoR (MANO)
+  깊이              : Pixel-Perfect Depth (PPD) + MoGe-2 사전
+  물체 생성          : Hunyuan3D 2.1 (amodal 컷아웃 조건)
+  물체 6-DoF 정합    : FoundationPose
+
+평가
+  데이터셋 : ARCTIC(~5K), ProciGen-GRAB(PGG, ~4K), BEHAVE, PICO-db
+  베이스라인: SAM 3D Objects, HOI-TG, HDM, TeHOR, EasyHOI, PICO
+  지표     : sCD, sF-sc, MPJPE, PA-MPJPE, 2D-IoU, hand coverage,
+             IV(cm^3), PD(mm), CPP(%)  [CPP는 본 논문이 정의]
+  런타임   : RTX 4090 기준 샘플당 124 s (통상 120-150 s)
+
+비고: 본 디제스트는 arXiv HTML 전문(Abstract~Sec.3.4)과 PDF 전문
+     (Sec.4 Experiments, Sec.5 Conclusion, 보충자료 S1-S8 포함)을
+     모두 읽고 작성했다. 기재된 수치는 모두 논문 Table 1-4, Table S1,
+     Figure 4 및 본문에서 직접 확인한 값이다.

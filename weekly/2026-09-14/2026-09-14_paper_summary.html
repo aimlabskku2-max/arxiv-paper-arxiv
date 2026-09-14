@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arXiv 논문 정리 — 2026-09-14</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']],
+            displayMath: [['$$','$$'],['\\[','\\]']], processEscapes: true },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --bg:#f8fafc; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    line-height:1.7; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+  header.top { background:linear-gradient(135deg,#1e293b,#334155); color:#fff; padding:42px 20px 36px; }
+  header.top .inner { max-width:1100px; margin:0 auto; }
+  header.top .home-link { display:inline-block; margin-bottom:14px; color:#cbd5e1; text-decoration:none;
+    font-size:13.5px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+    padding:6px 14px; border-radius:999px; }
+  header.top .home-link:hover { background:rgba(255,255,255,.2); color:#fff; }
+  header.top h1 { margin:0 0 8px; font-size:30px; letter-spacing:-.5px; }
+  header.top .sub { opacity:.85; font-size:15px; }
+  header.top .chips { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  header.top .chip { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    padding:5px 12px; border-radius:999px; font-size:13px; }
+  .layout { display:grid; grid-template-columns:260px 1fr; gap:32px; margin-top:32px; }
+  nav.toc { position:sticky; top:20px; align-self:start; font-size:13.5px; max-height:90vh; overflow:auto; }
+  nav.toc h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 12px; }
+  .toc-group { margin-bottom:16px; }
+  .toc-badge { display:inline-block; color:#fff; font-size:11.5px; padding:3px 9px; border-radius:6px; margin-bottom:6px; font-weight:600; }
+  nav.toc ul { list-style:none; padding:0 0 0 4px; margin:6px 0 0; }
+  nav.toc li { margin:4px 0; }
+  nav.toc a { color:var(--ink); text-decoration:none; }
+  nav.toc a:hover { color:#6366f1; text-decoration:underline; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:26px;
+    overflow:hidden; box-shadow:0 1px 3px rgba(15,23,42,.05); scroll-margin-top:20px; }
+  .card-head { padding:22px 26px 18px; border-left:6px solid; background:#fcfcfd; }
+  .topic-tag { display:inline-block; color:#fff; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:6px; }
+  .card-head h2 { margin:10px 0 6px; font-size:21px; letter-spacing:-.3px; }
+  .lead { margin:6px 0 10px; font-size:14.5px; color:#334155; font-weight:500;
+    border-left:3px solid var(--line); padding-left:12px; }
+  .authors { color:var(--muted); font-size:13px; margin-bottom:10px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { font-size:12.5px; text-decoration:none; color:#475569; background:#f1f5f9; border:1px solid var(--line);
+    padding:3px 10px; border-radius:999px; }
+  .pill.pdf { background:#fee2e2; border-color:#fecaca; color:#b91c1c; }
+  .pill:hover { filter:brightness(.96); }
+  .card-body { padding:8px 26px 24px; }
+  .card-body h3.sec { font-size:16.5px; margin:22px 0 8px; padding-bottom:6px; border-bottom:2px solid var(--line);
+    color:#0f172a; }
+  .card-body h4.subsec { font-size:14.5px; margin:16px 0 6px; color:#334155; }
+  .card-body p { margin:8px 0; }
+  .card-body ul, .card-body ol { margin:8px 0; padding-left:22px; }
+  .card-body li { margin:4px 0; }
+  .card-body code { background:#f1f5f9; padding:1px 6px; border-radius:5px; font-size:13px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; }
+  .card-body strong { color:#0f172a; }
+  .tbl-wrap { overflow-x:auto; margin:12px 0; -webkit-overflow-scrolling:touch; }
+  .card-body table { border-collapse:collapse; width:100%; font-size:13px; min-width:340px; }
+  .card-body thead th { background:#f1f5f9; color:#0f172a; text-align:left; font-weight:700;
+    padding:8px 12px; border-bottom:2px solid #cbd5e1; white-space:nowrap; vertical-align:bottom; }
+  .card-body tbody td { padding:7px 12px; border-bottom:1px solid var(--line); text-align:left;
+    vertical-align:top; }
+  .card-body tbody tr:nth-child(even) { background:#f8fafc; }
+  .card-body th.num, .card-body td.num { text-align:right; font-variant-numeric:tabular-nums;
+    font-family:"SF Mono",Menlo,Consolas,monospace; white-space:nowrap; }
+  .fig { margin:14px 0; text-align:center; }
+  .fig img { max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px;
+    background:#fff; }
+  .fig figcaption { margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .pubinfo { margin:6px 0 2px; font-size:12.5px; color:var(--muted); display:flex;
+    flex-wrap:wrap; gap:4px 12px; }
+  .pubinfo .pub-venue { color:#0f172a; font-weight:600; }
+  footer { text-align:center; color:var(--muted); font-size:13px; margin-top:40px; }
+  @media (max-width:820px) { .layout { grid-template-columns:1fr; } nav.toc { position:static; max-height:none; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <a class="home-link" href="../../index.html">← 전체 주차 목록(홈)</a>
+  <h1>📚 arXiv 논문 주간 정리</h1>
+  <div class="sub">2026-09-14 · 총 6편 · 주제별 균형 정리</div>
+  <div class="chips">
+    <span class="chip">Egocentric Vision · 2편</span><span class="chip">Hand-Object Interaction · 2편</span><span class="chip">Spatial Audio · 2편</span>
+  </div>
+</div></header>
+<div class="wrap">
+  <div class="layout">
+    <nav class="toc">
+      <h3>목차</h3>
+      <div class="toc-group"><span class="toc-badge" style="background:#0ea5e9">Egocentric Vision</span><ul><li><a href="#paper1">From Where to How: Continuous 4D Interaction Forecasting from Egocentric Video</a></li><li><a href="#paper2">VidParse: Online Parsing of Egocentric Procedures Like a Pro</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#10b981">Hand-Object Interaction</span><ul><li><a href="#paper3">Single-Query Person-Centric Bimanual Hand-Object Interaction Detection</a></li><li><a href="#paper4">Dex-X: Learning Visual-Tactile Dexterous Manipulation From Human Videos with Simulated Interaction</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#6366f1">Spatial Audio</span><ul><li><a href="#paper5">One-Stage Multi-Task Instruction-Guided 3D Spatial Audio Editing</a></li><li><a href="#paper6">PhysWave: Physics-Guided Latent Diffusion Models for Controllable Spatial Audio Generation</a></li></ul></div>
+    </nav>
+    <main>
+      
+<article class="card" id="paper1">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>From Where to How: Continuous 4D Interaction Forecasting from Egocentric Video</h2>
+    <p class="lead">1인칭 영상에서 &quot;앞으로 손이 어디를 만질지(where)&quot;를 연속 3D 좌표열로 먼저 예측하고, 그 좌표열을 기하학적 조건으로 삼아 &quot;몸이 어떻게 움직여 그것을 실현할지(how)&quot;를 이어서 예측하는 2단계 프레임워크 HIGFlow와, 두 목표가 시간·좌표계상 정렬된 23만 샘플 규모 데이터셋 Coherent4D를 제안한다.</p>
+    <div class="authors">Qiaohui Chu, Haoyu Zhang, Meng Liu, Haoxiang Shi, Dongmei Jiang, Liqiang Nie (arXiv HTML 판본에 소속 정보가 표기되어 있지 않음)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-09-08</span> · <span class="pub-venue">🏛 프리프린트 (abs 페이지에 Comments/발표처 언급 없음)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2609.08636" target="_blank">arXiv:2609.08636</a> <a class="pill pdf" href="https://arxiv.org/pdf/2609.08636" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2609.08636" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2609.08636v1/framework.png" alt="HIGFlow의 2단계 구조: 1단계에서 미래 상호작용 위치열을 예측하고, 2단계에서 그 위치열을 조건으로 시간 정렬된 전신 포즈를 예측한다" loading="lazy"><figcaption>HIGFlow의 2단계 구조: 1단계에서 미래 상호작용 위치열을 예측하고, 2단계에서 그 위치열을 조건으로 시간 정렬된 전신 포즈를 예측한다</figcaption></figure>
+<p>Fig. 5 (Overview of HIGFlow). 왼쪽 1단계는 관측된 ego 프레임·환경 서술자·위치 히스토리·태스크 프롬프트를 받아 미래 상호작용 위치 시퀀스를 회귀하고, 오른쪽 2단계는 그 예측 위치열을 조건으로 deterministic anchor + residual Flow Matching을 거쳐 전신 SMPL 포즈 시퀀스를 내놓는 cascaded 구조를 보여준다.</p>
+<p>---</p>
+<h3 class="sec">선행 연구</h3>
+<p>이 논문이 올라선 흐름은 크게 세 갈래다.</p>
+<p><strong>1) 3D interaction location forecasting (손이 앞으로 어디를 만질지 예측)</strong></p>
+<p>초기 연구는 대부분 2D 이미지 평면에서 손 궤적을 예측했다. OCT는 미래 2D 손 궤적과 interaction hotspot(손이 닿을 가능성이 높은 물체 위 영역)을 함께 예측했고, Diff-IP2D와 MADiff는 diffusion 및 ego-motion(카메라 착용자 본인의 움직임) 인지 모델링으로 미래의 불확실성을 다뤘다. 이후 metric 3D 공간으로 확장된 연구들이 나왔다 — USST는 RGB만으로 egocentric 3D hand trajectory forecasting을 정립했고, MMTwin은 MADiff 계열 diffusion을 멀티모달 3D 손 궤적 예측으로 확장했으며, Uni-Hand는 2D/3D waypoint 예측을 통합했다.</p>
+<p>여기에 semantic·VLM 기반 접근이 붙는다. <a href="https://arxiv.org/abs/2412.13187" target="_blank">HandsOnVLM</a>은 좌표를 언어 토큰으로 그냥 직렬화(serialize)하는 방식으로는 부족하다는 점을 보이고, 전용 hand token과 trajectory decoder를 썼다. 또 <a href="https://arxiv.org/abs/2603.14482" target="_blank">V-JEPA 2.1</a> 같은 latent world representation 계열은 짧은 구간의 시공간 동역학(short-horizon dynamics)을 포착한다.</p>
+<p><strong>2) Full-body pose forecasting (전신 포즈 예측)</strong></p>
+<p>관측된 포즈 히스토리와 문맥 단서로부터 미래 전신 모션을 예측하는 흐름이다. MoGaze는 gaze(시선)와 장면 문맥을, STARS는 deterministic anchor와 mode 내 변동을 분리하는 구조를, T2P는 예측된 global trajectory에 local pose를 조건화하는 방식을, GAP3DS는 gaze 기반 affordance(물체가 허용하는 행동 가능성) 단서를 사용했다. 다양성을 늘리는 쪽으로는 SLD-HMP(제어 가능한 semantic latent direction 학습), BeLFusion, CoMusion, SkeletonDiffusion(골격 구조 prior로 해부학적 타당성 보존), <a href="https://arxiv.org/abs/2512.13903" target="_blank">PrediFlow</a>(Flow Matching residual로 coarse 예측 정제) 등이 있다.</p>
+<p><strong>3) 데이터셋</strong></p>
+<p>EPIC-KITCHENS와 Ego4D는 행동 이해·예측 감독 신호를 대규모로 제공하지만, 순서가 있는 연속 3D 상호작용 위치와 시간 동기화된 전신 포즈를 짝지어 주지는 않는다. hand-centric 계열로는 EgoPAT3D/EgoPAT3Dv2(3D action target 예측), USST와 함께 공개된 EgoHandTrajPred, <a href="https://arxiv.org/abs/2504.08654" target="_blank">EgoH4</a>(양손 3D 궤적+포즈), <a href="https://arxiv.org/abs/2511.18127" target="_blank">EgoHaFL</a>(언어 기반 손 상태·포즈·궤적 주석), <a href="https://arxiv.org/abs/2512.16907" target="_blank">EgoMAN</a>(6-DoF 손 궤적) 등이 있고, pose-centric 계열로는 MoGaze, GIMO, HARPER, Real-IM이 있다.</p>
+<p>가장 가까운 선행 연구는 <strong>FIction</strong> (CVPR 2025)이다. 상호작용 위치 추정과 포즈 예측을 하나의 데이터셋·태스크 안에 묶은 첫 시도로, 미래 상호작용 위치를 <strong>voxel occupancy(공간을 격자로 나눠 어느 칸이 활성화되는지)</strong> 로 표현하고 후보 위치에 포즈 예측을 조건화했다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>논문은 기존 흐름의 빈틈을 네 가지로 정리한다.</p>
+<p><strong>❶ Decoupled task formulation (태스크가 분리돼 있음).</strong> 위치 단서와 모션 단서가 둘 다 있어도, 기존 예측기들은 interaction localization과 pose forecasting을 독립적이거나 느슨하게만 연결된 목표로 다룬다. 그 결과 &quot;연속적으로 예측된 상호작용 위치&quot;가 이후 모션 예측의 기하학적 제약으로 명시적으로 전달되지 않는다. 어디서 상호작용이 전개되는지와 그것을 몸이 어떻게 물리적으로 실현하는지 사이의 협응이 끊긴다.</p>
+<p><strong>❷ Spatiotemporal pairing gap (시공간 짝짓기 공백).</strong> 기존 데이터셋은 순서가 있는 연속 3D 손 상호작용 위치를, <strong>같은 미래 타임스탬프</strong>에 <strong>같은 metric 좌표계</strong>로 표현된 전신 포즈와 짝지어 주는 경우가 거의 없다. 그래서 모델이 위치와 몸 동작이 어떻게 함께 변해가는지를 직접 학습하거나 평가할 수 없다.</p>
+<p><strong>❸ Semantic-dynamic localization gap (의미 이해와 정밀 좌표 사이의 간극).</strong> 정확한 위치 예측에는 태스크 수준의 semantic grounding(지금 무슨 작업 중이고 어떤 물체가 관련 있는지)과 미래 시점별 정밀한 연속 3D 좌표가 모두 필요하다. 그런데 VLM(vision-language model) 표현은 의미 추론에 최적화돼 있지 metric 좌표 회귀에 맞춰져 있지 않고, 짧은 구간의 시각적 동역학도 충분히 담지 못한다. 이 불일치가 &quot;의미적으로는 그럴듯한데 공간적으로는 틀린&quot; 예측을 낳는다.</p>
+<p><strong>❹ Pose diversity-structure trade-off (다양성과 구조 안정성의 상충).</strong> deterministic 포즈 예측은 골격 구조는 잘 지키지만 &quot;다르게 해도 되는&quot; 대안적 실행 방식을 눌러버린다. 반대로 stochastic 생성은 여러 가능한 미래를 포착하지만 골격 구조나 관절 일관성을 깨뜨릴 수 있다.</p>
+<p>특히 FIction조차 위치를 이산 voxel로 표현하고 개별 후보 위치에 포즈를 조건화하기 때문에, 변해가는 상호작용 목표와 그것을 실현하는 몸 동작 사이의 <strong>단계별(stepwise) 대응</strong>은 여전히 미해결로 남는다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문이 새로 세우는 문제 정의는 <strong>continuous 4D interaction forecasting</strong> 이다. 여기서 &quot;continuous&quot;는 두 가지를 동시에 뜻한다 — (1) 모션 시퀀스의 시간적 연속성, (2) 이산 공간 격자가 아닌 연속 3D 좌표 사용.</p>
+<p>기존 흐름과의 차이는 세 지점이다.</p>
+<ul>
+<li><strong>voxel → continuous metric 좌표.</strong> FIction의 이산 occupancy 표현을 버리고 공유 좌표계 위의 연속 3D 좌표열로 문제를 다시 쓴다. 평가 지표도 voxel 정확도가 아니라 연속 공간의 mm 단위 오차로 바꾼다.</li>
+<li><strong>분리된 두 태스크 → cascaded where-to-how.</strong> 위치 예측 결과를 포즈 예측의 명시적 기하 조건으로 흘려보내, 두 예측 사이에 직접적 의존성을 만든다.</li>
+<li><strong>개별 후보 위치 → 시간 정렬된 시퀀스 쌍.</strong> 각 미래 스텝 $k$마다 상호작용 위치 $\mathbf{y}_k \in \mathbb{R}^3$와 그 시점의 SMPL 전신 상태 $\mathbf{X}_k$가 1:1로 붙어 있다.</li>
+</ul>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">A. Coherent4D 데이터셋</h4>
+<p><strong>출처와 구성.</strong> Ego-Exo4D의 동기화된 procedural take에서 구축한다. Aria ego 스트림이 예측 입력이고, 동기화된 exocentric(3인칭) 뷰는 오프라인 주석 생성·정제에만 쓴다(모델 입력 아님). 각 샘플은 30초 관측 윈도우에서 균일 샘플링한 <strong>30장의 ego 프레임</strong>, 구조화된 물체·환경 서술자, 관측된 상호작용 위치 히스토리와 SMPL 포즈 히스토리, 그리고 미래 위치·포즈 타깃으로 이루어진다.</p>
+<p><strong>주석 파이프라인 (5단계, Fig. 3)</strong></p>
+<ol>
+<li><strong>Scene object grounding.</strong> Detic + LVIS vocabulary로 ego 프레임에서 물체를 검출하고, Ego-Exo4D SLAM 재구성으로 3D로 lift한 뒤 클러스터링해 oriented 3D bounding box를 얻는다. 각 물체는 의미 카테고리와 연속 3D box 속성(center, size, orientation)을 갖는다 — 환경을 voxel로 이산화하지 않는다.</li>
+<li><strong>Shared coordinate construction.</strong> 샘플 $n$마다 안정적인 ego 기준 pose $(\mathbf{R}_n^{\text{ref}}, \mathbf{t}_n^{\text{ref}})$를 정의하고, 세계 좌표 점 $\mathbf{p}_w$를 sample-local 좌표로 옮긴다: $\mathbf{p}_n^{\text{loc}} = (\mathbf{R}_n^{\text{ref}})^\top (\mathbf{p}_w - \mathbf{t}_n^{\text{ref}})$. 상호작용 위치, 물체 중심, SMPL root translation, 3D 관절에 모두 적용한다. 모델 입출력용으로는 $s = 5\,m$로 나눈 뒤 각 좌표를 $[-1, 1]$로 클리핑한다. 단, SMPL의 23개 body joint 회전은 부모 관절 기준 상대 표현을 그대로 유지한다.</li>
+<li><strong>Location sequence construction.</strong> 희소한 hand-object 상호작용 주석을 시간 순서의 연속 3D 위치열로 바꾼다. FIction을 따라 narration 타임스탬프 + Llama 3 기반 물체 매칭 + 손-물체 기하 일관성으로 후보 이벤트를 찾고, 손 mesh에서 연속 3D 위치를 복원한다. 오른손/양손 상호작용은 하나의 스트림으로 통합하고, 시간적으로 인접하면서 공간적으로 중복되는 이벤트는 병합한다.</li>
+<li><strong>SMPL state attachment.</strong> WHAM으로 인체 모션을 복원하고 주 행위자 트랙을 골라 Ego-Exo4D 좌표계에 정렬한다. 관측·미래 각 타임스탬프마다 가장 가까운 유효 SMPL 상태(root translation, root orientation, body joint rotation, 3D joint position)를 붙여 sample-local 좌표로 변환한다.</li>
+<li><strong>Forecast sample generation.</strong> 첫 미래 상호작용 타임스탬프 $t_{n,1}$을 시간 원점으로 삼고, 그 직전 30초를 관측 윈도우로 쓴다. 각 미래 스텝의 절대 시각, 상대 시각 $\Delta t_{n,k} = t_{n,k} - t_{n,1}$, 연속 위치, 정렬된 SMPL 상태를 보존한다. <strong>상대 타임스탬프를 남겨 상호작용 이벤트 사이의 비균일한 간격을 그대로 유지</strong>하는 점이 특징이다. 꼬리가 짧은 시퀀스는 padding + validity mask로 처리하고, take 단위로 split해 학습/검증/테스트 간 환경·절차 중복을 막는다.</li>
+</ol>
+<p><strong>통계 (Table I)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Domain</th><th class="num">Horizon</th><th class="num">Takes</th><th class="num">Train</th><th class="num">Val</th><th class="num">Test</th><th class="num">Total</th><th class="num">Targets</th><th class="num">Obj.</th></tr></thead><tbody><tr><td>Cooking</td><td class="num">10</td><td class="num">331</td><td class="num">136,079</td><td class="num">15,435</td><td class="num">14,527</td><td class="num">166,041</td><td class="num">1,337,589</td><td class="num">428</td></tr><tr><td>Health</td><td class="num">5</td><td class="num">205</td><td class="num">21,532</td><td class="num">1,899</td><td class="num">4,167</td><td class="num">27,598</td><td class="num">114,964</td><td class="num">170</td></tr><tr><td>Bike Repair</td><td class="num">4</td><td class="num">251</td><td class="num">35,987</td><td class="num">3,150</td><td class="num">1,052</td><td class="num">40,189</td><td class="num">141,633</td><td class="num">197</td></tr><tr><td>Total</td><td class="num">–</td><td class="num">787</td><td class="num">193,598</td><td class="num">20,484</td><td class="num">19,746</td><td class="num">233,828</td><td class="num">1,594,186</td><td class="num">535</td></tr></tbody></table></div>
+<p>총 233,828 샘플, 787개 take, 535개 상호작용 물체 카테고리. 유효 미래 타깃 1,594,186개는 모두 narration과 정렬되며, 첫 동사 분포는 pick, place, hold, drop, move, pour, pass, turn 같은 조작 primitive를 덮는다(Fig. 4).</p>
+<p><strong>연속 공간 평가 지표</strong></p>
+<ul>
+<li>위치: <strong>ADE</strong>(유효 미래 스텝 평균 변위 오차), <strong>ADE₉₀</strong>(샘플별 ADE의 90번째 백분위수 — 상위 꼬리 오차), <strong>FDE</strong>(마지막 유효 스텝 오차). 모두 mm.</li>
+<li>포즈: <strong>MPJPE</strong>(관절 위치 오차, $J_{\text{pos}}=19$ 관절), <strong>PA-MPJPE</strong>(Procrustes 정렬 후 오차 — 전역 위치/회전/스케일 어긋남을 제거한 관절 배치 정확도), <strong>Root Trans.</strong>(root translation 오차, 전역 몸 이동 정확도), <strong>Body Geo.</strong>(root 제외 $J_{\text{rot}}=23$ 관절의 geodesic 각도 오차, degree).</li>
+<li>미래 모션의 multimodality를 반영해 <strong>Single</strong>(첫 후보)과 <strong>Best-5</strong>(5개 후보 중 샘플 단위 MPJPE가 가장 낮은 것)를 함께 보고한다. Best-5의 모든 지표는 동일하게 선택된 하나의 시퀀스에서 계산해 지표 간 일관성을 유지한다.</li>
+</ul>
+<h4 class="subsec">B. HIGFlow 프레임워크</h4>
+<p><strong>문제 정식화.</strong> 위치 단계 입력은 $\mathcal{C}_{\text{loc}} = (\mathcal{V}_{\text{obs}}, \mathcal{E}, \mathcal{O}_{\text{obs}}, \mathcal{T})$ = (ego 프레임, 구조화된 환경 서술자, 관측 위치 히스토리, 태스크 프롬프트). 출력은 $\hat{\mathcal{Y}} = \{\hat{\mathbf{y}}_k\}_{k=1}^{K}$. 포즈 단계는 $\hat{\mathcal{X}} = f_{\text{pose}}(\mathcal{H}_{\text{pose}}, \tilde{\mathcal{Y}})$이며, <strong>학습 때는 $\tilde{\mathcal{Y}}$에 ground-truth 위치를, 추론 때는 1단계 예측 위치를 넣는다.</strong> 각 $\hat{\mathbf{X}}_k \in \mathbb{R}^{147}$은 6D root orientation + 3D root translation + 23개 관절의 연속 6D 회전으로 구성된 SMPL 상태다.</p>
+<p>#### B-1. Semantic-Dynamic Location Forecasting (where 단계)</p>
+<p>핵심 아이디어는 <strong>&quot;의미 이해&quot;와 &quot;좌표 회귀&quot;를 분리하고, 여기에 단기 시각 동역학을 따로 주입</strong>하는 것이다.</p>
+<ul>
+<li><strong>Semantic context encoding.</strong> Qwen3-VL-2B가 ego 프레임, 태스크 프롬프트, 위치 히스토리, 환경 서술자를 받는다. 위치·환경 인코더가 $\mathcal{O}_{\text{obs}}$와 $\mathcal{E}$를 dense feature로 바꿔 대응하는 placeholder embedding을 대체한다. 각 미래 스텝 $k$마다 <code>&lt;hand_traj_k&gt;</code> 위치의 hidden state $\mathbf{h}_k^Q$를 스텝별 semantic 표현으로 뽑는다.</li>
+<li><strong>Dynamic feature augmentation.</strong> 얼어붙은(frozen) V-JEPA 2.1 ViT-Giant/384로 관측 영상을 인코딩해 Qwen hidden space로 투영하고 $M$개의 dynamic memory token으로 resample한다. 각 $\mathbf{h}_k^Q$가 학습된 step embedding $\mathbf{s}_k^{\text{loc}}$와 함께 이 메모리에 attend해 motion context $\mathbf{c}_k$를 얻고, <strong>gated residual adapter</strong>로 주입한다:</li>
+</ul>
+<p>$\mathbf{h}_k^F = \mathbf{h}_k^Q + g_k \Delta\mathbf{h}_k$, $\ \Delta\mathbf{h}_k = \alpha \tanh(D([\mathbf{h}_k^Q, \mathbf{c}_k, \mathbf{s}_k^{\text{loc}}]))$, $\ g_k = \text{sigmoid}(G([\mathbf{h}_k^Q, \mathbf{c}_k, \mathbf{s}_k^{\text{loc}}]))$</p>
+<p>$g_k \in (0,1)$이 동역학 기여도를 적응적으로 조절하고 $\alpha &gt; 0$이 크기를 제한한다.</p>
+<ul>
+<li><strong>Continuous coordinate decoding.</strong> 좌표 디코더가 $\mathbf{h}_k^F$를 정규화된 연속 3D 좌표 $\hat{\mathbf{y}}_k$로 직접 회귀한다. <strong>metric 좌표를 텍스트 토큰으로 쓰지 않는다</strong>는 점이 핵심 설계다.</li>
+<li><strong>학습 목표:</strong> $\mathcal{L}_{\text{loc}} = \lambda_{\text{ADE}}\mathcal{L}_{\text{ADE}} + \lambda_{\text{S1}}\mathcal{L}_{\text{S1}} + \lambda_{\text{CE}}\mathcal{L}_{\text{CE}}$ — mask-aware ADE loss + Smooth L1 + 보조 language modeling loss. 가중치는 $(1.5, 0.6, 0.01)$. base predictor를 먼저 학습한 뒤 base/구조화 인코더/좌표 디코더를 얼리고 JEPA adapter만 따로 학습하는 순차 학습 방식을 쓴다.</li>
+</ul>
+<p>#### B-2. Hand-Conditioned Residual Flow Matching (how 단계)</p>
+<p><strong>&quot;안정적인 결정론적 뼈대 + 그 주변의 제한된 확률적 변동&quot;</strong> 으로 diversity-structure 딜레마를 푼다.</p>
+<ul>
+<li><strong>Spatiotemporal conditioning.</strong> 관측된 각 SMPL 상태를 root 1개 + 관절 23개 = <strong>24-node 그래프</strong>(골격 연결이 간선)로 표현해 graph propagation으로 물리적으로 연결된 부위 간 의존성을 잡고 SMPL 위상을 보존한다. 노드 feature를 frame-level pose token으로 pooling한 뒤 pose history Transformer에 넣어, 최종 CLS 토큰 상태 $\mathbf{h}$가 관측 모션 히스토리를 요약한다.</li>
+<li><strong>Future condition encoding.</strong> 각 미래 스텝을 $\boldsymbol{\eta}_k = \text{MLP}_c([\tilde{\mathbf{y}}_k, \Delta\tilde{\mathbf{y}}_k, k/K])$로 인코딩(위치 + 변위 + 상대 스텝)하고 Transformer로 문맥화해 $\mathbf{f}_k$를 얻는다.</li>
+<li><strong>Deterministic anchor.</strong> $\hat{\mathbf{X}}_k^a = \text{MLP}_a([\mathbf{h}, \mathbf{f}_k])$. 이 anchor는 최종 예측이 아니라, 상호작용 위치에 기하학적으로 뿌리내린 <strong>기준 모션</strong>이다. 학습 손실 $\mathcal{L}_{\text{anchor}}$는 6D 회전 $\ell_1$, 전체/루트/몸통 geodesic, translation, velocity, 3D joint position 항의 가중합이다. anchor 사전학습 후 pose history 인코더, future condition 인코더, anchor predictor는 <strong>모두 동결</strong>한다.</li>
+<li><strong>Residual Flow Matching.</strong> anchor 대비 잔차 $\mathbf{r}_k^* = \text{Residual}(\hat{\mathbf{X}}_k^a, \mathbf{X}_k)$를 정의한다 — root/body 회전 보정은 상대 회전의 log map, root translation 보정은 뺄셈으로 계산해 3(root rot) + 3(root trans) + 69(23×3 body rot) = <strong>75차원</strong> 잔차 벡터가 된다.</li>
+</ul>
+<p>잔차 크기를 통제하기 위해 조건 $\mathbf{c}_k^{\text{flow}} = [\mathbf{h}, \mathbf{f}_k, P_a(\hat{\mathbf{X}}_k^a)]$에서 스텝별 게이트 $\boldsymbol{\gamma}_k = \boldsymbol{\gamma}_{\max} \odot \text{sigmoid}(\Gamma(\mathbf{c}_k^{\text{flow}}))$ (root 회전/root 이동/body 회전 3개 값)를 뽑고, 성분별 bound $\boldsymbol{\rho} = \text{concat}(\rho_R \mathbf{1}_3, \rho_t \mathbf{1}_3, \rho_B \mathbf{1}_{69})$로 클리핑하는 조절 연산자 $\mathcal{R}_k(\mathbf{x}) = \mathcal{B}_{\boldsymbol{\rho}}(\text{bcast}(\boldsymbol{\gamma}_k) \odot \mathbf{x})$를 적용한다.</p>
+<p>선형 probability path $\mathbf{x}_{\tau,k} = (1-\tau)\mathbf{z}_k + \tau \bar{\mathbf{r}}_k^*$ ($\tau \sim \mathcal{U}(0,1)$, $\mathbf{z}_k \sim \mathcal{N}(\mathbf{0}, \sigma_r^2 \mathbf{I}_{75})$) 위에서 conditional velocity field를 $\mathcal{L}_{\text{FM}} = \mathbb{E}[\|v(\mathbf{x}_{\tau,k}, \tau, \mathbf{c}_k^{\text{flow}}) - (\bar{\mathbf{r}}_k^* - \mathbf{z}_k)\|_2^2]$로 학습한다.</p>
+<ul>
+<li><strong>Endpoint 감독.</strong> 중간 flow 상태에서 직접 추정한 잔차(direct)와, Gaussian prior에서 미분 가능한 $N_{\text{ODE}}$-step Heun rollout으로 얻은 잔차(roll)를 둘 다 anchor와 합성(Compose: 회전은 exponential map, translation은 덧셈)해 포즈 손실을 건다. 최종 목표는 $\mathcal{L}_{\text{pose}} = \lambda_{\text{FM}}\mathcal{L}_{\text{FM}} + \lambda_{\text{direct}}\mathcal{L}_{\text{direct}} + \lambda_{\text{roll}}\mathcal{L}_{\text{roll}} + \lambda_{\text{res}}\mathcal{L}_{\text{res}}$ ($\lambda_{\text{FM}} = \lambda_{\text{direct}} = \lambda_{\text{roll}} = 1.0$, $\lambda_{\text{res}} = 0.5$).</li>
+<li><strong>추론.</strong> 독립적으로 $S=5$개의 residual prior를 샘플링해 각각 $N_{\text{ODE}}=4$ Heun step으로 적분하고 anchor와 합성해 5개의 그럴듯한 미래 모션을 만든다.</li>
+</ul>
+<p><strong>구현 세부.</strong> $M=64$ V-JEPA 메모리 토큰, $\alpha=0.1$, 3층 좌표 디코더, pose history/future condition Transformer 각각 4층/2층, $\sigma_r = 0.003$, AdamW, 전체 실험은 <strong>NVIDIA A100 6장</strong>에서 수행.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">1) 상호작용 위치 예측 (Table II, 단위 mm, 낮을수록 좋음)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Model</th><th class="num">Health ADE</th><th class="num">Health ADE₉₀</th><th class="num">Health FDE</th><th class="num">Bike ADE</th><th class="num">Bike ADE₉₀</th><th class="num">Bike FDE</th><th class="num">Cooking ADE</th><th class="num">Cooking ADE₉₀</th><th class="num">Cooking FDE</th></tr></thead><tbody><tr><td>FIction</td><td class="num">40.30</td><td class="num">62.62</td><td class="num">40.58</td><td class="num">88.55</td><td class="num">143.21</td><td class="num">98.61</td><td class="num">100.61</td><td class="num">184.63</td><td class="num">107.11</td></tr><tr><td>Qwen3-VL</td><td class="num">57.53</td><td class="num">89.54</td><td class="num">82.04</td><td class="num">90.71</td><td class="num">156.55</td><td class="num">103.81</td><td class="num">103.95</td><td class="num">199.20</td><td class="num">112.22</td></tr><tr><td>V-JEPA</td><td class="num">45.18</td><td class="num">69.49</td><td class="num">46.26</td><td class="num">86.50</td><td class="num">142.43</td><td class="num">96.33</td><td class="num">102.33</td><td class="num">194.80</td><td class="num">107.35</td></tr><tr><td>Diff-IP3D</td><td class="num">292.84</td><td class="num">433.26</td><td class="num">294.25</td><td class="num">525.63</td><td class="num">842.93</td><td class="num">561.19</td><td class="num">647.23</td><td class="num">1268.28</td><td class="num">662.71</td></tr><tr><td>MMTwin</td><td class="num">290.45</td><td class="num">437.88</td><td class="num">285.21</td><td class="num">429.71</td><td class="num">690.80</td><td class="num">480.29</td><td class="num">513.75</td><td class="num">957.17</td><td class="num">556.40</td></tr><tr><td><strong>HIGFlow</strong></td><td class="num"><strong>40.21</strong></td><td class="num"><strong>59.52</strong></td><td class="num">41.44</td><td class="num"><strong>80.91</strong></td><td class="num"><strong>131.87</strong></td><td class="num"><strong>93.78</strong></td><td class="num"><strong>93.46</strong></td><td class="num"><strong>178.20</strong></td><td class="num"><strong>104.26</strong></td></tr></tbody></table></div>
+<p>읽을 점: (a) HIGFlow가 대부분 지표에서 1위이며, Cooking ADE는 FIction 대비 100.61 → 93.46 mm, Bike Repair는 88.55 → 80.91 mm로 개선된다. (b) Health FDE만 FIction(40.58)이 근소하게 낫다. (c) 손 궤적 diffusion 계열(Diff-IP3D, MMTwin)은 이 설정에서 수백 mm 단위로 크게 무너진다 — 짧은 궤적 회귀에 맞춰진 모델을 비균일 간격의 &quot;상호작용 이벤트 위치열&quot; 예측으로 옮기면 잘 동작하지 않는다는 뜻이다. (d) Qwen3-VL 단독(semantic만)과 V-JEPA 단독(dynamics만) 모두 HIGFlow보다 못하다 — 두 신호를 합쳐야 한다는 논문 주장의 직접 근거다.</p>
+<h4 class="subsec">2) 전신 포즈 예측 (Table III, MPJPE/PA-MPJPE/Root Trans.는 mm, Body Geo.는 degree)</h4>
+<p><strong>(a) GT 위치로 조건화한 경우 (upper bound 성격의 통제 실험)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Domain / Model</th><th class="num">MPJPE (Single)</th><th class="num">MPJPE (Best-5)</th><th class="num">PA-MPJPE (Single)</th><th class="num">Root Trans. (Single)</th><th class="num">Body Geo. (Single)</th></tr></thead><tbody><tr><td>Health / FIction</td><td class="num">117.17</td><td class="num">115.91</td><td class="num">42.12</td><td class="num">104.09</td><td class="num">9.03</td></tr><tr><td>Health / SkeletonDiffusion</td><td class="num">166.32</td><td class="num">137.39</td><td class="num">53.18</td><td class="num">158.85</td><td class="num">10.55</td></tr><tr><td>Health / SLD-HMP</td><td class="num">421.56</td><td class="num">88.38</td><td class="num">44.79</td><td class="num">403.30</td><td class="num">8.76</td></tr><tr><td>Health / <strong>HIGFlow</strong></td><td class="num"><strong>95.25</strong></td><td class="num">93.45</td><td class="num">43.79</td><td class="num"><strong>80.93</strong></td><td class="num">8.80</td></tr><tr><td>Bike / FIction</td><td class="num">295.34</td><td class="num">284.52</td><td class="num">78.95</td><td class="num">292.07</td><td class="num"><strong>13.60</strong></td></tr><tr><td>Bike / SkeletonDiffusion</td><td class="num">453.52</td><td class="num">370.26</td><td class="num">113.22</td><td class="num">405.49</td><td class="num">17.69</td></tr><tr><td>Bike / SLD-HMP</td><td class="num">269.06</td><td class="num">234.95</td><td class="num">74.34</td><td class="num">261.00</td><td class="num">11.97</td></tr><tr><td>Bike / <strong>HIGFlow</strong></td><td class="num"><strong>213.65</strong></td><td class="num"><strong>210.09</strong></td><td class="num"><strong>70.07</strong></td><td class="num"><strong>224.19</strong></td><td class="num">15.05</td></tr><tr><td>Cooking / FIction</td><td class="num">237.86</td><td class="num">226.62</td><td class="num">43.81</td><td class="num">227.23</td><td class="num">8.34</td></tr><tr><td>Cooking / SkeletonDiffusion</td><td class="num">310.39</td><td class="num">260.00</td><td class="num">51.43</td><td class="num">278.05</td><td class="num">11.42</td></tr><tr><td>Cooking / SLD-HMP</td><td class="num">184.42</td><td class="num">167.19</td><td class="num">43.41</td><td class="num">174.33</td><td class="num">7.67</td></tr><tr><td>Cooking / <strong>HIGFlow</strong></td><td class="num"><strong>143.98</strong></td><td class="num"><strong>143.41</strong></td><td class="num"><strong>39.45</strong></td><td class="num"><strong>139.26</strong></td><td class="num"><strong>7.53</strong></td></tr></tbody></table></div>
+<p><strong>(b) 예측 위치로 조건화한 경우 (실제 forecasting 설정)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Domain / Model</th><th class="num">MPJPE (Single)</th><th class="num">MPJPE (Best-5)</th><th class="num">PA-MPJPE (Single)</th><th class="num">Root Trans. (Single)</th><th class="num">Body Geo. (Single)</th></tr></thead><tbody><tr><td>Health / FIction</td><td class="num">124.59</td><td class="num">123.43</td><td class="num">50.82</td><td class="num">108.67</td><td class="num"><strong>9.01</strong></td></tr><tr><td>Health / SkeletonDiffusion</td><td class="num">184.97</td><td class="num">155.55</td><td class="num">55.01</td><td class="num">172.37</td><td class="num">10.89</td></tr><tr><td>Health / SLD-HMP</td><td class="num">402.76</td><td class="num">92.15</td><td class="num">48.66</td><td class="num">381.66</td><td class="num">8.56</td></tr><tr><td>Health / <strong>HIGFlow</strong></td><td class="num"><strong>119.96</strong></td><td class="num"><strong>118.14</strong></td><td class="num"><strong>47.06</strong></td><td class="num"><strong>94.19</strong></td><td class="num">9.33</td></tr><tr><td>Bike / FIction</td><td class="num">351.64</td><td class="num">341.06</td><td class="num">86.75</td><td class="num">325.06</td><td class="num"><strong>14.14</strong></td></tr><tr><td>Bike / SkeletonDiffusion</td><td class="num">469.82</td><td class="num">398.82</td><td class="num">115.09</td><td class="num">408.17</td><td class="num">17.89</td></tr><tr><td>Bike / SLD-HMP</td><td class="num">358.20</td><td class="num">314.88</td><td class="num">83.82</td><td class="num">311.54</td><td class="num">12.39</td></tr><tr><td>Bike / <strong>HIGFlow</strong></td><td class="num"><strong>306.92</strong></td><td class="num"><strong>303.07</strong></td><td class="num"><strong>82.26</strong></td><td class="num"><strong>287.24</strong></td><td class="num">16.07</td></tr><tr><td>Cooking / FIction</td><td class="num">374.89</td><td class="num">364.15</td><td class="num">46.30</td><td class="num">348.70</td><td class="num">8.51</td></tr><tr><td>Cooking / SkeletonDiffusion</td><td class="num">421.75</td><td class="num">382.35</td><td class="num">53.09</td><td class="num">377.64</td><td class="num">11.89</td></tr><tr><td>Cooking / SLD-HMP</td><td class="num">358.92</td><td class="num">342.11</td><td class="num"><strong>44.86</strong></td><td class="num">332.74</td><td class="num"><strong>7.83</strong></td></tr><tr><td>Cooking / <strong>HIGFlow</strong></td><td class="num"><strong>340.72</strong></td><td class="num"><strong>340.24</strong></td><td class="num">45.65</td><td class="num"><strong>312.56</strong></td><td class="num">8.50</td></tr></tbody></table></div>
+<p>읽을 점: (a) 실전 설정에서 HIGFlow가 MPJPE와 Root Trans.를 전 도메인에서 최소로 만든다 — 특히 Cooking Root Trans. 348.70 → 312.56 mm. (b) <strong>Body Geo.(관절 회전 각도)에서는 HIGFlow가 최고가 아니다.</strong> Bike Repair에서 SLD-HMP 12.39°, FIction 14.14° 대비 HIGFlow는 16.07°다. 즉 HIGFlow의 강점은 &quot;몸이 어디로 가는가(전역 이동·관절 위치)&quot;이고, 국소 관절 회전 미세도는 상대적 약점이다. (c) SLD-HMP는 Single과 Best-5 격차가 극단적이다(Health Single 402.76 vs Best-5 92.15) — 샘플 분산이 너무 커서 한 번 뽑아서는 쓸 수 없다는 뜻이고, HIGFlow는 Single ≈ Best-5(119.96 vs 118.14)로 안정적이다. 이것이 residual bounding의 효과를 가장 잘 보여주는 숫자다. (d) GT 위치 → 예측 위치로 바꾸면 모든 방법의 성능이 나빠진다 — <strong>1단계 localization 품질이 2단계 포즈 예측을 직접 좌우한다</strong>는 cascaded 구조의 특성이 그대로 드러난다.</p>
+<h4 class="subsec">3) Ablation</h4>
+<p><strong>V-JEPA residual fusion (Table IV, mm)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Domain</th><th>V-JEPA</th><th class="num">ADE</th><th class="num">ADE₉₀</th><th class="num">FDE</th></tr></thead><tbody><tr><td>Health</td><td>–</td><td class="num">40.28</td><td class="num">59.34</td><td class="num">41.47</td></tr><tr><td>Health</td><td>✓</td><td class="num">40.21</td><td class="num">59.52</td><td class="num">41.44</td></tr><tr><td>Bike Repair</td><td>–</td><td class="num">81.18</td><td class="num">134.10</td><td class="num">94.03</td></tr><tr><td>Bike Repair</td><td>✓</td><td class="num">80.91</td><td class="num">131.87</td><td class="num">93.78</td></tr><tr><td>Cooking</td><td>–</td><td class="num">94.20</td><td class="num">178.21</td><td class="num">104.83</td></tr><tr><td>Cooking</td><td>✓</td><td class="num">93.46</td><td class="num">178.20</td><td class="num">104.26</td></tr></tbody></table></div>
+<p>효과는 일관되지만 <strong>폭은 작다</strong>(Cooking ADE 0.74 mm, Bike ADE 0.27 mm). 논문은 Bike Repair에서 가장 두드러진다고 서술한다.</p>
+<p><strong>표현/디코딩 ablation (Table VII, ADE만 발췌, mm)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Variant</th><th>LocEnc</th><th>EnvEnc</th><th>CoordDec</th><th class="num">Health</th><th class="num">Bike</th><th class="num">Cooking</th></tr></thead><tbody><tr><td>Qwen3-VL</td><td>–</td><td>–</td><td>–</td><td class="num">57.53</td><td class="num">90.71</td><td class="num">103.95</td></tr><tr><td>w/o CoordDec</td><td>✓</td><td>✓</td><td>–</td><td class="num">57.11</td><td class="num">99.64</td><td class="num">113.87</td></tr><tr><td>w/o LocEnc</td><td>–</td><td>✓</td><td>✓</td><td class="num">42.57</td><td class="num">87.78</td><td class="num">97.29</td></tr><tr><td>w/o EnvEnc</td><td>✓</td><td>–</td><td>✓</td><td class="num">42.17</td><td class="num">87.65</td><td class="num">100.13</td></tr><tr><td><strong>HIGFlow (Full)</strong></td><td>✓</td><td>✓</td><td>✓</td><td class="num"><strong>40.21</strong></td><td class="num"><strong>80.91</strong></td><td class="num"><strong>93.46</strong></td></tr></tbody></table></div>
+<p><strong>CoordDec(연속 좌표 회귀 헤드)가 압도적으로 중요하다.</strong> 좌표를 언어 인터페이스로 생성하면 Cooking ADE가 93.46 → 113.87 mm로 무너진다. HandsOnVLM이 지적한 &quot;좌표를 텍스트로 쓰면 안 된다&quot;는 관찰과 정확히 일치한다.</p>
+<p><strong>입력 ablation (Table VIII, ADE만 발췌, mm)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Input</th><th class="num">Health</th><th class="num">Bike</th><th class="num">Cooking</th></tr></thead><tbody><tr><td>w/o Env.</td><td class="num">37.40</td><td class="num">114.51</td><td class="num">97.92</td></tr><tr><td>w/o Loc.</td><td class="num">69.48</td><td class="num">135.71</td><td class="num">143.82</td></tr><tr><td>w/o Frames</td><td class="num">51.91</td><td class="num">143.90</td><td class="num">145.86</td></tr><tr><td><strong>Full</strong></td><td class="num">40.21</td><td class="num">80.91</td><td class="num">93.46</td></tr></tbody></table></div>
+<p>위치 히스토리와 프레임 입력을 빼면 성능이 크게 떨어진다. 환경 문맥은 <strong>Bike Repair에서 특히 중요</strong>하다(80.91 → 114.51). 흥미롭게도 <strong>Health에서는 환경 문맥을 빼는 편이 더 낫다</strong>(40.21 → 37.40) — 도메인마다 유용한 문맥이 다르다는 신호다.</p>
+<p><strong>V-JEPA 토큰 예산 (Table VI).</strong> $M \in \{16, 32, 64, 128\}$에서 성능이 단조 증가하지 않는다. $M=64$가 Bike Repair에서 최고(ADE 80.91)이고 나머지 도메인에서도 경쟁력 있어 기본값으로 채택.</p>
+<p><strong>포즈 단계 component ablation (Fig. 7).</strong> 미래 상호작용 위치 조건화를 없앨 때 성능 저하가 가장 크다 — <strong>위치가 전신 모션의 기하학적 가이드로서 핵심</strong>이라는 논문의 메인 주장을 뒷받침한다. anchor는 구조적 안정성을, residual flow matching은 추가적 모션 변동과 정확도를 담당하며, 둘의 결합이 가장 균형 잡혀 있다.</p>
+<p><strong>ODE step (Fig. 8).</strong> $N_{\text{ODE}} \in \{1,2,4,8,16\}$ 중 <strong>4 step이 12개 도메인-지표 쌍 중 9개에서 최고</strong>이고 평균 regret도 최소다. 스텝을 늘려도 오차가 일관되게 줄지 않는다.</p>
+<h4 class="subsec">4) 도메인별 개선 폭 차이의 이유 (Table V)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Domain</th><th class="num">Loc. Disp. (mm)</th><th class="num">Root Disp. (mm)</th><th>Spatial pattern</th></tr></thead><tbody><tr><td>Health</td><td class="num">153.86</td><td class="num">59.45</td><td>공간 이동이 좁음</td></tr><tr><td>Bike Repair</td><td class="num">293.53</td><td class="num">195.71</td><td>도구 중심의 뻗기·수리 동작</td></tr><tr><td>Cooking</td><td class="num">318.69</td><td class="num">171.48</td><td>물체 중심의 넓은 이동</td></tr></tbody></table></div>
+<p>HIGFlow의 이득은 Cooking·Bike Repair에서 크고 Health에서 작다. 이유는 명확하다 — Health는 연속 스텝 간 변위가 작아(153.86 / 59.45 mm) 기존 방법도 이미 잘 하고, 개선 여지가 적다. 반대로 변위가 크고 기하·동역학 단서가 풍부한 도메인에서 HIGFlow의 설계가 힘을 발휘한다.</p>
+<h4 class="subsec">5) 정성 분석 (Fig. 6)</h4>
+<ul>
+<li><strong>Bike Repair</strong>: HIGFlow는 초기 예측 구간에서 구부린 작업 자세를 유지하다가 ground truth에 가까운 시점에 서는 자세로 전환한다. FIction은 너무 일찍 몸을 세운다.</li>
+<li><strong>Cooking</strong>: HIGFlow가 예측 위치를 올바른 작업 공간에 더 자주 배치하고, 참조 모션에 가까운 몸 이동과 뻗기 자세를 낸다.</li>
+</ul>
+<h4 class="subsec">연구 의의 요약</h4>
+<ol>
+<li><strong>&quot;where&quot;를 &quot;how&quot;의 명시적 기하 조건으로 쓰면 실제로 도움이 된다</strong> — 위치 조건화 제거가 포즈 단계 ablation 중 가장 큰 성능 저하를 일으켰다.</li>
+<li><strong>VLM은 semantic grounding에만 쓰고 좌표는 전용 회귀 헤드로 뽑아야 한다</strong> — CoordDec ablation이 가장 큰 폭의 근거.</li>
+<li><strong>diversity와 structure는 &quot;anchor + bounded residual&quot;로 동시에 얻을 수 있다</strong> — SLD-HMP의 Single/Best-5 격차 vs HIGFlow의 안정성 비교가 직접 증거.</li>
+<li><strong>연속 metric 좌표계 + 시간 정렬 쌍 데이터셋</strong>이 있어야 이 문제를 제대로 학습·평가할 수 있다는 것을 Coherent4D로 보였다.</li>
+</ol>
+<h3 class="sec">한계</h3>
+<p><strong>논문이 스스로 밝힌 것</strong></p>
+<ul>
+<li><strong>오차 전파 (error propagation).</strong> cascaded 구조 탓에 위치 예측 오차가 forecasting horizon을 따라 커지고, 그것이 포즈 단계로 그대로 넘어간다. Bike Repair 후반 프레임에서 예측된 몸이 참조의 기울이고 뻗는 동작을 따라가지 못하고 지나치게 곧게 선 상태로 남는 사례가 관찰된다.</li>
+<li><strong>위치는 맞지만 &quot;어떻게 닿는지&quot;는 틀린다.</strong> Cooking에서 HIGFlow는 올바른 상호작용 영역을 자주 찾아내지만, <strong>어느 손으로 닿는지, 접촉 높이, 팔 구성, 몸통 방향</strong>이 ground truth와 다를 수 있다. 논문은 이를 &quot;상호작용 위치 조건화가 coarse spatial alignment는 개선하지만 인간의 의도(intent), 물체 affordance, 세밀한 접촉 제약(contact constraint)은 충분히 포착하지 못한다&quot;고 정리한다.</li>
+<li>Conclusion에서 future work으로 <strong>human intent modeling</strong>과 <strong>contact-aware conditioning</strong>을 통해 더 긴 horizon에서 물리적으로 일관된 예측을 하겠다고 밝힌다.</li>
+</ul>
+<p><strong>표에서 명백하게 드러나는 것</strong></p>
+<ul>
+<li><strong>Body Geo.(관절 회전)에서 HIGFlow가 최고가 아니다.</strong> Bike Repair 예측 위치 설정에서 HIGFlow 16.07° vs SLD-HMP 12.39°, FIction 14.14°. 전역 이동은 잘 맞추지만 국소 관절 각도는 경쟁 방법이 더 낫다.</li>
+<li><strong>V-JEPA residual fusion의 효과가 작다.</strong> ADE 개선 폭이 0.07~0.74 mm 수준이라 ViT-Giant/384급 인코더를 붙이는 비용 대비 이득이 크다고 보기 어렵다.</li>
+<li><strong>Health 도메인의 이득이 미미하다.</strong> ADE 40.30 → 40.21 mm (FIction 대비), FDE는 오히려 41.44 vs 40.58로 밀린다.</li>
+<li><strong>도메인별 하이퍼파라미터 튜닝 의존.</strong> Bike Repair는 $\lambda_{\text{rootgeo}} = \lambda_{\text{bodygeo}} = 0$, 다른 batch size(12 vs 1), 다른 dropout(0.15 vs 0.10), 다른 residual bound를 쓴다. 도메인 간 전이 가능성은 검증되지 않았다.</li>
+<li><strong>데이터셋 주석이 파생적(derived)이다.</strong> 상호작용 위치는 손 mesh에서, SMPL 상태는 WHAM 재구성에서 나온다. 즉 ground truth 자체가 off-the-shelf 모델의 추정 결과이며, 그 오차가 상한선으로 작용한다.</li>
+<li><strong>도메인 불균형.</strong> Cooking이 166K 샘플로 전체의 71%를 차지하는 반면 Health는 27.6K다. Bike Repair 테스트셋은 1,052 샘플로 작다.</li>
+<li><strong>오디오를 전혀 쓰지 않는다.</strong> Ego-Exo4D는 오디오를 포함하지만 이 연구의 입력에 오디오는 없다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Egocentric Vision 관점</strong></p>
+<ul>
+<li><strong>Ego-Exo4D 활용 방식이 참고할 만하다.</strong> ego 스트림은 모델 입력, exo 뷰는 오프라인 주석 생성·정제 전용으로 쓰는 비대칭 설계다. 3인칭 뷰를 &quot;학습 시 supervision 생성기&quot;로만 쓰고 추론 시에는 완전히 ego-only를 유지하는 패턴은, ego 데이터에 고품질 3D 라벨을 붙이기 어려운 거의 모든 문제에 그대로 이식할 수 있다.</li>
+<li><strong>sample-local 공유 좌표계 구성</strong>($\mathbf{p}_n^{\text{loc}} = (\mathbf{R}_n^{\text{ref}})^\top (\mathbf{p}_w - \mathbf{t}_n^{\text{ref}})$, $s=5\,m$ 정규화 후 $[-1,1]$ 클리핑)은 카메라가 계속 움직이는 ego 세팅에서 손·몸·물체·장면을 하나의 metric 공간에 올리는 실용적 레시피다.</li>
+<li><strong>VLM을 좌표 예측에 쓰는 올바른 방법</strong>에 대한 명확한 실험 근거를 준다. Qwen3-VL의 hidden state를 뽑되 좌표는 전용 회귀 헤드로 디코딩해야 하고, 좌표를 텍스트로 생성하면 base VLM보다도 나빠질 수 있다(Cooking ADE 103.95 → 113.87). ego 영상에 VLM을 붙여 공간 예측을 하려는 모든 연구가 먼저 확인해야 할 지점이다.</li>
+<li><strong>비균일 시간 간격을 보존하는 설계.</strong> 상대 타임스탬프 $\Delta t_{n,k}$를 유지해 &quot;고정 fps 프레임 예측&quot;이 아니라 &quot;이벤트 단위 예측&quot;으로 문제를 잡은 것이, 실제 procedural activity의 리듬에 더 가깝다.</li>
+</ul>
+<p><strong>Hand-Object Interaction 관점</strong></p>
+<ul>
+<li>이 논문은 손 궤적 예측(3D hand trajectory forecasting) 연구와 전신 모션 예측(human motion prediction) 연구를 잇는 다리를 놓는다. HOI를 연구한다면, 손만 보던 시야를 &quot;손이 가는 곳 → 몸 전체가 그것을 어떻게 만드는가&quot;로 넓히는 이 프레이밍 자체가 유용한 확장 축이다.</li>
+<li>동시에 <strong>가장 큰 한계가 바로 HOI의 핵심 부분</strong>이라는 점이 역설적으로 연구 기회다. 논문 스스로 &quot;올바른 영역은 찾지만 어느 손인지, 접촉 높이, 팔 구성, 몸통 방향은 틀릴 수 있다&quot;고 인정한다. 즉 contact point, grasp type, affordance 수준의 정밀한 HOI 모델링을 이 cascaded 구조에 3단계로 덧붙이는 것은 곧바로 후속 연구가 된다.</li>
+<li><strong>anchor + bounded residual 패턴</strong>은 HOI 생성 문제에 일반적으로 쓸 수 있다. 손 자세나 접촉 구성처럼 &quot;구조는 반드시 지켜야 하지만 여러 답이 가능한&quot; 출력에 적합하다. 특히 residual을 성분별 bound($\rho_R$, $\rho_t$, $\rho_B$)로 다르게 제한하고 스텝별 게이트로 크기를 조절하는 설계는, &quot;회전은 조금만, 이동은 크게 허용&quot; 같은 도메인 지식을 명시적으로 주입할 수 있게 해준다.</li>
+<li>SMPL 상태를 <strong>24-node 골격 그래프</strong>로 인코딩해 graph propagation을 쓰는 부분은 손 모델(MANO)의 관절 그래프에도 동일하게 적용 가능하다.</li>
+</ul>
+<p><strong>Spatial Audio 관점</strong></p>
+<ul>
+<li><strong>이 논문에 오디오는 전혀 없다</strong> — 입력은 ego 프레임, 환경 서술자, 위치 히스토리, 태스크 프롬프트뿐이다. 바로 그 부재가 기회다.</li>
+<li>Coherent4D의 소스인 Ego-Exo4D는 멀티채널 오디오를 포함한다. 요리·자전거 수리 같은 도메인에서 <strong>상호작용은 소리를 낸다</strong> — 도마 두드리는 소리, 렌치가 금속에 닿는 소리, 냄비 놓는 소리. 이 소리들은 (a) 상호작용이 <strong>언제</strong> 일어나는지에 대한 강한 시간 단서이고, (b) binaural/spatial cue가 있다면 <strong>어디서</strong> 일어나는지에 대한 방향 단서다. HIGFlow가 Table VIII에서 보인 &quot;프레임 입력을 빼면 성능이 크게 떨어진다&quot;는 결과는 동역학 단서에 대한 모델의 민감성을 보여주는데, 오디오는 물체가 가려지거나(occlusion) 시야 밖에 있을 때도 살아남는 상보적 동역학 신호다.</li>
+<li>특히 <strong>occlusion 상황</strong>이 결정적이다. 1인칭 영상에서 손과 물체는 몸·팔·다른 물체에 자주 가려진다. 이때 시각 dynamics는 끊기지만 접촉음은 남는다. Spatial audio를 dynamic memory token(현재는 V-JEPA만 채우는 자리)에 함께 넣는 구조는 곧바로 시도해볼 수 있는 확장이다 — 현재 V-JEPA fusion의 이득이 작다는 점($\le 0.74$ mm)을 고려하면, 오디오가 더 큰 상보적 이득을 줄 여지가 있다.</li>
+<li>논문이 사용한 <strong>gated residual adapter</strong>($\mathbf{h}_k^F = \mathbf{h}_k^Q + g_k \Delta\mathbf{h}_k$)는 새 modality를 얼어붙은 VLM backbone에 안전하게 주입하는 범용 패턴이다. $g_k$가 modality별 기여도를 적응적으로 조절하므로, 오디오처럼 &quot;어떤 순간엔 결정적이고 어떤 순간엔 무의미한&quot; 신호에 특히 잘 맞는다.</li>
+<li>평가 관점에서도 유용하다. Coherent4D가 정의한 연속 공간 지표(ADE / ADE₉₀ / FDE, mm 단위)는 audio-visual 방법이 spatial localization에 정말 기여하는지를 voxel 정확도보다 훨씬 엄밀하게 잴 수 있는 틀이다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper2">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>VidParse: Online Parsing of Egocentric Procedures Like a Pro</h2>
+    <p class="lead">1인칭 영상을 실시간으로 &quot;지금 몇 번째 조리 단계인가&quot;로 쪼개는 문제를, 학습을 한 번도 하지 않고 frozen foundation model 특징 + 고전 신호처리 경계 검출 + task graph 제약 beam search만으로 푸는 프레임워크다.</p>
+    <div class="authors">Anubhav Gupta, Archit Kambhamettu, Vatsal Agarwal, Pulkit Kumar, Abhinav Shrivastava (University of Maryland, College Park)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-27</span> · <span class="pub-venue">🏛 ECCV 2026</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.27562" target="_blank">arXiv:2608.27562</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.27562" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.27562" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2608.27562v1/vidgraph_pk_teaser_v1.png" alt="DINOv2 기반 유사도 행렬로 경계를 찾고, task graph로 제약된 beam search가 라벨을 붙여 인과적으로 타당한 분할을 만든다" loading="lazy"><figcaption>DINOv2 기반 유사도 행렬로 경계를 찾고, task graph로 제약된 beam search가 라벨을 붙여 인과적으로 타당한 분할을 만든다</figcaption></figure>
+<p>Figure 1. (a) frozen DINOv2 특징으로 Temporal Similarity Matrix(TSM, 프레임끼리 얼마나 닮았는지 적어 놓은 행렬)를 만들고 대각선을 따라 checkerboard kernel을 미끄러뜨려 (b) 의미가 바뀌는 지점(peak)을 경계로 잡은 뒤, (c) task graph 제약 beam search로 라벨을 붙여 (d) 매끄럽고 절차적으로 타당한 분할을 얻는 전체 흐름.</p>
+<p>---</p>
+<h3 class="sec">선행 연구</h3>
+<p>이 논문이 딛고 선 흐름은 크게 세 갈래다.</p>
+<p><strong>1) Temporal Action Segmentation (TAS, 영상을 행동 단위로 시간축에서 자르기)</strong></p>
+<ul>
+<li>초기에는 영상 전체를 다 보고 자르는 <strong>offline</strong> 모델이 주류였다. MS-TCN(multi-stage temporal convolutional network), <a href="https://arxiv.org/abs/2110.08568" target="_blank">ASFormer</a> 같은 모델이 대표적이다. 미래 프레임까지 쓸 수 있으니 애매한 구간을 뒤늦게 정정할 수 있다.</li>
+<li>실시간 응용(AR 코치, 로봇 보조)에서는 <strong>과거 프레임만 보고</strong> 판단해야 하는 <strong>Online Action Segmentation (OAS)</strong> 이 필요하다. OnlineTAS, MATR(memory-augmented transformer), Mamba-OTR(state-space model 기반) 등이 메모리 뱅크나 sub-quadratic 시퀀스 모델로 온라인 제약을 버텨내려 했다.</li>
+<li>데이터셋도 3인칭(50 Salads, Breakfast, <a href="https://arxiv.org/abs/1705.06950" target="_blank">Kinetics</a>, Something-Something, COIN, Cross-Task)에서 1인칭(EPIC-Kitchens, Ego4D, CaptainCook4D, EgoPER, HD-EPIC)으로 무게중심이 옮겨갔다.</li>
+<li>학습 없이 하려는 시도로는 vision-language model을 test time에 적응시키는 T3AL, <a href="https://arxiv.org/abs/2501.13795" target="_blank">FreeZAD</a> 등이 있다.</li>
+</ul>
+<p><strong>2) 유사도 기반 경계 검출 (Generic Event Boundary Detection, GEBD)</strong></p>
+<p>미리 정한 행동 목록 없이 &quot;장면이 바뀌는 순간&quot;만 찾는 계열이다. 최근에는 인지 모델(ESTimator), 동적 exit 구조(DyBDet), diffusion(DiffGEBD) 등으로 발전했다. 비지도(UBoCo, OTAS)나 약지도(ATBA) 방법도 결국 feature나 decoder를 상당히 최적화해야 한다.</p>
+<p>원조 격인 고전 기법은 <strong>self-similarity matrix(SSM) 위의 checkerboard kernel</strong>이다. Foote(2000), Cooper &amp; Foote(2001)가 오디오/영상 장면 경계 검출에 도입했다. 균질한 구간 사이의 전환이 SSM 대각선에서 체커보드 패턴으로 나타난다는 아이디어다.</p>
+<p><strong>3) 문법·구조 기반 절차 파싱</strong></p>
+<p>수 분짜리 절차 영상의 장거리 의존성을 다루려고 구조적 prior를 넣는 계열이다. <a href="https://arxiv.org/abs/1905.05143" target="_blank">VideoGraph</a>가 latent unit-action들의 soft graph로 긴 활동을 모델링한 초기 작업이고, 이후 activity grammar 유도, progress 추정용 soft task graph(ProTAS 계열), LLM으로 논리를 뽑아 시공간 정렬에 쓰는 <a href="https://arxiv.org/abs/2304.07647" target="_blank">LASER</a>·PHGC·KML, 일반화 task graph로 오류를 검출하는 GTG2Vid 등이 이어진다.</p>
+<p>---</p>
+<h3 class="sec">문제 제기</h3>
+<p>1인칭 영상은 특유의 시각적 노이즈가 심하다. 논문이 짚는 원인은 세 가지다.</p>
+<ul>
+<li><strong>heavy ego-motion(머리가 흔들려 시점 자체가 요동치는 현상)</strong>: 프레임 단위 feature가 행동과 무관하게 확 바뀐다.</li>
+<li><strong>transient occlusion(손이나 물체가 잠깐씩 가려지는 현상)</strong>: 증거가 순간적으로 사라진다.</li>
+<li><strong>high intra-class variability(같은 행동인데 사람마다 실행 방식이 크게 다른 현상)</strong>: 대본 없이 수행하는 human-object interaction이라 &quot;커피 내리기&quot;의 모습이 매번 다르다.</li>
+</ul>
+<p>그 결과 표준적인 프레임 단위 online 모델은 두 가지 방식으로 무너진다.</p>
+<ul>
+<li><strong>over-segmentation(하나의 행동을 잘게 토막 내는 현상)</strong>: 경계 근처에서 라벨이 깜빡깜빡 흔들린다.</li>
+<li><strong>structural collapse(절차 구조 자체가 붕괴)</strong>: 국소 오류가 쌓이면서 &quot;물을 붓기 전에 차를 마신다&quot; 같은 불가능한 순서가 나온다.</li>
+</ul>
+<p>게다가 기존 online 방법들은 라벨이 붙은 학습 데이터에 크게 의존한다. 도메인이 바뀌면 다시 학습해야 하고, 주석이나 재학습이 현실적으로 불가능한 현장에서는 배포가 어렵다. 즉 <strong>불안정한 저수준 지각(low-level perception)</strong> 과 <strong>고수준 절차 논리(procedural logic)</strong> 사이가 비어 있다는 게 핵심 지적이다.</p>
+<p>---</p>
+<h3 class="sec">연구 주제</h3>
+<p>논문은 egocentric 활동 이해를 <strong>&quot;학습된 temporal filter를 쌓는 문제&quot;가 아니라 &quot;절차 제약이 지배하는 structured inference 문제&quot;</strong> 로 다시 정의한다.</p>
+<p>핵심 관찰은 간단하다. 일상의 대부분의 작업은 일관된 구조적 의존성을 갖는다. 어떤 행동은 반드시 다른 행동보다 먼저 와야 하고, 어떤 행동은 동시에 일어날 수 없다. <strong>국소 시각 증거가 애매해도 이 의존성을 쓰면 행동 시퀀스를 복원할 수 있다.</strong></p>
+<p>기존 흐름과의 차이는 두 지점이 결정적이다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>축</th><th>기존 연구</th><th>VidParse</th></tr></thead><tbody><tr><td>temporal 모델</td><td>학습된 TCN/Transformer/SSM</td><td>학습 없음, TSM + checkerboard kernel</td></tr><tr><td>graph 사용 방식</td><td>학습 중 soft regularizer</td><td>추론 중 <strong>hard constraint</strong> (위반 transition에 $\infty$ 비용)</td></tr><tr><td>처리 단위</td><td>frame-level 분류</td><td>segment-level 파싱</td></tr><tr><td>학습 필요성</td><td>downstream 데이터로 학습/파인튜닝</td><td>gradient update 0회</td></tr><tr><td>평가</td><td>frame accuracy, Edit, F1@k</td><td>+ <strong>N-step transition AUC</strong> (장거리 절차 일관성)</td></tr></tbody></table></div>
+<p>여기서 &quot;training-free&quot;의 정의도 논문이 명시한다. <strong>downstream 절차 파싱 데이터셋에서 task-specific 학습이나 fine-tuning을 전혀 하지 않는다</strong>는 뜻이며, DINOv2나 hand-object detector 같은 frozen pretrained 부품에만 의존한다는 의미다. (단, action prototype과 task graph는 training split의 주석에서 유도한다 — 즉 gradient 학습이 없다는 뜻이지 라벨을 전혀 안 본다는 뜻은 아니다.)</p>
+<p>---</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">전체 구조</h4>
+<ul>
+<li><strong>Input</strong>: 스트리밍 1인칭 영상 $\mathcal{V}$ (GTEA는 15 fps, EgoPER는 10 fps로 처리)</li>
+<li><strong>Output</strong>: 시간순으로 정렬된 action step 시퀀스 (online, causal — 과거 프레임만 사용)</li>
+<li><strong>학습 목표</strong>: 없음. 대신 <strong>에너지 최소화(structured energy minimization)</strong> 로 추론한다.</li>
+</ul>
+<p>문제 정의는 MAP(Maximum A Posteriori) 추론이다. 온라인 boundary detector $\phi_{boundary}$가 스트림을 세그먼트 $\mathcal{S} = \{s_1, \dots, s_N\}$ 으로 나누고, 절차 그래프 $\mathcal{G}$ 아래에서</p>
+<p>$$\mathbf{A}^* = \arg\max_{\mathbf{A}} P(\mathbf{A} \mid \mathcal{S}, \mathcal{G})$$</p>
+<p>를 푼다. 파이프라인은 네 단계다.</p>
+<h4 class="subsec">1단계 — Manipulation-Anchored Features (MAFs)</h4>
+<p><strong>아이디어</strong>: 1인칭 행동을 결정하는 정보는 화면 전체가 아니라 <strong>손이 물체를 만지는 영역</strong>에 있다. 배경을 다 넣으면 ego-motion 노이즈만 늘어난다.</p>
+<p><strong>동작 방식</strong>:</p>
+<ol>
+<li>frozen <a href="https://arxiv.org/abs/2304.07193" target="_blank">DINOv2</a> ViT-L/14 마지막 레이어의 patch token을 뽑는다 (Vision Transformer 구조는 <a href="https://arxiv.org/abs/2010.11929" target="_blank">ViT</a>).</li>
+<li>frozen Hand-Object Detector(HOD, Shan et al. 2020)로 손과 조작 중인 물체의 bounding box를 검출한다.</li>
+<li>검출된 박스들을 모두 감싸는 <strong>minimum spanning box</strong>(enclosing 전략)로 하나의 interaction 영역 $R_t = [p_{x1}, p_{y1}, p_{x2}, p_{y2}]$ 를 만든다.</li>
+<li>이 영역과 겹치는 $16 \times 16$ patch token들을 공간 평균해 프레임 표현을 얻는다.</li>
+</ol>
+<p>$$\mathbf{f}_t = \frac{1}{|R_t|} \sum_{i=p_{y1}}^{p_{y2}} \sum_{j=p_{x1}}^{p_{x2}} \mathbf{P}_{t,i,j}$$</p>
+<ol>
+<li>검출이 하나도 없는 프레임은 <strong>직전 유효 feature를 그대로 이어 쓴다</strong>. 머리 움직임이나 짧은 occlusion이 feature stream에 가짜 변화를 만드는 것을 막는 단순한 temporal smoothing이다.</li>
+</ol>
+<p>논문은 이 설계를 &quot;video representation을 task-relevant trajectory에 한정하면 motion과 scene appearance가 분리된다&quot;는 기존 발견(Trokens, Trajectory-aligned space-time tokens)의 <strong>공간판(spatial version)</strong> 이라고 설명한다.</p>
+<h4 class="subsec">2단계 — Training-Free Boundary Detection</h4>
+<p>학습된 boundary predictor 대신 고전 novelty detection을 쓴다.</p>
+<p><strong>Gaussian-tapered checkerboard kernel</strong>: 기본 체커보드 패턴 $\mathbf{C} = \begin{bmatrix} 1 &amp; -1 \\ -1 &amp; 1\end{bmatrix}$ 을 $L \times L$ 전체 1 행렬 $\mathbf{J}_L$ 과 Kronecker 곱한 뒤, 중앙을 강조하고 가장자리 노이즈를 억누르는 Gaussian 가중치 $\mathbf{G}$ 를 원소곱한다.</p>
+<p>$$\mathbf{K} = (\mathbf{C} \otimes \mathbf{J}_L) \odot \mathbf{G}$$</p>
+<p><strong>local novelty</strong>: 최근 $2L$ 개 MAF만 담는 버퍼(= online 보장)로 local self-similarity matrix를 만든다.</p>
+<p>$$S_{i,j} = \frac{\mathbf{f}_i^\top \mathbf{f}_j}{\|\mathbf{f}_i\| \|\mathbf{f}_j\|}, \qquad \Delta_t = \sum_{i=1}^{2L}\sum_{j=1}^{2L} S_{i,j} K_{i,j}$$</p>
+<p><strong>boundary emission</strong>: novelty가 국소 최대이면서 saliency threshold $h$ 를 넘으면 경계로 확정한다.</p>
+<p>$$\tau = \{t \mid \Delta_t &gt; \Delta_{t \pm k} \ \text{and} \ \Delta_t &gt; h\}$$</p>
+<p>over-segmentation을 막기 위해 직전 경계로부터 최소 간격 $d$ 를 강제한다. 경계가 잡히면 버퍼를 $\tau$ 까지 비우고 세그먼트를 추론 단계로 넘긴다.</p>
+<p>이 단순한 선형 필터가 통하는 이유를 논문은 명확히 말한다. <strong>DINOv2가 의미적으로 안정적이라서, &quot;썰기&quot; 같은 하나의 행동이 MAF 공간에서 균질한 block으로 나타나기 때문</strong>이다. 예전에는 deep temporal network가 필요했던 일을 선형 필터가 해낸다는 것.</p>
+<h4 class="subsec">3단계 — Prototype-Based Action Matching</h4>
+<p>세그먼트에 의미 라벨을 붙이는 비모수(non-parametric) 단계다.</p>
+<ul>
+<li>한 행동의 모든 인스턴스를 평균 내 하나의 global prototype을 만들면 <strong>multi-phasic(여러 하위 국면으로 이뤄진) 행동의 구분이 뭉개진다</strong>. 그래서 두 단계로 쪼갠다.</li>
+<li>먼저 training example을 <strong>agglomerative clustering</strong>으로 &quot;실행 스타일(execution style)&quot;별로 묶고 centroid를 계산한다.</li>
+<li>그 다음 각 클러스터 표현을 짧은 시간 창(EgoPER: 4초 구간 / 2초 stride, GTEA: 1.5초 구간 / 0.5초 stride)으로 겹쳐 자른다. 결과가 행동 $a$ 의 <strong>micro-prototype 라이브러리</strong> $\mathcal{P}_a$ 다. temporal warping 없이 국면별 의미를 보존한다.</li>
+<li>온라인 추론 시, 세그먼트 $s_k$ 에서 HOD 마스크로 유효 interaction이 없는 프레임을 걸러내고 평균 descriptor $\mathbf{g}_k$ 를 계산한 뒤, 최근접 micro-prototype까지의 cosine distance를 매칭 비용으로 쓴다.</li>
+</ul>
+<p>$$\phi(s_k, a) = \min_{p \in \mathcal{P}_a}\left(1 - \frac{\mathbf{g}_k^\top p}{\|\mathbf{g}_k\| \|p\|}\right)$$</p>
+<h4 class="subsec">4단계 — Structured Procedural Inference (graph-constrained beam search)</h4>
+<p><strong>Task graph 유도</strong>: training 시퀀스의 step 순서 주석을 모아 만든다.</p>
+<ul>
+<li>인접한 전이를 모두 기록하되 <strong>첫 방문(first-visit)</strong> 과 <strong>재방문(revisit)</strong> 을 구분한다.</li>
+<li>각 행동의 첫 등장 이전에 관찰된 step들을 prerequisite 후보로 누적한다.</li>
+<li>그 step 없이도 성립하는 시퀀스가 있으면 <strong>omittable(선택적)</strong> 로 표시한다.</li>
+<li>최소 prerequisite 집합이 빈 행동은 <strong>start node</strong>로 두고, start node끼리는 전부 연결한다.</li>
+</ul>
+<p>(보충자료에 따르면 노드 색으로 start(초록)/end(빨강)/optional(노랑)/필수(회색), 엣지로 first-visit(실선 검정)/revisit(점선 빨강)을 시각화한다.)</p>
+<p><strong>에너지 함수</strong>:</p>
+<p>$$\mathbf{A}^* = \arg\min_{\mathbf{A}} \sum_{i=1}^{N} \left[ D_i \cdot \phi(s_i, a_i) + \lambda D_i (1 - \bar{M}_i) \right] + \Psi(\mathbf{A}, \mathcal{G})$$</p>
+<ul>
+<li>$D_i$: 세그먼트 길이 → 긴 세그먼트가 목적함수에 비례해 더 크게 기여</li>
+<li>$\bar{M}_i$: 세그먼트 내 평균 manipulation confidence → <strong>visibility prior</strong>, 즉 interaction 증거가 부실한 세그먼트에 페널티</li>
+<li>$\Psi$: 그래프 제약. 유효하지 않은 전이를 <strong>완전히 잘라낸다</strong>.</li>
+</ul>
+<p>$$\Psi(a_{i-1}, a_i) = \begin{cases} 0 &amp; (a_{i-1}, a_i) \in E_{\mathcal{G}} \\ \infty &amp; \text{otherwise} \end{cases}$$</p>
+<p>식은 전체 시퀀스로 적었지만 실제 추론은 <strong>fixed-lag commitment</strong>로 온라인 갱신한다. 몇 초보다 오래된 예측은 얼려서 미래 관측이 바꿀 수 없게 하고, 그래서 버퍼가 유한하게 유지된다.</p>
+<p><strong>Low-Visibility Inertia와 배경 처리</strong>: 손이 잠깐 화면을 벗어날 때, 이미 어떤 step을 추적 중이면 decoder가 <strong>관성(inertia)</strong> 을 적용해 작은 상수 비용으로 직전 행동을 연장한다. 반대로 시퀀스가 막 시작됐거나 이미 억제된 배경 상태라면 안전하게 background(BG)로 배정한다.</p>
+<p><strong>Gap rectification</strong>: 배경 세그먼트 뒤에 직전 행동으로 높은 확신으로 복귀하면, decoder가 <strong>소급해서</strong> 그 공백을 그 행동으로 메운다.</p>
+<p>$$E_{\text{rectified}} = E_{\text{prev}} - \text{Cost}_{BG} + (D_{\text{gap}} \cdot \bar{\phi}_{a_{i-2}})$$</p>
+<p><strong>Action-conditioned background suppression (보충자료)</strong>: &quot;전자레인지 X초 돌리기&quot;처럼 손이 오래 프레임을 벗어나는 것이 정상인 step에서는 hand-visibility 페널티를 0으로 만들어 BG로 잘못 넘어가는 것을 막는다. 손-물체 상호작용이 다시 또렷해지면 자동 해제된다. 논문은 이 설정을 EgoPER의 &quot;Microwave for X seconds&quot; 행동에만 적용했다고 밝힌다.</p>
+<p><strong>하이퍼파라미터</strong>: checkerboard kernel 폭 $L$ = EgoPER 20프레임 / GTEA 10프레임, 클러스터 수 $k$ = GTEA 3 / EgoPER 9, beam width $B$ = EgoPER 10 / GTEA 5.</p>
+<p>---</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">데이터셋과 평가 지표</h4>
+<ul>
+<li><strong>GTEA</strong>: 7개 주방 활동, 28개 영상. 15 fps로 처리.</li>
+<li><strong>EgoPER</strong>: 5개 레시피, 정상 213개 + 오류 173개 영상. ProTAS 설정을 따라 <strong>정상 영상만</strong> 평가, 동일 split 사용. 10 fps로 처리.</li>
+<li>지표: background 프레임 제외한 frame-wise Accuracy, Edit distance, F1@{0.1, 0.25, 0.5}.</li>
+<li>새 지표 <strong>N-Step Transition Accuracy</strong>: 예측 시퀀스에서 $n$-step 전이를 모두 뽑아 GT와 비교한다. $\mathcal{H}_n(S) = \{(s_i, \dots, s_{i+n})\}$ 의 multiset을 만들고 겹치는 개수로 TP를 센다.</li>
+<p>$$TP_n = \sum_{h \in \mathcal{U}} \min(c(h, S_{\text{pred}}), c(h, S_{\text{gt}}))$$ precision-recall 곡선의 AUC를 보고한다. 영상의 첫 {10%, 20%, …, 100%}만 파싱하는 <strong>점진적 완성도(progressive completion)</strong> 스윕도 함께 돌려, 증거가 쌓일수록 절차 상태를 일관되게 유지하는지 본다.</p>
+</ul>
+<h4 class="subsec">주 결과 (Table 1)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>Inference</th><th>Train-Free</th><th class="num">GTEA Acc</th><th class="num">GTEA Edit</th><th class="num">GTEA F1@0.1</th><th class="num">F1@0.25</th><th class="num">F1@0.5</th><th class="num">EgoPER Acc</th><th class="num">EgoPER Edit</th><th class="num">EgoPER F1@0.1</th><th class="num">F1@0.25</th><th class="num">F1@0.5</th></tr></thead><tbody><tr><td>MSTCN</td><td>Offline</td><td>✗</td><td class="num">79.35</td><td class="num">84.46</td><td class="num">86.54</td><td class="num">83.79</td><td class="num">71.86</td><td class="num">87.52</td><td class="num">92.34</td><td class="num">92.60</td><td class="num">91.81</td><td class="num">86.12</td></tr><tr><td>MSTCN</td><td>Online</td><td>✗</td><td class="num">47.28</td><td class="num">60.26</td><td class="num">66.75</td><td class="num">60.12</td><td class="num">40.29</td><td class="num">25.40</td><td class="num">44.81</td><td class="num">44.09</td><td class="num">31.78</td><td class="num">15.72</td></tr><tr><td>ProTAS</td><td>Online</td><td>✗</td><td class="num">73.19</td><td class="num">71.81</td><td class="num">72.89</td><td class="num">68.94</td><td class="num">54.87</td><td class="num">76.61</td><td class="num">65.50</td><td class="num">64.26</td><td class="num">62.59</td><td class="num">51.31</td></tr><tr><td><strong>VidParse (Ours)</strong></td><td>Online</td><td>✓</td><td class="num"><strong>89.1</strong></td><td class="num"><strong>87.4</strong></td><td class="num"><strong>91.9</strong></td><td class="num"><strong>89.9</strong></td><td class="num"><strong>80.5</strong></td><td class="num"><strong>80.7</strong></td><td class="num"><strong>88.7</strong></td><td class="num"><strong>91.1</strong></td><td class="num"><strong>88.5</strong></td><td class="num"><strong>77.6</strong></td></tr></tbody></table></div>
+<p>읽는 법:</p>
+<ul>
+<li>MS-TCN을 그대로 online으로 돌리면 붕괴한다 (EgoPER F1@0.5가 86.12 → 15.72). 미래 컨텍스트가 얼마나 컸는지 보여주는 대조군이다.</li>
+<li>VidParse는 <strong>gradient update 0회로 online SoTA</strong>를 찍는다. GTEA에서는 offline MS-TCN마저 모든 지표에서 넘는다.</li>
+<li>논문 본문 서술: ProTAS 대비 GTEA에서 모든 threshold의 F1을 15% 이상, F1@0.5는 최대 25%까지 개선. EgoPER에서는 F1과 Edit에서 약 25%, frame accuracy에서 4% 개선.</li>
+</ul>
+<p>논문은 <strong>자기 방식의 지표 해석 주의점</strong>도 명시한다. frame-level 모델과 달리 segment 단위로 라벨을 커밋하기 때문에, 세그먼트가 GT와 잘 정렬돼도 경계가 조금만 어긋나면 frame accuracy가 손해를 본다. 따라서 이 설정에서는 <strong>Edit와 F1@k가 분할 품질을 더 잘 반영</strong>한다.</p>
+<h4 class="subsec">절차 파싱 일관성 (N-Step Transition, Fig. 4)</h4>
+<p>EgoPER에서 모든 transition 길이에 대해 ProTAS를 앞서고, <strong>$n$ 이 커질수록 격차가 벌어진다. 5-step과 7-step 전이의 AUC는 baseline의 최대 $5\times$–$10\times$</strong> (초록의 &quot;10x improvement&quot;가 이 수치다). 메시지가 분명하다. frame-level baseline은 국소 오류가 쌓여 장거리 전이를 깨뜨리고 절차 제약을 위반하지만, VidParse는 <strong>행동을 따로따로 인식하는 게 아니라 기저 task graph를 재구성</strong>한다.</p>
+<h4 class="subsec">경계 검출 거동</h4>
+<ul>
+<li>방출된 세그먼트 길이 분포: 약 <strong>75%가 2–4초 구간</strong>, <strong>90% 이상이 5초 미만</strong>. 온라인성(짧은 지연)을 보여준다.</li>
+<li>경계 recall: kernel = 10에서 <strong>90% 이상의 경우 2초 이내에 경계를 회수</strong>한다 → 서로 다른 행동을 한 세그먼트에 뒤섞지 않는다는 근거.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>Boundary 방법 (EgoPER)</th><th class="num">Acc</th><th class="num">Edit</th><th class="num">F1</th></tr></thead><tbody><tr><td>Adjacent Frame Similarity</td><td class="num">75.7</td><td class="num">83.4</td><td class="num">68.0</td></tr><tr><td>Z-score</td><td class="num">78.5</td><td class="num">85.1</td><td class="num">69.9</td></tr><tr><td>ABD</td><td class="num">78.5</td><td class="num">88.1</td><td class="num">72.2</td></tr><tr><td><strong>Ours (checkerboard TSM)</strong></td><td class="num"><strong>80.7</strong></td><td class="num"><strong>88.7</strong></td><td class="num"><strong>77.6</strong></td></tr></tbody></table></div>
+<h4 class="subsec">Ablation — Feature (Table 2, EgoPER Overall)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>Feature</th><th>Train-Free</th><th class="num">Acc</th><th class="num">Edit</th><th class="num">F1</th></tr></thead><tbody><tr><td>ProTAS</td><td>I3D</td><td>✗</td><td class="num">76.61</td><td class="num">65.50</td><td class="num">51.31</td></tr><tr><td>ProTAS</td><td>DINO CLS</td><td>✗</td><td class="num">81.31</td><td class="num">72.63</td><td class="num">64.44</td></tr><tr><td>ProTAS</td><td>DINO MAFs</td><td>✗</td><td class="num">83.31</td><td class="num">70.87</td><td class="num">67.26</td></tr><tr><td>Ours</td><td>DINO CLS</td><td>✓</td><td class="num">69.09</td><td class="num">82.68</td><td class="num">61.42</td></tr><tr><td><strong>Ours</strong></td><td><strong>DINO MAFs</strong></td><td>✓</td><td class="num"><strong>80.69</strong></td><td class="num"><strong>88.69</strong></td><td class="num"><strong>77.61</strong></td></tr></tbody></table></div>
+<ul>
+<li>MAF는 <strong>다른 방법(ProTAS)에 꽂아 넣어도</strong> 성능을 올린다 → feature 자체가 좋다.</li>
+<li>같은 MAF 위에서 VidParse의 추론이 F1을 67.26 → 77.61로 더 끌어올린다 → 구조적 디코딩의 기여가 별개로 존재한다.</li>
+<li>전체 프레임(DINO CLS)은 MAF보다 못하다 → <strong>foreground를 명시적으로 집는 것이 필요</strong>하다는 증거.</li>
+</ul>
+<h4 class="subsec">Ablation — EgoVLPv2 비교 (Table 3 Right, EgoPER)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>MAF</th><th>Clip-level</th><th class="num">Acc</th><th class="num">Edit</th><th class="num">F1</th></tr></thead><tbody><tr><td>EgoVLPv2</td><td>✗</td><td>✗</td><td class="num">78.1</td><td class="num">89.4</td><td class="num">73.0</td></tr><tr><td>EgoVLPv2</td><td>✓</td><td>✗</td><td class="num">80.3</td><td class="num">91.5</td><td class="num">77.5</td></tr><tr><td>EgoVLPv2</td><td>✗</td><td>✓</td><td class="num">53.4</td><td class="num">62.8</td><td class="num">43.7</td></tr><tr><td>EgoVLPv2</td><td>✓</td><td>✓</td><td class="num">60.1</td><td class="num">70.6</td><td class="num">52.1</td></tr><tr><td>Ours (DINOv2)</td><td>✗</td><td>✗</td><td class="num">69.1</td><td class="num">82.7</td><td class="num">61.4</td></tr><tr><td><strong>Ours (DINOv2)</strong></td><td><strong>✓</strong></td><td>✗</td><td class="num"><strong>80.7</strong></td><td class="num"><strong>88.7</strong></td><td class="num"><strong>77.6</strong></td></tr></tbody></table></div>
+<p>egocentric video-language backbone인 EgoVLPv2의 frame-level feature는 DINOv2 MAF와 거의 대등하지만, <strong>clip-level feature는 크게 떨어진다</strong>. 시간적으로 뭉뚱그린 표현은 짧은 절차 전환을 놓친다는 뜻이다. 그리고 어느 backbone을 쓰든 <strong>MAF 마스킹은 일관되게 이득</strong>이다.</p>
+<h4 class="subsec">Ablation — Prototype 방식 / 민감도 (Table 4, EgoPER)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Prototype 방식</th><th class="num">Acc</th><th class="num">Edit</th><th class="num">F1</th></tr></thead><tbody><tr><td>Global mean</td><td class="num">78.5</td><td class="num">88.8</td><td class="num">74.5</td></tr><tr><td>Medoids</td><td class="num">80.1</td><td class="num">87.0</td><td class="num">75.0</td></tr><tr><td><strong>Centroids (Ours)</strong></td><td class="num"><strong>80.7</strong></td><td class="num"><strong>88.7</strong></td><td class="num"><strong>77.6</strong></td></tr></tbody></table></div>
+<p>global mean은 feature 공간을 뭉개고, medoid는 실제 관찰된 인스턴스로만 한정된다. centroid가 둘 사이 균형을 잡는다.</p>
+<div class="tbl-wrap"><table><thead><tr><th class="num">최소 간격 $d$</th><th class="num">Acc</th><th class="num">Edit</th><th class="num">F1</th></tr></thead><tbody><tr><td class="num">10</td><td class="num">81.0</td><td class="num">84.1</td><td class="num">73.5</td></tr><tr><td class="num">15</td><td class="num">81.7</td><td class="num">87.9</td><td class="num">75.7</td></tr><tr><td class="num"><strong>20</strong></td><td class="num">80.7</td><td class="num"><strong>88.7</strong></td><td class="num"><strong>77.6</strong></td></tr><tr><td class="num">25</td><td class="num">78.1</td><td class="num">87.7</td><td class="num">72.8</td></tr><tr><td class="num">30</td><td class="num">76.1</td><td class="num">87.7</td><td class="num">71.3</td></tr></tbody></table></div>
+<p>$d$ 가 작으면 경계가 촘촘해져 살짝 over-segment하고, 크면 간격이 경직돼 빠른 전환을 놓친다.</p>
+<p>prototype 개수 $p$ 는 3→11로 바꿔도 Accuracy·Edit 변동이 <strong>1.2% 미만</strong>이라, 클러스터링 기반 매칭이 견고하다.</p>
+<h4 class="subsec">추론 속도 (Table 3 Left, EgoPER, 영상당 평균 초)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">HOD</th><th class="num">Backbone</th><th class="num">Method 단계</th><th class="num">Total</th><th class="num">FPS</th><th class="num">Acc</th><th class="num">Edit</th><th class="num">F1@0.5</th></tr></thead><tbody><tr><td>ProTAS</td><td class="num">-</td><td class="num">79.5</td><td class="num">706</td><td class="num">785.5</td><td class="num">4.5</td><td class="num">76.6</td><td class="num">65.5</td><td class="num">51.3</td></tr><tr><td>Ours ($B=1$)</td><td class="num">339</td><td class="num">36.8</td><td class="num">24.8</td><td class="num">400.6</td><td class="num">8.7</td><td class="num">58.5</td><td class="num">77.5</td><td class="num">52.1</td></tr><tr><td>Ours ($B=3$)</td><td class="num">339</td><td class="num">36.8</td><td class="num">28.2</td><td class="num">404.0</td><td class="num">8.7</td><td class="num">76.3</td><td class="num">86.0</td><td class="num">72.4</td></tr><tr><td>Ours ($B=5$)</td><td class="num">339</td><td class="num">36.8</td><td class="num">28.4</td><td class="num">404.2</td><td class="num">8.6</td><td class="num">78.5</td><td class="num">86.9</td><td class="num">74.5</td></tr><tr><td><strong>Ours ($B=10$)</strong></td><td class="num">339</td><td class="num">36.8</td><td class="num">32.8</td><td class="num">408.6</td><td class="num">8.6</td><td class="num"><strong>80.7</strong></td><td class="num"><strong>88.7</strong></td><td class="num"><strong>77.6</strong></td></tr></tbody></table></div>
+<p>MAF 추출에 HOD 비용(339초)이 붙는데도 전체는 <strong>8.6 FPS로 ProTAS(4.5 FPS)보다 빠르다</strong>. 더 인상적인 건 파싱·디코딩 단계인데, VidParse는 <strong>AMD EPYC 7443 CPU에서 32.8초</strong>면 끝나는 반면 ProTAS는 <strong>NVIDIA RTX A4000 GPU에서 706초</strong>가 필요하다. beam width로 속도-정확도를 매끄럽게 조절할 수 있다.</p>
+<h4 class="subsec">보충 실험 — 레시피별 task graph (GTEA)</h4>
+<p>보충자료는 더 엄격한 설정을 본다. 일반화된 action graph(동사만 모음: take, pour, place)가 아니라 <strong>레시피별 task graph</strong>, 즉 행동과 조작 대상 물체를 묶은(&quot;take bread&quot; vs &quot;take cup&quot;) 정밀한 순차 제약을 강제한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>Feature</th><th class="num">Overall Acc</th><th class="num">Overall Edit</th><th class="num">Overall F1</th></tr></thead><tbody><tr><td>ProTAS</td><td>I3D*</td><td class="num">46.11</td><td class="num">46.60</td><td class="num">21.63</td></tr><tr><td>ProTAS</td><td>DINO CLS*</td><td class="num">41.82</td><td class="num">45.89</td><td class="num">19.75</td></tr><tr><td>ProTAS</td><td>DINO MAFs*</td><td class="num">44.89</td><td class="num">44.54</td><td class="num">21.30</td></tr><tr><td>Ours</td><td>DINO CLS*</td><td class="num">56.55</td><td class="num">79.29</td><td class="num">46.33</td></tr><tr><td><strong>Ours</strong></td><td><strong>DINO MAFs\</strong>*</td><td class="num"><strong>89.11</strong></td><td class="num"><strong>87.39</strong></td><td class="num"><strong>80.47</strong></td></tr></tbody></table></div>
+<p>(* = 레시피별 task-graph 설정)</p>
+<p><strong>ProTAS는 좋은 MAF feature를 줘도 F1 21.30에서 정체</strong>하는 반면, 같은 feature로 VidParse는 <strong>80.47</strong>을 낸다. &quot;Cheese&quot; 레시피에서는 Acc 94.85 / Edit 100.00 / F1 100.00으로 거의 완벽한 구조 파싱을 달성한다. 강한 feature만으로는 부족하고, <strong>hard constraint 기반 구조적 디코딩이 정밀한 절차 이해의 핵심</strong>이라는 게 이 표의 메시지다.</p>
+<h4 class="subsec">연구 의의</h4>
+<ol>
+<li><strong>&quot;학습 없이도 된다&quot;의 실증</strong>: frozen foundation model의 의미적 안정성이 충분히 좋으면, 2000년대 초 신호처리 기법(checkerboard kernel on SSM)이 deep temporal network를 대체할 수 있다. 학습 파이프라인 전체를 없애도 online SoTA가 가능하다.</li>
+<li><strong>구조를 soft가 아닌 hard로</strong>: 대부분의 선행 연구는 graph를 학습 중 regularizer로 썼다. 이 논문은 추론 시 $\infty$ 비용의 경직된 제약으로 쓰고, 그것이 local predictor 특유의 structural collapse를 막는 결정적 장치임을 보인다.</li>
+<li><strong>평가 축의 확장</strong>: frame accuracy와 F1@k만으로는 &quot;장거리 절차 일관성&quot;을 측정할 수 없다. N-step transition AUC는 이 공백을 겨냥한 지표이며, 여기서 격차가 가장 크게 벌어진다.</li>
+<li><strong>배포 친화성</strong>: CPU에서 디코딩이 끝나고 도메인별 재학습이 필요 없어, 주석 예산이 없는 현장에 바로 얹을 수 있다.</li>
+</ol>
+<p>---</p>
+<h3 class="sec">한계</h3>
+<p>논문이 본문(Sec. 6)과 보충자료(Sec. 6)에서 직접 밝힌 것들:</p>
+<ul>
+<li><strong>초저지연(ultra-low-latency) 응용에는 부적합</strong>. global context는 필요 없지만 segment 단위로 처리하므로, 경계가 잡힐 때까지 라벨 확정이 지연된다. (측정치로 보면 세그먼트의 약 75%가 2–4초)</li>
+<li><strong>out-of-distribution 실행 순서에서 복구 불가</strong>. task graph를 training 시퀀스에서 유도하고 위반 전이에 $\infty$ 비용을 주므로, 사용자가 <strong>실제로는 유효하지만 학습에서 본 적 없는 새로운 순서</strong>로 수행하면 decoder가 정답 경로를 잘라내고 알려진 그래프에 억지로 정렬시킨다. hard constraint의 장점이 곧 약점이다.</li>
+<li><strong>HOD 의존성</strong>. 심한 occlusion, motion blur, 혹은 손을 쓰지 않는 행동(예: &quot;전자레인지 사용&quot;)에서 hand-object detector가 틀리거나 늦는다. gap rectification과 inertia가 일시적 occlusion은 메우지만, <strong>장기간 가려짐이나 순수 비수작업 행동</strong>에서는 시각 증거가 무너져 엉뚱한 예측을 내거나 마지막 유효 feature에 과하게 기댄다.</li>
+<li><strong>exocentric(3인칭)으로의 확장은 조건부</strong>. manipulation cue가 보이면 적용 가능하지만, 약하거나 없으면 성능이 떨어질 것으로 논문 스스로 예상한다.</li>
+<li><strong>task graph 자체는 주석 기반</strong>. gradient 학습은 없지만 training split의 step 순서 주석이 그래프와 prototype 양쪽에 필요하다. 완전한 zero-shot은 아니다.</li>
+<li><strong>future work</strong>: 확률적(probabilistic) 그래프로 open-world와 느슨하게 구조화된 작업을 다루는 방향.</li>
+</ul>
+<p>---</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<h4 class="subsec">Egocentric Vision</h4>
+<ul>
+<li><strong>online / causal 제약이 얼마나 비싼지</strong>를 정량적으로 보여주는 좋은 레퍼런스다. MS-TCN이 EgoPER F1@0.5에서 offline 86.12 → online 15.72로 무너지는 수치는, 1인칭 실시간 시스템을 설계할 때 &quot;미래 컨텍스트 없음&quot;의 대가를 잡아주는 기준선이 된다.</li>
+<li><strong>frozen foundation model로 얼마나 멀리 갈 수 있나</strong>에 대한 강력한 baseline. 새 egocentric 태스크를 시작할 때 학습 파이프라인을 짜기 전에 &quot;DINOv2 patch token + 고전 novelty detection&quot;을 먼저 돌려보는 것이 저비용 상한 추정이 된다. 특히 clip-level feature가 frame-level보다 크게 나쁘다는 ablation은 backbone 선택 시 바로 쓸 수 있는 교훈이다.</li>
+<li><strong>N-step transition AUC</strong>는 그대로 차용할 만한 지표다. 절차·시퀀스가 중요한 egocentric 태스크(조리, 조립, 수술, 정비)에서 프레임 지표만 보면 &quot;구조가 무너졌는데 숫자는 괜찮은&quot; 상황을 놓친다.</li>
+<li>EgoPER, GTEA, CaptainCook4D, HD-EPIC 같은 절차 벤치마크 지형도를 Related Work가 잘 정리해 두어, 데이터셋 선택 시 참고하기 좋다.</li>
+</ul>
+<h4 class="subsec">Hand-Object Interaction</h4>
+<ul>
+<li>이 논문의 <strong>핵심 기여 자체가 HOI를 표현 학습의 앵커로 쓴 것</strong>이다. MAF는 &quot;손+조작 물체 박스로 patch token을 마스킹해 평균&quot;이라는 극도로 단순한 연산인데, 전체 프레임 feature를 일관되게 이긴다. HOI를 명시적 spatial prior로 쓰는 아이디어의 저비용 검증판으로 읽을 수 있다.</li>
+<li><strong>HOI 검출기의 신뢰도를 downstream 추론의 신호로 재활용</strong>하는 방식이 흥미롭다. 평균 manipulation confidence $\bar{M}_i$ 를 에너지 함수의 visibility prior로 쓰고, 검출 실패 시 inertia로 직전 행동을 연장하며, gap rectification으로 소급 수정한다. HOI detection의 불확실성을 버리지 않고 상위 추론에 넘기는 설계는 우리 파이프라인에도 옮길 수 있다.</li>
+<li>다만 논문이 인정하듯 <strong>HOD가 곧 병목</strong>이다. 장기 occlusion과 비수작업 행동에서 무너진다. 더 강건한 hand-object contact 추정(3D hand pose, contact field, 양손 상호작용)을 MAF 자리에 끼워 넣으면 그대로 개선 여지가 된다.</li>
+<li>micro-prototype 설계(행동을 실행 스타일별로 클러스터링 → 짧은 창으로 슬라이스)는 <strong>하나의 HOI 행동이 여러 하위 국면으로 이뤄진다</strong>는 관찰의 실용적 구현이다. HOI 인식에서 클래스당 단일 prototype이 왜 부족한지에 대한 구체적 근거가 된다.</li>
+</ul>
+<h4 class="subsec">Spatial Audio</h4>
+<ul>
+<li>이 논문은 순수 비전이며 오디오를 전혀 쓰지 않는다. 그런데 <strong>한계 지점들이 오디오가 가장 잘 메우는 지점과 정확히 겹친다</strong>는 점이 흥미롭다.</li>
+<ul>
+<li>손이 프레임을 벗어나거나 가려지는 구간: 소리는 계속 난다. 끓는 소리, 자르는 소리, 전자레인지 동작음.</li>
+<li>&quot;Microwave for X seconds&quot;처럼 손이 없는 step을 위해 논문은 별도 수작업 억제 규칙을 만들어야 했다. 오디오가 있으면 이 규칙 없이 자연스럽게 해결될 가능성이 크다.</li>
+<li>Spatial audio라면 소리가 나는 방향까지 알 수 있어, 시야 밖(off-screen)에서 진행 중인 step을 추적하는 데 직접 쓰인다.</li>
+</ul>
+<li>방법론적으로도 이식이 쉽다. <strong>TSM + checkerboard kernel은 원래 오디오 novelty detection에서 나온 기법</strong>(Foote 2000)이다. 즉 audio feature stream에 똑같이 적용해 audio-side boundary를 뽑고, 두 modality의 novelty 신호를 합쳐 경계를 확정하는 확장이 자연스럽다.</li>
+<li>에너지 함수 $\sum_i [D_i \phi(s_i, a_i) + \lambda D_i (1 - \bar{M}_i)] + \Psi$ 는 modality를 추가하기 쉬운 형태다. audio matching cost 항이나 audio-based visibility 항을 더하면 되고, graph 제약 $\Psi$ 는 그대로 유지된다. <strong>training-free 상태를 유지한 채 multimodal로 확장</strong>할 수 있다는 것이 실용적 매력이다.</li>
+</ul>
+<h4 class="subsec">즉시 실험해 볼 만한 것</h4>
+<ul>
+<li>MAF 마스킹만 떼어내 우리 기존 egocentric 파이프라인의 feature 앞단에 붙여 보기 (논문의 Table 2가 보여주듯 ProTAS 같은 남의 방법에도 이득을 준다).</li>
+<li>N-step transition AUC를 기존 실험에 추가해, frame 지표로는 안 보이던 구조 붕괴가 있는지 점검.</li>
+<li>task graph를 hard constraint로 쓰는 beam search를 우리 online 디코더에 얹어, over-segmentation이 줄어드는지 확인.</li>
+<li>프로젝트 페이지: <a href="https://learn2phoenix.github.io/VidParse" target="_blank">https://learn2phoenix.github.io/VidParse</a> (코드와 인터랙티브 정성 결과 제공)</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper3">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>Single-Query Person-Centric Bimanual Hand-Object Interaction Detection</h2>
+    <p class="lead">손을 따로따로 검출하던 기존 방식 대신, <strong>사람 한 명 = query 하나</strong>로 묶어 사람 박스·자세·양손 박스·양손 접촉 상태·상호작용 대상까지 한 번에 예측하는 person-centric 프레임워크를 제안하고, 이를 위한 COCO 기반 데이터셋과 tuple 단위 평가 지표를 함께 만든 논문이다.</p>
+    <div class="authors">Jonghyun Kim, Junho Roh, Yubin Yoon, Hyotae Lee, Jongkuk Park, Taehwan Hwang, Jaechul Kim, Jungho Lee — LG전자 CTO부문 AI Lab (South Korea)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-09-10</span> · <span class="pub-venue">🏛 ECCV 2026</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2609.12155" target="_blank">arXiv:2609.12155</a> <a class="pill pdf" href="https://arxiv.org/pdf/2609.12155" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2609.12155" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2609.12155v1/figures/oih_architecture.jpg" alt="단일 query가 사람 박스·pose·양손 박스를 동시에 내놓고, hand-to-query relation matrix로 각 손의 상호작용 대상을 검출된 query 집합에서 골라내는 전체 구조" loading="lazy"><figcaption>단일 query가 사람 박스·pose·양손 박스를 동시에 내놓고, hand-to-query relation matrix로 각 손의 상호작용 대상을 검출된 query 집합에서 골라내는 전체 구조</figcaption></figure>
+<p>Figure 2 (Model overview): backbone + transformer encoder가 top-$K$ query(+ off query)를 만들고, part-aware reference point를 쓰는 deformable decoder가 이를 정제해 detection box, body keypoint, hand box, hand-target relation을 동시에 뽑아내는 파이프라인.</p>
+<p>보조 그림(Figure 1, 데이터셋 예시): <a href="https://arxiv.org/html/2609.12155v1/figures/oih_paper_vis.png" target="_blank">https://arxiv.org/html/2609.12155v1/figures/oih_paper_vis.png</a> — 사람 박스, keypoint, 좌/우 손 영역(점선), 상호작용 대상(실선)을 한 사람 단위로 묶어 annotate한 예시.</p>
+<p>---</p>
+<h3 class="sec">선행 연구</h3>
+<p><strong>Hand-object interaction(손-물체 상호작용) 이해 — hand-centric 계열</strong></p>
+<p>이 분야의 주류는 &quot;손 하나&quot;를 예측 단위로 삼는 방식이다.</p>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2006.06669" target="_blank">100DOH</a></strong> (Shan et al., CVPR 2020): 손마다 (hand box, hand side(좌/우), contact state(접촉 상태), in-contact object box)를 예측한다. 인터넷 규모의 대형 데이터셋을 함께 공개해 이 분야의 표준 출력 포맷을 사실상 정의했다.</li>
+<li><strong>Hands23</strong> (Cheng et al., NeurIPS 2023): 출력 공간을 더 넓혀 object segment(물체 분할 마스크), 도구를 통해 간접적으로 닿는 second object, grasp/contact 종류까지 예측한다.</li>
+<li><strong>ContactHands</strong> (Narasimhaswamy et al., NeurIPS 2020): in-the-wild 환경에서 손 검출과 물리적 접촉 인식을 다룬다. 손 박스와 손 상태만 제공하고, 접촉 물체 annotation은 없다.</li>
+</ul>
+<p><strong>Human-object interaction(HOI) detection 계열</strong></p>
+<p>사람-물체 쌍과 그 사이의 action predicate(동작 술어)를 찾는 더 큰 흐름이다.</p>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2104.13682" target="_blank">HOTR</a></strong>, <strong>HOI Transformer</strong>: detection과 interaction 추론을 end-to-end set prediction 하나로 통합.</li>
+<li>이후 predicate context 모델링 강화, open-vocabulary/open-world 확장(visual-semantic alignment, multi-modal prompt) 연구가 이어졌다.</li>
+</ul>
+<p><strong>Entity set 위에서의 relation 예측</strong></p>
+<p>검출된 entity(객체 query) 사이의 관계를 추론하는 scene graph generation 흐름이다.</p>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2201.11460" target="_blank">RelTR</a></strong>, <strong>EGTR</strong>: transformer object query 위에서 직접 relation을 모델링.</li>
+<li>최근에는 vision-language 결합으로 닫힌 predicate 집합을 넘어서려는 시도가 있다.</li>
+</ul>
+<p><strong>DETR 계열 detector</strong></p>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2005.12872" target="_blank">DETR</a></strong>: detection을 bipartite matching 기반 set prediction으로 재정의, NMS 같은 휴리스틱 후처리를 제거.</li>
+<li><strong><a href="https://arxiv.org/abs/2010.04159" target="_blank">Deformable DETR</a></strong>: sparse deformable attention으로 수렴 속도와 작은 물체 성능 개선.</li>
+<li><strong><a href="https://arxiv.org/abs/2203.03605" target="_blank">DINO</a></strong>: denoising 학습과 query 설계 개선.</li>
+<li><strong><a href="https://arxiv.org/abs/2304.08069" target="_blank">RT-DETR</a></strong>: 실시간 end-to-end transformer detection. 이 논문의 base detector.</li>
+</ul>
+<p>---</p>
+<h3 class="sec">문제 제기</h3>
+<p><strong>핵심 지적: 예측 단위(prediction unit)와 해석 단위(interpretation unit)가 어긋나 있다.</strong></p>
+<p>기존 hand-centric 방법들은 손 하나하나를 <strong>독립된 instance</strong>로 다룬다. 그래서 좌/우 손을 &quot;같은 사람에게 속한 한 쌍&quot;으로 명시적으로 묶지 않는다. 이 설계가 낳는 구체적 문제는 다음과 같다.</p>
+<ol>
+<li><strong>Ownership ambiguity(소유권 모호성)</strong>: 여러 사람이 있는 장면에서 손 여러 개와 상호작용 여러 개를 다 검출해도, <strong>어느 두 손이 같은 사람의 손인지</strong>를 결정하지 못한다. 붐비는 장면에서 A의 왼손과 B의 오른손이 한 사람의 양손으로 잘못 묶이는 cross-person assignment가 발생할 수 있다.</li>
+</ol>
+<ol>
+<li><strong>양손 상호작용(bi-manual interaction) 해석 불가</strong>: &quot;이 사람이 왼손으로 컵을 잡고 오른손으로 주전자를 들고 있다&quot; 같은 person-level 해석은 두 손이 한 사람에 묶여야만 가능하다. 손 단위 출력만으로는 이런 구조를 복원할 수 없다.</li>
+</ol>
+<ol>
+<li><strong>평가 지표도 이 문제를 못 잡는다</strong>: 기존 hand-centric metric은 손 단위 검출/연관 정확도만 재기 때문에, ownership 불일치(cross-person 할당, 좌/우 슬롯 혼동)에 <strong>아무 페널티를 주지 않는다</strong>.</li>
+</ol>
+<ol>
+<li><strong>데이터셋의 annotation 부족</strong>: Table 1에서 정리하듯, 기존 hand-contact 데이터셋은 person-centric 구조 자체가 없다.</li>
+</ol>
+<div class="tbl-wrap"><table><thead><tr><th>Dataset</th><th>Person-centric</th><th>Hand box</th><th>Contact info</th><th>Object box</th><th>Object class</th><th>Human box</th><th>Body keypoint</th></tr></thead><tbody><tr><td>Ours</td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr><tr><td>ContactHands</td><td>X</td><td>O</td><td>O</td><td>X</td><td>X</td><td>X</td><td>X</td></tr><tr><td>100DOH</td><td>X</td><td>O</td><td>O</td><td>O</td><td>X</td><td>X</td><td>X</td></tr><tr><td>Hands23</td><td>X</td><td>O</td><td>O</td><td>O</td><td>X</td><td>X</td><td>X</td></tr></tbody></table></div>
+<p>즉 기존 데이터셋 중 어느 것도 human box, body keypoint, object class를 함께 주지 않아, 사람 단위의 구조적 학습 자체가 불가능했다.</p>
+<ol>
+<li><strong>상호작용 물체의 semantics 상실</strong>: person query에서 상호작용 물체 박스를 <strong>직접 regression</strong>하면 위치는 나오지만 그 물체가 &quot;무엇인지(class)&quot;는 알 수 없다.</li>
+</ol>
+<p><strong>왜 중요한가</strong>: 어느 사람이 어느 손으로 어떤 물체를 조작하는지를 파싱하는 능력은 fine-grained action understanding, demonstration mining(사람 시연 데이터 수집), assistive perception(보조 인지), robot learning from observation(관찰 기반 로봇 학습)의 기반이 된다.</p>
+<p>---</p>
+<h3 class="sec">연구 주제</h3>
+<p>논문이 새로 정의하는 문제는 <strong>person-centric bi-manual hand-object interaction detection</strong>이다. 기존 흐름과의 차이는 세 층위로 나뉜다.</p>
+<p><strong>(1) 표현(formulation)의 전환 — hand-centric → person-centric</strong></p>
+<p>사람 instance를 1차 예측 단위로 삼고, 좌/우 손을 그 사람에 붙은 <strong>두 개의 명시적 slot</strong>으로 다룬다. Query 하나가 한 사람에 대한 구조화된 출력 전체를 담당한다:</p>
+<ul>
+<li>human box</li>
+<li>body pose (keypoint $\mathbf{\hat{K}}_i \in [0,1]^{J\times2}$)</li>
+<li>좌/우 hand box ($\mathbf{\hat{b}}_i^L, \mathbf{\hat{b}}_i^R$)</li>
+<li>좌/우 hand state (접촉 여부/유형)</li>
+<li>좌/우 손 각각의 interaction target</li>
+</ul>
+<p>이 구조는 person-centric pose estimation과 형태가 비슷하지만, 거기에 양손 상호작용 추론까지 붙인 확장이다.</p>
+<p><strong>(2) HOI 계열과의 차이</strong></p>
+<p>HOI detection도 detection과 relation을 통합하지만, 관계의 단위가 &quot;사람-물체 쌍 + predicate&quot;다. 이 논문은 <strong>사람 내부의 손 단위(hand-specific)</strong> 상호작용을 person 구조 안에서 다룬다. Scene graph generation과도 &quot;entity set 위에서 relation을 뽑는다&quot;는 관점은 공유하지만, 일반 predicate graph가 아니라 <strong>각 손이 대상 하나를 고르는 compact한 selection</strong> 문제로 좁힌다.</p>
+<p><strong>(3) 평가 기준의 전환</strong></p>
+<p>손 단위가 아니라 <strong>완전한 human-hand-object tuple</strong> 단위로 맞았는지를 재는 구조적 metric을 제안해, ownership 불일치에 실제로 페널티가 가도록 만든다.</p>
+<p>---</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">전체 구조</h4>
+<p>Base는 RT-DETR 스타일 파이프라인이다. Backbone + transformer encoder → top-$K$ query 선택 → part-aware reference를 쓰는 deformable decoder → 여러 head로 구조화 출력.</p>
+<ul>
+<li><strong>Input</strong>: 이미지 $\mathbf{x}$ 하나.</li>
+<li><strong>Output</strong>: person-centric interaction tuple의 집합.</li>
+</ul>
+<h4 class="subsec">1) Query 설계: 사람도 물체도 같은 query 풀에서</h4>
+<p>$N$개의 object query를 쓰되, <strong>각 query가 human instance일 수도 general object instance일 수도 있다</strong>. 모든 query $i$에 대해 detector는 class 분포 $\mathbf{\hat{c}}_i \in \mathbb{R}^C$ (person 포함)와 박스 $\mathbf{\hat{b}}_i \in [0,1]^4$를 예측한다.</p>
+<p>Person으로 분류된 query는 여기에 body keypoint, 좌/우 hand box, 그리고 relation 추론에 쓰이는 좌/우 hand embedding $\mathbf{h}_i^L, \mathbf{h}_i^R \in \mathbb{R}^d$를 더 뽑는다.</p>
+<p>중요한 구현 디테일: <strong>non-person query도 forward pass에서는 hand/pose head를 똑같이 통과한다.</strong> 예측된 hand box와 pose가 decoder의 part-aware reference point를 만드는 데 쓰이기 때문이다. 다만 <strong>loss는 human instance에 matching된 query에만 건다.</strong> 즉 출력은 나오되 supervision은 없다.</p>
+<h4 class="subsec">2) Part-aware Deformable Attention — 하나의 query로 몸과 손을 동시에 보기</h4>
+<p><strong>문제</strong>: 큰 사람 몸통과 작고 관절이 많은 손을 하나의 query가 동시에 정확히 잡아야 한다. 기존 구조적 human prediction 방법들은 instance query와 part query(예: human query + keypoint query)를 <strong>따로</strong> 두어 해결했다(<a href="https://arxiv.org/abs/2302.01593" target="_blank">ED-Pose</a>, Group Pose 계열).</p>
+<p><strong>해법</strong>: task별 추가 query를 만들지 않고, <strong>query 하나 안에서</strong> interactive learning을 한다.</p>
+<ul>
+<li>*Head-wise decomposition*: 같은 query feature의 서로 다른 sub-representation(attention head 묶음)에 서로 다른 구조적 역할(몸통 / 좌손 / 우손 / body joint)을 할당한다.</li>
+<li>*두 층위의 interactive learning*: query 사이의 self-attention으로 instance-to-instance 상호작용을, query 내부 head 구조로 global-to-local 결합을 만든다.</li>
+</ul>
+<p><strong>Reference point 구성</strong>: 각 decoder layer에서 중간 예측으로부터 reference를 만든다.</p>
+<p>$$\mathbf{p}_i^H = \phi(\mathbf{\hat{b}}_i), \quad \mathbf{p}_i^L = \phi(\mathbf{\hat{b}}_i^L), \quad \mathbf{p}_i^R = \phi(\mathbf{\hat{b}}_i^R)$$</p>
+<p>$\phi(\cdot)$는 박스를 정규화 좌표의 2D reference point(예: 박스 중심)로 보내는 함수다.</p>
+<p>Pose를 위해서는 $J$개의 <strong>joint-specific reference region</strong>을 추가로 만든다. 관절 $j$의 예측 위치 $\mathbf{\hat{k}}_i^j$를 중심으로 쓰고, 크기는 main box 크기 $(\hat{w}_i, \hat{h}_i)$에 <strong>학습 가능한 파라미터</strong> $\gamma_w^j, \gamma_h^j$를 곱해 정한다:</p>
+<p>$$\mathbf{s}_i^j = (\gamma_w^j \hat{w}_i,\ \gamma_h^j \hat{h}_i), \quad \mathbf{p}_i^j = (\mathbf{\hat{k}}_i^j, \mathbf{s}_i^j)$$</p>
+<p>Decoder attention head들을 이 part reference들에 분배해, 하나의 query가 박스 수준 / 손 수준 / 관절 수준 영역을 동시에 참조하게 만든다.</p>
+<h4 class="subsec">3) Hand-to-Query Relation Matrix — 상호작용 대상을 &quot;고른다&quot;</h4>
+<p>논문은 상호작용 표현 방식 두 가지를 비교한다.</p>
+<p><strong>(i) DirectBox (직접 regression, 베이스라인)</strong>: person query에서 손마다 상호작용 물체 박스 $\mathbf{\hat{b}}_i^{s,\text{obj}}$를 직접 회귀하고, 접촉 상태 label도 따로 예측한다. 회귀된 박스만으로는 접촉 여부도, 접촉의 의미적 종류도 알 수 없기 때문에 별도 label이 필수다. 그리고 <strong>물체의 class를 알 수 없다.</strong></p>
+<p><strong>(ii) Relation (제안 방식)</strong>: 각 손이 <strong>검출된 query 집합 + 학습 가능한 off token</strong> 중에서 대상 하나를 고른다.</p>
+<ul>
+<li>최종 query embedding $\{\mathbf{z}_i^T\}$를 relation embedding $\mathbf{r}_i \in \mathbb{R}^d$로 project하고, no-contact를 뜻하는 학습 가능한 off embedding $\mathbf{r}_0$를 둔다.</li>
+<li>Person query $i$, 손 방향 $s \in \{L, R\}$에 대해 hand embedding $\mathbf{h}_i^s$와 모든 target embedding $\{\mathbf{r}_0, \mathbf{r}_1, \ldots, \mathbf{r}_N\}$의 dot-product 점수를 구하고 $(N+1)$개 후보에 softmax를 건다. 예측 target index $\hat{t}_i^s$는 argmax.</li>
+</ul>
+<p><strong>접촉 상태가 선택 결과에서 자동으로 파생된다는 것이 핵심이다:</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>선택 결과</th><th>해석되는 contact state</th></tr></thead><tbody><tr><td>$\hat{t}_i^s = 0$ (off token)</td><td>no-contact (접촉 없음)</td></tr><tr><td>$\hat{t}_i^s = i$ (자기 자신 query)</td><td>self-contact (자기 몸에 접촉)</td></tr><tr><td>$\hat{t}_i^s = j \neq i$</td><td>다른 entity와 접촉 (보통 object contact, 대상이 사람 query면 other-person contact)</td></tr></tbody></table></div>
+<p>그리고 모든 query가 이미 박스와 class 분포를 예측하므로, $j$를 고르는 순간 <strong>대상의 박스 $\mathbf{\hat{b}}_j$와 class $\arg\max \mathbf{\hat{c}}_j$를 그대로 가져올 수 있다.</strong> 별도의 interacting-object regression head가 필요 없어진다.</p>
+<h4 class="subsec">4) 학습 목표</h4>
+<p>DETR 스타일 bipartite matching을 human/object instance 전체에 대해 수행하고, end-to-end로 학습한다. Loss는 표준 detection loss(<a href="https://arxiv.org/abs/1902.09630" target="_blank">GIoU</a> 포함)에 hand box, body pose(YOLO-Pose 계열 OKS loss), hand-object relation supervision을 더한 조합이다. 각 손은 matching된 query 집합 + off 옵션 중에서 자기 target을 고르도록 학습된다. (전체 loss 정의와 구현 디테일은 supplementary로 미뤄져 있다.)</p>
+<p><strong>Inference</strong>: detection confidence 기준 top-$K$ query를 남기고, person query는 pose·좌우 hand box·좌우 interaction target을 추가 출력한다. 유효한 target query를 고른 손은 그 query에서 박스와 class를 바로 retrieve한다.</p>
+<h4 class="subsec">5) 데이터셋 구축 — COCO + Hands23 결합</h4>
+<p><a href="https://arxiv.org/abs/1405.0312" target="_blank">COCO</a> 위에 만든 이유는 두 가지다. (a) 다인원 장면이 다양해 person-centric 추론에 적합하고, (b) 이미 object detection annotation과 human keypoint가 있어서 처음부터 다시 라벨링할 필요가 없다.</p>
+<p><strong>단계 1 — Person-hand pair 구성 (wrist-guided geometric matching)</strong></p>
+<p>COCO는 좌/우 손목 keypoint를, Hands23는 COCO 일부 이미지의 좌/우 hand box를 준다. 가시성이 0이 아닌 손목 $\mathbf{w}_p^s$에 대해 같은 방향의 hand box 중심 $\mathbf{c}_h$와의 거리를 재고,</p>
+<p>$$d(p,h,s) = \|\mathbf{w}_p^s - \mathbf{c}_h\|_2$$</p>
+<p>다음 두 조건을 모두 만족하면 매칭한다:</p>
+<ul>
+<li>$d(p,h,s) &lt; k \cdot \text{diag}(h)$, with $k = 1.4$ (손 크기 대비 손목-손중심 거리가 충분히 가까움)</li>
+<li>$\mathbf{c}_h \in \text{Expand}(\mathbf{b}_p, l)$, with $l = 1.15$ (손 중심이 확장된 사람 박스 안에 있음)</li>
+</ul>
+<p>여러 사람이 같은 손 박스에 대해 조건을 만족하면 $d$가 가장 작은 사람에게 할당한다.</p>
+<p><strong>단계 2 — LLM/VLM 기반 검증</strong></p>
+<p>규칙 기반 매칭은 심한 occlusion(가림)이나 사람들이 겹칠 때 틀릴 수 있다. 그래서 (i) 전체 이미지, (ii) 손 주변 local crop, (iii) <a href="https://arxiv.org/abs/2406.09414" target="_blank">DepthAnythingV2</a>로 뽑은 relative depth map을 함께 주고 검증한다. Depth는 앞뒤 순서(front-back ordering)와 가림 여부에 대한 공간적 근거가 된다. Verifier는 <strong>no-guessing 정책</strong>을 따라 contact / no-contact / uncertain 중 하나만 내고, uncertain은 학습에서 제외한다.</p>
+<p><strong>단계 3 — Interaction target 변환</strong></p>
+<p>Contact taxonomy는 네 가지를 유지한다: <code>no_contact</code>, <code>self_contact</code>, <code>other_person_contact</code>, <code>object_contact</code>. (DirectBox 베이스라인과 hand-state 평가에서는 none vs. hold 이진 상태로 축약.)</p>
+<p>Hands23의 contact-associated interaction box를 COCO entity와 <strong>IoU $\ge 0.5$</strong> 로 매칭한다.</p>
+<ul>
+<li><code>object_contact</code> → COCO object box 중 최고 IoU 물체</li>
+<li><code>other_person_contact</code> → 현재 사람을 제외한 COCO person box 중 최고 IoU</li>
+<li><code>self_contact</code> → 현재 사람 instance 자신</li>
+<li><code>no_contact</code> → off</li>
+</ul>
+<p>매칭되는 COCO object가 없으면 interaction box를 그대로 pseudo target box로 쓰고 generic class <code>object</code>를 부여(학습용 placeholder). <code>other_person_contact</code>인데 매칭되는 사람이 없으면 애매한 supervision을 피하려고 <strong>샘플을 버린다</strong>.</p>
+<p><strong>단계 4 — Validation set</strong></p>
+<p>Hands23는 COCO val2017과 겹치지 않으므로, 사람이 최소 한 명 있는 COCO val2017 이미지 <strong>약 2K장</strong>을 직접 수작업 annotate해 human-verified validation split을 만들었다.</p>
+<p><strong>Annotation 신뢰도</strong> (770 샘플 수동 감사 결과):</p>
+<div class="tbl-wrap"><table><thead><tr><th>항목</th><th class="num">값</th></tr></thead><tbody><tr><td>uncertain 비율</td><td class="num">1.3%</td></tr><tr><td>annotation 오류율 (rule-based)</td><td class="num">2.5%</td></tr><tr><td>annotation 오류율 (검증 후)</td><td class="num">2.1%</td></tr><tr><td>두 annotator의 이중 라벨링 일치율 (500 샘플)</td><td class="num">98.4%</td></tr></tbody></table></div>
+<p>남은 오류는 주로 흐릿하거나 해상도가 낮은 손, 아주 작은 손, occlusion, depth로 판별하기 어려운 배치 때문이다.</p>
+<h4 class="subsec">6) 평가 지표 — soft / medium / hard</h4>
+<p>세 지표 모두 먼저 예측/GT person instance를 one-to-one IoU matching하고, person-box IoU가 $\tau_p = 0.5$를 넘는 쌍만 남긴다.</p>
+<p><strong>Soft</strong>: 매칭된 사람들에 대한 hand-state 정확도.</p>
+<p>$$\text{Acc}_{\text{soft}} = \frac{\sum_{(g,p)\in\mathcal{A}}\sum_{s\in\{L,R\}} m_g^s \cdot \mathbb{1}[\hat{y}_p^s = y_g^s]}{\sum_{(g,p)\in\mathcal{A}}\sum_{s\in\{L,R\}} m_g^s}$$</p>
+<p>여기서 $m_g^s$는 해당 손 annotation이 존재하는지를 나타내는 availability mask다.</p>
+<p><strong>Medium</strong>: GT state가 hold일 때 <strong>상호작용 물체 위치까지 맞아야</strong> 한다 ($\tau_o = 0.5$). HOI 프로토콜에서 사람과 물체 localization을 모두 요구하는 방식을 따른다.</p>
+<p><strong>Hard</strong>: 여기에 더해 <strong>hand box localization까지 맞아야</strong> 한다 ($\tau_h = 0.5$).</p>
+<p>본문은 좌/우 평균을 보고한다.</p>
+<p>---</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p><strong>설정</strong>: 기본 detector는 RT-DETR-R50-m. 학습/평가는 제안한 COCO 기반 person-centric 데이터셋. 추가로 100DOH를 같은 person-hand merging 파이프라인으로 변환해 학습 데이터로 쓰고(100DOH엔 object detection·pose annotation이 없어 off-the-shelf detector <a href="https://arxiv.org/abs/2211.12860" target="_blank">Co-DETR</a>와 pose 모델로 pseudo label 생성), ContactHands는 전체를 평가셋으로 사용한다. ContactHands는 접촉 물체 annotation이 없으므로 $\text{Acc}_{\text{soft}}$만 보고한다.</p>
+<h4 class="subsec">실험 1 — Relation vs. DirectBox, 그리고 pose 학습의 효과 (Table 2)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>Rel.</th><th>Pose</th><th class="num">Det. mAP</th><th class="num">Pose AP</th><th class="num">Acc_soft</th><th class="num">Acc_mid</th><th class="num">Acc_hard</th><th class="num">ContactHands Acc_soft</th></tr></thead><tbody><tr><td>DirectBox</td><td>X</td><td>X</td><td class="num">49.1</td><td class="num">N/A</td><td class="num">81.5</td><td class="num">44.9</td><td class="num">12.6</td><td class="num">80.7</td></tr><tr><td>DirectBox+Pose</td><td>X</td><td>O</td><td class="num">47.7</td><td class="num">61.8</td><td class="num">83.0</td><td class="num">57.6</td><td class="num">30.1</td><td class="num">81.3</td></tr><tr><td>Relation</td><td>O</td><td>X</td><td class="num">48.8</td><td class="num">N/A</td><td class="num">80.0</td><td class="num">60.8</td><td class="num">28.9</td><td class="num">81.7</td></tr><tr><td>Relation+Pose</td><td>O</td><td>O</td><td class="num">47.1</td><td class="num">62.3</td><td class="num"><strong>83.8</strong></td><td class="num"><strong>64.6</strong></td><td class="num"><strong>31.3</strong></td><td class="num"><strong>82.2</strong></td></tr></tbody></table></div>
+<p>읽어낼 메시지:</p>
+<ul>
+<li><strong>Relation formulation이 tuple 정확도를 크게 끌어올린다.</strong> Detection mAP는 거의 같은데(49.1 vs. 48.8), $\text{Acc}_{\text{mid}}$는 44.9 → 60.8 (+15.9), $\text{Acc}_{\text{hard}}$는 12.6 → 28.9 (+16.3). 즉 물체 박스를 직접 회귀하는 것보다 <strong>이미 검출된 query 중에서 고르는 편이 훨씬 안정적</strong>이다.</li>
+<li>다만 relation만 쓰면 COCO $\text{Acc}_{\text{soft}}$가 81.5 → 80.0으로 약간 떨어진다. Relation modeling의 이득은 <strong>target association과 localization</strong>에 있지, 단순 hand-state 분류에 있는 게 아니라는 뜻이다. ContactHands에서는 오히려 80.7 → 81.7로 조금 오르므로, state 인식을 해치지는 않는다.</li>
+<li><strong>Pose supervision은 두 formulation 모두에서 일관되게 손 추론을 개선한다.</strong> DirectBox는 $\text{Acc}_{\text{mid}}$ +12.7, $\text{Acc}_{\text{hard}}$ +17.5. Relation은 +3.8, +2.4. 사람의 구조적 이해가 손 위치 추정과 상호작용 추론을 돕는다는 가설을 뒷받침한다.</li>
+<li><strong>Detection mAP는 pose를 넣으면 조금 떨어진다</strong> (49.1→47.7, 48.8→47.1). 논문은 이를 multi-task learning에서 흔한 task conflict(태스크 간 간섭)로 설명한다.</li>
+</ul>
+<h4 class="subsec">실험 2 — 100DOH 추가 supervision (Table 3)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>+100DOH</th><th class="num">Det. mAP</th><th class="num">Pose AP</th><th class="num">Acc_soft</th><th class="num">Acc_mid</th><th class="num">Acc_hard</th><th class="num">ContactHands Acc_soft</th></tr></thead><tbody><tr><td>Relation+Pose</td><td>X</td><td class="num">47.1</td><td class="num">62.3</td><td class="num">83.8</td><td class="num">64.6</td><td class="num">31.3</td><td class="num">82.2</td></tr><tr><td>Relation+Pose</td><td>O</td><td class="num">48.6</td><td class="num">63.2</td><td class="num">84.0</td><td class="num">66.2</td><td class="num">32.7</td><td class="num">81.2</td></tr></tbody></table></div>
+<ul>
+<li>COCO val2017에서는 전 지표 상승: mAP +1.5, pose AP +0.9, $\text{Acc}_{\text{soft}}$ +0.2, $\text{Acc}_{\text{mid}}$ +1.6, $\text{Acc}_{\text{hard}}$ +1.4.</li>
+<li><strong>증가폭이 soft보다 mid/hard에서 훨씬 크다.</strong> 100DOH가 명시적 interacted-object box를 주기 때문에, 손-물체 localization과 association에 직접적인 supervision이 들어간 결과다. 즉 100DOH는 &quot;완전한 hand-object tuple 복원 능력&quot;을 강화한다.</li>
+<li>ContactHands $\text{Acc}_{\text{soft}}$는 82.2 → 81.2로 소폭 하락. ContactHands는 hand-state만 재는데 100DOH의 이득은 target-aware 추론 쪽이라 정렬이 어긋난 것으로 해석한다.</li>
+</ul>
+<h4 class="subsec">실험 3 — Part-aware reference allocation ablation (Table 4)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th>PartAware</th><th class="num">Det. mAP</th><th class="num">Pose AP</th><th class="num">Acc_soft</th><th class="num">Acc_mid</th><th class="num">Acc_hard</th><th class="num">ContactHands Acc_soft</th></tr></thead><tbody><tr><td>DirectBox+Pose</td><td>X</td><td class="num">48.7</td><td class="num">43.4</td><td class="num">80.4</td><td class="num">43.1</td><td class="num">11.5</td><td class="num">80.5</td></tr><tr><td>DirectBox+Pose</td><td>O</td><td class="num">47.7</td><td class="num">61.8</td><td class="num">83.0</td><td class="num">57.6</td><td class="num">30.1</td><td class="num">81.3</td></tr><tr><td>Relation+Pose</td><td>X</td><td class="num">48.6</td><td class="num">42.8</td><td class="num">83.0</td><td class="num">63.6</td><td class="num">10.3</td><td class="num">81.7</td></tr><tr><td>Relation+Pose</td><td>O</td><td class="num">47.1</td><td class="num">62.3</td><td class="num">83.8</td><td class="num">64.6</td><td class="num">31.3</td><td class="num">82.2</td></tr></tbody></table></div>
+<p>이 논문에서 가장 극적인 표다.</p>
+<ul>
+<li>Part-aware를 끄면 모든 decoder head가 main box reference 하나를 공유한다. 그러면 instance-level localization에 유리해 <strong>detection mAP는 오히려 조금 높다</strong> (48.7 vs. 47.7, 48.6 vs. 47.1).</li>
+<li>그러나 part-level 추론은 붕괴한다. <strong>Pose AP가 ~42대로 떨어진다</strong> (DirectBox 43.4 → part-aware 61.8, +18.4 / Relation 42.8 → 62.3, +19.5).</li>
+<li><strong>$\text{Acc}_{\text{hard}}$는 완전히 다른 수준이 된다</strong>: DirectBox 11.5 → 30.1 (+18.6), Relation 10.3 → 31.3 (+21.0). Hard metric은 hand box 정확도를 요구하므로, 손 주변 local 영역에 attention이 가는지가 결정적임을 보여준다.</li>
+<li>흥미로운 대비: Relation+Pose의 $\text{Acc}_{\text{mid}}$는 63.6 → 64.6 (+1.0)으로 변화가 작다. Relation 방식은 검출된 query에서 target을 retrieve하므로 detection 성능 변동에 상대적으로 강건하다. 반면 DirectBox는 $\text{Acc}_{\text{mid}}$가 43.1 → 57.6 (+14.5)로 크게 흔들려, <strong>직접 regression 방식이 decoder가 어디를 보는지에 극도로 민감함</strong>을 드러낸다.</li>
+<li>요약된 trade-off: 모든 head를 main box에 몰면 detection이 살짝 유리하지만, <strong>정확한 pose와 신뢰할 수 있는 person-centric 양손 상호작용을 얻으려면 part-aware allocation이 필수</strong>다.</li>
+</ul>
+<h4 class="subsec">실험 4 — 혼잡도(crowding) 분석 (Table 5)</h4>
+<p>COCO val2017을 이미지 내 사람 수로 나눈 결과다.</p>
+<div class="tbl-wrap"><table><thead><tr><th class="num"># persons</th><th class="num">Acc_soft</th><th class="num">Acc_mid</th><th class="num">Acc_hard</th></tr></thead><tbody><tr><td class="num">1</td><td class="num">90.28</td><td class="num">79.42</td><td class="num">54.00</td></tr><tr><td class="num">2–4</td><td class="num">86.58</td><td class="num">67.31</td><td class="num">33.09</td></tr><tr><td class="num">≥5</td><td class="num">75.84</td><td class="num">56.17</td><td class="num">22.02</td></tr></tbody></table></div>
+<ul>
+<li>1인 장면에서는 매우 높다 ($\text{Acc}_{\text{hard}}$ 54.00).</li>
+<li>사람이 5명 이상인 극혼잡 장면에서는 뚜렷하게 떨어진다 ($\text{Acc}_{\text{hard}}$ 22.02). 심한 occlusion, 손 겹침, 보이는 손 영역이 작아지는 것이 주요 원인이다.</li>
+<li>이 표 자체가 논문의 문제의식(ownership ambiguity)이 실제로 남아 있는 난제임을 정직하게 보여준다.</li>
+</ul>
+<h4 class="subsec">연구 의의</h4>
+<ol>
+<li><strong>Prediction unit을 해석 unit에 맞추면 구조적 정확도가 올라간다</strong>는 것을 수치로 보였다. 단순히 성능을 올린 게 아니라, &quot;무엇을 하나의 예측 단위로 볼 것인가&quot;라는 설계 질문에 답을 준다.</li>
+<li><strong>Relation-based target selection이 direct regression보다 근본적으로 낫다</strong>: 위치뿐 아니라 class까지 공짜로 얻고, tuple metric에서 +15~16점 차이를 만든다.</li>
+<li><strong>Detection·pose·hand interaction의 통합이 상호 보완적</strong>임을 보였다. Pose를 배우면 손 추론이 좋아지고, part-aware attention을 쓰면 pose가 20점 가까이 좋아진다.</li>
+<li><strong>평가 프로토콜을 문제 정의에 맞춰 재설계</strong>했다. Soft/medium/hard의 계단식 엄격도는 &quot;상태만 맞음 / 대상 위치까지 맞음 / 손 위치까지 맞음&quot;을 분리해 보여주므로, 어느 단계에서 실패하는지 진단할 수 있다.</li>
+<li>이 프레임워크는 특정 detector에 묶이지 않는다. DETR 계열 발전과 <strong>직교(orthogonal)</strong>하는 표현 설계여서, 더 좋은 detector가 나오면 그 위에 얹을 수 있다.</li>
+</ol>
+<p>---</p>
+<h3 class="sec">한계</h3>
+<p><strong>논문이 직접 밝힌 것</strong></p>
+<ul>
+<li><strong>극혼잡 장면에서의 성능 저하</strong>: 사람 5명 이상일 때 $\text{Acc}_{\text{soft}}$ 75.84, $\text{Acc}_{\text{hard}}$ 22.02로 1인 장면 대비 크게 떨어진다. 심한 occlusion, 손 겹침, 작은 손 영역이 여전히 주된 난제라고 명시한다.</li>
+<li><strong>Annotation noise</strong>: 학습 라벨이 규칙 기반 COCO-Hands23 정렬로 생성되어, occlusion·겹침·심한 스케일 변화에서 noise가 남는다. VLM 검증 후에도 오류율 2.1%가 남고, uncertain 1.3%는 아예 버린다.</li>
+<li><strong>Multi-task conflict</strong>: pose를 함께 학습하면 detection mAP가 떨어진다(최대 약 2점). Part-aware reference를 켜도 detection mAP는 소폭 손해다. 이 trade-off를 해소하지는 못했다.</li>
+<li><strong>Future work로 남긴 것</strong>: 데이터셋 도메인·상호작용 유형 확장, 심한 occlusion/혼잡 장면 robustness 개선, contact 수준을 넘어선 풍부한 interaction semantics로의 확장.</li>
+</ul>
+<p><strong>명백하지만 논문이 크게 다루지 않은 것</strong></p>
+<ul>
+<li><strong>접촉 수준(contact-level) 추론에 머문다</strong>: &quot;닿았다/안 닿았다 + 무엇에&quot; 까지다. 어떻게 잡는지(grasp type), 무엇을 하는 중인지(action predicate)는 없다. Hands23가 제공하는 grasp/contact category나 tool을 통한 second object 같은 풍부한 신호도 쓰지 않는다.</li>
+<li><strong>단일 이미지, 정적 프레임 기반</strong>: 비디오 시간 정보나 양손 협응의 시간적 구조를 전혀 쓰지 않는다.</li>
+<li><strong>2D만 다룬다</strong>: 3D hand pose(MANO 등)나 물체와의 3D 공간 관계는 범위 밖이다. Depth는 데이터 검증 단계에서만 보조로 쓰인다.</li>
+<li><strong>Target 후보가 검출된 query 집합에 갇힌다</strong>: relation 방식의 장점이 곧 제약이다. 대상 물체가 애초에 검출되지 않으면(COCO 80 class에 없거나 검출 실패) 올바른 target을 고를 수 없다. 데이터 구축에서도 매칭 안 되는 물체는 generic class <code>object</code>의 pseudo box로 때운다.</li>
+<li><strong>비교 대상이 사실상 자기 ablation뿐</strong>: 100DOH/Hands23 같은 기존 방법과의 직접적인 head-to-head 비교표가 본문에 없다. 새 task와 새 metric을 정의했기 때문에 불가피한 면이 있지만, 기존 hand-centric 방법을 이 metric 위에 올려 비교했다면 person-centric의 이득이 더 분명했을 것이다.</li>
+<li><strong>COCO 도메인 편향</strong>: 일상 사진 위주라 정밀 조작(fine manipulation)이나 1인칭 시점 데이터는 거의 없다.</li>
+<li>Loss 정의, interactive learning의 구체적 아키텍처, LLM verification 절차 등 상당 부분이 supplementary로 미뤄져 본문만으로는 재현이 어렵다.</li>
+</ul>
+<p>---</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<h4 class="subsec">Hand-Object Interaction 관점</h4>
+<p>가장 직접적으로 이어진다.</p>
+<ul>
+<li><strong>&quot;무엇을 하나의 query로 볼 것인가&quot;는 그대로 가져올 수 있는 설계 원칙이다.</strong> 손을 독립 instance로 보느냐, 사람에 붙은 slot으로 보느냐가 tuple 정확도를 15점 이상 가른다. 우리가 HOI 관련 모델을 설계할 때도 &quot;예측 단위가 최종 해석 단위와 일치하는가&quot;를 먼저 점검할 만하다.</li>
+<li><strong>Relation matrix + off token 패턴은 재사용 가치가 높다.</strong> 회귀 대신 &quot;이미 검출된 entity 중에서 고르기&quot;로 바꾸면 (a) 대상의 class를 공짜로 얻고, (b) 별도 head가 사라지고, (c) contact state가 선택 결과에서 자동 파생된다. no-contact를 학습 가능한 off token으로 두는 것도 깔끔한 트릭이다. 이 구조는 손-물체뿐 아니라 &quot;무언가가 무언가를 고르는&quot; 모든 association 문제에 옮길 수 있다.</li>
+<li><strong>Part-aware reference allocation은 작은 대상을 다룰 때 결정적이다.</strong> Pose AP +19, $\text{Acc}_{\text{hard}}$ +21이라는 ablation 수치는, 큰 instance와 작은 part를 하나의 표현으로 다룰 때 <strong>어디를 sampling하느냐</strong>가 표현력보다 중요할 수 있음을 보여준다. 손처럼 작고 자주 가려지는 대상을 다루는 우리 과제에 그대로 적용 가능한 교훈이다.</li>
+<li><strong>데이터셋 구축 레시피</strong>가 실용적이다. 기존 데이터셋 두 개(COCO + Hands23)를 wrist-guided geometric matching으로 합치고, VLM + depth map으로 검증하고, uncertain은 버린다. 라벨링 비용 없이 새 구조의 supervision을 만드는 방법론으로 참고할 만하다. 특히 <strong>depth map을 occlusion/front-back 판별의 근거로 VLM에 함께 주는 것</strong>은 바로 따라 할 수 있다.</li>
+<li><strong>평가 지표 설계</strong>: soft/medium/hard 3단계 계단식 엄격도는 실패 원인을 분해해 준다. 우리도 새 task를 정의할 때 이런 층위별 metric을 설계하면 &quot;state는 맞는데 localization이 틀린다&quot; 같은 진단이 가능해진다.</li>
+</ul>
+<h4 class="subsec">Egocentric Vision 관점</h4>
+<p>이 논문은 3인칭(exocentric) COCO 이미지가 대상이지만, 1인칭 연구와의 접점은 분명하다.</p>
+<ul>
+<li><strong>관점의 대칭성</strong>: Egocentric 영상에서는 카메라 착용자의 양손이 거의 항상 함께 등장하므로, &quot;좌/우 손이 한 사람에 속한다&quot;는 person-centric 구조가 <strong>기본값</strong>이다. 역으로 말하면 이 논문이 exocentric에서 힘들게 복원하려는 ownership은 egocentric에서는 대체로 주어진다. 대신 egocentric에는 <strong>착용자의 손 vs. 상대방의 손</strong>을 구분하는 문제가 있고, 이 논문의 <code>other_person_contact</code> 카테고리와 person query 간 relation 설계가 그 문제에 그대로 대응된다.</li>
+<li><strong>Exo → Ego 전이 데이터의 원천</strong>: Egocentric 모델 학습에 3인칭 데이터를 쓰려면 3인칭 쪽에서 person-centric 구조가 있어야 한다. 이 논문의 데이터셋은 human box + pose + 양손 + 접촉 대상 + 물체 class를 다 갖춘 드문 리소스다. Exo-ego 공동 학습이나 view-invariant 손-물체 표현 학습의 supervision으로 쓸 수 있다.</li>
+<li><strong>Body pose가 hand reasoning을 돕는다는 발견</strong>은 egocentric에도 시사점이 있다. 1인칭에서는 몸 전체가 잘 안 보이지만, 팔/어깨의 부분적 단서나 head pose가 유사한 구조적 prior 역할을 할 수 있는지 실험해 볼 만하다.</li>
+<li>100DOH와 Hands23는 원래 egocentric 비중이 큰 데이터셋이다. 이 논문이 100DOH를 통합 포맷으로 변환하는 파이프라인을 만들어 두었으므로, 그 변환기를 ego 데이터 통합의 출발점으로 삼을 수 있다.</li>
+<li><strong>Crowding 분석의 교훈</strong>: 사람이 많을수록 성능이 떨어진다는 결과는, 1인칭 사회적 상호작용 장면(여러 사람이 함께 요리하거나 조립하는 상황)에서 손 소유권 판별이 여전히 미해결 과제임을 뜻한다.</li>
+</ul>
+<h4 class="subsec">Spatial Audio 관점</h4>
+<p>직접적 연결은 없지만(이 논문에 오디오는 전혀 등장하지 않는다), 구조적으로 빌려올 지점이 있다.</p>
+<ul>
+<li><strong>&quot;Query가 대상을 고른다&quot;는 association 패턴</strong>은 audio-visual 대응 문제와 형태가 같다. 소리 하나가 화면 속 검출된 여러 음원 후보 중 하나를 고르고, &quot;화면 밖 음원&quot;을 off token으로 두는 설계를 곧바로 상상할 수 있다. Off token으로 no-contact를 표현한 방식이, off-screen sound source를 표현하는 데 그대로 대응된다.</li>
+<li><strong>접촉이 소리를 만든다</strong>: 손-물체 접촉 순간은 impact sound의 물리적 원천이다. 이 논문이 주는 &quot;누가, 어느 손으로, 어떤 class의 물체에, 접촉했는가&quot;라는 구조화된 출력은 <strong>소리 이벤트의 공간적·의미적 근거(spatial grounding)</strong>로 쓸 수 있다. 접촉 대상의 박스 위치는 곧 음원의 화면상 위치 추정치가 된다.</li>
+<li><strong>Multi-task conflict 관찰</strong>은 멀티모달 공동 학습 전반의 교훈이다. Pose를 추가하니 detection이 떨어졌듯, audio task를 붙일 때도 어느 지표가 희생되는지 미리 측정하고 trade-off를 명시적으로 관리해야 한다.</li>
+<li><strong>계단식 metric 설계 철학</strong>도 audio-visual 과제에 옮길 수 있다. &quot;이벤트 종류만 맞음 / 대략적 방향까지 맞음 / 정밀 위치까지 맞음&quot; 같은 3단계로 나누면 모델의 실패 모드를 분리해 볼 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper4">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>Dex-X: Learning Visual-Tactile Dexterous Manipulation From Human Videos with Simulated Interaction</h2>
+    <p class="lead">단안(monocular) 사람 영상에는 없는 촉각 정보를 시뮬레이션의 접촉 물리로 &quot;채워 넣어&quot;, 로봇으로 데이터를 따로 모으지 않고도 실제 로봇에 바로 올라가는 visual-tactile dexterous manipulation 정책을 학습하는 프레임워크.</p>
+    <div class="authors">Ruoqu Chen, Feixiang Ruan, Liu Cao, Zihao Wang, Botian Xu, Shiqin Tong, Jiajun Liu, Mingzhi Pei, Chenyu Zhang, Wanli Xing, Kaifeng Zhang, Mengdi Xu — Tsinghua University, Shanghai Qizhi Institute, Sharpa, Tongji University, Renmin University</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-09-07</span> · <span class="pub-venue">🏛 프리프린트 (프로젝트 웹사이트만 명시, 발표처 언급 없음)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2609.07747" target="_blank">arXiv:2609.07747</a> <a class="pill pdf" href="https://arxiv.org/pdf/2609.07747" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2609.07747" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2609.07747v2/system.png" alt="사람 영상에서 복원한 hand-object 궤적을 시뮬레이션으로 옮겨 접촉력(촉각) 지도를 얻고, 이를 써서 학습한 정책을 실제 로봇에 zero-shot으로 전개하는 Dex-X의 전체 흐름" loading="lazy"><figcaption>사람 영상에서 복원한 hand-object 궤적을 시뮬레이션으로 옮겨 접촉력(촉각) 지도를 얻고, 이를 써서 학습한 정책을 실제 로봇에 zero-shot으로 전개하는 Dex-X의 전체 흐름</figcaption></figure>
+<p>왼쪽의 사람 시연 영상 → 가운데 시뮬레이션 안의 손-물체 상호작용 재현(여기서 손끝 접촉력이 생성됨) → 오른쪽 실제 hand-arm 로봇의 grasping·tool use로 이어지는 파이프라인을 한 장에 보여준다.</p>
+<p>---</p>
+<h3 class="sec">선행 연구</h3>
+<p>이 논문은 크게 세 갈래의 흐름 위에 서 있다.</p>
+<p><strong>(1) 사람 시연으로부터의 dexterous manipulation 학습.</strong> 사람의 손 움직임은 로봇 손 정책을 학습시키는 좋은 재료라서, 오래전부터 demonstration-guided RL(시연을 강화학습의 힌트로 쓰는 방식)이나 human grasp affordance(사람이 물체를 어떻게 쥐는지에 대한 사전 지식)를 활용해 왔다. 대표적으로 <a href="https://arxiv.org/abs/1709.10087" target="_blank">DAPG</a>가 시연과 RL을 결합하는 고전적 방식이고, DexMV·VideoDex처럼 영상에서 직접 정책을 배우려는 시도도 이어졌다. 핵심 난제는 <strong>embodiment gap(사람 손과 로봇 손의 구조 차이)</strong>이다. 이를 풀기 위해 motion retargeting(사람 손 관절을 로봇 손 관절로 옮기는 변환), trajectory optimization, 복원된 hand-object 궤적 위에서의 RL 등이 제안되었다. ManipTrans, <a href="https://arxiv.org/abs/2505.24853" target="_blank">DexMachina</a>, <a href="https://arxiv.org/abs/2404.15709" target="_blank">ViViDex</a>, <a href="https://arxiv.org/abs/2411.04005" target="_blank">Object-centric dexterous manipulation</a>, DexTrack 등이 이 계열이다.</p>
+<p><strong>(2) Dexterous manipulation의 sim-to-real transfer.</strong> 시뮬레이션에서 대규모 RL로 복잡한 행동을 학습한 뒤 실제 로봇으로 옮기는 접근은 DeXtreme, pen-spinning 등에서 성과를 냈다. 하지만 접촉 동역학(contact dynamics), 촉각 센싱, 구동기 특성의 시뮬-실제 불일치에 민감한 행동일수록 transfer가 어렵다는 점이 반복적으로 지적됐다. 최근에는 <a href="https://arxiv.org/abs/2412.01791" target="_blank">DextrAH-RGB</a> 같은 대규모 grasping, <a href="https://arxiv.org/abs/2602.16863" target="_blank">SimToolReal</a> 같은 object-centric goal tracking 기반 도구 사용으로 범위가 넓어지는 중이다.</p>
+<p><strong>(3) Visual-tactile manipulation.</strong> 시각만으로는 부족한 상황(손가락이 물체를 가려 보이지 않는 occlusion, 미끄러짐 감지 등)에서 촉각은 결정적이다. tactile representation learning, force-aware 정책 학습(<a href="https://arxiv.org/abs/2507.09160" target="_blank">Tactile-VLA</a> 등), 공간적으로 접지된 촉각 표현 연구가 있었다. 이 논문의 표현 방식과 가장 가까운 것은 <a href="https://arxiv.org/abs/2312.01853" target="_blank">Robot Synesthesia</a>로, 촉각 정보를 하나의 point cloud 표현 안에 녹여 in-hand manipulation의 zero-shot sim-to-real을 달성했다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>문제의 출발점은 아주 단순한 관찰이다. <strong>사람 영상에는 촉각이 없다.</strong></p>
+<ul>
+<li>강화학습이나 모방학습으로 잘 동작하는 dexterous 시스템을 만들려면, 정교하게 설계된 시뮬레이션 환경에서의 대량 상호작용이거나, 전용 teleoperation 장비로 수집한 대규모 로봇 시연이 필요하다. 둘 다 비싸고, 실세계 상호작용의 다양성을 따라가기 어렵다.</li>
+<li>특히 <strong>촉각 시연을 모으려면 계측 장갑(instrumented glove)이나 맞춤 센싱 하드웨어가 필요</strong>해서 비용과 복잡도가 한층 더 올라간다.</li>
+<li>반면 사람 영상은 풍부하고 다양하며 자연스러운 환경에서의 손 조작 행동을 담고 있다. 확장성 면에서 가장 매력적인 데이터 소스다.</li>
+</ul>
+<p>그래서 저자들이 던지는 질문은 이것이다. <strong>&quot;로봇 쪽 데이터 수집 없이, 사람 영상만으로 실제 배포 가능한 visual-tactile dexterous manipulation 정책을 배울 수 있는가?&quot;</strong></p>
+<p>이 질문에 답하려면 두 가지 난관을 넘어야 한다.</p>
+<ol>
+<li><strong>촉각 결손.</strong> 영상은 시각 관측은 주지만 접촉력(contact force)을 주지 않는다. 그런데 안정적인 grasp 유지와 지속적인 물체 상호작용에는 힘 피드백이 결정적이다.</li>
+<li><strong>sim-to-real 간극.</strong> 인지 노이즈, 구동 지연, 접촉 모델링 오차 때문에 시뮬에서 학습한 dexterous 정책을 실제 하드웨어로 옮기는 일 자체가 어렵다.</li>
+</ol>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문이 새롭게 내세우는 프레이밍은 <strong>&quot;시뮬레이션 = 촉각 완성 엔진(tactile completion engine)&quot;</strong> 이다.</p>
+<p>기존 흐름과의 차이를 정리하면 이렇다.</p>
+<ul>
+<li>기존 human-video 계열은 시뮬레이션을 주로 <strong>motion을 재현·검증하는 무대</strong>로 썼다. retargeting이 잘 됐는지, 궤적이 물리적으로 가능한지를 확인하는 용도다.</li>
+<li>Dex-X는 시뮬레이션을 <strong>원본 데이터에 없던 감각 모달리티(촉각)를 생성하는 장치</strong>로 쓴다. 사람의 hand-object 상호작용을 물리적으로 재현하면, 물리 엔진이 계산하는 접촉 동역학 자체가 곧 &quot;영상에 없던 힘 신호&quot;의 정답 라벨이 된다.</li>
+<li>따라서 결과물은 단순히 motion을 흉내 내는 정책이 아니라, <strong>실제 배포 시 진짜 손끝 촉각 센서 값을 받아 closed-loop로 반응하는 visual-tactile 정책</strong>이다.</li>
+</ul>
+<p>contribution은 세 가지로 정리된다.</p>
+<ol>
+<li>사람 영상으로부터 visual-tactile dexterous manipulation 정책을 학습하는 프레임워크 Dex-X. 핵심 아이디어는 시뮬레이션을 tactile completion engine으로 쓰는 것.</li>
+<li>사람 영상에서 뽑은 motion prior와 tactile-aware RL을 결합한 <strong>teacher-student 학습 패러다임</strong>. 추가 fine-tuning 없이 실제 로봇으로 zero-shot 전이되는 contact-rich 스킬을 얻는다.</li>
+<li><strong>29-DoF hand-arm 플랫폼</strong>에서 다양한 grasping·tool-use 과제에 대한 zero-shot sim-to-real 실증. 저자들이 아는 한, task-specific fine-tuning 없이 사람 영상만으로 학습한 실세계 visual-tactile dexterous tool use를 수행한 최초 수준의 시스템이라고 주장한다.</li>
+</ol>
+<h3 class="sec">연구 방법</h3>
+<p>전체 파이프라인은 <strong>3단계</strong>다. (Figure 2)</p>
+<h4 class="subsec">0) 문제 정의</h4>
+<p>단안 사람 시연 데이터셋 $\mathcal{D} = \{\tau_i^h\}_{i=1}^N$ (각 $\tau_i^h = (I_0, I_1, \dots)$는 이미지 시퀀스)이 주어졌을 때, 목표는 <strong>reference-conditioned 정책</strong> $\pi(a_t \mid o_t, r_{t+1})$을 학습하는 것이다.</p>
+<ul>
+<li><strong>input (observation)</strong>: $o_t = \{o_t^{\text{prop}}, o_t^{\text{vis}}, o_t^{\text{tac}}\}$ — proprioception(로봇 자기 관절 상태), 시각, 촉각</li>
+<li><strong>input (조건)</strong>: $r_{t+1}$ — 다음 스텝의 retarget된 motion reference</li>
+<li><strong>output</strong>: 행동 $a_t$</li>
+</ul>
+<h4 class="subsec">1) Motion Prior 추출 + Spatial Augmentation (Sec 3.2)</h4>
+<p><strong>Hand-Object Motion Reconstruction.</strong> 단안 영상에서 30 Hz로 손-물체 움직임을 복원한다.</p>
+<ul>
+<li>물체 6-DoF pose: <a href="https://arxiv.org/abs/2312.08344" target="_blank">FoundationPose</a>. 물체 메시는 3D 스캔 또는 단일 이미지 복원으로 미리 준비 (시연 촬영과 무관한 오프라인 단계).</li>
+<li>손 pose: <a href="https://arxiv.org/abs/2409.12259" target="_blank">WiLoR</a>로 초기 추정 후 MANO 파라메트릭 모델로 정제. 프레임별로 MANO pose $\theta_t^H \in \mathbb{R}^{45}$, root translation $t_t$, global rotation $R_t$를 2D 키포인트 재투영 오차 $\mathcal{L}_{\text{hand}} = \sum_{k=1}^{21}\|\pi(J_k(\theta_t^H,\beta,t_t,R_t)) - j_t^k\|^2$로 최적화.</li>
+<li><strong>시간적 정제</strong>: 전체 시퀀스에 대해 MANO mesh vertex의 프레임 간 변화를 억제하는 smoothness 항을 추가($\mathcal{L}_{\text{batch}}$). AdamW 5000 iteration, lr $10^{-3}$, 1000 iteration마다 0.5배 감쇠.</li>
+<li><strong>joint hand-object 최적화</strong>: 손과 물체를 따로 추정하면 서로 파고드는 interpenetration(관통)이 생긴다. SDF 기반 penetration loss + 초기 추정값 유지를 위한 registration loss + smoothness loss를 결합해 함께 정제한다. 먼저 registration·smoothness만 최적화하고, 그다음 penetration loss를 켜는 2단계 방식.</li>
+</ul>
+<p><strong>Robot Embodiment Retargeting.</strong> Franka FR3 팔 + Sharpa 손으로 2단계 최적화.</p>
+<ul>
+<li><strong>Stage 1 (팔만)</strong>: 손은 기본 자세로 고정한 채, 복원된 손목 pose를 따라가도록 팔 관절 2~7만 최적화. 목적함수 $\mathcal{L}_{\text{stage1}} = 0.5\mathcal{L}_{\text{pos}} + 0.25\mathcal{L}_{\text{rot}} + 10^{-3}\mathcal{L}_{\text{vel}}^{\text{arm}}$ (회전 오차는 geodesic distance).</li>
+<li><strong>Stage 2 (팔+손 동시)</strong>: 22개 손 관절 전부와 팔 관절을 함께 최적화. 로봇 손 키포인트를 MANO 타깃에 정렬시키되, <strong>엄지·검지와 손끝(distal) 키포인트에 더 큰 가중치</strong>를 준다. 가중치는 손가락별 가중치 × 레벨 스케일로 분해된다.</li>
+</ul>
+<div class="tbl-wrap"><table><thead><tr><th>손가락</th><th class="num">엄지</th><th class="num">검지</th><th class="num">중지</th><th class="num">약지</th><th class="num">소지</th></tr></thead><tbody><tr><td>Finger weight</td><td class="num">25</td><td class="num">15</td><td class="num">10</td><td class="num">7</td><td class="num">5</td></tr></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>Level</th><th class="num">Tip</th><th class="num">Distal</th><th class="num">Intermediate</th><th class="num">Proximal</th></tr></thead><tbody><tr><td>Scale</td><td class="num">1.0</td><td class="num">0.6</td><td class="num">0.4</td><td class="num">0.3</td></tr></tbody></table></div>
+<ul>
+<li>실제 손의 측정된 가동 범위로 관절 한계를 URDF보다 더 빡빡하게 조여, retargeting과 실제 배포가 같은 행동 공간을 쓰도록 맞춘다.</li>
+<li>평균 end-effector 위치 추적 오차가 <strong>8 cm를 넘는 augmented 변형은 &quot;도달 불가&quot;로 판정해 학습에서 제외</strong>한다.</li>
+</ul>
+<p><strong>Spatial Augmentation.</strong> 시연 하나를 여러 개로 불리는 단계로, <a href="https://arxiv.org/abs/2410.24185" target="_blank">DexMimicGen</a>·<a href="https://arxiv.org/abs/2510.18316" target="_blank">MoMaGen</a> 계열의 데이터 증강을 따른다. 손목·MANO 타깃·물체 궤적 <strong>전부에 동일한</strong> 평면 이동과 yaw 회전을 적용해 상호작용 기하를 보존한다.</p>
+<p>$\tilde{\mathbf{x}}_{xy} = \mathbf{R}_z(\Delta\psi)(\mathbf{x}_{xy} - \mathbf{c}_{xy}) + \mathbf{c}_{xy} + \Delta\mathbf{p}_{xy}$</p>
+<p>여기서 $\mathbf{c}_{xy}$는 팔 베이스 위치, $\Delta\psi \sim \mathcal{U}(-10^\circ, 10^\circ)$, 평면 이동은 $\Delta\mathbf{p}_{xy} \sim \mathcal{U}([-5\text{cm}, 5\text{cm}]^2)$.</p>
+<h4 class="subsec">2) State Expert 학습 (Sec 3.3) — 촉각이 &quot;생성되는&quot; 단계</h4>
+<p>Retargeting은 <strong>운동학적으로만</strong> 타당한 궤적을 준다. 물체를 실제로 쥐고 버티는 물리적 상호작용은 담기지 않는다. 그래서 시뮬레이션 안에서 RL로 closed-loop expert를 학습한다.</p>
+<ul>
+<li><strong>알고리즘</strong>: <a href="https://arxiv.org/abs/1707.06347" target="_blank">PPO</a> + <a href="https://arxiv.org/abs/1710.06542" target="_blank">asymmetric actor-critic</a>(critic만 특권 정보를 보는 구조). <a href="https://arxiv.org/abs/2511.04831" target="_blank">IsaacLab</a>에서 4096개 병렬 환경, 30 Hz.</li>
+<li><strong>retarget 궤적 $\tau_r$의 역할</strong>: 초기 상태 샘플링 + motion reference 조건화. 그 위에서 정책은 자유롭게 접촉을 탐색한다.</li>
+</ul>
+<p><strong>여기가 핵심</strong>: expert는 시뮬레이션 접촉 센서로부터 <strong>손끝 5개의 스칼라 접촉력 크기</strong>를 관측한다. 순간적인 접촉 스파이크를 줄이려고 최근 두 샘플을 평균낸다: $f_t^{\text{tac}} = \frac{1}{2}(f_{t,0}^{\text{raw}} + f_{t,1}^{\text{raw}})$. 즉 영상에 없던 촉각 신호가 물리 엔진에서 만들어져 학습 신호로 쓰인다.</p>
+<p><strong>Observation 구조 (actor 557차원)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>그룹</th><th>구성</th><th class="num">차원</th></tr></thead><tbody><tr><td>Proprioception</td><td>손 관절 위치/cos/sin, 손목 quaternion·속도 등</td><td class="num">79</td></tr><tr><td>Wrist reference</td><td>목표-현재 손목 위치/회전/속도 차이</td><td class="num">23</td></tr><tr><td>Hand reference</td><td>목표-현재 키포인트 위치·속도</td><td class="num">288</td></tr><tr><td>Task reference</td><td>목표 물체 위치(3) + quaternion(4) + 손끝-물체 거리(5)</td><td class="num">12</td></tr><tr><td>Object geometry</td><td><a href="https://arxiv.org/abs/1908.09186" target="_blank">BPS</a> 물체 메시 인코딩</td><td class="num">128</td></tr><tr><td>Tactile</td><td>손끝 force 크기(5) + 예약된 contact-position 채널(15, 기본 0)</td><td class="num">20</td></tr><tr><td>Current object pose</td><td>노이즈 섞인 위치+quaternion</td><td class="num">7</td></tr><tr><td><strong>합계</strong></td><td></td><td class="num"><strong>557</strong></td></tr></tbody></table></div>
+<p>critic은 여기에 <strong>148차원 privileged state</strong>(정답 물체 상태, 5스텝 미래 목표 물체 상태, 손끝-물체 거리 등)를 더해 총 705차원을 본다.</p>
+<p><strong>Action.</strong> $a_t \in \mathbb{R}^{29}$ = 팔 관절 델타 7개 + 손 관절 위치 타깃 22개. 팔은 $q_{t+1}^{\text{arm}} = q_t^{\text{arm}} + \alpha a_t^{\text{arm}}$, $\alpha = 0.2$ rad로 스텝당 변화를 제한한다. 행동에는 0~3 스텝의 랜덤 지연, 팔/손에 각각 0.15/0.4 계수의 저역 필터가 적용된다.</p>
+<p><strong>Reward.</strong> $r_t = r_t^{\text{wrist}} + 2 r_t^{\text{hand,abs}} + r_t^{\text{hand,rel}} + r_t^{\text{object}} + r_t^{\text{contact}} + r_t^{\text{action}} + r_t^{\text{success}} + r_t^{\text{collision}}$</p>
+<div class="tbl-wrap"><table><thead><tr><th>그룹</th><th>주요 항</th><th>가중치</th></tr></thead><tbody><tr><td>Wrist</td><td>위치 / 회전</td><td>4.0 / 2.0</td></tr><tr><td>Absolute hand</td><td>엄지 / 검지 / 중지 tip</td><td>0.9 / 0.8 / 0.75</td></tr><tr><td>Object</td><td>위치 / 회전</td><td>8.0 / 6.0</td></tr><tr><td>Contact</td><td>손끝 힘 / approach shaping / no-slip</td><td>3.0 / 2.0 / 1.5</td></tr><tr><td>Terminal</td><td>최종 위치 / 회전 / approach</td><td>30.0 / 5.0 / 1.0</td></tr></tbody></table></div>
+<p>approach shaping은 최소 손끝-물체 거리 $d_t^{\min}$에 대해 $r_t^{\text{approach}} = \frac{1}{1 + 5 d_t^{\min}}$.</p>
+<p><strong>Domain Randomization.</strong> 실제 하드웨어의 불확실성을 미리 겪게 한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>파라미터</th><th>범위</th><th>목적</th></tr></thead><tbody><tr><td>손 PD stiffness / damping</td><td>×[0.5, 2.0]</td><td>손 동역학</td></tr><tr><td>팔 PD gain</td><td>×[0.8, 1.2]</td><td>팔 동역학</td></tr><tr><td>물체 질량</td><td>[0.01, 0.15] kg</td><td>물체 동역학</td></tr><tr><td>물체 CoM 오프셋</td><td>축당 ±0.02 m</td><td>물체 동역학</td></tr><tr><td>마찰</td><td>×[1.0, 2.5]</td><td>접촉 동역학</td></tr><tr><td>Action delay</td><td>0–3 스텝</td><td>제어 지연</td></tr><tr><td>물체 pose 위치/회전 노이즈</td><td>$\sigma$ = 8 mm / 0.06 rad</td><td>프레임별 오차</td></tr><tr><td>물체 pose 위치 bias</td><td>축당 $\mathcal{U}(-0.05, 0.05)$ m</td><td>에피소드별 bias</td></tr><tr><td>물체 pose latency / dropout</td><td>2 스텝 / 스텝당 2%</td><td>인지 지연·결손</td></tr></tbody></table></div>
+<p>촉각 쪽은 별도로 랜덤화한다: 곱셈형 가우시안 노이즈 $f \leftarrow \max(0, f(1 + 0.2\epsilon))$, <strong>손가락별 5% dropout</strong>(한 손가락 신호를 통째로 없앰), 원소당 0.005 확률의 hold-last(직전 값 유지, 지연 모사).</p>
+<h4 class="subsec">3) Distillation과 Sim-to-Real (Sec 3.4)</h4>
+<p>특권 정보를 보는 expert는 실제 로봇에서 그대로 쓸 수 없다. 그래서 <a href="https://arxiv.org/abs/1011.0686" target="_blank">DAgger</a>로 <strong>배포 가능한 student</strong>로 증류한다.</p>
+<ul>
+<li><strong>student가 버리는 것</strong>: BPS 물체 형상 인코딩(128) + 참조 손끝-물체 거리(5) + 노이즈 물체 pose 추정(7). $557 - 128 - 5 - 7 = 417$차원.</li>
+<li><strong>student가 새로 받는 것</strong>: <strong>visual-tactile point cloud</strong>. 깊이에서 나온 장면 점 1024개 + 로봇 손 키포인트 6개(손목 + 손끝 5) + 촉각 표면 점 25개(손끝당 5). 각 점은 3D 좌표 + 점 종류 표시자 1 + 촉각 force 채널 1을 갖는다: $(1024 + 6 + 25) \times (3+1+1) = 1055 \times 5$.</li>
+<ul>
+<li>이 표현이 <a href="https://arxiv.org/abs/2312.01853" target="_blank">Robot Synesthesia</a>와 가장 가까운 지점이다. <strong>힘을 별도 벡터로 붙이는 게 아니라, 장면 기하 안의 해당 위치에 &quot;공간적으로 심어 넣는다&quot;.</strong></li>
+</ul>
+<li>공유 PointNet(masked max-pooling)이 이를 64차원 feature로 압축 → student 입력은 $417 + 64 = 481$차원, 출력은 동일한 29차원 행동.</li>
+<li><strong>DAgger 혼합</strong>: $a_t^{\text{exec}} = \beta_k a_t^{\text{tea}} + (1-\beta_k) a_t^{\text{stu}}$, $\beta_0 = 1.0$에서 iteration마다 0.85배로 기하 감쇠. 30 iteration, iteration당 4096 rollout step, 버퍼 $2\times10^5$ transition, iteration당 8 epoch MSE 회귀.</li>
+<li><strong>배포</strong>: student가 motion reference $r_{t+1}$ + 실시간 proprioception·depth·손끝 촉각을 받아 30 Hz로 관절 명령을 낸다. 33 ms 예산 안에 depth 촬영 ~5 ms, forward kinematics ~2 ms, 정책 추론 ~3 ms, ROS 2 publish ~1 ms, 하드웨어 SDK 통신 ~1 ms가 들어간다.</li>
+<li><strong>팔 동역학 캘리브레이션</strong>: 0.2 Hz, 진폭 0.3 rad 사인 궤적을 각 관절에 재생해 실제 FR3와 시뮬을 맞춘다. 관절 1~3의 시뮬 damping을 약 40% 줄여 상호상관 0.996 초과, 지연 10 ms 미만이 되도록 조정.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p><strong>세팅.</strong> Franka FR3 팔 + Sharpa Wave dexterous hand (한 팔 29 DoF, 양팔 구성 58 DoF). 고정형 RealSense depth 카메라, 손끝 촉각 센서. 6개 task 카테고리:</p>
+<div class="tbl-wrap"><table><thead><tr><th>Task 카테고리</th><th class="num">물체 수</th><th class="num">시연 수</th></tr></thead><tbody><tr><td>Pick-up (컵, 큐브)</td><td class="num">2</td><td class="num">5</td></tr><tr><td>Tool use (스퀴지, 망치)</td><td class="num">2</td><td class="num">3</td></tr><tr><td>Peg insertion</td><td class="num">1</td><td class="num">2</td></tr><tr><td>In-hand rotation</td><td class="num">1</td><td class="num">2</td></tr><tr><td>In-hand translation</td><td class="num">1</td><td class="num">1</td></tr><tr><td>Bimanual handover</td><td class="num">1</td><td class="num">1</td></tr></tbody></table></div>
+<p>즉 <strong>시연 총합이 14개</strong>에 불과하다. 데이터 효율성이 이 논문의 숨은 강점이다.</p>
+<h4 class="subsec">Q1. 시뮬레이션에서의 multi-task 성능 (Table 1)</h4>
+<p>단위: 성공률(%). Dex-X의 Reach/Grasp/Manip은 해당 단계에 진입한 경우의 성공률이고, 비교 대상들은 전체 성공률이다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Category</th><th class="num">Dex-X Reach</th><th class="num">Dex-X Grasp</th><th class="num">Dex-X Manip</th><th class="num">Dex-X Overall</th><th class="num">DAPG</th><th class="num">ManipTrans</th><th class="num">Kin. Retarget</th></tr></thead><tbody><tr><td>Pick Up</td><td class="num">99.2</td><td class="num">97.4</td><td class="num">89.9</td><td class="num">89.6</td><td class="num">66.7</td><td class="num">1.5</td><td class="num">1.8</td></tr><tr><td>Peg Insertion*</td><td class="num">56.8</td><td class="num">43.7</td><td class="num">43.3</td><td class="num">43.1</td><td class="num">52.8</td><td class="num">—</td><td class="num">0.0</td></tr><tr><td>Tool Use</td><td class="num">86.9</td><td class="num">82.3</td><td class="num">74.6</td><td class="num">74.3</td><td class="num">70.1</td><td class="num">35.0</td><td class="num">24.1</td></tr><tr><td>In-hand Rotation</td><td class="num">—</td><td class="num">—</td><td class="num">36.8</td><td class="num">36.8</td><td class="num">0.7</td><td class="num">56.9</td><td class="num">0.0</td></tr><tr><td>In-hand Translation</td><td class="num">—</td><td class="num">—</td><td class="num">64.8</td><td class="num">64.8</td><td class="num">12.5</td><td class="num">11.5</td><td class="num">0.0</td></tr><tr><td>Bimanual Handover</td><td class="num">99.0</td><td class="num">88.8</td><td class="num">87.9</td><td class="num">86.6</td><td class="num">—</td><td class="num">4.7</td><td class="num">—</td></tr><tr><td><strong>Average</strong></td><td class="num">85.5</td><td class="num">78.0</td><td class="num">66.2</td><td class="num"><strong>65.9</strong></td><td class="num">40.6†</td><td class="num">21.9</td><td class="num">5.2</td></tr></tbody></table></div>
+<p>\* Peg insertion은 1 cm 미만 기준. † DAPG 평균은 평가된 단일 손 5개 카테고리 기준(Dex-X는 같은 5개에서 61.7%).</p>
+<p>메시지: <strong>kinematic retargeting만으로는 거의 아무것도 안 된다(5.2%)</strong>. 모방 기반 ManipTrans는 긴 상호작용 동안 안정적 접촉을 놓쳐 물체가 미끄러지거나 실패하는 패턴을 보인다. Dex-X는 학습 중 손끝 힘 피드백을 받으며 물리적 상호작용을 탐색하므로 조작 전 구간에서 closed-loop 적응이 가능하다. 격차가 특히 큰 곳은 contact-rich 과제들이다 — tool use(74.3 vs 35.0), in-hand translation(64.8 vs 11.5), bimanual handover(86.6 vs 4.7). 다만 in-hand rotation은 ManipTrans(56.9)가 Dex-X(36.8)보다 높다.</p>
+<h4 class="subsec">Q2. 시각·촉각 표현의 역할</h4>
+<p><strong>시뮬레이션 ablation (Figure 4).</strong> 성공 기준은 엄격(최종 물체 위치 3 cm 이내)과 완화(5 cm), 회전 과제는 30° 기준.</p>
+<div class="tbl-wrap"><table><thead><tr><th>관측 구성</th><th class="num">엄격</th><th class="num">완화</th></tr></thead><tbody><tr><td>Point cloud + tactile</td><td class="num">44%</td><td class="num">58%</td></tr><tr><td>Point cloud, tactile 제거</td><td class="num">논문에 명시적 언급 없음</td><td class="num">45%</td></tr><tr><td>Depth 기반</td><td class="num">32%</td><td class="num">논문에 명시적 언급 없음</td></tr></tbody></table></div>
+<p>즉 <strong>명시적 3D 기하(point cloud)와 촉각 둘 다 성능에 기여</strong>한다. 또 scalar force / binary contact / 3D force 세 가지 촉각 인코딩을 비교했는데 성능 차이가 비슷해서, 실제 센서와의 일관성을 위해 <strong>scalar force magnitude</strong>를 배포용으로 채택했다.</p>
+<p><strong>실세계 modality ablation (Table 2, 큐브 집기 30회, 모두 같은 teacher에서 증류).</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Observation</th><th class="num">Success</th></tr></thead><tbody><tr><td>Full Visual-Tactile</td><td class="num">28/30 (93.3%)</td></tr><tr><td>No Vision</td><td class="num">14/30 (46.7%)</td></tr><tr><td>No Tactile</td><td class="num">11/30 (36.7%)</td></tr><tr><td>Proprioception Only</td><td class="num">8/30 (26.7%)</td></tr></tbody></table></div>
+<p>흥미롭게도 <strong>촉각을 빼는 쪽(36.7%)이 시각을 빼는 쪽(46.7%)보다 더 나쁘다.</strong> 실패는 주로 grasp 획득 중 물체를 놓치거나, 접촉 후 물체를 잃는 형태로 나타난다.</p>
+<h4 class="subsec">Q3. 실세계 배포와 일반화</h4>
+<p><strong>Zero-shot 배포(추가 fine-tuning 없음), 과제당 30회:</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Task</th><th class="num">Success</th></tr></thead><tbody><tr><td>Cube picking</td><td class="num">28/30 (93%)</td></tr><tr><td>Cup pouring</td><td class="num">24/30 (80%)</td></tr><tr><td>Cup lifting</td><td class="num">22/30 (73%)</td></tr><tr><td>Squeegee manipulation (table cleaning)</td><td class="num">16/30 (53%)</td></tr></tbody></table></div>
+<p>단계별 분해(Figure 5)를 보면, 큐브는 G1(충돌 없는 grasp) → G2(파지) → G3(파지 후 충돌·낙하 없음) → G4(최종 성공) 전 구간에서 높은 성공률을 유지한다. 반면 스퀴지는 <strong>grasp 획득 단계에서 가장 크게 떨어지고</strong>, 실패 원인은 grasp 실패와 파지 후 충돌/낙하가 지배적이다. 상호작용 지평(horizon)이 길수록 어렵다는 뜻이다.</p>
+<p><strong>Zero-shot 물체 일반화 (Table 3, 큐브 집기 정책 그대로):</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>Object</th><th class="num">Success</th></tr></thead><tbody><tr><td>Training Cube</td><td class="num">28/30 (93.3%)</td></tr><tr><td>Thin Cube (미학습)</td><td class="num">23/30 (76.7%)</td></tr><tr><td>Square Cube (미학습)</td><td class="num">8/30 (26.7%)</td></tr><tr><td>Big Duck (미학습)</td><td class="num">8/30 (26.7%)</td></tr><tr><td>Small Duck (미학습)</td><td class="num">7/30 (23.3%)</td></tr></tbody></table></div>
+<p>형상 변화가 작으면 잘 버티지만(얇은 큐브 76.7%), 기하가 크게 달라지면 23~27%로 급락한다. 일반화가 &quot;된다&quot;와 &quot;그 한계도 뚜렷하다&quot;를 동시에 보여주는 표다.</p>
+<h4 class="subsec">Sim-to-Real 전이의 정량 분석 (Appendix B) — 이 논문의 가장 설득력 있는 부분</h4>
+<ul>
+<li><strong>손끝 힘 패턴 (Figure 6)</strong>: 큐브 집기에서 5개 손끝의 접촉력을 시간축으로 시각화했더니, <strong>접촉 시작 타이밍, 힘 크기, 손가락 간 힘 재분배 경향이 시뮬과 실제에서 매우 유사</strong>했다. 실측은 센싱 불확실성 때문에 더 노이즈가 많지만 힘 프로파일의 전체 구조는 보존된다. 즉 정책이 motion만이 아니라 <strong>접촉 전략(contact strategy) 자체를 전이</strong>했다는 증거다.</li>
+<li><strong>손목 궤적 (Figure 7)</strong>: 시뮬-실제 평균 추적 오차 <strong>2.83 cm</strong>, 실세계 rollout 간 표준편차 <strong>0.46–0.82 cm</strong>(재현성이 높다). 오차는 $x$축(전방 하중 방향)에 집중되고, 시간적으로 approach 1.1 cm → grasp 2.7 cm → lift 3.8 cm로 증가한다. $z$축에서는 실제 로봇이 시뮬보다 일관되게 약 <strong>5.7 mm 더 높이</strong> 든다. 저자들은 이를 팔 impedance controller의 하중에 따른 정상상태 컴플라이언스 오프셋 + 물체 배치 변동(에피소드당 최대 1 cm) + 카메라 외부 파라미터 캘리브레이션 오차로 해석한다. 즉 <strong>잔여 gap은 학습된 motion의 차이가 아니라 체계적 하드웨어 요인</strong>이라는 것.</li>
+</ul>
+<h4 class="subsec">연구 의의</h4>
+<p>한 문장으로: <strong>&quot;사람 영상에는 촉각이 없다&quot;는 근본적 결손을, 별도의 센서나 장갑이 아니라 물리 시뮬레이션으로 메울 수 있음을 실제 로봇 배포까지 이어서 보여줬다.</strong></p>
+<ul>
+<li>인터넷 규모의 사람 영상을 로봇 스킬 데이터로 쓰는 경로에서, 시뮬레이션이 단순 검증 무대가 아니라 <strong>&quot;빠진 물리적 감독(physical supervision)을 생성하는 장치&quot;</strong> 라는 역할 재정의.</li>
+<li>시연 14개로 6개 카테고리를 커버하고 실세계 zero-shot까지 간다는 데이터 효율성.</li>
+<li>촉각을 point cloud에 공간적으로 심는 통합 표현이 실제로 sim-to-real에 유효함을 modality ablation으로 검증.</li>
+</ul>
+<h3 class="sec">한계</h3>
+<p>논문이 직접 밝힌 한계(Sec 6)와 실험에서 드러나는 한계를 함께 정리한다.</p>
+<p><strong>논문이 명시한 한계</strong></p>
+<ol>
+<li><strong>장기 지평(long-horizon) 상호작용과 폭넓은 일반화가 여전히 어렵다.</strong> 성능이 인지 오차, 컨트롤러 불일치, 큰 기하·카테고리 변화에 민감하다.</li>
+<li><strong>배포 정책이 여전히 retarget된 motion reference에 의존한다.</strong> 즉 완전 자율적으로 &quot;무엇을 할지&quot;를 정하는 게 아니라, 사람 시연에서 온 참조 궤적이 항상 조건으로 들어간다. 새 스킬을 하려면 그에 맞는 시연이 필요하다.</li>
+<li><strong>촉각 표현이 손끝당 스칼라 힘 크기 하나로 제한</strong>된다. 압력 분포, 전단력(shear), 미끄러짐(slip), 접촉 패치(contact patch) 같은 풍부한 신호를 담지 못한다. 고해상도 촉각 센싱이 있으면 더 정밀한 접촉 추론과 힘 조절이 가능할 것이다.</li>
+<li>더 넓은 스킬로 확장하려면 더 다양한 시연, 더 많은 시뮬레이션 상호작용, 더 유연한 task conditioning이 필요하다.</li>
+</ol>
+<p><strong>실험에서 드러나는 한계</strong></p>
+<ul>
+<li>물체 일반화 급락: 미학습 square cube·오리 인형에서 23~27%로 떨어진다.</li>
+<li>Tool use(스퀴지) 실세계 53%는 실용 수준과 거리가 있고, 병목은 grasp 획득 단계다.</li>
+<li>In-hand rotation은 시뮬에서 36.8%로 ManipTrans(56.9%)에 밀린다. 모든 접촉 과제에서 우월한 건 아니다.</li>
+<li>파이프라인이 물체 메시(3D 스캔 또는 단일 이미지 복원)를 오프라인으로 요구한다. 임의의 인터넷 영상에 바로 적용하기에는 전처리 부담이 남는다.</li>
+<li>물체 pose 추정이 FoundationPose에, 손 추정이 WiLoR+MANO에 의존하므로 이들의 실패가 그대로 전파된다. Appendix B에서도 카메라 캘리브레이션 오차가 잔여 gap의 원인 중 하나로 지목됐다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Egocentric Vision 관점</strong></p>
+<ul>
+<li>Dex-X의 입력은 단안 RGB 영상에서 복원한 hand-object 궤적이다. 이건 egocentric video 연구에서 다루는 신호와 거의 동일한 재료다. <strong>egocentric 영상을 &quot;물리 시뮬레이션으로 리프팅&quot;해서 그 안에서 없던 모달리티를 생성한다</strong>는 발상은, 1인칭 영상 이해에서도 그대로 쓸 수 있는 템플릿이다.</li>
+<li>다만 이 논문은 고정 3인칭 카메라 기반 시연을 쓴다. Egocentric으로 옮기면 카메라 자체가 움직이고 손이 프레임 밖으로 자주 나가며, 자기 손에 의한 occlusion이 훨씬 심하다. 현재 파이프라인(FoundationPose + WiLoR + 물체 메시 사전 준비)이 egocentric 조건에서 얼마나 버티는지가 자연스러운 후속 질문이다.</li>
+<li>&quot;관측되지 않은 물리량을 시뮬레이션으로 라벨링한다&quot;는 아이디어는 egocentric 데이터의 만성적 문제인 <strong>ground-truth 부재</strong>에 대한 일반적 해법이 될 수 있다. 힘뿐 아니라 접촉 시점, 파지 안정성, 물체 무게 같은 것도 같은 방식으로 유도해 볼 수 있다.</li>
+</ul>
+<p><strong>Hand-Object Interaction 관점</strong></p>
+<ul>
+<li>이 논문은 HOI 복원(reconstruction)과 HOI 활용(policy learning)을 하나의 파이프라인으로 잇는 좋은 사례다. 특히 <strong>joint hand-object optimization에서 SDF penetration loss로 관통을 없애는 단계</strong>는 순수 HOI 복원 연구에서도 흔히 쓰는 요소인데, 여기서는 &quot;그렇게 정제하지 않으면 시뮬에서 물리적으로 재현이 안 된다&quot;는 명확한 하류 동기가 붙는다. 복원 품질을 평가할 때 재투영 오차 대신 <strong>&quot;시뮬레이션에서 실행 가능한가&quot;</strong> 를 지표로 삼는 관점을 제공한다.</li>
+<li>Retargeting 가중치 표(엄지 25, 검지 15, 손끝 스케일 1.0)는 HOI에서 <strong>어떤 키포인트가 상호작용에 실제로 중요한가</strong>에 대한 실용적 힌트다. 손끝과 엄지/검지가 접촉의 대부분을 결정한다는 건 HOI 표현 설계에도 시사점이 있다.</li>
+<li><strong>접촉(contact)을 이진 레이블이 아니라 연속적인 힘으로 다룬다</strong>는 점이 중요하다. 대부분의 HOI 데이터셋은 접촉을 있음/없음으로만 주는데, 이 논문은 힘의 시간적 변화와 손가락 간 분배까지 다루고(Figure 6), 그것이 실제 로봇에서도 재현됨을 보였다. HOI 어노테이션의 다음 단계가 어디인지를 시사한다.</li>
+<li>흥미로운 반전: 실세계 ablation에서 <strong>촉각 제거(36.7%)가 시각 제거(46.7%)보다 더 치명적</strong>이었다. HOI를 순수 시각 문제로만 보는 시각에 대한 반례로 인용할 만하다.</li>
+</ul>
+<p><strong>Spatial Audio 관점</strong></p>
+<ul>
+<li>직접적 연결은 없다. 다만 방법론적 유비는 꽤 선명하다. <strong>&quot;한 모달리티에 없는 정보를 물리적 시뮬레이션으로 합성해 supervision을 만든다&quot;</strong> 는 구조는, room acoustics 시뮬레이션으로 mono 오디오에서 spatial audio 학습 데이터를 만드는 파이프라인과 정확히 같은 형태다 (이 주간 다이제스트의 spatial audio editing 논문들이 쓰는 controllable room simulation과 같은 논리).</li>
+<li>한 걸음 더 나가면, contact force는 <strong>contact sound의 물리적 원인</strong>이다. 시뮬레이션이 접촉력을 알고 있다면 접촉음도 원리적으로 합성할 수 있다. egocentric video + 접촉음 + 손-물체 상호작용을 묶는 멀티모달 연구에서, 이 논문의 &quot;시뮬레이션을 completion engine으로 쓴다&quot;는 틀을 오디오 쪽으로 확장하는 건 자연스러운 방향이다.</li>
+<li>또한 sim-to-real 검증 방식(Figure 6의 힘 분포 비교, Figure 7의 궤적 IQR 비교)은 <strong>시뮬로 만든 신호가 실제와 정말 일치하는지를 정량적으로 보이는 프로토콜</strong>로, 시뮬레이션 기반 오디오 데이터의 realism을 검증할 때도 참고할 만한 형식이다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper5">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>One-Stage Multi-Task Instruction-Guided 3D Spatial Audio Editing</h2>
+    <p class="lead">&quot;앞쪽에 있던 군중을 오른쪽으로 옮기고 왼쪽에 기타 스트럼을 하나 넣어줘&quot; 같은 복합 자연어 지시를 받아, 기존 FOA 3차원 음장을 중간 단계 없이 <strong>한 번의 생성으로</strong> 편집하는 최초의 멀티태스크 프레임워크 SwanWeave를 제안한다. ---</p>
+    <div class="authors">Ke Lei, Chenyuhao Wen, Yu Zhang, Wenxiang Guo, Changhao Pan, Sashuai Zhou, Yongshi Li, Ruiqi Li, Ruofan Hu, Haorui Xu, Xiang Yin, Zhou Zhao (Zhejiang University, ByteDance)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-09-04</span> · <span class="pub-venue">🏛 프리프린트</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2609.04975" target="_blank">arXiv:2609.04975</a> <a class="pill pdf" href="https://arxiv.org/pdf/2609.04975" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2609.04975" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2609.04975v2/teaser-5.png" alt="자연어 지시를 받아 FOA 음장에서 지정된 이벤트만 이동·추가하고 나머지는 그대로 보존하는 SwanWeave의 편집 개념도" loading="lazy"><figcaption>자연어 지시를 받아 FOA 음장에서 지정된 이벤트만 이동·추가하고 나머지는 그대로 보존하는 SwanWeave의 편집 개념도</figcaption></figure>
+<p>Figure 1. 왼쪽은 편집 전 FOA 장면(군중 소리가 정면, 기타 없음), 오른쪽은 &quot;군중을 정면에서 오른쪽으로 옮기고 왼쪽에 스트럼을 추가하라&quot;는 지시를 적용한 결과다. 핵심은 <strong>지시가 가리키지 않은 이벤트들의 내용·궤적·잔향은 건드리지 않은 채</strong> 요청한 변화만 음장에 반영한다는 점이다.</p>
+<p>(참고로 모델 구조도는 Figure 2 <code>https://arxiv.org/html/2609.04975v2/model-3.png</code> 에 있다. 왼쪽 패널이 전체 학습·추론 파이프라인, 오른쪽 패널이 SE-MoE 모듈이다.)</p>
+<p>---</p>
+<h3 class="sec">선행 연구</h3>
+<p>이 논문은 크게 두 갈래의 흐름 위에 서 있다.</p>
+<h4 class="subsec">1) 언어 지시 기반 오디오 편집 (Audio Editing)</h4>
+<p>오디오 편집은 &quot;기존 녹음에서 지시가 가리킨 부분만 바꾸고 나머지는 보존한다&quot;는 문제다. 최근 text-to-audio 생성 모델(<a href="https://arxiv.org/abs/2301.12503" target="_blank">AudioLDM</a>, <a href="https://arxiv.org/abs/2407.14358" target="_blank">Stable Audio Open</a> 등)이 강력한 생성 prior를 제공하면서, 그 위에 편집 기능을 얹는 방식이 주류가 되었다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th>접근</th><th>편집 공간</th></tr></thead><tbody><tr><td><a href="https://arxiv.org/abs/2304.00830" target="_blank">AUDIT</a></td><td>(입력 오디오, 지시, 편집된 오디오) 삼중항을 만들어 latent diffusion을 지도학습</td><td>mono / semantic (add, drop, replace, inpainting, super-resolution)</td></tr><tr><td><a href="https://arxiv.org/abs/2402.10009" target="_blank">ZETA / ZEUS</a></td><td>DDPM inversion을 이용한 zero-shot 편집. 텍스트 프롬프트 또는 비지도로 찾은 semantic 방향 사용</td><td>mono / semantic</td></tr><tr><td><a href="https://arxiv.org/abs/2409.12466" target="_blank">AudioEditor</a></td><td>Null-text inversion, EOT-suppression 등 이미지 편집 기법을 오디오에 이식한 학습 불필요(training-free) 편집</td><td>mono / semantic</td></tr><tr><td><a href="https://arxiv.org/abs/2509.21625" target="_blank">SmartDJ</a></td><td>Audio-Language Model이 상위 요청을 <strong>atomic operation 시퀀스로 분해</strong>하고, diffusion 편집기가 순차 실행</td><td>stereo (2채널)</td></tr></tbody></table></div>
+<p>이 중 SmartDJ가 본 논문과 가장 가깝다. 스테레오 장면까지 편집 공간을 넓혔고, &quot;소리를 공간적으로 재배치&quot;하는 조작도 다룬다.</p>
+<h4 class="subsec">2) 공간 오디오 생성 / Spatialization</h4>
+<p>또 다른 흐름은 공간 오디오를 <strong>만들어내는</strong> 쪽이다. 시각·기하 맥락에서 소리를 공간화하는 초기 연구(visual sound localization, SoundSpaces 류의 audio-visual navigation 환경), mono 오디오를 binaural로 변환하는 spatialization 연구(Neural Sound Field, BinauralGrad 등), 그리고 최근의 멀티모달 조건·스트리밍 공간 오디오 생성(OmniAudio, ViSAGe, ISDrama 등)이 여기 속한다.</p>
+<p>표현 수준에서 공간과 언어를 잇는 연구로 <a href="https://arxiv.org/abs/2507.16724" target="_blank">SALM</a>이 있다. SALM은 오디오 인코더를 semantic branch와 spatial branch로 분리해 구조화된 임베딩을 학습하고, 임베딩 공간에서 방향을 조작할 수 있게 한다. 다만 이는 <strong>표현 공간(representation space) 조작</strong>이지, 기존 FOA 파형을 직접 편집하는 waveform-level 편집기는 아니다.</p>
+<p>---</p>
+<h3 class="sec">문제 제기</h3>
+<p>저자들은 기존 연구의 공백을 두 가지로 정리한다.</p>
+<h4 class="subsec">문제 1. One-stage generation이 안 된다</h4>
+<p>기존 언어 지시 편집기들은 mono 또는 일반 오디오를 대상으로 하며, <strong>3차원 공간 변수를 편집 가능한 control로 취급하지 않는다</strong>. 가장 가까운 SmartDJ조차 (a) stereo 2채널에서 동작하고, (b) 상위 지시를 atomic operation으로 쪼개 <strong>순차 실행</strong>한다.</p>
+<p>순차 실행 파이프라인의 근본 문제는 두 가지다.</p>
+<ul>
+<li><strong>복합 지시의 결합된 음향적 결과를 직접 학습하지 못한다.</strong> &quot;소리를 교체하면서 동시에 더 멀리 보내라&quot;는 지시에서, 교체와 거리 이동은 파형 상에서 서로 분리되지 않는다. 에너지, 방향성, 잔향, 다른 음원과의 masking이 한꺼번에 바뀐다.</li>
+<li><strong>오류가 단계마다 누적된다.</strong> 중간 출력을 다시 편집 입력으로 넣으므로 복원 오차와 공간 오차가 쌓인다.</li>
+</ul>
+<h4 class="subsec">문제 2. 태스크 커버리지가 좁다</h4>
+<p>Spatialization·공간 오디오 생성 연구들은 방향성·정위·비디오 조건 공간음 생성을 다루지만, <strong>이미 존재하는 FOA 장면을 파형 수준에서 편집하는 문제</strong>는 풀지 않는다. 저자들이 아는 한, 오디오 이벤트 편집 + 3D 재배치 + 동적 궤적 + 환경 변화를 모두 포괄하는 FOA 편집 연구는 선행 사례가 없다.</p>
+<h4 class="subsec">왜 중요한가</h4>
+<p>VR/AR, 텔레프레즌스, 게임, 영화 제작에서 공간 오디오는 이미 널리 쓰인다. 공간 오디오는 소리를 단순한 신호가 아니라 <strong>장면(scene)</strong> 으로 만든다. 음원이 위치를 점유하고, 시간에 따라 움직이며, 주변 공간과 상호작용한다. 실제 프로덕션에서 대부분의 장면은 &quot;거의 원하는 결과에 가깝지만 한 군데만 고치면 되는&quot; 상태다. 그렇다면 음장 전체를 처음부터 다시 만드는 것이 아니라, <strong>기존 장면 위에서 요청된 변경만 적용</strong>하는 편집이 자연스러운 인터페이스다.</p>
+<p>---</p>
+<h3 class="sec">연구 주제</h3>
+<p>논문이 새로 정의하는 문제는 <strong>Instruction-Guided 3D FOA Spatial Audio Editing</strong>이다.</p>
+<p>First-Order Ambisonics(1차 앰비소닉스, 3차원 음장을 W/Y/Z/X 4채널로 표현하는 방식) 파형 $a_{\text{src}} \in \mathbb{R}^{4 \times T}$ 와 자연어 지시 $c$ 가 주어졌을 때, 편집된 FOA 파형을 직접 예측하는 함수를 학습한다.</p>
+<p>$$\hat{a}_{\text{tgt}} = F_\theta(a_{\text{src}}, c)$$</p>
+<p>기존 흐름과의 차별점은 세 가지다.</p>
+<ol>
+<li><strong>stereo → FOA.</strong> 2채널이 아니라 4채널 3차원 음장을 직접 모델링한다. 고도(elevation)와 위/아래 방향까지 편집 대상이 된다.</li>
+<li><strong>sequential → one-stage.</strong> 복합 지시를 단계로 쪼개지 않고, 소스에서 최종 타깃으로 가는 직접 변환으로 학습한다. 학습 데이터의 타깃은 <strong>모든 요청 변경이 이미 적용된 최종 장면</strong>이며, 중간 단계는 아예 관측시키지 않는다.</li>
+<li><strong>편집 축을 4개로 명시적으로 정의한다.</strong></li>
+</ol>
+<div class="tbl-wrap"><table><thead><tr><th>편집 축</th><th>포함 조작</th></tr></thead><tbody><tr><td>Audio events (오디오 이벤트)</td><td>add, remove, replace, extract, enhance(볼륨 증가), attenuate(볼륨 감소)</td></tr><tr><td>Spatial information (공간 정보)</td><td>azimuth(방위각), elevation(고도), distance(거리), source layout(음원 배치)</td></tr><tr><td>Dynamic changes (동적 변화)</td><td>시변 게인 변화(volume fade), 각도 이동(angle motion), 거리 이동(distance motion)</td></tr><tr><td>Environmental information (환경 정보)</td><td>체감 방 크기, 잔향(reverberation) 변경 — 단, 별도 지시가 없으면 장면 내용과 음원 배치는 유지</td></tr></tbody></table></div>
+<p>이 네 축은 파형 안에서 서로 <strong>결합(coupled)</strong> 되어 있다는 것이 논문의 핵심 주장이다. 음원을 멀리 보내면 에너지, 방향성, 잔향, 다른 음원과의 masking이 동시에 변한다. 따라서 복합 지시는 연산의 연쇄가 아니라 하나의 source-to-target 변환으로 학습해야 한다.</p>
+<p>---</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">전체 구조</h4>
+<p><strong>Input</strong>: 소스 FOA 파형 $a_{\text{src}} \in \mathbb{R}^{4 \times T}$ + 자연어 편집 지시 $c$ <strong>Output</strong>: 편집된 FOA 파형 $\hat{a}_{\text{tgt}} \in \mathbb{R}^{4 \times T}$</p>
+<p>구성 요소는 (1) FOA 인코더, (2) 지시 인코더, (3) SE-MoE를 장착한 flow-matching latent 편집기다.</p>
+<h4 class="subsec">1) Latent 공간에서 편집하기</h4>
+<p>FOA 파형을 직접 생성하면 모델이 4채널 장신호 복원이라는 저수준 작업에 자원을 다 쓴다. 그래서 <a href="https://arxiv.org/abs/2407.14358" target="_blank">Stable Audio Open</a>의 stereo FOA VAE로 연속 latent 공간에 매핑한 뒤 거기서 편집한다.</p>
+<p>$$z_{\text{src}} = \mathcal{E}(a_{\text{src}}), \quad z_{\text{tgt}} = \mathcal{E}(a_{\text{tgt}})$$</p>
+<p>여기서 $z_{\text{src}}, z_{\text{tgt}} \in \mathbb{R}^{L \times d}$ 이고 latent 차원 $d = 128$ 이다. 지시 $c$ 는 사전학습된 언어 인코더로 인코딩해 cross-attention으로 주입한다.</p>
+<h4 class="subsec">2) Diffusion Transformer + Conditional Flow Matching</h4>
+<p>백본은 <a href="https://arxiv.org/abs/2212.09748" target="_blank">DiT(Diffusion Transformer)</a>다. 공간 편집은 이벤트 간, 시간 구간 간, FOA 채널 간의 조율이 필요하기 때문이다. $z_{\text{src}}$ 와 노이즈가 섞인 타깃 latent는 시간 길이가 같으므로, <strong>feature 차원으로 concat</strong>한 뒤 Transformer 입력 projection에 넣는다. 이러면 self-attention이 소스 장면과 생성 중인 latent 사이의 <strong>프레임 단위 대응</strong>을 학습할 수 있고, cross-attention은 지시 조건을 공급한다.</p>
+<p>학습은 <a href="https://arxiv.org/abs/2210.02747" target="_blank">conditional flow matching</a>이다. $z_1 = z_{\text{tgt}}$, $z_0 \sim \mathcal{N}(0, I)$, $t \sim \mathcal{U}(0,1)$ 에 대해</p>
+<p>$$z_t = (1-t)z_0 + t z_1, \quad v = z_1 - z_0$$</p>
+<p>$$\mathcal{L}_{\text{FM}} = \mathbb{E}_{z_0, t}\left[\|v - v_\theta(z_t, t, z_{\text{src}}, c)\|_2^2\right]$$</p>
+<p>소스 latent가 벡터장에 <strong>명시적 보존 조건</strong>을 주고, 지시가 의도된 편집을 지정하는 구조다.</p>
+<h4 class="subsec">3) SE-MoE: 이중 라우팅 Spatial Edit Mixture-of-Experts</h4>
+<p>하나의 공유 FFN이 &quot;이벤트 삽입 / 음원 재배치 / 궤적 변경 / 실내 음향 변경&quot;을 전부 감당하기는 어렵다. 복합 지시에서 여러 편집 타입이 상호작용하면 특히 취약하다. 그래서 <a href="https://arxiv.org/abs/1701.06538" target="_blank">Sparse MoE</a> 방식의 모듈로 모든 Transformer 층의 FFN 블록을 대체한다.</p>
+<p>전문가(expert)는 세 종류다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>전문가 종류</th><th>선택 단위</th><th>역할</th></tr></thead><tbody><tr><td>Task expert</td><td>지시 표현으로부터 선택, 샘플 내 모든 프레임에 고정</td><td>편집 계열(family)·복합 지시별 태스크 인지 전문가 조합</td></tr><tr><td>Routed expert</td><td>latent 토큰마다 독립 선택</td><td>편집된 구간·음원에 대한 국소 적응</td></tr><tr><td>Null expert</td><td>프레임 라우터가 선택 가능</td><td>0 텐서 반환 — <strong>변하지 않아야 할 구간이 불필요한 변환을 피하도록</strong></td></tr></tbody></table></div>
+<p>Null expert가 이 설계의 영리한 부분이다. 편집의 본질은 &quot;일부만 바꾸고 나머지는 보존&quot;인데, 보존해야 할 구간이 명시적으로 &quot;아무것도 하지 않음&quot;을 고를 수 있게 만든 것이다.</p>
+<p>프레임 레벨 라우터는 flow-matching 타임스텝 임베딩 $e_t$ 를 함께 받는다.</p>
+<p>$$p_i = \text{softmax}(W_g(x_i + W_t e_t))$$</p>
+<p>고정 top-$k$ 대신 <strong>top-$p$ 라우팅</strong>을 쓴다. 누적 확률이 임계값 $\rho$ 를 넘는 최소 전문가 집합 $\mathcal{S}_i$ 를 고른다. 덕분에 단순하거나 변경 없는 프레임은 더 적은 전문가를, 복잡한 편집 구간은 더 많은 전문가를 활성화한다.</p>
+<p>태스크 레벨은 학습된 task query로 지시 상태를 pooling해 전문가 확률 $q(c)$ 를 얻고, 같은 top-$p$ 로 태스크 전문가 집합 $\mathcal{T}(c)$ 를 고른 뒤 정규화 가중치 $\beta_e$ 를 쓴다. 최종 출력은 둘의 합이다.</p>
+<p>$$\text{SE-MoE}(x_i) = \sum_{e \in \mathcal{S}_i \cap \mathcal{E}_r} \alpha_{i,e} f^r_e(x_i) + \sum_{e \in \mathcal{T}(c)} \beta_e f^t_e(x_i)$$</p>
+<p>라우팅 정규화 $\mathcal{L}_{\text{moe}}$ 는 세 항의 합이다(부록 B.1).</p>
+<ul>
+<li>$\mathcal{L}_{\text{bal}}$: load-balancing. 프레임/태스크 라우터 각각의 expert importance와 load에 대한 $\text{CV}^2$ 합으로 라우팅 붕괴 방지</li>
+<li>$\mathcal{L}_z$: router z-loss. 라우팅 logit의 수치 안정화</li>
+<li>$\mathcal{L}_{\text{null}}$: 합성 편집 메타데이터로 만든 이진 시간 마스크 $m_{b,i}$ 를 이용해, <strong>변경 없는 구간은 null expert로, 편집 구간은 null expert를 피하도록</strong> 유도하는 BCE 형태 손실</li>
+</ul>
+<h4 class="subsec">4) 단계적 학습 (Staged Training)</h4>
+<p>복잡한 편집 삼중항으로 바로 학습하면, 복합 지시 실패가 &quot;편집 연산을 못 해서&quot;인지 &quot;장면 자체를 이해 못 해서&quot;인지 구분이 안 된다. 그래서 커리큘럼을 나눈다.</p>
+<ol>
+<li><strong>Text-to-FOA 사전학습</strong>: 소스-타깃 쌍을 장면 수준 FOA-caption 예제로 분해해 학습. 기본적인 공간 오디오 생성 능력과 이벤트·공간 배치·움직임·실내 음향에 대한 언어 grounding을 확보.</li>
+<li><strong>단일 연산 편집 학습</strong>: 4개 축의 atomic 편집 능력 습득.</li>
+<li><strong>복합 편집 학습</strong>: 다중 연산 데이터를 추가해 joint training. <strong>중간 편집 시퀀스가 아니라 최종 타깃 장면으로만</strong> 지도한다.</li>
+</ol>
+<h4 class="subsec">5) SPO: Spatial Preference Optimization</h4>
+<p>지도 flow matching은 타깃을 지정하지만, <strong>그럴듯한 실패 사례와 타깃을 명시적으로 대비시키지는 않는다</strong>. 실제로 모델은 소스를 그대로 복사하거나, 엉뚱한 이벤트를 바꾸거나, 방향을 틀리게 배치할 수 있다.</p>
+<p>이를 <a href="https://arxiv.org/abs/2305.18290" target="_blank">DPO</a> 기반 정렬 목적함수로 해결한다. 핵심은 <strong>편집 타입별로 설계한 negative target</strong>이다.</p>
+<ul>
+<li><strong>wrong-edit negative</strong>: 그럴듯하지만 틀린 편집 (잘못된 이벤트를 바꿈, 잘못된 방향으로 이동, 잘못된 궤적, 잘못된 실내 음향)</li>
+<li><strong>no-operation negative</strong>: 소스 장면을 그대로 둠 (소스 복사 방지)</li>
+</ul>
+<p>둘의 비율은 <strong>2:1</strong> (wrong-edit : no-op)이며, 편집 타입마다 <strong>10K개의 선호 예제</strong>를 만든다. 평균 길이는 약 <strong>9.17초</strong>.</p>
+<p>정책 모델 $\theta$ 의 per-sample flow-matching loss $\ell^+_\theta, \ell^-_\theta$ 와 고정된 reference 모델의 $\ell^+_{\text{ref}}, \ell^-_{\text{ref}}$ 로부터</p>
+<p>$$\Delta = \beta\left[(\ell^-_\theta - \ell^+_\theta) - (\ell^-_{\text{ref}} - \ell^+_{\text{ref}})\right], \quad \mathcal{L}_{\text{SPO}} = -\log \sigma(\Delta)$$</p>
+<p>(flow loss는 낮을수록 선호되므로 부호가 이렇게 잡힌다.) 최종 정렬 손실은 positive 지도 손실을 유지한다.</p>
+<p>$$\mathcal{L}_{\text{align}} = \mathcal{L}_{\text{SPO}} + \lambda_{\text{pos}} \ell^+_\theta + \lambda_{\text{moe}} \mathcal{L}_{\text{moe}}$$</p>
+<p>SPO 학습 중 positive와 negative는 <strong>같은 noise와 같은 timestep을 공유</strong>한다. 샘플링 무작위성이 아니라 타깃 편집 자체에 선호 비교가 집중되도록 하기 위해서다.</p>
+<h4 class="subsec">6) Staircase CFG (추론 전략)</h4>
+<p>추론 시 소스 오디오와 지시는 서로 다른 guidance 강도가 필요하다. 소스 조건은 무관한 내용과 공간 맥락을 <strong>보존</strong>해야 하고, 지시 조건은 요청된 변화를 <strong>강제</strong>해야 한다. 합쳐진 조건에 단일 CFG scale을 걸면 이 둘을 따로 제어할 수 없다.</p>
+<p>조건 dropout 덕분에 각 solver step에서 세 가지 속도 예측이 가능하다.</p>
+<p>$$v_\emptyset = v_\theta(z_t, t, \emptyset, \emptyset), \quad v_{\text{src}} = v_\theta(z_t, t, z_{\text{src}}, \emptyset), \quad v_{\text{all}} = v_\theta(z_t, t, z_{\text{src}}, c)$$</p>
+<p>$$\tilde{v}_\theta = v_\emptyset + s_{\text{src}}(v_{\text{src}} - v_\emptyset) + s_{\text{inst}}(v_{\text{all}} - v_{\text{src}})$$</p>
+<p>$\emptyset \rightarrow z_{\text{src}} \rightarrow (z_{\text{src}}, c)$ 라는 계단식 경로가 먼저 생성을 소스 장면에 고정(anchor)하고, 그 다음 지시를 <strong>잔차(residual) 편집</strong>으로 적용한다. <a href="https://arxiv.org/abs/2211.09800" target="_blank">InstructPix2Pix</a>류의 평면적 two-scale CFG에 비해 튜닝이 쉽고 보존-지시추종 간 충돌이 줄어든다는 것이 저자들의 주장이다.</p>
+<h4 class="subsec">7) 데이터 구축</h4>
+<div class="tbl-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>원천 코퍼스</td><td>AudioCaps, FSDKaggle2019, PicoAudio, LibriSpeech, Spatial LibriSpeech</td></tr><tr><td>렌더링</td><td>PyRoomAcoustics (방향·거리·이동 궤적·실내 반사 조건을 명시적으로 제어)</td></tr><tr><td>장면 구성</td><td>예제당 2~4개 오디오 이벤트</td></tr><tr><td>학습 규모</td><td>단일 연산 태스크당 약 <strong>125K</strong> 삼중항, 복합 편집 <strong>250K</strong> 삼중항, 예제당 약 <strong>8.9초</strong></td></tr><tr><td>지시 다양화</td><td>Gemini 2.5 Pro로 편집 지시당 <strong>3개 패러프레이즈</strong> 생성 (10~25 단어, 1문장)</td></tr><tr><td>테스트셋</td><td>단일 연산 편집 타입별 <strong>50개</strong>, 2-/3-/4-연산 복합 편집 각 <strong>50개</strong>. 학습셋과 원본 클립 비중복</td></tr><tr><td>FOA 채널 순서</td><td>W, Y, Z, X</td></tr></tbody></table></div>
+<p>방향은 10가지로 정의한다. right, front, left, back, front-right, front-left, back-left, back-right의 8개는 방위각 $[0°, 90°, 180°, 270°, 45°, 135°, 225°, 315°]$ 에 대응하고, above / below는 수직 방향을 뜻한다(정확히 머리 위/아래로 제한하지는 않음). 변동성을 위해 방위각·거리를 정한 뒤 그 위치를 중심으로 한 작은 구형 영역에서 최종 음원 위치를 랜덤 샘플링한다.</p>
+<p>방 크기는 4단계다. small $[2,2,2]$, medium $[6,6,4]$, large $[21,21,10]$, extra-large $[100,100,100]$ 미터이며, extra-large는 개방 공간(open space)으로 간주한다. 기본값은 $[21,21,10]$.</p>
+<p>렌더링은 Habitat 대신 PyRoomAcoustics를 썼는데, 그 이유가 흥미롭다. Habitat의 복잡한 장면 기하는 직접음 전파에 <strong>폐색(occlusion)</strong> 을 일으키고 강한 다중경로 반사를 만들어, 청취 위치에서의 방향 단서가 부정확해지기 때문이다.</p>
+<h4 class="subsec">학습 설정</h4>
+<ul>
+<li>베이스 text-to-FOA 모델: 975K 샘플로 <strong>300K steps</strong></li>
+<li>편집 모델: 베이스에서 초기화 후 <strong>500K steps</strong></li>
+<li>SPO 후학습: <strong>2 epochs</strong></li>
+<li>조건 dropout: 소스 오디오와 텍스트를 각각 독립적으로 <strong>10%</strong> 확률로 빈 입력 대체 (staircase CFG의 세 분기를 가능하게 함)</li>
+<li>CFG scale: $s_{\text{src}} = s_{\text{inst}} = 3.0$ (모든 실험 공통)</li>
+<li>모든 결과는 <strong>단일 학습 run</strong>에서 얻음</li>
+</ul>
+<p>---</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">평가 지표</h4>
+<p>두 축으로 나뉜다.</p>
+<ul>
+<li><strong>의미/품질</strong>: FD, FAD(사전학습 오디오 임베딩 공간에서의 분포 거리), KL(이벤트 수준 클래스 확률 불일치), LSD(스펙트럼 왜곡), <a href="https://arxiv.org/abs/2211.06687" target="_blank">CLAP</a> score(편집 지시와 생성 오디오의 CLAP 임베딩 코사인 유사도 = 지시 추종도)</li>
+<li><strong>공간 충실도</strong>: GCC MSE(GCC-PHAT 기반), CRW MSE(StereoCRW feature 기반), FSAD(Fréchet Stereo Audio Distance)</li>
+</ul>
+<p>공정 비교를 위해 <strong>모든 방법을 공통 2채널 스테레오 공간에서 평가</strong>한다. SwanWeave는 FOA를 직접 생성하므로, 출력과 레퍼런스 모두 동일한 고정 FOA-to-stereo 디코더로 렌더링한 뒤 지표를 계산한다. 베이스라인은 스테레오 출력을 같은 파이프라인에 넣는다.</p>
+<h4 class="subsec">베이스라인</h4>
+<p>FOA를 직접 편집하는 선행 방법이 없으므로, FOA 결과를 스테레오 프록시로 디코딩해 비교한다. <a href="https://arxiv.org/abs/2409.12466" target="_blank">AudioEditor</a>(백엔드를 Auffusion 대신 BEWO/SpatialSonic 공간 오디오 생성기로 교체해 binaural 출력 지원), <a href="https://arxiv.org/abs/2402.10009" target="_blank">ZETA</a>, <a href="https://arxiv.org/abs/2108.01073" target="_blank">SDEdit</a>(ZETA와 함께 Stable Audio Open을 백본으로), <a href="https://arxiv.org/abs/2509.21625" target="_blank">SmartDJ</a>(모든 편집 연산을 한 번의 추론에 동시 투입하는 one-stage 설정으로 적응)와 비교한다.</p>
+<h4 class="subsec">Table 1. 전체 편집 타입 평균 객관 평가</h4>
+<p>HP는 각 베이스라인 대 본 방법의 쌍대 인간 선호도 분할이다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Speed</th><th class="num">FD ↓</th><th class="num">FAD ↓</th><th class="num">KL ↓</th><th class="num">LSD ↓</th><th class="num">CLAP ↑</th><th class="num">GCC ↓</th><th class="num">CRW ↓</th><th class="num">FSAD ↓</th><th>HP (baseline-ours)</th></tr></thead><tbody><tr><td>ZETA</td><td class="num">56.26s</td><td class="num">14.84</td><td class="num">4.03</td><td class="num">4.43</td><td class="num">3.29</td><td class="num">0.17</td><td class="num">51.85</td><td class="num">22.12</td><td class="num">0.78</td><td>17.88% - 82.12%</td></tr><tr><td>AudioEditor</td><td class="num">119.97s</td><td class="num">8.66</td><td class="num">3.19</td><td class="num">2.46</td><td class="num">2.89</td><td class="num">0.19</td><td class="num">28.19</td><td class="num">44.50</td><td class="num">0.55</td><td>25.67% - 74.33%</td></tr><tr><td>SDEdit</td><td class="num">32.28s</td><td class="num">8.60</td><td class="num">2.03</td><td class="num">2.41</td><td class="num">2.72</td><td class="num">0.18</td><td class="num">24.19</td><td class="num">25.48</td><td class="num">0.40</td><td>23.30% - 76.70%</td></tr><tr><td>SmartDJ</td><td class="num">4.23s</td><td class="num">8.47</td><td class="num">2.87</td><td class="num">2.69</td><td class="num">2.56</td><td class="num">0.17</td><td class="num">20.32</td><td class="num">33.07</td><td class="num">0.32</td><td>38.44% - 61.56%</td></tr><tr><td><strong>Ours (SwanWeave)</strong></td><td class="num"><strong>1.17s</strong></td><td class="num"><strong>5.47</strong></td><td class="num"><strong>1.16</strong></td><td class="num"><strong>1.67</strong></td><td class="num"><strong>1.07</strong></td><td class="num"><strong>0.21</strong></td><td class="num"><strong>12.39</strong></td><td class="num"><strong>18.80</strong></td><td class="num"><strong>0.31</strong></td><td>-</td></tr></tbody></table></div>
+<p>읽을 점:</p>
+<ul>
+<li><strong>속도</strong>: 평균 1.17초. 가장 빠른 베이스라인 SmartDJ(4.23s)보다 3.6배, ZETA(56.26s)보다 48배 빠르다. 반복적 diffusion 샘플링이나 순차 편집 연산이 필요 없는 one-stage latent 편집이라는 설계의 직접적 결과다.</li>
+<li><strong>공간 충실도</strong>: GCC 12.39는 최고 베이스라인(SmartDJ 20.32)보다 낮다. FOA 채널에 인코딩된 방향 구조가 편집 후에도 더 잘 보존된다는 뜻이다. CRW 18.80은 FOA-to-stereo 디코딩 후 스테레오 공간 단서가 더 정확함을, FSAD 0.31은 타깃 분포에 더 가까운 공간 표현을 생성함을 시사한다.</li>
+<li><strong>지시 추종</strong>: CLAP 0.21로 최고. 다만 절대값 차이는 크지 않다(베이스라인 0.17~0.19).</li>
+<li><strong>인간 평가</strong>: 3명의 annotator가 소스 오디오 + 편집 지시 + 두 편집 결과를 듣고 오디오 품질과 지시-오디오 정합을 함께 고려해 더 나은 쪽을 고르는 쌍대 비교. 모든 베이스라인 대비 선호된다. 다만 SmartDJ 대비 61.56%는 다른 베이스라인(74~82%)보다 격차가 좁다.</li>
+</ul>
+<h4 class="subsec">Table 2. 동적 편집(motion) 전용 비교</h4>
+<p>여기가 이 논문에서 가장 극적인 결과다. Dis Motion은 음원의 거리가 점진적으로 변하는 편집을 뜻한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Operation</th><th>Method</th><th class="num">FD ↓</th><th class="num">FAD ↓</th><th class="num">KL ↓</th><th class="num">LSD ↓</th><th class="num">GCC ↓</th><th class="num">CRW ↓</th><th class="num">FSAD ↓</th></tr></thead><tbody><tr><td>Angle Motion</td><td>SmartDJ</td><td class="num">6.70</td><td class="num">2.40</td><td class="num">1.92</td><td class="num">2.36</td><td class="num">23.25</td><td class="num">50.16</td><td class="num">0.29</td></tr><tr><td>Angle Motion</td><td><strong>Ours</strong></td><td class="num"><strong>3.41</strong></td><td class="num"><strong>1.23</strong></td><td class="num"><strong>0.66</strong></td><td class="num"><strong>0.80</strong></td><td class="num"><strong>1.15</strong></td><td class="num"><strong>14.84</strong></td><td class="num"><strong>0.23</strong></td></tr><tr><td>Dis Motion</td><td>SmartDJ</td><td class="num">11.10</td><td class="num">1.88</td><td class="num">3.18</td><td class="num">2.77</td><td class="num">16.45</td><td class="num">28.66</td><td class="num">0.33</td></tr><tr><td>Dis Motion</td><td><strong>Ours</strong></td><td class="num"><strong>5.54</strong></td><td class="num"><strong>0.93</strong></td><td class="num"><strong>1.25</strong></td><td class="num"><strong>0.86</strong></td><td class="num"><strong>1.74</strong></td><td class="num"><strong>11.32</strong></td><td class="num"><strong>0.22</strong></td></tr></tbody></table></div>
+<p>Angle motion에서 GCC가 23.25 → 1.15로, CRW가 50.16 → 14.84로 떨어진다. Distance motion에서도 GCC 16.45 → 1.74, CRW 28.66 → 11.32. <strong>방향과 거리의 정확한 시간적 변화가 요구되는 동적 공간 편집에서 격차가 가장 크게 벌어진다</strong>는 것이 이 표의 메시지다.</p>
+<h4 class="subsec">Table 3. Ablation</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Variation</th><th class="num">FD ↓</th><th class="num">FAD ↓</th><th class="num">KL ↓</th><th class="num">LSD ↓</th><th class="num">CLAP ↑</th><th class="num">GCC ↓</th><th class="num">CRW ↓</th><th class="num">FSAD ↓</th></tr></thead><tbody><tr><td>w/o pretrain</td><td class="num">8.49</td><td class="num">3.15</td><td class="num">2.78</td><td class="num">2.33</td><td class="num">0.16</td><td class="num">21.24</td><td class="num">25.09</td><td class="num">0.39</td></tr><tr><td>w/o MoE</td><td class="num">6.84</td><td class="num">2.72</td><td class="num">2.34</td><td class="num">1.66</td><td class="num">0.21</td><td class="num">14.05</td><td class="num">19.51</td><td class="num">0.29</td></tr><tr><td>w/o task expert</td><td class="num">6.21</td><td class="num">2.14</td><td class="num">1.98</td><td class="num">1.24</td><td class="num">0.18</td><td class="num">13.76</td><td class="num">17.91</td><td class="num">0.38</td></tr><tr><td>w/o SPO</td><td class="num">5.94</td><td class="num">1.82</td><td class="num">1.85</td><td class="num">1.10</td><td class="num">0.21</td><td class="num">15.45</td><td class="num">19.89</td><td class="num">0.32</td></tr><tr><td><strong>Full (Table 1 기준)</strong></td><td class="num"><strong>5.47</strong></td><td class="num"><strong>1.16</strong></td><td class="num"><strong>1.67</strong></td><td class="num"><strong>1.07</strong></td><td class="num"><strong>0.21</strong></td><td class="num"><strong>12.39</strong></td><td class="num"><strong>18.80</strong></td><td class="num"><strong>0.31</strong></td></tr></tbody></table></div>
+<ul>
+<li><strong>사전학습 제거의 타격이 가장 크다.</strong> FD 5.47 → 8.49, KL 1.67 → 2.78, CLAP 0.21 → 0.16. text-to-FOA 사전학습이 FOA 생성의 강한 초기화이자 의미 정렬의 기반임을 보여준다. 편집 전용 학습만으로는 장면 이해 자체가 부족해진다.</li>
+<li><strong>MoE 전체 제거</strong> 시 FD, KL, LSD가 나빠진다. 공유 FFN 하나로는 이질적 공간 편집 연산을 모델링하기 어렵다.</li>
+<li><strong>task expert만 제거</strong>하면 MoE 완전 제거보다는 낫다(프레임 수준 라우팅이 국소 시간 적응에 유용). 하지만 full 모델보다는 나쁘고, 특히 FSAD가 0.31 → 0.38로 오히려 MoE 완전 제거(0.29)보다도 나빠진다. 지시 조건 task expert가 <strong>보완적인 지시 수준 특화</strong>를 제공한다는 해석이다.</li>
+<li><strong>SPO 제거</strong>는 지표 절대값 차이가 가장 작지만, 공간 지표에서 뚜렷하다(GCC 12.39 → 15.45, CRW 18.80 → 19.89). 지도 학습만으로는 소스 복사, 엉뚱한 이벤트 수정, 잘못된 공간 배치 같은 <strong>그럴듯한 편집 실패</strong>를 충분히 억제하지 못한다는 것.</li>
+</ul>
+<h4 class="subsec">Table 4. One-stage vs Multi-stage (복합 편집 샘플)</h4>
+<p>2-, 3-, 4-연산 복합 편집 각 100개 테스트 예제를 대상으로, 복합 편집을 순차 실행한 경우와 최종 결과를 직접 예측한 경우를 비교한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Speed (s) ↓</th><th class="num">FD ↓</th><th class="num">FAD ↓</th><th class="num">KL ↓</th><th class="num">LSD ↓</th><th class="num">CLAP ↑</th><th class="num">GCC ↓</th><th class="num">CRW ↓</th><th class="num">FSAD ↓</th></tr></thead><tbody><tr><td>SmartDJ multi-stage</td><td class="num">10.73</td><td class="num">9.88</td><td class="num">3.12</td><td class="num">2.82</td><td class="num">2.99</td><td class="num">0.17</td><td class="num">27.99</td><td class="num">47.99</td><td class="num">0.44</td></tr><tr><td>SmartDJ one-stage</td><td class="num">4.23</td><td class="num">8.47</td><td class="num">2.87</td><td class="num">2.69</td><td class="num">2.56</td><td class="num">0.17</td><td class="num">20.32</td><td class="num">33.07</td><td class="num">0.32</td></tr><tr><td>Ours multi-stage</td><td class="num">3.96</td><td class="num">7.16</td><td class="num">1.67</td><td class="num"><strong>1.36</strong></td><td class="num">1.82</td><td class="num"><strong>0.23</strong></td><td class="num">19.45</td><td class="num">22.29</td><td class="num">0.37</td></tr><tr><td><strong>Ours one-stage</strong></td><td class="num"><strong>1.17</strong></td><td class="num"><strong>5.47</strong></td><td class="num"><strong>1.16</strong></td><td class="num">1.67</td><td class="num"><strong>1.07</strong></td><td class="num">0.21</td><td class="num"><strong>12.39</strong></td><td class="num"><strong>18.80</strong></td><td class="num"><strong>0.31</strong></td></tr></tbody></table></div>
+<p>이 논문의 핵심 가설을 직접 검증하는 표다. 순차 실행은 오디오·공간 충실도를 떨어뜨리면서 추론 시간을 크게 늘린다. 본 모델 기준 one-stage가 FD 7.16 → 5.47, FAD 1.67 → 1.16, LSD 1.82 → 1.07, GCC 19.45 → 12.39, CRW 22.29 → 18.80, FSAD 0.37 → 0.31로 개선된다. SmartDJ에서도 같은 방향의 열화가 관측된다.</p>
+<p><strong>다만 저자들이 솔직하게 인정하는 부분</strong>: KL(1.36 → 1.67)과 CLAP(0.23 → 0.21)은 multi-stage 쪽이 더 좋다. 즉 one-stage의 주된 이점은 <strong>전반적 복원 품질과 공간 일관성</strong>이지, 모든 의미(semantic) 지표를 일률적으로 개선하는 것은 아니다. 순차 실행이 각 연산을 명시적으로 밟기 때문에 이벤트 수준 의미 정합은 오히려 유리할 수 있다는 해석이 가능하다.</p>
+<h4 class="subsec">Table 5. CFG scale 선택</h4>
+<p>각 scale 조합마다 40개 샘플을 생성해, 편집되지 않아야 할 소스 내용이 보존되었는지와 요청된 편집이 성공했는지를 수작업으로 평가했다. 항목은 (보존 성공 수 / 편집 성공 수) / 40이다.</p>
+<div class="tbl-wrap"><table><thead><tr><th class="num">$s_{\text{src}}$ \ $s_{\text{inst}}$</th><th>1.5</th><th>3.0</th><th>4.5</th></tr></thead><tbody><tr><td class="num">1.5</td><td>36 / 23</td><td>33 / 28</td><td>28 / 30</td></tr><tr><td class="num">3.0</td><td>36 / 24</td><td><strong>36 / 31</strong></td><td>30 / 31</td></tr><tr><td class="num">4.5</td><td>38 / 20</td><td>33 / 29</td><td>31 / 33</td></tr></tbody></table></div>
+<p>보존과 편집 성공이 명확한 trade-off 관계임을 보여준다. $s_{\text{inst}}$ 를 올리면 편집 성공률이 오르지만 보존이 떨어지고, $s_{\text{src}}$ 를 올리면 반대다. $(3.0, 3.0)$ 이 균형점으로 선택되었다.</p>
+<h4 class="subsec">추가 실험: 지시 강건성</h4>
+<p>구어체·중복 표현·모호한 표현이 섞인 지시 50개로 평가한 결과, <strong>지시 준수 44%, 소스 보존 76%</strong>를 기록했다. 복잡도별 인간 평가에서는 SmartDJ 대비 평균 <strong>62%</strong> 선호를 얻었고, <strong>편집 복잡도가 올라갈수록 우위가 커졌다</strong>. (원문 C.2에서 모델을 &quot;SPATIALEDIT&quot;으로 지칭하는데, 익명화 과정의 잔재로 보인다.)</p>
+<p>지시 준수 44%라는 수치는 솔직하게 낮다. 정제된 지시에서는 잘 동작하지만 <strong>자연스러운 구어 지시에 대한 grounding은 여전히 절반 이하</strong>라는 뜻이다.</p>
+<h4 class="subsec">연구 의의</h4>
+<ol>
+<li><strong>FOA 파형 수준 편집을 하나의 태스크로 정립했다.</strong> 지금까지 공간 오디오 연구는 &quot;생성&quot;과 &quot;이해&quot;에 몰려 있었고, &quot;기존 3D 장면을 언어로 수정&quot;이라는 축은 비어 있었다. 이 논문은 4개 편집 축과 10종 이상 연산, 그리고 그에 맞는 paired supervision 구축 레시피를 함께 제시한다.</li>
+<li><strong>복합 편집은 분해가 아니라 결합으로 풀어야 한다는 실증.</strong> Table 4가 이를 직접 보여준다. 순차 실행의 오차 누적이 실제로 측정 가능한 크기로 존재한다.</li>
+<li><strong>동적 공간 편집이 결정적 차별점.</strong> Table 2의 GCC 20배 개선은 시간에 따라 변하는 방향·거리 궤적이 순차 파이프라인으로는 사실상 다루기 어려운 영역임을 시사한다.</li>
+<li><strong>Null expert라는 설계.</strong> &quot;편집 = 일부 변경 + 나머지 보존&quot;이라는 태스크 구조를 아키텍처에 직접 새겨 넣은 사례로, 다른 편집 도메인(비디오, 3D 장면)으로도 이식 가능한 아이디어다.</li>
+<li><strong>Staircase CFG.</strong> 보존 조건과 지시 조건을 분리해 잔차로 쌓는 방식은, multi-condition 편집 일반에 적용 가능한 추론 기법이다.</li>
+</ol>
+<p>---</p>
+<h3 class="sec">한계</h3>
+<h4 class="subsec">논문이 명시한 한계</h4>
+<p><strong>1) 시뮬레이션 데이터 의존</strong> Paired supervision 전체가 PyRoomAcoustics 기반 controllable room simulation으로 만들어졌다. 정확한 source-target 정렬을 얻을 수 있다는 장점의 이면에, 실제 녹음의 음향적 복잡성을 충분히 담지 못한다. 저자들이 직접 꼽는 항목은 <strong>마이크 특성, 배경 잡음, 폐색(occlusion), 매우 불규칙한 방 응답</strong>이다. 실제 녹음 FOA 데이터로의 확장이 중요한 후속 과제로 남는다.</p>
+<p>여기에 더해, 렌더링 자체가 shoebox room(직육면체) 가정이다. 실내 기하가 단순하고, RIR도 벽 흡수와 반사 차수로 결정된다. 실제 공간의 복잡한 기하·재질 다양성과는 거리가 있다.</p>
+<p><strong>2) 장면 길이와 복잡도의 제약</strong> 대부분의 예제는 소수의 사운드 이벤트를 담고 길이가 약 10초다(학습 삼중항 평균 8.9초, SPO 예제 평균 9.17초). 더 긴 장면, 더 촘촘한 이벤트 혼합, 겹치는 궤적, 더 개방적(open-ended)인 지시를 다루려면 <strong>더 강한 long-context 모델링과 더 다양한 supervision</strong>이 필요하다.</p>
+<h4 class="subsec">명백해 보이는 추가 한계</h4>
+<p><strong>3) 평가가 스테레오로 축약된다.</strong> 공정 비교를 위해 FOA 출력을 고정 디코더로 스테레오 렌더링한 뒤 GCC/CRW/FSAD를 계산한다. 그런데 FOA의 가장 큰 이점 중 하나는 <strong>고도(elevation), 즉 위/아래 방향</strong>인데, 2채널 스테레오로 내려오면 이 정보가 상당 부분 소실된다. above/below 편집이 얼마나 정확한지는 현재 지표 체계로 직접 측정되지 않는다.</p>
+<p><strong>4) 구어 지시에 대한 grounding이 약하다.</strong> 부록 C.2의 44% 지시 준수율. 학습 지시는 Gemini 2.5 Pro가 &quot;10~25 단어, 1문장&quot;의 정형화된 스펙으로 생성한 것이라, 실제 사용자의 모호하고 장황한 발화와는 분포가 다르다.</p>
+<p><strong>5) 인간 평가 규모와 구성.</strong> annotator가 3명이며, 저자들의 연구 그룹에서 모집한 자원봉사 대학원생으로 금전적 보상이 없었다(부록 C.3). 평가 기준도 &quot;오디오 품질과 지시 추종을 함께 고려&quot;라는 단일 축 쌍대 비교라, 보존 실패와 편집 실패를 분리해 보기 어렵다.</p>
+<p><strong>6) 단일 학습 run.</strong> 모든 결과가 single training run에서 나왔다고 명시되어 있어, 분산(variance) 정보가 없다. Ablation의 작은 차이(예: SPO 제거 시 FD 5.47 → 5.94)를 얼마나 신뢰할지 판단할 근거가 부족하다.</p>
+<p><strong>7) 시각 정보 부재.</strong> 편집 지시가 순전히 텍스트다. 실제 프로덕션에서는 &quot;화면 속 저 인물의 소리를&quot; 같은 시각 참조가 자연스럽지만, 이 프레임워크는 시각 조건을 다루지 않는다.</p>
+<p><strong>8) CLAP 지표의 한계.</strong> 지시 추종을 CLAP 유사도로 측정하는데, CLAP은 기본적으로 semantic alignment 모델이지 <strong>공간 속성을 평가하도록 학습되지 않았다</strong>. &quot;왼쪽으로 옮겨라&quot;가 제대로 수행되었는지를 CLAP이 판별할 수 있다고 보기는 어렵다. 실제로 베이스라인 간 CLAP 차이(0.17~0.21)가 매우 작은 것도 이 지표의 해상도 한계를 시사한다.</p>
+<p>---</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<h4 class="subsec">Spatial Audio 관점</h4>
+<ul>
+<li><strong>편집이라는 새로운 축.</strong> 지금까지 공간 오디오는 생성(generation), 공간화(spatialization), 이해(understanding)로 나뉘어 왔다. 이 논문은 &quot;<strong>기존 3D 음장의 언어 기반 수정</strong>&quot;을 네 번째 축으로 제안한다. 공간 오디오 연구 지형을 정리할 때 참조할 만한 프레이밍이다.</li>
+<li><strong>FOA를 latent로 다루는 실전 레시피.</strong> stereo FOA VAE($d=128$)로 4채널을 압축하고 DiT + flow matching으로 편집하는 구조는, FOA를 직접 다루려는 어떤 연구에도 바로 재사용 가능한 백본 설계다. 소스 latent와 노이즈 latent를 feature 차원으로 concat해 self-attention이 프레임 대응을 학습하게 하는 트릭도 단순하고 효과적이다.</li>
+<li><strong>공간 편집의 평가 문제.</strong> 이 논문이 쓴 GCC-PHAT / StereoCRW / FSAD 조합은 현재 공간 오디오 편집 평가의 사실상 표준에 가깝다. 동시에, FOA를 스테레오로 내려 평가할 수밖에 없었다는 점이 <strong>FOA 네이티브 평가 지표의 부재</strong>를 드러낸다. 고도 정확도, 궤적 정확도, 공간적 보존도를 4채널에서 직접 재는 지표는 아직 열려 있는 문제다.</li>
+<li><strong>Null expert 아이디어.</strong> &quot;변경 없는 영역은 0 텐서를 반환&quot;이라는 명시적 설계와 이를 유도하는 $\mathcal{L}_{\text{null}}$ 마스크 손실은, 보존-편집 trade-off가 있는 모든 편집 태스크에 이식 가능하다.</li>
+<li><strong>Staircase CFG.</strong> 보존 조건과 편집 조건을 분리해 잔차로 쌓는 추론 전략. 다중 조건 편집 모델을 다룬다면 바로 시도해볼 수 있는 저비용 개선이다.</li>
+</ul>
+<h4 class="subsec">Egocentric Vision 관점</h4>
+<ul>
+<li><strong>1인칭 오디오는 본질적으로 FOA와 궁합이 좋다.</strong> 머리에 장착한 마이크 어레이는 청취자 중심 좌표계를 자연스럽게 정의한다. 이 논문이 &quot;listener를 방 중심에 두고 source-listener 단위 벡터로 FOA를 인코딩&quot;하는 방식은 egocentric 설정과 동형이다. Ego4D/Ego-Exo4D류 데이터에 공간 오디오를 결합하려는 연구라면 이 데이터 구축 파이프라인이 직접 참고가 된다.</li>
+<li><strong>10방향 언어 라벨 체계.</strong> right/front/left/back/front-right/.../above/below의 10방향과 방위각 매핑은, egocentric 장면 기술(scene description)에서 공간 관계를 언어화할 때 그대로 쓸 수 있는 어휘 설계다.</li>
+<li><strong>동적 궤적이 1인칭의 핵심.</strong> 1인칭 영상에서는 착용자가 계속 움직이므로 음원의 상대 방향·거리가 끊임없이 변한다. 이 논문이 angle motion / distance motion을 별도 태스크로 두고 그 축에서 가장 큰 성능 격차를 보였다는 사실은, <strong>egocentric 공간 오디오에서 정적 정위보다 동적 궤적이 더 중요하고 더 어렵다</strong>는 시사점을 준다.</li>
+<li><strong>빠진 연결고리: 시각 조건.</strong> 이 프레임워크는 텍스트만 조건으로 쓴다. Egocentric vision 연구자 입장에서 가장 자연스러운 확장은 <strong>1인칭 프레임을 조건으로 추가한 spatial audio editing</strong>이다. &quot;내가 보고 있는 저 소리를 키워라&quot; 같은 gaze/시선 기반 참조는 아직 미개척 영역이다.</li>
+</ul>
+<h4 class="subsec">Hand-Object Interaction 관점</h4>
+<ul>
+<li><strong>접촉음의 공간 편집.</strong> 손-물체 상호작용은 타격, 마찰, 파지 등 짧고 국소적인 접촉음을 만든다. 이런 이벤트는 (a) 시간적으로 sparse하고, (b) 손의 위치, 즉 청취자 기준 근거리에 정위된다. 이 논문의 add/replace/distance change 편집은 이런 접촉음을 조작하는 도구가 될 수 있다.</li>
+<li><strong>Null expert와 sparse 이벤트.</strong> 접촉음처럼 짧은 이벤트를 편집할 때, 프레임 단위 라우팅과 null expert 조합은 &quot;접촉 순간만 건드리고 나머지 프레임은 그대로&quot;를 구현하는 자연스러운 메커니즘이다. HOI 오디오의 시간적 sparsity와 잘 맞는다.</li>
+<li><strong>한계도 그대로 물려받는다.</strong> 이 논문의 학습 장면은 2~4개 이벤트, 약 10초, shoebox room이다. 실제 HOI 상황은 근거리 음원(near-field), 손·몸에 의한 폐색, 물체 재질별 방사 패턴이 지배적인데, 여기서 쓴 point source + 직육면체 방 시뮬레이션은 이런 요소를 담지 못한다. 저자들이 Habitat을 배제한 이유(폐색과 다중경로 반사가 방향 단서를 흐린다)가, 역설적으로 HOI 쪽에서는 <strong>오히려 모델링해야 할 현상</strong>이다.</li>
+<li><strong>Paired supervision 구축 전략의 이식.</strong> &quot;이벤트를 샘플링해 소스 장면을 합성하고, 편집 후 타깃을 다시 렌더링하며, 편집별로 wrong-edit / no-op negative를 설계한다&quot;는 레시피는 도메인 독립적이다. HOI 오디오-비주얼 데이터에서 paired supervision을 만들 때 그대로 차용할 수 있다.</li>
+</ul>
+<h4 class="subsec">방법론 일반</h4>
+<ul>
+<li><strong>DPO를 생성 모델 정렬에 쓰는 구체적 설계.</strong> SPO의 핵심은 negative를 &quot;임의로 망가뜨린 오디오&quot;가 아니라 <strong>태스크별 실패 모드(wrong-edit, no-op)로 설계</strong>했다는 점이다. 특히 no-op negative는 &quot;입력을 그대로 복사하는&quot; 편집 모델의 고전적 실패를 정면으로 겨냥한다. 편집·변환 태스크에 선호 학습을 적용하려는 어떤 연구에도 바로 적용 가능한 패턴이다. 2:1 비율과 positive/negative가 <strong>같은 noise·timestep을 공유</strong>하도록 한 디테일도 재현에 중요하다.</li>
+<li><strong>Staged curriculum의 가치.</strong> Ablation에서 사전학습 제거가 가장 큰 성능 하락을 낳았다. &quot;생성 능력 → atomic 편집 → 복합 편집&quot;으로 나누면, 복합 지시 실패의 원인을 장면 이해 부족과 편집 연산 실패로 분리해 진단할 수 있다. 멀티태스크 편집 모델 설계 시 기본으로 삼을 만한 원칙이다.</li>
+<li><strong>MoE의 task-level / token-level 이중 라우팅.</strong> 태스크 식별자가 명시적으로 주어지지 않고 <strong>자연어 지시에서 유도되는</strong> task expert 선택은, 멀티태스크 조건부 생성 전반에 응용 가능하다. top-$k$ 대신 top-$p$ 라우팅으로 입력 복잡도에 따라 활성 전문가 수를 가변시키는 것도 계산 효율 측면에서 참고할 점이다.</li>
+</ul>
+<h4 class="subsec">리소스</h4>
+<ul>
+<li>데모: swanaigc/swanweave</li>
+<li>코드: github.com/MM-Speech/SwanWeave</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper6">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>PhysWave: Physics-Guided Latent Diffusion Models for Controllable Spatial Audio Generation</h2>
+    <p class="lead">텍스트로 3차원 공간 음향(FOA)을 만들 때, 소리의 방향과 거리가 지켜야 할 물리 법칙을 미분 가능한 손실 함수로 직접 학습에 집어넣고, 자연어와 좌표 궤적을 하나의 &quot;웨이포인트-캡션&quot; 표현으로 통합한 latent diffusion 모델이다.</p>
+    <div class="authors">Lingfeng Yao, Chenpei Huang, Xingke Yang, Ziye Geng, Changqing Luo, Miao Pan (University of Houston), Hao Wang (Stevens Institute of Technology), Jiang Liu (Waseda University)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-30</span> · <span class="pub-venue">🏛 EMNLP 2026 Main Conference</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.29549" target="_blank">arXiv:2608.29549</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.29549" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.29549" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2608.29549v1/framework.png" alt="스페이셜 캡션을 LLM이 음향 캡션 + 웨이포인트 궤적으로 분해하고, 이를 조건으로 FOA latent diffusion을 학습하되 디코딩된 파형에 물리 일관성 손실을 거는 PhysWave 전체 구조" loading="lazy"><figcaption>스페이셜 캡션을 LLM이 음향 캡션 + 웨이포인트 궤적으로 분해하고, 이를 조건으로 FOA latent diffusion을 학습하되 디코딩된 파형에 물리 일관성 손실을 거는 PhysWave 전체 구조</figcaption></figure>
+<p>Figure 2. 왼쪽에서 사용자의 공간 묘사 문장이 LLM 파서를 거쳐 &quot;무슨 소리인가(acoustic caption)&quot;와 &quot;어디서 어떻게 움직이는가(waypoint trajectory)&quot;로 갈라지고, 이 둘이 temporal token과 함께 DiT의 조건으로 들어간다. 오른쪽에서는 diffusion이 예측한 latent를 <strong>다시 FOA 파형으로 디코딩해</strong> 방향·거리 물리 손실을 계산하는 경로가 핵심이다. 보통의 latent diffusion이 latent 공간에서만 감독하는 것과 달리, 여기서는 파형까지 내려가야 물리량(채널 간 관계, 에너지 포락선)을 잴 수 있기 때문이다.</p>
+<h3 class="sec">선행 연구</h3>
+<p>공간 음향 생성 연구는 출력 포맷을 기준으로 크게 세 갈래로 나뉜다.</p>
+<p><strong>1) 모노(monaural) 텍스트-투-오디오.</strong> AudioLDM 계열, <a href="https://arxiv.org/abs/2305.18474" target="_blank">Make-An-Audio 2</a>를 포함한 Make-An-Audio 계열, TANGO 계열, Stable Audio 등은 오디오 품질(fidelity)과 텍스트-오디오 의미 정합(semantic alignment)을 크게 끌어올렸다. 하지만 출력이 한 채널이라 방향·거리·움직임 정보를 아예 담지 못한다.</p>
+<p><strong>2) 스테레오/바이노럴(binaural) 생성.</strong> 두 채널 사이의 시간차(ITD, Interaural Time Difference)와 레벨차(ILD, Interaural Level Difference)를 이용해 좌우 정위감을 만든다. <a href="https://arxiv.org/abs/2502.11219" target="_blank">AudioSpa</a>와 DualSpec은 텍스트로 바이노럴 오디오를 만들고, SpatialSonic은 언어와 다른 모달리티로 스테레오 생성을 제어한다. 다만 바이노럴은 청자 중심(listener-centric) 포맷이라 3차원 음장 전체를 표현하지는 못한다.</p>
+<p><strong>3) FOA(First-Order Ambisonics, 1차 앰비소닉스 — 3차원 음장을 $W, X, Y, Z$ 네 개의 구면 조화(spherical harmonic) 채널로 표현하는 방식) 생성.</strong> FOA는 특정 스피커 배치에 묶이지 않고 헤드폰·스피커 어레이 어디로든 디코딩할 수 있어 device-agnostic한 포맷이다. Diff-SAGe는 음원 카테고리와 위치로 FOA를 생성하고, ImmerseDiffusion은 텍스트 조건 FOA 생성을 정적(static) 음원에 대해 다뤘으며, SonicMotion은 이를 움직이는 음원(원형 궤도)까지 확장했다. ViSAGe와 OmniAudio는 영상/360도 영상에서 FOA를 만든다.</p>
+<p><strong>4) 물리 유도(physics-guided) 생성 모델.</strong> PINN(Physics-Informed Neural Network)처럼 지배 방정식 위반을 패널티로 주는 흐름이 diffusion으로도 넘어와, 유체 흐름장 복원, 기온 다운스케일링, 적외선 영상 생성 등에 쓰였다. 음향 쪽에서는 파동 방정식·헬름홀츠 방정식 기반 prior로 음장 추정/복원(sound field estimation)을 다뤘지만, 이는 측정값으로부터의 역문제(inverse reconstruction)이지 텍스트 조건 생성이 아니다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>논문은 기존 text-to-FOA의 한계를 두 가지로 명확히 못 박는다.</p>
+<p><strong>한계 1 — 물리적 일관성을 보장할 수 없다.</strong> FOA는 지켜야 할 관계식이 이미 알려져 있다. 방위각 $\theta$, 고도각 $\phi$에서 도착하는 점음원의 압력 신호 $s(t)$에 대해 FOA 인코딩은</p>
+<p>$W(t) = \tfrac{1}{\sqrt{2}} s(t),\quad X(t) = s(t)\cos\phi\cos\theta,\quad Y(t) = s(t)\cos\phi\sin\theta,\quad Z(t) = s(t)\sin\phi$</p>
+<p>로 정해진다. 즉 네 채널은 독립된 오디오 스트림이 아니라, <strong>채널 간 비율 자체가 방향을 인코딩</strong>한다. 거리 $r$에 대해서도 자유장(free field)에서 압력은 대략 $1/r$로 감쇠하고 에너지는 $1/r^2$ 꼴을 따른다. 그런데 기존 FOA 생성 모델은 이 관계를 데이터에서 <strong>암묵적으로만</strong> 배운다. 그 결과 귀로 들으면 그럴듯한데 FOA 채널에는 엉뚱한 방향이 박혀 있거나, 음원-청자 거리와 맞지 않는 에너지 포락선(energy envelope)이 나오는 일이 생긴다. 이 관계식들은 이미 알려져 있고 미분 가능하므로, 학습과 샘플링에 명시적 prior로 넣을 수 있는데도 활용하지 않았다는 것이 논문의 지적이다.</p>
+<p><strong>한계 2 — 사용자 인터페이스가 갈라져 있다.</strong> ImmerseDiffusion과 SonicMotion은 제어 인터페이스를 둘로 분리해 제공한다. 파라메트릭(parametric) 모드는 방위각·고도각·거리·움직임 같은 수치를 직접 받아 정밀하지만, 사용자가 저수준 공간 변수를 일일이 지정해야 한다. 디스크립티브(descriptive) 모드는 자연어를 받아 쓰기는 쉽지만 방향·거리·시간에 따른 변화에 대해 제어가 거칠다. 사용자는 <strong>쓰기 편함과 정밀함 사이에서 하나를 포기</strong>해야 한다. 하나의 모델 안에서 두 방식을 모두 받아주는 통합 인터페이스가 필요하다.</p>
+<p>여기에 데이터 문제도 겹친다. 정확한 음원 궤적이 라벨링된 실제 FOA 녹음을 대규모로 모으기는 어렵다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>PhysWave가 새로 정의하는 문제는 <strong>&quot;물리적으로 일관되며 동시에 궤적 수준으로 제어 가능한 text-to-FOA 생성&quot;</strong>이다. 기존 흐름과 다른 점은 세 축이다.</p>
+<ul>
+<li><strong>물리를 목적 함수로 승격.</strong> 기존 FOA 생성이 &quot;데이터에서 알아서 배워라&quot;였다면, PhysWave는 구면 조화 방향 관계와 역제곱 거리 관계를 <strong>미분 가능한 손실</strong>로 만들어 학습 목표에 직접 더한다. 게다가 이 손실은 학습이 끝난 뒤에도 샘플링 단계의 gradient guidance로 재사용할 수 있어, <strong>재학습 없이(training-free)</strong> 공간 정확도를 더 끌어올리는 도구가 된다.</li>
+<li><strong>표현의 통합.</strong> 자연어와 파라메트릭 제어를 두 개의 모드로 두지 않고, 둘 다 같은 <strong>웨이포인트-캡션(waypoint-caption)</strong> 표현으로 환원한다. 자연어는 LLM 파서를 거쳐 웨이포인트로 변환되고, 정밀 제어를 원하는 사용자는 웨이포인트를 직접 넣거나 파서 결과를 편집한다. 모델 입장에서는 언제나 같은 입력 형식이다.</li>
+<li><strong>동적(dynamic) 궤적으로의 일반화.</strong> SonicMotion이 원형 궤도(circular)에 한정됐던 것과 달리, 정적·선형 통과·원형·접근/후퇴를 아우르는 일반 웨이포인트 궤적을 다룬다.</li>
+</ul>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">데이터셋 구축 (300K 클립 규모)</h4>
+<p>정확한 궤적 라벨을 가진 실제 FOA 녹음이 부족하므로, 캡션이 달린 모노 오디오를 궤적을 따라 공간화(spatialize)하는 합성 파이프라인을 만든다 (Figure 1).</p>
+<p><strong>(a) 모노 소스 준비.</strong> AudioCaps, WavCaps, Clotho에서 클립을 수집한다. 캡션이 지배적인(dominant) 단일 음향 이벤트를 묘사하는 클립을 우선 선별한 뒤, 16 kHz 리샘플링 → 에너지 기반 활동 구간 검출로 10초 구간 추출(활성 구간 1초 미만이면 폐기, 10초 미만은 제로 패딩, 초과분은 활성 프레임이 가장 많은 10초 윈도 선택) → EBU R128 라우드니스 정규화(목표 $-14$ LUFS, 파형은 $[-1, 1]$로 클리핑) → CLAP 유사도 0.3 미만 폐기 순으로 처리한다. Clotho는 캡션이 최대 5개이므로 가장 점수가 높은 것을 남긴다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>데이터 소스</th><th class="num">Train 클립</th><th class="num">Train 시간(h)</th><th class="num">Test 클립</th><th class="num">Test 시간(h)</th></tr></thead><tbody><tr><td>AudioCaps</td><td class="num">46,696</td><td class="num">129.7</td><td class="num">4,239</td><td class="num">11.8</td></tr><tr><td>WavCaps</td><td class="num">107,850</td><td class="num">299.6</td><td class="num">–</td><td class="num">–</td></tr><tr><td>Clotho</td><td class="num">2,863</td><td class="num">8.0</td><td class="num">1,021</td><td class="num">2.8</td></tr><tr><td>모노 합계</td><td class="num">157,409</td><td class="num">437.2</td><td class="num">5,260</td><td class="num">14.6</td></tr><tr><td>렌더링된 FOA</td><td class="num">314,818</td><td class="num">874.5</td><td class="num">10,520</td><td class="num">29.2</td></tr></tbody></table></div>
+<p>각 모노 클립은 정적 버전 1개 + 이동 버전 1개로 두 번 렌더링되어, 학습용 FOA 314,818개(약 874.5시간)가 나온다.</p>
+<p><strong>(b) 궤적 샘플링.</strong> 궤적은 청자 상대 좌표 $(\theta(t), \phi(t), r(t))$로 기술하고, 편집 가능하도록 웨이포인트 시퀀스 $\mathbf{W} = \{(t_i, \theta_i, \phi_i, r_i)\}_{i=1}^{M}$로 압축한다. 시뮬레이션 시에는 선형 보간으로 샘플 단위 방향·거리를 복원한다. 프레임 단위 궤적은 0.1초 간격으로 저장한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>모션 패밀리</th><th>비율</th><th>샘플링 범위</th><th>설명</th></tr></thead><tbody><tr><td>Static</td><td>50.0%</td><td>$\theta \in [-180°, 180°]$, $\phi \in [-35°, 35°]$, $r \in [0.5, 5]$ m</td><td>방향·거리 고정</td></tr><tr><td>Linear pass-by</td><td>약 16.7%</td><td>$v \in [1, 25]$ m/s, $d_{\min} \in [1, 8]$ m</td><td>방향과 거리가 함께 변함</td></tr><tr><td>Circular</td><td>약 16.7%</td><td>$r \in [0.5, 5]$ m, 각도 범위 $\geq 30°$</td><td>거리 거의 고정, 방향만 변함</td></tr><tr><td>Approach/recede</td><td>약 16.7%</td><td>$v \in [2, 6]$ m/s, $r \in [1, 60]$ m</td><td>방향 고정, 거리만 변함</td></tr></tbody></table></div>
+<p><strong>(c) FOA 시뮬레이션.</strong> 세 단계다. (i) <strong>전파 지연</strong> — 지연 시간 격자 $t_{\text{emit}} = t - r(t)/c$ ($c$는 음속) 위에서 소스 신호를 리샘플링한다. 이 과정에서 반경 방향 운동에 대해 도플러 효과 같은 주파수 변화가 자연스럽게 생긴다. (ii) <strong>거리 감쇠</strong> — 지연된 신호에 $1/r(t)$를 곱해 자유장 압력 감쇠를 모사한다. (iii) <strong>FOA 인코딩</strong> — 위의 구면 조화 식으로 네 채널에 투영한다. 최종 데이터는 {FOA 오디오, 프레임 단위 궤적, 원본 캡션} 삼중항이다.</p>
+<h4 class="subsec">모델 구조</h4>
+<p><strong>입력</strong>: 공간 정보가 섞인 자연어 캡션(예: &quot;왼쪽에서 다가오는 파도 소리&quot;) 또는 웨이포인트 시퀀스. <strong>출력</strong>: 10초 길이 4채널 FOA 파형(16 kHz).</p>
+<p><strong>(1) 통합 웨이포인트-캡션 조건화.</strong> 얼린(frozen) LLM 파서가 공간 캡션을 두 갈래로 분해한다 — 공간 표현을 뺀 순수 음향 캡션, 그리고 궤적. 파서는 웨이포인트 배열을 직접 출력하지 않고 타입(<code>static</code>/<code>linear</code>/<code>arc</code>/<code>approach</code>/<code>recede</code>), 시작/끝 좌표, control point, 회전 방향, 속도 등 간결한 JSON을 내며, 결정적(deterministic) 후처리가 이를 $M=10$개의 웨이포인트 조건으로 변환한다. 좌표 규약은 방위각 0° = 정면, +90° = 왼쪽, $\pm 180°$ = 뒤이고, 거리 기본값은 &quot;very close&quot; 1 m, &quot;close&quot; 2 m, &quot;normal&quot; 8 m, &quot;far&quot; 25 m다. 시간이 명시되지 않으면 0–10초 전체를 쓴다.</p>
+<p>음향 캡션은 사전학습된 T5-base 인코더(최대 128 토큰)로 text token이 된다. 웨이포인트는 모델이 물리 구조를 직접 보도록 프레임 단위 특징으로 펼친다.</p>
+<p>$\mathbf{f}_k = [\underbrace{t_k/T}_{\text{시간}},\ \underbrace{n_x(t_k), n_y(t_k), n_z(t_k)}_{\text{방향}},\ \underbrace{1/r(t_k)^2}_{\text{거리}}]$</p>
+<p>즉 각도를 그대로 넣는 대신 <strong>단위 방향 벡터</strong>와 <strong>역제곱 거리 프로파일</strong>이라는 물리량 형태로 주입한다. 이 시퀀스를 Q-Former 스타일 인코더가 16개 learnable query token으로 요약해 waypoint token을 만든다. 별도의 temporal 인코더가 클립 시작 시각과 길이 $(t_{\text{start}}, T)$를 temporal token으로 임베딩한다. 세 종류 토큰을 이어 붙인 joint condition $\mathbf{c}$가 cross-attention으로 DiT를 구동한다.</p>
+<p><strong>(2) FOA latent diffusion 백본.</strong> 4채널 FOA 파형을 연속 latent로 압축하는 FOA VAE를 먼저 학습한다(DAC 계열 1D 컨볼루션 구조, 입출력 채널을 $W, X, Y, Z$ 4채널로 변경, 다운샘플링 비율 1024, latent 채널 64, 2.05초 크롭). VAE 손실은 채널별 multi-resolution STFT 손실 + KL + adversarial + feature matching에 더해 <strong>방향 일관성 손실 $\mathcal{L}_{\text{dir}}$까지 포함</strong>한다. 가중치는 $\lambda_{\text{mrstft}}=1.0$, $\lambda_{\text{adv}}=0.1$, $\lambda_{\text{fm}}=5.0$, $\lambda_{\text{kl}}=10^{-6}$, $\lambda_{\text{dir}}=0.1$. 이후 VAE는 얼려 쓴다.</p>
+<p>Diffusion은 코사인 노이즈 스케줄로 $\mathbf{x}_t = \alpha_t \mathbf{x} + \sigma_t \epsilon$를 만들고, DiT가 velocity target $\mathbf{v}_t = \alpha_t \epsilon - \sigma_t \mathbf{x}$를 예측한다(v-prediction). 기본 손실은 $\mathcal{L}_{\text{mse}} = \mathbb{E}[\|\hat{\mathbf{v}}_\theta(\mathbf{x}_t, t, \mathbf{c}) - \mathbf{v}_t\|_2^2]$.</p>
+<p><strong>(3) 물리 유도 학습 목표 — 이 논문의 핵심.</strong> latent 공간에서만 감독하는 대신, 예측된 velocity로 clean latent $\hat{\mathbf{x}}_0 = \alpha_t \mathbf{x}_t - \sigma_t \hat{\mathbf{v}}_\theta$를 복원하고 <strong>얼린 VAE 디코더로 파형 $\hat{\mathbf{a}} = \mathcal{D}(\hat{\mathbf{x}}_0)$까지 되돌린 뒤</strong> 두 가지 물리 손실을 건다.</p>
+<p>*구면 조화 방향 일관성.* 각 프레임 $k$에서 FOA 인텐시티 벡터(intensity vector, 음의 흐름 방향을 추정하는 고전적 지표)를 계산한다.</p>
+<p>$\hat{\mathbf{I}}_k = [\langle \hat{W}_k \hat{X}_k \rangle, \langle \hat{W}_k \hat{Y}_k \rangle, \langle \hat{W}_k \hat{Z}_k \rangle]^\top$</p>
+<p>이를 목표 단위 방향 $\mathbf{n}_k$와 코사인 정렬시킨다.</p>
+<p>$\mathcal{L}_{\text{dir}} = \frac{1}{K}\sum_{k=1}^{K}\left(1 - \frac{\hat{\mathbf{I}}_k^\top \mathbf{n}_k}{\|\hat{\mathbf{I}}_k\|\|\mathbf{n}_k\| + \varepsilon}\right)$</p>
+<p>*역제곱 거리 일관성.* 전방향 $W$ 채널의 프레임 에너지 $\hat{E}_k = \langle \hat{W}_k^2 \rangle$를 목표 프로파일 $E_k^* = 1/r_k^2$와 비교한다. 절대 음량은 콘텐츠에 따라 달라지므로, 로그를 취하고 평균을 뺀 <strong>정규화된 로그 에너지 모양</strong>만 비교한다($\tilde{u}_k = \log(u_k + \varepsilon) - \frac{1}{K}\sum_j \log(u_j + \varepsilon)$).</p>
+<p>$\mathcal{L}_{\text{dist}} = \frac{1}{K}\sum_{k=1}^{K}(\tilde{\hat{E}}_k - \tilde{E}_k^*)^2$</p>
+<p>최종 목적 함수는 $\mathcal{L} = \mathcal{L}_{\text{mse}} + \lambda_{\text{dir}}\mathcal{L}_{\text{dir}} + \lambda_{\text{dist}}\mathcal{L}_{\text{dist}}$이다.</p>
+<p><strong>구현 세부.</strong> LLM 파서는 Qwen3.5-4B. 생성 백본은 Stable Audio Open을 따르되 VAE를 스테레오에서 4채널 FOA로 바꾸고, DiT는 24층 / hidden 768 / attention head 12. Q-Former 인코더는 입력 160 프레임, query token 16개, hidden 768, head 8, MLP hidden 256. 학습은 AdamW($lr = 1\times10^{-5}$, betas $(0.9, 0.99)$, weight decay $10^{-3}$), 선형 warm-up 후 $1\times10^{-6}$까지 코사인 감쇠, EMA decay 0.9999, classifier-free 조건 드롭아웃 확률 0.1, H100 1장에서 배치 64, bfloat16, 128K 스텝. 물리 손실 가중치는 $\lambda_{\text{dir}} = 1.0$, $\lambda_{\text{dist}} = 0.05$이며, 배치당 8개 샘플에 대해 40 ms 분석 프레임으로 계산하고 학습 시작부터 적용하되 denoising SNR로 가중한다. VAE는 RTX 3090 2장, 배치 12, 120K 스텝.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">평가 지표</h4>
+<ul>
+<li><strong>오디오 품질</strong>: FD, FAD$_\text{CLAP}$, CLAP score, KL, IS. 표준 text-to-audio 지표는 단일 채널용이므로 FOA의 전방향 $W$ 채널에서 계산한다. FD·IS·KL은 사전학습 PANNs 분류기 기반, FAD$_\text{CLAP}$은 CLAP 임베딩 공간에서 계산.</li>
+<li><strong>공간 충실도(spatial fidelity)</strong>: 인텐시티 벡터에서 프레임별 DoA(Direction of Arrival, 도래 방향)를 추정한 뒤 haversine 공식으로 구면 각도 오차(°)를 잰다. 거리 쪽은 $W$ 채널 에너지를 목표 $1/r_k^2$ 프로파일과 비교해 RMS 오차(InvSqErr, dB)와 피어슨 상관(InvSqCorr)을 보고한다. 무음 프레임의 영향을 막기 위해 $E_k \geq 10^{-3}\max_j E_j$인 활성 프레임만 사용한다.</li>
+</ul>
+<h4 class="subsec">선행 FOA 방법과의 공간 정확도 비교 (Table 2)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>모델</th><th>제어 방식</th><th class="num">Static (°) ↓</th><th class="num">Moving (°) ↓</th></tr></thead><tbody><tr><td>ImmerseDiffusion-D</td><td>Static text</td><td class="num">7.07</td><td class="num">–</td></tr><tr><td>ImmerseDiffusion-P</td><td>Static param.</td><td class="num">2.79</td><td class="num">–</td></tr><tr><td>SonicMotion-D</td><td>Circular text</td><td class="num">20.82</td><td class="num">31.09</td></tr><tr><td>SonicMotion-P</td><td>Circular param.</td><td class="num">2.41</td><td class="num">19.22</td></tr><tr><td><strong>PhysWave</strong></td><td>Text + Waypoints</td><td class="num"><strong>1.73</strong></td><td class="num"><strong>5.78</strong></td></tr></tbody></table></div>
+<p>공식 구현이 공개되지 않아 두 방법을 재현해 동일 프로토콜로 평가했다. 움직이는 음원에서 격차가 특히 크다 — SonicMotion은 서술형 조건에서 31.09°, 파라메트릭 조건에서도 19.22°인데 PhysWave는 5.78°다. 정적 음원에서도 1.73°로 가장 낮다. <strong>&quot;자연어로 편하게 쓰면서도 파라메트릭보다 정확하다&quot;</strong>가 이 표의 메시지다.</p>
+<h4 class="subsec">오디오 품질 ($W$ 채널, Table 3)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>모델</th><th class="num">FD ↓</th><th class="num">FAD$_\text{CLAP}$ ↓</th><th class="num">CLAP ↑</th><th class="num">KL ↓</th><th class="num">IS ↑</th></tr></thead><tbody><tr><td>AudioLDM</td><td class="num">31.67</td><td class="num">0.33</td><td class="num">0.33</td><td class="num">2.37</td><td class="num">6.96</td></tr><tr><td>AudioLDM 2</td><td class="num">24.13</td><td class="num">0.12</td><td class="num">0.33</td><td class="num">2.11</td><td class="num">8.62</td></tr><tr><td>Make-An-Audio</td><td class="num">15.44</td><td class="num">0.11</td><td class="num">0.37</td><td class="num">1.93</td><td class="num">8.79</td></tr><tr><td>Make-An-Audio 2</td><td class="num">13.86</td><td class="num">0.14</td><td class="num">0.40</td><td class="num">1.73</td><td class="num">10.85</td></tr><tr><td>Stable Audio Open</td><td class="num">30.84</td><td class="num">0.31</td><td class="num">0.30</td><td class="num">2.30</td><td class="num">11.09</td></tr><tr><td>ImmerseDiffusion</td><td class="num">20.45</td><td class="num">0.14</td><td class="num">0.35</td><td class="num">1.66</td><td class="num">9.55</td></tr><tr><td>SonicMotion</td><td class="num">24.80</td><td class="num">0.26</td><td class="num">0.32</td><td class="num">1.88</td><td class="num">8.55</td></tr><tr><td><strong>PhysWave</strong></td><td class="num">21.22</td><td class="num">0.21</td><td class="num">0.33</td><td class="num"><strong>1.66</strong></td><td class="num">8.31</td></tr></tbody></table></div>
+<p>모노 baseline들은 FOA를 못 만들기 때문에, 같은 궤적 조건 렌더링 파이프라인으로 공간화한 뒤 비교했다. PhysWave는 KL에서 최고(1.66)이고 나머지 지표는 강한 모노 baseline들과 비슷한 수준을 유지한다. Make-An-Audio 2가 FD·CLAP·IS에서 더 좋지만 이 모델은 공간 제어 능력이 없다. <strong>공간 제어를 추가하면서 콘텐츠 품질을 희생하지 않았다</strong>는 것이 요지다.</p>
+<h4 class="subsec">절제 실험 (Table 1)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>변형</th><th class="num">FD ↓</th><th class="num">FAD$_\text{CLAP}$ ↓</th><th class="num">CLAP ↑</th><th class="num">KL ↓</th><th class="num">IS ↑</th><th class="num">Static (°) ↓</th><th class="num">Moving (°) ↓</th><th class="num">InvSq Err. (dB) ↓</th><th class="num">InvSq Corr. ↑</th></tr></thead><tbody><tr><td>Trajectory text (웨이포인트 대신 궤적 서술문)</td><td class="num">23.13</td><td class="num">0.20</td><td class="num">0.32</td><td class="num">1.74</td><td class="num">8.05</td><td class="num">7.33</td><td class="num">17.62</td><td class="num">4.59</td><td class="num">0.62</td></tr><tr><td>PhysWave (물리 손실 없음)</td><td class="num">21.92</td><td class="num">0.20</td><td class="num">0.33</td><td class="num">1.69</td><td class="num">8.22</td><td class="num">2.05</td><td class="num">6.50</td><td class="num">5.15</td><td class="num">0.48</td></tr><tr><td>PhysWave (w/o $\mathcal{L}_{\text{dist}}$)</td><td class="num">21.79</td><td class="num">0.20</td><td class="num">0.33</td><td class="num">1.68</td><td class="num">8.15</td><td class="num">1.75</td><td class="num">4.81</td><td class="num">4.79</td><td class="num">0.59</td></tr><tr><td>PhysWave (w/o $\mathcal{L}_{\text{dir}}$)</td><td class="num">21.34</td><td class="num">0.20</td><td class="num">0.33</td><td class="num">1.67</td><td class="num">8.25</td><td class="num">2.47</td><td class="num">6.60</td><td class="num">3.78</td><td class="num">0.74</td></tr><tr><td><strong>PhysWave (전체)</strong></td><td class="num"><strong>21.22</strong></td><td class="num">0.21</td><td class="num">0.33</td><td class="num"><strong>1.66</strong></td><td class="num"><strong>8.31</strong></td><td class="num"><strong>1.73</strong></td><td class="num"><strong>4.65</strong></td><td class="num">4.06</td><td class="num">0.73</td></tr></tbody></table></div>
+<p>읽어야 할 세 가지:</p>
+<ol>
+<li><strong>웨이포인트 조건화가 결정적이다.</strong> 궤적을 상세한 자연어로 바꿔 넣기만 해도 static 오차가 2.05° → 7.33°, moving 오차가 6.50° → 17.62°로 급증한다. 자유 형식 텍스트는 방향·거리·시간 변화를 정밀하게 지정하기에 부족하다는 뜻이다. 다만 LLM 파서가 사용자 텍스트와 구조화된 웨이포인트 사이의 다리를 놓아주므로 사용성은 유지된다.</li>
+<li><strong>두 물리 손실은 서로 다른 축을 담당한다.</strong> $\mathcal{L}_{\text{dir}}$은 각도 오차를 낮추고(moving 6.50° → 4.81°, static 2.05° → 1.75°) 역제곱 지표에는 별 영향이 없다. $\mathcal{L}_{\text{dist}}$는 거리 일관성을 담당해 InvSq Corr.을 0.48 → 0.74로, InvSq Err.을 5.15 dB → 3.78 dB로 개선한다. 둘 다 넣은 전체 모델이 각도(static 1.73°, moving 4.65°)에서 최고이고 거리도 강하다(InvSq Corr. 0.73).</li>
+<li><strong>품질이 희생되지 않는다.</strong> 변형들 사이에서 FD·CLAP·KL·IS가 거의 흔들리지 않는다. 보조 물리 손실이 공간 충실도만 골라서 올린다는 증거다.</li>
+</ol>
+<p>(참고: Table 2의 moving 5.78°와 Table 1의 4.65°는 테스트 세트가 다르다 — 전자는 SonicMotion과 맞춘 원형 모션 세트, 후자는 절제 실험용 전체 이동 세트.)</p>
+<h4 class="subsec">LLM 파서 비교 (Table 4)</h4>
+<p>GPT-4o를 judge로 써서 200개 공간 캡션에 대해 1–5점 척도로 평가했다(temperature 0).</p>
+<div class="tbl-wrap"><table><thead><tr><th>파서</th><th>Spatial Faithfulness ↑</th><th>Semantic Preservation ↑</th></tr></thead><tbody><tr><td>Qwen3.5-0.8B</td><td>1.89 ± 0.20</td><td>3.40 ± 0.38</td></tr><tr><td>Llama-3.2-3B-Instruct</td><td>2.40 ± 0.24</td><td>4.18 ± 0.29</td></tr><tr><td><strong>Qwen3.5-4B</strong></td><td><strong>3.88 ± 0.28</strong></td><td><strong>4.72 ± 0.17</strong></td></tr></tbody></table></div>
+<p>파서 규모가 공간 해석 정확도에 크게 영향을 준다. 작은 모델은 음향 내용 보존(semantic preservation)은 어느 정도 하지만 좌표 변환(spatial faithfulness)에서 무너진다.</p>
+<h4 class="subsec">주관 평가 (Table 5)</h4>
+<p>실제 녹음/실환경 FOA 100개 클립(STARSS23 등)에 음향 이벤트와 궤적을 수동 라벨링해 조건으로 주고, 참가자 14명이 1–5점으로 평가했다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>소스</th><th class="num">MOS-Event ↑</th><th class="num">MOS-Trajectory ↑</th><th class="num">MOS-Realism ↑</th></tr></thead><tbody><tr><td>실제 FOA 녹음 (상한 참조)</td><td class="num">4.89</td><td class="num">4.56</td><td class="num">4.79</td></tr><tr><td>AudioLDM2</td><td class="num">2.70</td><td class="num">2.07</td><td class="num">2.07</td></tr><tr><td>Stable Audio Open</td><td class="num">3.40</td><td class="num">2.21</td><td class="num">2.51</td></tr><tr><td><strong>PhysWave</strong></td><td class="num"><strong>4.32</strong></td><td class="num"><strong>3.90</strong></td><td class="num"><strong>3.48</strong></td></tr></tbody></table></div>
+<p>특히 MOS-Trajectory(공간 궤적 일치도)에서 baseline 대비 격차가 크다(3.90 vs 2.07/2.21). 다만 realism(3.48)은 실제 녹음(4.79)과 여전히 상당한 차이가 있다.</p>
+<h4 class="subsec">추론 시 물리 가이던스 (Figure 4)</h4>
+<p>학습된 모델을 건드리지 않고, 선택한 denoising 스텝에서 $\mathcal{L}_{\text{dir}}$과 $\mathcal{L}_{\text{dist}}$의 gradient로 샘플을 밀어주는 방식이다. 가이던스 스케일이 커질수록 static/moving 각도 오차가 줄고 InvSq Corr.이 올라가며, 특히 물리 손실 없이 학습한 모델(&quot;w/o physics&quot;)에서 개선 폭이 크다. 반대급부로 FAD$_\text{CLAP}$이 완만히 증가해 <strong>공간 보정과 오디오 품질 사이의 트레이드오프</strong>가 존재한다. 이 결과의 의의는 크다 — 같은 미분 가능 prior가 학습 목표이자 추론 시 제어 손잡이로 이중 역할을 한다는 뜻이고, 이미 학습된 FOA 생성 모델에 재학습 없이 얹을 수 있다.</p>
+<h4 class="subsec">부가 결과</h4>
+<ul>
+<li><strong>FOA VAE 재구성 품질 (Table 9)</strong>: STFT 1.44, Mel 1.11, L1($\theta$) 0.87°, L1($\phi$) 1.45°, $\Delta_\text{angle}$ 1.92°. 방향 손실을 VAE 학습에 넣은 덕에 latent 압축 단계에서 이미 공간 구조가 거의 보존된다. 다만 이 1.92°가 전체 파이프라인의 실질적 하한선 역할을 한다는 점도 읽힌다(최종 static 오차 1.73°가 이 값과 같은 자릿수).</li>
+<li><strong>정성 결과 (Figure 3, 8, 9)</strong>: 물리 손실 없이 학습하면 생성된 궤적이 목표 움직임을 대략만 따라가고 특히 정적 정위와 원형 모션에서 눈에 띄게 흔들린다. 전체 모델은 네 가지 모션 패밀리 전반에서 GT에 더 잘 붙는다. Figure 9는 로그 에너지 포락선이 목표 역제곱 프로파일을 더 잘 따라감을 보여준다.</li>
+</ul>
+<h4 class="subsec">연구 의의</h4>
+<p>한마디로, <strong>&quot;아는 물리는 데이터로 배우게 두지 말고 손실로 넣어라&quot;</strong>를 공간 음향 생성에 적용해 확실한 이득을 보였다. 게다가 그 물리 prior가 (1) 학습 정규화, (2) 조건 특징 설계($1/r^2$, 단위 벡터 형태로 주입), (3) 추론 시 gradient guidance라는 세 지점에서 모두 재활용된다는 점이 설계적으로 깔끔하다. 사용성 측면에서는 자연어와 정밀 궤적 제어를 배타적 모드가 아닌 하나의 표현으로 합쳐, 사용자가 대충 말해도 되고 필요하면 숫자를 직접 고칠 수도 있게 했다. 300K 클립 규모의 동적 FOA 데이터셋도 후속 연구 자산이다.</p>
+<h3 class="sec">한계</h3>
+<p><strong>논문이 스스로 밝힌 한계 (Limitations 절):</strong></p>
+<ul>
+<li><strong>단일 음원, 자유장(free-field) 가정.</strong> 현재는 하나의 음원 궤적 제어에 한정되며, 직접 경로(direct-path) 시뮬레이션만 사용한다. 잔향(reverberation), 차폐(occlusion), 다중 경로(multi-path) 전파 같은 실내 음향 효과를 모델링하지 않는다. 다중 음원 장면과 현실적 실내 음향으로의 확장이 향후 과제다.</li>
+</ul>
+<p><strong>명백히 드러나는 추가 한계:</strong></p>
+<ul>
+<li><strong>학습·평가가 대부분 합성 데이터.</strong> FOA는 모노 클립을 물리 공식으로 렌더링해 만든 것이라, 물리 손실이 강제하는 관계식과 데이터 생성 규칙이 정확히 같다. 즉 &quot;물리 prior가 잘 맞는다&quot;는 결과에는 어느 정도 순환성이 있다. 주관 평가만이 실제 녹음 기반 조건을 썼고, 거기서 realism은 3.48(실제 4.79) 수준이다.</li>
+<li><strong>CLAP 필터로 걸러낸 단일 지배 음원 위주 데이터.</strong> 실제 장면에 흔한 중첩 이벤트는 학습 분포에서 배제됐다.</li>
+<li><strong>baseline 재현 의존.</strong> ImmerseDiffusion과 SonicMotion의 공식 구현이 없어 저자들이 재현한 결과와 비교했다. 재현 품질이 수치에 영향을 줄 수 있다.</li>
+<li><strong>추론 가이던스의 트레이드오프.</strong> 공간 정확도를 올리면 FAD$_\text{CLAP}$이 나빠진다. 스케일을 어떻게 고를지는 여전히 수동 튜닝 영역이다.</li>
+<li><strong>파서가 병목.</strong> 최상위 파서(Qwen3.5-4B)도 spatial faithfulness 3.88/5에 그친다. 즉 자연어 경로에서는 모델 자체가 완벽해도 파싱 오류가 최종 공간 정확도의 상한을 깎는다. 또 파서는 얼려 쓰므로 생성 모델과 함께 최적화되지 않는다.</li>
+<li><strong>고정된 길이·해상도.</strong> 10초, 16 kHz, $M = 10$ 웨이포인트로 고정되어 있고 FOA도 1차(first-order)까지다. 고차 앰비소닉스(HOA)로 가면 채널 간 관계식이 훨씬 복잡해진다.</li>
+<li><strong>평가 지표의 한계.</strong> 오디오 품질 지표를 $W$ 채널에서만 계산하므로 방향 채널의 아티팩트는 객관 지표에 잡히지 않는다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Spatial Audio 관점.</strong> 이 논문의 가장 이식성 높은 부분은 모델 구조가 아니라 <strong>미분 가능한 음향 prior</strong>다. 인텐시티 벡터 $[\langle WX\rangle, \langle WY\rangle, \langle WZ\rangle]$와 목표 방향의 코사인 정렬, 그리고 정규화된 로그 에너지와 $1/r^2$의 MSE — 둘 다 구현이 매우 단순하고, FOA를 출력하거나 FOA에 조건을 거는 어떤 파이프라인에도 붙일 수 있다. 특히 &quot;학습 없이 추론 시 gradient guidance로도 쓸 수 있다&quot;는 결과는, 이미 가진 공간 오디오 생성/변환 모델을 재학습 없이 보정할 수 있다는 실용적 의미다. FOA VAE를 학습할 때 $\mathcal{L}_{\text{dir}}$을 넣어 latent 압축 단계부터 공간 구조를 보존한 설계도 참고할 만하다(재구성 각도 오차 1.92°).</p>
+<p>평가 프로토콜도 그대로 가져다 쓸 수 있다 — DoA 각도 오차(haversine), InvSqErr/InvSqCorr, 그리고 무음 구간을 배제하는 에너지 게이트($E_k \geq 10^{-3}\max_j E_j$)는 &quot;공간 정확도&quot;를 정량화하려는 어떤 연구에도 필요한 도구다. 지금까지 공간 오디오 평가가 각도 오차에 편중돼 있었다면, <strong>거리 일관성을 독립 지표로 분리</strong>한 점이 새롭다.</p>
+<p><strong>Egocentric Vision 관점.</strong> PhysWave의 궤적은 처음부터 <strong>청자 상대(listener-relative)</strong> 좌표 $(\theta(t), \phi(t), r(t))$로 정의된다. 이는 에고센트릭 비전의 카메라 중심 좌표계와 정확히 같은 프레임이다. 즉 1인칭 영상에서 추정한 물체의 방위·거리 궤적을 그대로 웨이포인트 조건으로 변환할 수 있는 구조다. 현재 PhysWave는 텍스트만 받지만, 조건 경로가 이미 &quot;텍스트 토큰 + 웨이포인트 토큰 + 시간 토큰&quot;으로 모듈화돼 있어 웨이포인트를 시각 추적 결과로 대체하거나, 텍스트 토큰 자리에 비주얼 토큰을 추가하는 확장이 자연스럽다. 논문이 Table 6에서 ViSAGe(영상→FOA)와 OmniAudio(360도 영상→FOA)를 비교 대상에 올려둔 것도 이 접점을 의식한 배치다. 다만 이들 영상 기반 방법에는 physics-guided 항목이 ✗로 표시되어 있다 — <strong>영상 조건 공간 음향 생성에 물리 prior를 결합하는 자리는 아직 비어 있다.</strong></p>
+<p>또한 에고센트릭 영상에서는 착용자가 움직이므로 음원의 상대 궤적이 착용자 자체 움직임(head/body motion)과 얽힌다. PhysWave가 다루는 네 모션 패밀리(정적/선형 통과/원형/접근-후퇴)는 사실 착용자가 고정 음원 주변을 돌거나 다가갈 때 생기는 상대 궤적과 같은 형태여서, 에고모션 기반 공간 음향 합성의 기초 블록으로 쓸 수 있다.</p>
+<p><strong>Hand-Object Interaction 관점.</strong> 직접적 연결은 약하지만 두 지점이 있다. 첫째, HOI에서 발생하는 접촉음(충돌, 마찰, 파지)은 <strong>손의 3D 위치가 곧 음원 위치</strong>다. 손 궤적 추정 결과를 웨이포인트로 변환하면, 접촉 이벤트에 물리적으로 일관된 공간 음향을 입히는 파이프라인이 된다. 특히 손은 대개 착용자 근거리(0.3~0.8 m)에 있어 $1/r^2$ 감쇠가 급격하게 변하는 영역인데, PhysWave의 샘플링 범위가 $r \geq 0.5$ m에서 시작한다는 점은 근거리 상호작용에 그대로 쓰기엔 보정이 필요함을 시사한다.</p>
+<p>둘째, <strong>&quot;알려진 물리 관계를 미분 가능 손실로 학습에 주입한다&quot;</strong>는 메타 전략 자체가 HOI에 옮겨진다. 접촉 제약(contact constraint), 관통 방지(non-penetration), 마찰 원뿔(friction cone) 같은 HOI의 물리 법칙도 미분 가능하게 쓸 수 있고, PhysWave가 보여준 세 가지 활용 지점 — (a) 조건 특징을 물리량 형태로 설계, (b) 학습 목표에 추가, (c) 추론 시 gradient guidance로 재사용 — 이 그대로 대응된다. 특히 (c)는 HOI 생성 모델에서 &quot;학습된 모델을 건드리지 않고 물리 위반을 사후 교정한다&quot;는 형태로 자주 필요한 기능이다.</p>
+<p><strong>공통 시사점.</strong> PhysWave의 &quot;latent에서만 감독하지 말고 디코딩된 신호까지 내려가 물리를 재라&quot;는 설계는, latent diffusion을 쓰는 모든 도메인에서 물리 제약을 걸고 싶을 때 마주치는 문제에 대한 구체적 답이다(얼린 디코더를 통과시키면 gradient가 흐르고, 배치 일부 샘플에만 적용해 비용을 줄이며, denoising SNR로 가중해 노이즈가 큰 스텝에서는 약하게 건다). Egocentric·HOI·Spatial Audio 어디서든 latent 생성 모델에 도메인 물리를 얹으려 할 때 참고할 레시피다.</p>
+  </div>
+</article>
+      <footer>생성: 2026-09-14 15:21 · 적합성은 abstract로 판단, 요약은 논문 전문 기반 작성</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

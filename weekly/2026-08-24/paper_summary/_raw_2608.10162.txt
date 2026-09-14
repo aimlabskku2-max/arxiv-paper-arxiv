@@ -1,0 +1,1085 @@
+SOURCE: https://arxiv.org/pdf/2608.10162v1  (full text, complete)
+NOTE: The arXiv HTML page (https://arxiv.org/html/2608.10162v1) was also fetched but the
+fetch was truncated partway through Table 2. Figure image URL recovered from the HTML:
+  Figure 1 (architecture): https://arxiv.org/html/2608.10162v1/images/Arch_MAD-HOI.png
+  (HTML figure caption: "Figure 1: MAD-HOI architecture. Left: Our cascaded VAE builds
+   continuous motion latents for object and hand trajectories. Right: Our generation model
+   consists of a masked autoregressive transformer that predicts conditioning signals for a
+   flow-matching head. This module generates motion latents for masked tokens, enabling
+   smooth, text-based HOI generation, completion, infilling and termination.")
+Additional HTML-only detail (Sec. 3): "The VAE reconstructs with penetration in only 2.1% of
+frames and contact in 92.2% frames, against 24.7% and 77.9% of the frames respectively for
+the VQ-VAE."
+================================================================================
+
+https://arxiv.org/pdf/2608.10162v1
+→ https://arxiv.org/pdf/2608.10162v1
+Content-Type: application/pdf
+
+MAD-HOI: Masked Autoregressive Diffusion for Generating Articulated Hand
+Object Interactions from Text
+Ananya Bal, Kartik Sharma, Ethan Lai, Samyak Tiwari,
+Liza Dahiya, Chaitanya Chawla, László A. Jeni
+Carnegie Mellon University
+Figure 1: Beyond static grasps and atomic rigid-object motions, MAD-HOI supports articulated and composite interactions,
+motion completion and infilling, handedness control, and automatic termination.
+Abstract
+Methods for text-based generation of hand–object interaction (HOI) sequences primarily focus on producing smooth,
+physically plausible trajectories. A truly utilitarian method
+should additionally support variable-length generation, composite motion sequences, motion completion and infilling, and
+reliable termination without compromising physical plausibility. Standard diffusion models for HOI generation are typically
+trained only for text-to-motion generation on atomic motions
+and require the motion length to be specified a priori. Autoregressive (AR) methods provide greater sequence-level flexibility, but commonly depend on discrete motion codes, which
+can lose contact-sensitive motion detail.
+To address these key limitations, we present a model performing Masked Autoregression with Diffusion for HOI generation (MAD-HOI). Our method starts by encoding hand and
+object motions in a continuous latent space while keeping
+them disentangled to maintain stream-wise control. This is
+followed by a masked autoregressive transformer to predict
+context features that condition a flow-matching head. MADHOI is capable of motion generation for atomic and composite
+articulated sequences, conditioned motion completion and infilling, as well as EOM (End of Motion) prediction from a
+single training objective.
+We provide comprehensive evaluations for these capabilities and benchmark our method on the ARCTIC and GRAB
+datasets. Our experiments demonstrate that our method generates more diverse and physically plausible interactions compared to other open-sourced baseline methods.
+1 Introduction
+Hand manipulation is a fundamental human motor skills
+(Cheng et al. 2023), and offers a powerful lens into action
+understanding (Liu et al. 2024). The ability to predict its
+underlying motions is central to advancing both robotic manipulation (Yang et al. 2025; Singh et al. 2025) and realism
+in virtual reality (Mangalam et al. 2024). Studying hand
+movements for object manipulation through the lens of 3D
+computer vision is commonly referred to as Hand Object
+Interaction (HOI). In this paper, we focus on a specific HOI
+task - Generation of Hand and Object Motions from Text
+inputs. In particular, we assume that object geometry and its
+arXiv:2608.10162v1 [cs.CV] 10 Aug 2026
+articulating segments are known, and that the intent of the
+interaction is provided via language instruction.
+Diffusion-based (Sohl-Dickstein et al. 2015) HOI generation methods Text2HOI (Cha et al. 2024) , DiffH2O (Christen et al. 2024), LatentHOI(Li et al. 2025a) produce smooth,
+realistic motions but are structurally ’atomic’: the absence
+of a strong long-horizon motion prior restricts these approaches to short indivisible movement primitives. Moreover, sequence lengths must be provided by a separate predictor (Text2HOI) or by the user (DiffH2O, LatentHOI).With
+these methods, generating longer composite sequences from
+chained instructions is undefined, and trajectories for both
+hands are generated at all times, with the unused hand masked
+post-hoc for single-hand prompts.
+A complementary line of work (Jiang et al. 2023; Huang
+et al. 2025) offers exactly the missing controls, but pays for
+them in motion quality. These methods use vector quantization (VQ) to represent motion as discrete tokens and introduce these tokens to an LLM as a ‘new language’. They
+gain variable-length generation, completion, and composition through next-token prediction, and termination from the
+standard EOS (End of Sequence) token. However, quantizing
+contact-critical motion is destructive: in our tokenizer comparison study (Sec. 3), reconstruction from discrete tokens
+through a VQ-VAE has much higher penetration and lower
+contact than with continuous latents from our VAE, and produces visibly spikier jerk profiles (see supplementary). The
+information lost at tokenization caps the quality of everything
+generated downstream.
+We address this trade-off with a framework that retains
+the compositional and variable-length benefits of AR modeling while maintaining a continuous motion representation.
+Our method employs the Masked Autoregressive Diffusion
+paradigm for text to HOI sequence generation, and is hence
+named MAD-HOI. We make certain design choices to enable additional capabilities and maximize the expressivity
+and text-alignment of generated motions.
+We begin by encoding the object, left-hand, and right-hand
+motions into disentangled continuous latent streams through
+a Variational Autoencoder (VAE). The VAE is cascaded to
+condition hand motions on object trajectories and is supervised with contact-aware geometric losses. We then train a
+bidirectional masked autoregressive transformer to predict
+conditioning signals for a flow-matching head that generates
+motion latents. This generator is designed to respect the individual motion streams as separate modalities and predict
+EOM tokens. Through a single training objective of masked
+conditional flow matching, and without task-specific heads
+or post-processing, MAD-HOI learns to respect handedness
+in text and generate the respective motion streams, complete and infill motion sequences smoothly, generate longerhorizon composite motions and predict automatic termination, as seen in (Tab. 1).
+Our contributions are summarized as follows:
+• We demonstrate that continuous motion latents yield
+smoother reconstructions than discrete VQ tokens, and
+propose a cascaded VAE that encodes short temporal sequences into a structured and disentangled latent space.
+• We show that combining our latent structure with a
+Masked Autoregressive Diffusion model provides a set
+of capabilities no existing diffusion HOI method has:
+targeted handedness with genuinely idle hands, varyinglength composite generation with learned termination,
+conditioned completion, and infilling.
+• We present comprehensive evaluations and further evaluate text-motion alignment with a protocol wherein the
+motion evaluator encodes object motion and articulation
+alongside hand motion, unlike prior protocols that consider hand motion only.
+2 Related Works
+Diffusion. Diffusion models generate continuous data by
+reversing a progressive noising process (Sohl-Dickstein et al.
+2015; Ho, Jain, and Abbeel 2020), while flow-matching and
+stochastic-interpolant formulations such as SiT (Ma et al.
+2024) learn continuous transport paths between noise and
+data. Recent methods combine diffusion with sequence modeling: Diffusion Forcing (Chen et al. 2024) assigns different
+noise levels across causal sequence tokens, whereas MAR (Li
+et al. 2024) models masked continuous tokens using diffusion. These works have been adapted to motion generation.
+Full-body motion generation. Diffusion-based methods
+such as MDM (Tevet et al. 2023), MotionDiffuse (Zhang
+et al. 2024a), and MLD (Chen et al. 2023) model continuous
+action- or text-conditioned trajectories and generate smooth,
+diverse motions. In parallel, TM2T (Guo et al. 2022b), T2MGPT (Zhang et al. 2023), MotionGPT (Jiang et al. 2023),
+and MoMask (Guo et al. 2024) represent motion using discrete VQ tokens, enabling flexible sequence modeling at
+the cost of quantization. PriorMDM (Shafir et al. 2024) further demonstrates diffusion-based long-duration and spatiotemporal composition, while MARDM (Meng et al. 2025)
+and MoMADiff (Zhang et al. 2025b) combine continuous
+diffusion with masked autoregressive generation.
+Hand–object interaction generation. In full-body HOI,
+OOD-HOI (Zhang et al. 2024b) uses reciprocal diffusion
+and contact-guided refinement for unseen-object and unseenaction generalization; and GenHOI (Li et al. 2025b) reconstructs sparse interaction keyframes before synthesizing temporally coherent 4D sequences with contact-aware diffusion.
+ARDHOI (Geng et al. 2025) is particularly relevant because
+it combines continuous HOI representations with causal autoregressive diffusion. However, its next-token formulation
+is naturally suited to forward generation, whereas masked
+bidirectional prediction more naturally accommodates completion and infilling. It also does not explicitly separate object
+and per-hand streams for asymmetric control.
+Diffusion-based methods for fine-grained hands-only
+HOI generation typically involve multiple stages, limited
+sequence-level controllability, and externally supplied motion lengths. Text2HOI (Cha et al. 2024) first predicts contact maps and then generates motion conditioned on them
+through diffusion, followed by a penetration-reduction refiner. DiffH2O (Christen et al. 2024) separates grasping and
+interaction into two diffusion stages and represents motion
+Capability
+Text2HOI
+DiffH2OLatentHOI
+OpenHOI
+HOIGPTMAD-HOI
+Continuous Repr. ✓ ✓ ✓ ✓ ✗ ✓
+Motion Generation ✓ ✓ ✓ ✓ ✓ ✓
+Auto-stop ✗ ✗ ✗ ✗ ✓ ✓
+Motion Completion ✗ ✓ ✓ ✗ ✓ ✓
+Motion Infilling ✗ ✗ ✗ ✗ ✓ ✓
+Composite Motion ✗ ✗ ✗ ✓ ✓ ✓
+Captioning ✗ ✗ ✗ ✗ ✓ ✗
+Table 1: Capability comparison of MAD-HOI with relevant
+baselines (determined from their papers and public code.)
+in an object-centered coordinate frame. LatentHOI (Li et al.
+2025a) similarly adopts an object-centered representation
+and factorizes generation into latent wrist trajectories and
+hand-pose decoding. These decompositions can aid unseenobject generalization, but introduce specialized stages and
+primarily target atomic interactions whose duration must be
+supplied or separately predicted. They also generate both
+hand trajectories irrespective of handedness, requiring the
+unused hand to be suppressed after generation rather than
+modeled as part of the output distribution. OpenHOI (Zhang
+et al. 2025c) extends a Text2HOI-style generator with multimodal affordance reasoning, physics-based refinement, and
+a separate post-hoc module for compositing atomic motions.
+Autoregressive approaches provide stronger sequencelevel flexibility. HOIGPT (Huang et al. 2025) discretizes
+hand and object trajectories into VQ-VAE codes and trains
+a language model over motion and text tokens, naturally
+supporting variable-length generation, completion, and compositional sequencing. Its capabilities, however, depend on
+quantized motion representations, which can discard finegrained kinematic and contact information. MAD-HOI instead retains continuous motion latents while explicitly structuring the sequence into object, left-hand, and right-hand
+streams. This representation allows the model to generate
+asymmetric bimanual interactions, represent inactive hands
+directly, and predict the termination of each modality without
+post-hoc masking or an external length predictor.
+3 Tokenization: Discrete vs Continuous
+Autoregressive modeling operates on a tokenized latent
+space, and the tokenizer bounds the quality of downstream
+generations. VQVAE-based methods (Jiang et al. 2023;
+Huang et al. 2025) encode motion into discrete codebooks
+and train an LLM to predict the code indices; we argue that
+discretization loses information HOI cannot afford to lose, as
+small quantization errors in wrist pose or finger articulation
+translate directly into penetration, broken contact and jitter.
+To demonstrate this, we train our VAE and an equivalent
+VQVAE architecture (similar to (Huang et al. 2025)) and
+compare their reconstructions, measuring penetration and
+contact percentages following (Zhang et al. 2025a) and, following (Cho et al. 2025), jerk profiles (the third derivative of
+position, which exposes high-frequency jitter that mean errors hide; plots presented in the supplementary material. The
+VAE reconstructs with penetration in only 2.1% of frames
+and contact in 92.2% frames, against 24.7% and 77.9%
+of the frames respectively for the VQ-VAE. And the jerk
+profiles show that the VAE tracks the ground truth closely
+and produces less jerky (jittery) motion, especially when it
+comes to reconstructing the longer tail of static hands. This
+motivates continuous motion latents over discrete motion
+tokens for autoregressive HOI generation.
+4 Method
+MAD-HOI first uses a cascaded variational autoencoder (left
+in Fig. 2) to create motion latents for object and hand trajectories. These motion latents then undergo masking before
+being passed to the autoregressive diffusion generator of our
+framework (right in Fig. 2), which consists of a masked autoregressive transformer producing conditions for the diffusion head at masked positions. Our method derives its capabilities from two streams - 1. The bidirectional autoregressive
+model with iterative masked denoising allows the generator
+to look at the full unmasked temporal context while generating each motion latent, giving rise to conditioned completion
+and infilling (depending on the masking). 2. Our VAE with
+its disentangled the latent structure enables modality control and stream-wise generation/completion/infilling which
+improves ’handedness’. It further learns ’idle hand’ latents
+which enable the generator to get the right context for predicting EOM and therefore, termination.
+Data: We focus on motion datasets that capture onehanded and bimanual object interactions in 4D. GRAB
+(Taheri et al. 2020) captures full-body sequences with rigid
+objects, of which we use only the hand interaction data; ARCTIC (Fan et al. 2023) consists of single-joint articulating objects. With the preprocessing protocol and text annotations
+from (Cha et al. 2024), GRAB has 1.6k motion sequences
+for 51 objects and ARCTIC 4.6k atomic sequences spanning
+11 objects; this difference in trajectories per object prompts
+us to maintain separate experiments for the two datasets.
+The object trajectory is represented as a list of global
+poses O = (T
+t
+o
+, Rt
+o
+, αt
+o
+), where To is the normalized global
+3D location of the object center, Ro its 6D rotation, αo an optional articulation value for articulated objects, and t the time
+frame. Hand poses are based on MANO (Romero, Tzionas,
+and Black 2017): each hand’s trajectory is H = (τ
+t
+h
+, ϕt
+h
+),
+with τh the normalized global 3D wrist position and ϕh the
+6D rotations of the wrist and the other 15 MANO joints, plus
+a binary left/right identifier appended separately.
+4.1 Variational Autoencoder
+To enable modality control in generation, our tokenizer must
+keep the the three motion modalities (object, left hand and
+right hand) as separate latent streams. Following prior works
+(Jiang et al. 2023; Meng et al. 2025; Huang et al. 2025),
+we use 1D conv + resnet blocks in the encoders and decoders of our cascaded VAE. We encode the object motion
+and the hand motions through different branches. We further
+recognize that hand motions depend heavily on the object
+motion and therefore design a cascaded network structure
+Figure 2: MAD-HOI architecture. Left: Our cascaded VAE builds continuous motion latents for object and hand trajectories. Right: Our generation model consists of a masked autoregressive transformer that predicts conditioning signals for a
+flow-matching head. This module generates motion latents for masked tokens, enabling smooth, text-based HOI generation,
+completion, infilling and termination.
+that decodes hands conditioned on the decoded object motion. Object branch: The object encoder encodes O into a
+512-dimensional latent zo, and the object decoder receives
+pointnet features from a canonical object point cloud, which
+are concatenated with zo to reconstruct object trajectories.
+Hand branch: The hand encoder and decoder maintain
+one set of weights to separately process two streams of input,
+Hlef t and Hright, latents zl and zr for the left and right hands
+respectively. This enables co-learning and efficiently embeds
+both hand motion streams into a shared latent space while
+keeping them differentiated through an identifier value. The
+object latent zo is concatenated with zl and zr and passed to
+the hand decoder to jointly decode the full HOI sequence. The
+hand decoder also applies the reconstructed O as conditions
+through a FiLM layer (Perez et al. 2018).
+In addition to the motion reconstruction objective, we force
+our VAE to reconstruct static poses over short horizons as
+’idle latents’. We do this to have hand inactivity represented
+by static (or ’idle’) poses. See Sec. 4.2 for the use.
+Each encoder predicts a posterior mean and variance, and
+in the generator training, motion latents are drawn with the
+reparameterization trick, z = µ + σϵ with ϵ ∼ N (0, I). A
+KL-divergence loss regularizes each posterior toward a unit
+Gaussian.
+This regularization matters downstream: the flowmatching head of our generator regresses velocities toward
+samples from this latent space, and a bounded, smoothly
+populated space is a more stable regression target than the
+unconstrained latents of a deterministic autoencoder.
+We use a window length of 152 frames with a 4-frames-to1-latent temporal compression throughout, giving at most 38
+latents per modality (see Fig. 2 for the architecture). The latents are 512 dimensional. The VAE is trained to reconstruct
+HOI sequences with L1 reconstruction loss and three geometric losses (definitions in the supplementary): a contact
+loss LC penalizing hand joints that stray beyond a threshold distance ϕ from the object surface, a penetration loss
+Lpen penalizing hand vertices inside the object mesh, and
+a distance map loss LDM (Liang et al. 2024) aligning predicted and ground-truth joint-to-object distance maps in nearcontact regions. The total loss combines L1 losses over the
+translation and rotation components of the object and hand
+trajectories with the geometric losses and the KL term.
+L = αLrec + βLC + γLpen + δLDM + λLKL (1)
+4.2 Autoregressive Diffusion
+Unlike diffusion models, autoregressive models factorize
+the conditional likelihood of a sequence, p(x
+1:n | c), into
+chained conditionals p(x
+i
+| x
+<i, c), generating each token
+conditioned on the previously generated tokens and the input
+condition (c). Extending diffusion models for AR prediction
+with an MSE objective over ϵθ or x0 collapses the generation
+task into simple regression with gaussian probability, failing to model the chained conditional probabilities that define
+p(x
+1:n|c) in true autoregressive generation. Recent advances
+in image generation (Li et al. 2024) highlight the promise
+of continuous autoregressive generation, where logits from
+an AR model are used as conditioning signals for a continuous sampling network to better approximate underlying data
+likelihoods with chained probability.
+At each autoregressive iteration in MAD-HOI, interaction
+sequences are encoded into motion latents through the VAE
+and masked through a cosine schedule (Li et al. 2024). The
+unmasked latents form the visible context um, while the
+masked latents m represent the ’tokens’ that must be generated under condition c. Generation proceeds over K unmasking iterations, with mj denoting the subset of masked
+latents generated at iteration j; see Eq. (2)
+p(x
+′
+1:n | c) = YK
+j=1
+p(mj | um, m<j , c). (2)
+Masked Autoregressive Transformer The transformer is
+tasked with capturing the context of time-variant motion data,
+and provide meaningful conditions s for the flow matching
+head. In our case, an interaction sequence encoded with our
+VAE results in three motion latents, zo, zl, zr which are all
+considered as different motion modalities in our framework.
+We refer to this triplet of latents as x and maintain this
+structure per timeframe by interleaving latents from the
+three modalities and attaching one positional encoding to
+each triplet. The latent from each modality also receives its
+own learnable ’modality embedding’. Since our VAE has
+a decoupled latent space for the hands, when the generation branch recognizes that a hand token corresponds to an
+’idle’ hand, it is able to predict latents corresponding to ’idleness’ leading to the ability to understand ’hand use’. While
+Text2HOI, DiffH2O and LatentHOI generate trajectories
+for both hands irrespective of the single-hand text prompt
+and mask the unused hand for visualizations, our method
+actually predicts static poses for unused hands.
+Further, we pad all non-valid frames within our input
+with learnable End of Motion ⟨EOM⟩ tokens, while continuing the interleaved structure. The model learns to associate this token with the long tail of ’idle’ latents and
+predict the end of generation - meaning that we do not
+require an input sequence length for inference. A sample
+input sequence to the generator is given in the supplementary.
+Given the unmasked motion latent sequence um as previously generated motion latents, the masked autoregressive
+transformer g produces conditions s = g(um) for the diffusion branch to generate latents at masked positions m. Our
+transformer uses bidirectional attention (Meng et al. 2025)
+and a single transformer layer (Vaswani et al. 2017) with
+Adaptive Layer Norm (Peebles and Xie 2023). The text caption is fed into the CLIP encoder and integrated into the
+transformer’s latent space through a linear projection.
+Diffusion: The output s from the Masked Autoregressive
+Transformer is fed into the flow matching head as conditions.
+We call this per-token sampler the diffusion head for continuity with (Li et al. 2024; Meng et al. 2025), though its training
+objective is flow matching. An MLP network produces the
+motion latent x
+′i
+at each masked position i by iterating the
+reverse step x
+′ i
+t−1 ∼ p(x
+′ i
+t−1
+| x
+′ i
+t
+, t, si) over timesteps t.
+During the MLP training, k random motion latents are
+masked with a learnable mask vector following the cosine
+masking schedule from MoMask (Guo et al. 2024). The autoregressive model learns to provide accurate signals based
+on the unmasked latents given the timestep and text condition, and the diffusion MLP uses this signal to predict a
+velocity v(x, t). Following SiT (Ma et al. 2024), we corrupt the ground-truth latent x0 along the linear interpolant
+xt = αtx0+σtϵ = (1−t)x0+tϵ, where ϵ is gaussian noise,t
+is the continuous timestep, and α˙ t, σ˙ t denote the time derivatives of the interpolation coefficients (the velocity-field definition is given in the supplementary). We apply the following
+loss over velocity prediction:
+LGB =
+Z T
+0
+Ev,th
+vθ(x
+′ i
+t
+| t, g(um)) − α˙ tx
+′ i
+0 − σ˙ tϵ
+
+
+2
+i
+dt,
+(3)
+At inference, given previous motion latents um, mask
+Method Acc.
+Top-3 ↑
+FID ↓ KID ↓ Div. → Match. ↓
+ARCTIC
+Ground Truth 0.991 – – 20.235 1.295
+Text2HOI 0.926 0.528 0.008 20.110 2.578
+DiffH2O 0.715 1.138 0.025 15.246 9.791
+LatentHOI 0.941 1.053 0.009 20.264 3.325
+OpenHOI 0.946 0.495 0.010 20.159 2.292
+MAD-HOI (Ours) 0.994 0.071 0.004 20.312 1.353
+ARCTIC Ablations
+w/o EOM Pred. 0.928 1.132 0.010 19.467 2.944
+w/o Mod. Tokens 0.542 56.736 0.787 17.641 11.993
+ARCTIC Composite
+Ground Truth 0.890 – – 20.118 3.320
+MAD-HOI (Ours) 0.869 0.142 0.002 20.450 3.693
+GRAB
+Ground Truth 0.939 – – 12.871 3.188
+Text2HOI 0.745 3.661 0.088 13.177 4.941
+DiffH2O 0.838 1.923 0.029 12.250 4.746
+LatentHOI 0.797 5.616 0.146 13.220 4.698
+OpenHOI 0.677 4.502 0.131 12.316 5.429
+MAD-HOI (Ours) 0.993 1.125 0.011 13.218 4.041
+GRAB Ablations
+w/o EOM Pred. 0.940 1.471 0.008 14.321 2.923
+w/o Mod. Tokens 0.737 11.024 0.292 11.330 5.772
+Table 2: Retrieval and generation metrics on ARCTIC and
+GRAB. ↓ indicates lower is better, ↑ indicates higher is better,
+and → indicates closer to ground truth is better. Best non-GT
+result per metric is in bold.
+vectors are added to the latent sequence, allowing the autoregressive model to generate signals for masked positions. The velocity prediction uses ODE sampling over 18
+refinement steps (re-masking), taking Euler steps x
+i
+t−1 =
+x
+i
+t + ∆t · vθ(x
+i
+t
+| t, s i) of size ∆t. The generator architecture is a transformer with single attention block and 16
+heads, followed by the SiT-XL flow matching model.
+4.3 Baselines, Metrics, and Evaluation Protocol
+We consider recent open-sourced methods addressing the
+text-to-motion objective as baselines; some relevant contemporaneous approaches are omitted due to lack of public code.
+Our data preprocessing mirrors the Text2HOI protocol,
+making their available checkpoints valid for our evaluations.
+DiffH2O, assumes a grasping+interaction split, and uses the
+MANO PCA representation with an-object centric coordinate system (as does LatentHOI) leading to motions relative
+to the first frame. We therefore preprocess our data according to their representations, maintain our global coordinate
+system, and train both methods from scratch. OpenHOI inherits Text2HOI’s diffusion generator, however needs to be
+retrained due to mismatch in scales of supervision.
+5 Experiments
+Metrics: For generation, we report Top-3 retrieval Accuracy (R@3), FID, KID, Diversity, and Matching Score, all
+Method Accel↓ Pen.%↓ Con.%↑ NC↑ IV↓ ID↓ CR↑ IVU↓ Phy↑
+ARCTIC
+Ground Truth 0.18 7.86 80.77 74.42 7.41 0.85 13.42 0.13 98.67
+Text2HOI 0.19 22.74 92.90 71.77 7.55 0.94 14.32 0.15 88.99
+DiffH2O 0.64 19.98 91.64 73.33 8.99 1.03 13.05 0.16 93.13
+LatentHOI 0.31 12.37 65.30 57.23 11.24 1.15 12.59 0.18 60.25
+OpenHOI 0.40 20.52 73.58 58.48 9.77 1.05 13.48 0.17 77.90
+MAD-HOI 0.18 12.89 84.47 73.58 7.52 0.94 14.76 0.14 92.65
+GRAB
+Ground Truth 0.31 30.64 95.91 66.52 5.17 2.16 9.45 0.14 99.24
+Text2HOI 0.47 45.11 97.86 53.72 9.97 2.35 13.59 0.19 94.49
+DiffH2O 0.49 31.34 92.71 63.66 8.15 2.51 10.41 0.16 93.20
+LatentHOI 0.74 35.45 85.35 55.09 11.37 2.49 11.26 0.21 79.55
+OpenHOI 0.88 47.11 92.28 48.80 10.76 2.50 12.41 0.20 86.60
+MAD-HOI 0.38 35.35 92.30 59.68 8.06 2.06 12.20 0.15 86.71
+Table 3: Geometric and physical-plausibility metrics (defined
+in Sec. 5). ↓ lower / ↑ higher is better; best non-GT value per
+column in bold, second-best underlined.
+computed in the embedding space of our evaluator over 5 repeats; definitions follow standard practice (Guo et al. 2022a)
+and are detailed in the supplementary. For geometric accuracy, we compute Accel - mean per-vertex acceleration
+magnitude over the MANO mesh (scaled by 100); Penetration % - the percentage of frames where any hand vertex
+penetrates the object by more than 1 cm; Contact % - the
+percentage of frames with a hand vertex within 5 mm of the
+object surface; Net Contact - a tradeoff metric computed as
+C ∗ (1 − P) to reward contact without penetration. We additionally report the fine-grained physical-plausibility suite
+of metrics from LatentHOI (Li et al. 2025a), all evaluated
+per active hand and averaged over the frames in which that
+hand is in contact with the object. Interpenetration Volume
+(IV, cm3) is the volume of hand–object overlap, obtained
+by voxelizing the object at a 5 mm pitch and counting voxel
+centers that fall inside the hand mesh (a thin-shell object
+convention). Interpenetration Depth (ID, cm) is the deepest
+single hand-vertex penetration into the object. Contact Ratio
+(CR, %) is the fraction of hand vertices lying within 5 mm
+of the object surface. Interpenetration-Volume per Unit contact area (IVU, cm3
+/cm2) divides the total interpenetration
+volume by the total contact area, expressing penetration relative to how much of the hand actually contacts the object.
+And finally, Physical plausibility (Phy, %) is the fraction of
+object-moving frames (mean per-vertex object displacement
+> 1 cm between consecutive frames) in which the hand is
+simultaneously in contact, capturing whether the hand drives
+object motion rather than the object drifting on its own.
+For completion and infilling, we report Average and Final
+Displacement Errors ADE and FDE (Yuan and Kitani 2020);
+for EOM prediction, the Median AE in no. of frames (with
+4-frame and 8-frame tolerance variants) over ground truth
+sequence lengths, detailed in the supplementary.
+Evaluation Protocol: For our generation metrics, we adopt
+the feature-based evaluation protocol from (Guo et al.
+2022a), which learns a shared text–motion embedding space
+using separate text and motion encoders. The two branches
+are trained with a margin-based contrastive objective that
+pulls matched text–motion pairs together and pushes mismatched pairs apart. All prior works using this or a similar
+protocol adopt the full-body motion encoder for the hand trajectories only, ignoring object motion and articulation fully.
+Since the object trajectory and articulation are key to the
+’action’ specified in the text, we train the evaluation pipeline
+from scratch to encode motion latents for the hands and the
+object jointly, before minimizing distances between motion
+features and their positive text pairs.
+5.1 Results
+Text-to-Motion Generation We provide qualitative results for all our capabilities in Fig. 3. And we also visualize time-progressing grasps on sequences from ARCTIC
+and GRAB in Fig. 4. Quantitative comparisons with baselines on both metric families are presented in Tab. 2 and
+Tab. 3. MAD-HOI achieves the best retrieval accuracy, FID,
+KID, and Matching Score on both the datasets, trailing only
+in Diversity by a small margin Tab. 2. The gains are most
+signifantly seen in FID for ARCTIC where our method OpenHOI is the second best performing method on ARCTIC while
+DiffH2O is the second best performing method on GRAB.
+When it comes to geometric and physical plausibility metrics (Tab. 3), we note that MAD-HOI performs well on ARCTIC. It has the best performance on 6 out of the 9 metrics,
+coming in second on Physical Plausibility and Penetration
+and Contact %s. We realize that since contact and penetration
+exist in a tradeoff, we compute NC to show a balance between
+the two and here MAD-HOI has the highest NC value. The
+picture is more blurry for GRAB though. MAD-HOI still
+has the smoothest generated motions (with the lowest acceleration and closer to ground truth (GT) as with ARCTIC).
+However, it trails in Contact % and CR. We still outperform
+the baselines in IV, ID and IVU and clock in the second best
+values for Penetration %, NC and physical plausibility.
+Overall, MAD-HOI is the strongest method. It leads in
+retrieval and generative fidelity metrics on both datasets and
+on plauibility metrics, it is the strongest on ARCTIC and
+remains competitive on GRAB. No baseline method outperforms MAD-HOI across both metric families consistently.
+Composite Motion Generation The MAD-HOI generator is trained with bidirectional attention and is pushed to
+predict EOM tokens. This coupled with iterative masked denoising at inference, gives MAD-HOI the ability to generate
+motions of varying lengths within its maximum context window, meaning that it can generate composite motions based
+on chained prompts. We train the MAD-HOI generator on a
+bigger ARCTIC training dataset where we add a few composite motions (up to 4 atomic motions chained). This debiases
+EOM likelihoods from atomic motion lengths and introduces
+words like ’and’ to the generator. Generation metrics from
+(Tab. 3) show that MAD-HOI has minimal quality degradation in such composite generations and is close in quality
+to the ground truth distribution. We omit this experiment
+on GRAB: its sequences are longer leaving very few valid
+testing sequences below the maximum context window.
+Conditioned Completion and Infilling During inference,
+masked out tokens beyond a few starting frames in the se-
+Figure 3: Qualitative results showcasing all capabilities of MAD-HOI.
+ADE ↓ FDE ↓ FID ↓ Diversity ↑
+Task Tokens (#): 1 2 3 4 5 1 2 3 4 5 2 2
+Completion ARCTIC 0.638 0.611 0.618 0.608 0.605 0.811 0.786 0.796 0.737 0.742 0.173 20.325
+GRAB 0.791 0.782 0.759 0.765 0.747 0.995 0.965 1.018 0.931 0.863 1.719 13.010
+Infilling ARCTIC 0.747 0.678 0.646 0.619 0.612 0.792 0.739 0.700 0.671 0.664 0.182 19.2136
+GRAB 0.739 0.586 0.567 0.536 0.505 0.870 0.655 0.615 0.607 0.547 1.931 13.649
+Table 4: Evaluation of conditioned completion and infilling. Lower ADE, FDE, and FID are better, higher Diversity is better.
+quence result in completion, and in the center, result in infilling. Our generation is context-aware, its latent prediction
+is conditioned on whatever input motion is provided. We
+therefore report the ADE and FDE with the closest semantic GT samples rather than raw trajectory errors in meters.
+In (Tab. 4), errors decrease monotonically as more groundtruth latents are provided to the generator as context, as is
+expected. At 2 conditioning latents, completion quality is
+close to atomic generation while infilling is harder, due to
+the stricter constraint of matching context on both sides.
+Sequence Termination with EOM When the MAD-HOI
+generator predicts latents close to the learned EOM token for
+the masked tokens of all 3 modalities, the end of the sequence
+is detected and the trailing frames are discarded. No separate
+length predictor needs to be trained or queried. We compare
+our sequence termination performance indirectly by comparing against the dedicated cVAE length regressor of Text2HOI
+in Tab. 5. The specialist regressor is more accurate on raw
+error, as expected. A single prompt, however, maps to many
+valid durations, so we also evaluate against the [q10, q90] interval of demonstrated lengths per condition: MAD-HOI’s
+predicted endpoints fall inside this valid range for 78.4%
+(ARCTIC) and 70.5% (GRAB) of prompts, and miss it by
+only 2–5 frames on average. Termination thus comes at no
+extra cost to the single generation objective or number of parameters, with modest accuracy against a specialist module.
+Ablation Experiments We ablate the two design decisions
+our capability claims rest on: EOM prediction and the learnable modality embeddings that disentangle the three streams.
+We switch off each individually in our base model and test
+for atomic generations. As seen in (Tab. 2), modality embeddings are necessary for convergence: without them, FID
+degrades from 0.071 to 56.7 on ARCTIC and from 1.125 to
+11.0 on GRAB, and the network cannot learn a usable distribution. Switching off EOM prediction is comparatively mild
+but still costly: FID rises from 0.071 to 1.13 on ARCTIC
+and from 1.125 to 1.47 on GRAB. Thus, learning explicit
+termination does not burden generation and appears to help
+the model organize varying lengths for similar prompts.
+Figure 4: Comparison of time-progressing grasps with baselines. One frame is visualized with a zoom-in to highlight contact
+and penetration in generations across all methods.
+6 Application
+High-fidelity 4D HOI sequences can serve as priors for
+robotic motion by capturing detailed human-object interactions. These sequences provide smooth trajectories with realistic contact events and limited penetration between bodies,
+properties that matter when learning control policies. Furthermore, text-driven generation of these sequences reduces
+the dependence on manually collected human demonstrations, which otherwise require extensive and labor-intensive
+teleoperation setups (Khazatsky et al. 2024; O’Neill et al.
+2024; Qiu et al. 2025). Although an embodiment gap exists between the MANO model and dexterous robot hands,
+we find that our generated sequences can seed a manipulation pipeline. We bridge this gap in multiple stages: first,
+the MANO motion is retargeted to the robot hand using
+keypose-vector optimization (Qin et al. 2023). This target
+motion is then translated to the full robot using Inverse Kinematics. Finally, this reference trajectory is refined using the
+physics-based rewards of DexMachina’s (Mandi et al. 2025)
+functional retargeting pipeline to produce a fine-tuned policy.
+Fig. 5 shows a robot trajectory, with motion retargeted from
+our generated sequence to the Unitree G1 robot with Inspire
+hands. The resulting trajectory preserves realistic contact and
+grasp transitions, indicating that our generated motions can
+serve as reference priors for robotic manipulation.
+7 Conclusion
+We present MAD-HOI, a masked autoregressive generation
+framework that produces single-handed and bimanual, articulated HOI sequences from text. It is further able to generate
+composite motions, complete and infill motions with minimal degradation in quality. The unique structure of the continuous latent space from our VAE leads to stream-wise control and enables learning end-of-motion, which in turn imARCTIC GRAB
+Metric
+Text2HOI
+cVAE
+MAD-HOI
+(Ours)
+Text2HOI
+cVAE
+MAD-HOI
+(Ours)
+MAE ↓ 7.92 12.23 14.75 20.43
+MedAE ↓ 5.00 8.00 11.20 14.40
+Within-4 (%) ↑ 44.2 44.3 31.1 33.1
+Within-8 (%) ↑ 67.2 62.8 43.0 38.3
+Interval MAE ↓ 0.26 2.32 1.02 4.85
+Within Interval (%) ↑ 90.7 78.4 80.0 70.5
+Table 5: Quantitative evaluation of EOM prediction on ARCTIC and GRAB.We report regression errors, threshold-based
+accuracies, and distribution-aware tolerance metrics.
+Figure 5: Robot retargeting from MAD-HOI outputs. A
+text-generated HOI sequence is retargeted from the MANO
+model to the Unitree G1 robot with Inspire dexterous hands.
+proves generation. In ARCTIC and GRAB, MAD-HOI outperforms retrained open-source baselines on distributional
+fidelity while being competitive on plausibility. Finally, its
+outputs can reliably seed robot retargeting pipelines.
+References
+Cha, J.; Kim, J.; Yoon, J. S.; and Baek, S. 2024. Text2hoi:
+Text-guided 3d motion generation for hand-object interaction. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 1577–1585.
+Chen, B.; Martí Monsó, D.; Du, Y.; Simchowitz, M.; Tedrake,
+R.; and Sitzmann, V. 2024. Diffusion forcing: Next-token
+prediction meets full-sequence diffusion. Advances in Neural
+Information Processing Systems, 37: 24081–24125.
+Chen, X.; Jiang, B.; Liu, W.; Huang, Z.; Fu, B.; Chen, T.; and
+Yu, G. 2023. Executing your commands via motion diffusion
+in latent space. In Proceedings of the IEEE/CVF conference
+on computer vision and pattern recognition, 18000–18010.
+Cheng, T.; Shan, D.; Hassen, A.; Higgins, R.; and Fouhey,
+D. 2023. Towards a richer 2d understanding of hands at
+scale. Advances in Neural Information Processing Systems,
+36: 30453–30465.
+Cho, J.; Kim, J.; Kim, J.; Kim, M.; Kang, M.; Hong, S.; Oh,
+T.-H.; and Yu, Y. 2025. DisCoRD: Discrete Tokens to Continuous Motion via Rectified Flow Decoding. In Proceedings
+of the IEEE/CVF International Conference on Computer Vision (ICCV), 14602–14612.
+Christen, S.; Hampali, S.; Sener, F.; Remelli, E.; Hodan, T.;
+Sauser, E.; Ma, S.; and Tekin, B. 2024. Diffh2o: Diffusionbased synthesis of hand-object interactions from textual descriptions. In SIGGRAPH Asia 2024 Conference Papers,
+1–11.
+Fan, Z.; Taheri, O.; Tzionas, D.; Kocabas, M.; Kaufmann,
+M.; Black, M. J.; and Hilliges, O. 2023. ARCTIC: A dataset
+for dexterous bimanual hand-object manipulation. In Proceedings of the IEEE/CVF conference on computer vision
+and pattern recognition, 12943–12954.
+Geng, Z.; Hayder, Z.; Liu, W.; and Mian, A. S. 2025. Autoregressive diffusion for generating 3d human-object interactions. In Proceedings of the AAAI Conference on Artificial
+Intelligence, volume 39, 3131–3139.
+Guo, C.; Mu, Y.; Javed, M. G.; Wang, S.; and Cheng, L.
+2024. MoMask: Generative Masked Modeling of 3D Human
+Motions. In Proceedings of the IEEE/CVF Conference on
+Computer Vision and Pattern Recognition (CVPR), 1900–
+1910.
+Guo, C.; Zou, S.; Zuo, X.; Wang, S.; Ji, W.; Li, X.; and Cheng,
+L. 2022a. Generating diverse and natural 3d human motions
+from text. In Proceedings of the IEEE/CVF conference on
+computer vision and pattern recognition, 5152–5161.
+Guo, C.; Zuo, X.; Wang, S.; and Cheng, L. 2022b. Tm2t:
+Stochastic and tokenized modeling for the reciprocal generation of 3d human motions and texts. In European Conference
+on Computer Vision, 580–597. Springer.
+Ho, J.; Jain, A.; and Abbeel, P. 2020. Denoising diffusion
+probabilistic models. Advances in neural information processing systems, 33: 6840–6851.
+Huang, M.; Chu, F.-J.; Tekin, B.; Liang, K. J.; Ma, H.; Wang,
+W.; Chen, X.; Gleize, P.; Xue, H.; Lyu, S.; et al. 2025.
+HOIGPT: Learning Long-Sequence Hand-Object Interaction
+with Language Models. In Proceedings of the Computer Vision and Pattern Recognition Conference, 7136–7146.
+Jiang, B.; Chen, X.; Liu, W.; Yu, J.; Yu, G.; and Chen, T.
+2023. Motiongpt: Human motion as a foreign language.
+Advances in Neural Information Processing Systems, 36:
+20067–20079.
+Khazatsky, A.; Pertsch, K.; Nair, S.; Balakrishna, A.; Dasari,
+S.; Karamcheti, S.; Nasiriany, S.; Srirama, M. K.; Chen,
+L. Y.; Ellis, K.; et al. 2024. Droid: A large-scale in-the-wild
+robot manipulation dataset. In Robotics: Science and Systems
+(RSS).
+Li, M.; Christen, S.; Wan, C.; Cai, Y.; Hilliges, O.; and Ma,
+J. 2025a. LatentHOI: On the Generalizable Hand Object
+Motion Generation with Latent Hand Diffusion. In Proceedings of the IEEE/CVF Conference on Computer Vision and
+Pattern Recognition (CVPR), 17416–17426.
+Li, S.; Zhang, H.; Chen, X.; Wang, Y.; and Ban, Y. 2025b.
+GenHOI: Generalizing Text-driven 4D Human-Object Interaction Synthesis for Unseen Objects. arXiv preprint
+arXiv:2506.15483.
+Li, T.; Tian, Y.; Li, H.; Deng, M.; and He, K. 2024. Autoregressive image generation without vector quantization.
+Advances in Neural Information Processing Systems, 37:
+56424–56445.
+Liang, H.; Zhang, W.; Li, W.; Yu, J.; and Xu, L. 2024. Intergen: Diffusion-based multi-human motion generation under
+complex interactions. International Journal of Computer
+Vision, 132(9): 3463–3483.
+Liu, Y.; Yang, H.; Si, X.; Liu, L.; Li, Z.; Zhang, Y.; Liu,
+Y.; and Yi, L. 2024. Taco: Benchmarking generalizable bimanual tool-action-object understanding. In Proceedings of
+the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, 21740–21751.
+Ma, N.; Goldstein, M.; Albergo, M. S.; Boffi, N. M.;
+Vanden-Eijnden, E.; and Xie, S. 2024. SiT: Exploring Flow
+and Diffusion-Based Generative Models with Scalable Interpolant Transformers. In Leonardis, A.; Ricci, E.; Roth,
+S.; Russakovsky, O.; Sattler, T.; and Varol, G., eds., Computer Vision – ECCV 2024, 23–40. Cham: Springer Nature
+Switzerland. ISBN 978-3-031-72980-5.
+Mandi, Z.; Hou, Y.; Fox, D.; Narang, Y.; Mandlekar, A.;
+and Song, S. 2025. Dexmachina: Functional retargeting for bimanual dexterous manipulation. arXiv preprint
+arXiv:2505.24853.
+Mangalam, M.; Oruganti, S.; Buckingham, G.; and Borst,
+C. W. 2024. Enhancing hand-object interactions in virtual
+reality for precision manual tasks. Virtual Reality, 28(4):
+166.
+Meng, Z.; Xie, Y.; Peng, X.; Han, Z.; and Jiang, H. 2025.
+Rethinking Diffusion for Text-Driven Human Motion Generation: Redundant Representations, Evaluation, and Masked
+Autoregression. In Proceedings of the Computer Vision and
+Pattern Recognition Conference, 27859–27871.
+O’Neill, A.; Rehman, A.; Maddukuri, A.; Gupta, A.;
+Padalkar, A.; Lee, A.; Pooley, A.; Gupta, A.; Mandlekar, A.;
+Jain, A.; et al. 2024. Open x-embodiment: Robotic learning
+datasets and rt-x models: Open x-embodiment collaboration
+0. In 2024 IEEE International Conference on Robotics and
+Automation (ICRA), 6892–6903. IEEE.
+Peebles, W.; and Xie, S. 2023. Scalable diffusion models with
+transformers. In Proceedings of the IEEE/CVF International
+Conference on Computer Vision, 4195–4205.
+Perez, E.; Strub, F.; De Vries, H.; Dumoulin, V.; and
+Courville, A. 2018. Film: Visual reasoning with a general
+conditioning layer. In Proceedings of the AAAI conference
+on artificial intelligence, volume 32.
+Qin, Y.; Yang, W.; Huang, B.; Van Wyk, K.; Su, H.; Wang,
+X.; Chao, Y.-W.; and Fox, D. 2023. Anyteleop: A general
+vision-based dexterous robot arm-hand teleoperation system.
+In Robotics: Science and Systems (RSS).
+Qiu, R.-Z.; Yang, S.; Cheng, X.; Chawla, C.; Li, J.; He,
+T.; Yan, G.; Yoon, D. J.; Hoque, R.; Paulsen, L.; et al.
+2025. Humanoid Policy˜ Human Policy. arXiv preprint
+arXiv:2503.13441.
+Romero, J.; Tzionas, D.; and Black, M. J. 2017. Embodied
+hands: Modeling and capturing hands and bodies together.
+ACM Transactions on Graphics (Proc. SIGGRAPH Asia),
+36(6).
+Shafir, Y.; Tevet, G.; Kapon, R.; and Bermano, A. 2024.
+Human motion diffusion as a generative prior. In International Conference on Learning Representations, volume
+2024, 8717–8733.
+Singh, H. G.; Loquercio, A.; Sferrazza, C.; Wu, J.; Qi, H.;
+Abbeel, P.; and Malik, J. 2025. Hand-object interaction pretraining from videos. In 2025 IEEE International Conference
+on Robotics and Automation (ICRA), 3352–3360. IEEE.
+Sohl-Dickstein, J.; Weiss, E.; Maheswaranathan, N.; and
+Ganguli, S. 2015. Deep unsupervised learning using
+nonequilibrium thermodynamics. In International conference on machine learning, 2256–2265. pmlr.
+Taheri, O.; Ghorbani, N.; Black, M. J.; and Tzionas, D. 2020.
+GRAB: A dataset of whole-body human grasping of objects. In European conference on computer vision, 581–600.
+Springer.
+Tevet, G.; Raab, S.; Gordon, B.; Shafir, Y.; Cohen-Or, D.;
+and Bermano, A. H. 2023. Human motion diffusion model.
+In International Conference on Learning Representations
+(ICLR).
+Vaswani, A.; Shazeer, N.; Parmar, N.; Uszkoreit, J.; Jones, L.;
+Gomez, A. N.; Kaiser, Ł.; and Polosukhin, I. 2017. Attention
+is all you need. Advances in neural information processing
+systems, 30.
+Yang, R.; Yu, Q.; Wu, Y.; Yan, R.; Li, B.; Cheng, A.-C.; Zou,
+X.; Fang, Y.; Cheng, X.; Qiu, R.-Z.; et al. 2025. Egovla:
+Learning vision-language-action models from egocentric human videos. arXiv preprint arXiv:2507.12440.
+Yuan, Y.; and Kitani, K. 2020. Dlow: Diversifying latent
+flows for diverse human motion prediction. In European
+Conference on Computer Vision, 346–364. Springer.
+Zhang, J.; Zhang, Y.; Cun, X.; Huang, S.; Zhang, Y.; Zhao,
+H.; Lu, H.; and Shen, X. 2023. T2M-GPT: Generating human motion from textual descriptions with discrete representations. In Proceedings of the IEEE/CVF Conference on
+Computer Vision and Pattern Recognition (CVPR), 14730–
+14740.
+Zhang, M.; Cai, Z.; Pan, L.; Hong, F.; Guo, X.; Yang, L.; and
+Liu, Z. 2024a. Motiondiffuse: Text-driven human motion
+generation with diffusion model. IEEE transactions on pattern analysis and machine intelligence, 46(6): 4115–4128.
+Zhang, W.; Dabral, R.; Golyanik, V.; Choutas, V.; Alvarado,
+E.; Beeler, T.; Habermann, M.; and Theobalt, C. 2025a. BimArt: A Unified Approach for the Synthesis of 3D Bimanual Interaction with Articulated Objects. Proceedings of
+the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition (CVPR).
+Zhang, Y.; Yang, H.; Luo, C.; Peng, J.; Wang, Y.; and
+Zhang, Z. 2024b. OOD-HOI: Text-driven 3d whole-body
+human-object interactions generation beyond training domains. arXiv preprint arXiv:2411.18660.
+Zhang, Z.; Kong, B.; Liu, Q.; and Wang, Y. 2025b. Towards
+robust and controllable text-to-motion via masked autoregressive diffusion. In Proceedings of the 33rd ACM International Conference on Multimedia, 9326–9335.
+Zhang, Z.; Shi, Y.; Yuan, L.; Zhou, B.; and Wang, J. 2025c.
+Openhoi: Open-world hand-object interaction synthesis with
+multimodal large language model. In Advances in Neural
+Information Processing Systems (NeurIPS).
+MAD-HOI: Masked Autoregressive Diffusion for Generating Articulated Hand Object Interactions
+from Text
+Supplementary Material
+In this supplementary material, we provide jerk profiles for motion reconstructions from discrete and continuous latents to
+motivate our approach, followed by technical details about our method and training (loss definitions, the input token sequence
+example, training details). We then present details of our evaluation pipeline and metrics, more qualitative samples, followed by
+experiments to further validate our claims.
+A Tokenization: Discrete vs Continuous
+We argue that motions reconstructed from discrete codes lose fine-grained information and this directly results in motions
+that are less smooth and more jittery. We take inspiration from (Cho et al. 2025), and assess the temporal coherence of the
+reconstructed motions by analyzing their jerk profiles, i.e., the third derivative of position over time. Jerk quantifies fine-grained
+temporal irregularities, allowing us to distinguish overly static motion from high-frequency jitter. Lower and smoother jerk
+magnitudes correspond to more natural and physically consistent trajectories. See Fig. 6 and Fig. 7 for plots on jerk profiles of
+ground truth and reconstructed trajectories of the wrist joints and the object centers obtained from the VAE and its equivalent
+VQ-VAE for samples from ARCTIC and GRAB respectively. We observe that the VQ-VAE-reconstructed trajectories are less
+smooth, with spikes corresponding to abrupt, non-physical changes. The trajectories from the VAE are closer in smoothness to
+the ground truth data.
+B Method Details
+B.1 Losses for VAE Training
+Our VAE is trained to reconstruct fine-grained motions and hand-object contacts. To facilitate this, we apply some geometric
+losses that encourage close contact and penalize penetration. They are defined as follows:
+Contact Loss: We enforce a threshold-based contact loss. D(J
+o
+i
+) calculates the distance between a hand joint and the closest
+object surface, enforcing the threshold distance constraint D(J
+o
+i
+) ≤ ϕ:
+LC =
+X
+i
+D(Jˆo
+i
+), ∀ D(Jˆo
+i
+) ≤ ϕ, (4)
+where
+D(Jˆo
+i
+) = min
+j
+
+
+
+
+V
+p
+j − Jˆo
+i
+
+
+
+2
+2
+, (5)
+with V
+p
+j
+representing object surface points and J
+o
+i
+representing hand joints.
+Penetration Loss: To penalize penetration of the hand mesh and the object mesh, we minimize the average squared distances
+of penetrating hand vertices p ∈ P
+o
+in to their closest object vertex Vˆ o
+i
+:
+Lpen =
+1
+|P
+o
+in|
+X
+p∈P o
+in
+min
+i
+∥p − Vˆ o
+i ∥
+2
+2
+. (6)
+Distance Map Loss: Following (Liang et al. 2024), we apply a distance map loss to align the estimated distance map (distance
+from each hand joint to the closest object vertex) with the ground-truth distance map. For a single hand,
+LDM =
+X
+i
+
+D(Jˆo
+i
+) − D(J
+o
+i
+)
+2
+1
+
+D(J
+o
+i
+) < ϕ, (7)
+where ϕ is a threshold that selects near-contact regions.
+We also study the effect of these losses on the reconstruction quality of our VAE. See Tab. 6 to see the ablated performance
+of our VAE on the GRAB dataset. Without the penetration loss, there is high contact but it it assuredly comes with penetration.
+Without the contact loss, the contact % is lower than optimum. Perhaps the most important loss is the Distance Map Loss,
+as when its removed the contact worsens severely, and further the reconstruction losses and MPJPE is also impacted. The
+combination of all losses performs the best.
+B.2 Input Token Sequence to Transformer Example
+If we assume a max token length of 18 (6 possible latent timesteps x 3 for modalities), and consider a motion having 5 valid
+latent timesteps, where we mask one latent timestep out and the EOM tokens are appended at the end, the sample input token
+sequence to the transformer would look like Eq. (8).
+⟨z
+0
+o
+⟩ ⟨z
+0
+l
+⟩ ⟨z
+0
+r
+⟩ ⟨z
+1
+o
+⟩ ⟨z
+1
+l
+⟩ ⟨z
+1
+r
+⟩ ⟨MASK⟩ ⟨MASK⟩ ⟨MASK⟩⟨z
+3
+o
+⟩ ⟨z
+3
+l
+⟩ ⟨z
+3
+r
+⟩ ⟨z
+4
+o
+⟩ ⟨z
+4
+l
+⟩ ⟨z
+4
+r
+⟩ ⟨EOMo⟩ ⟨EOMl⟩ ⟨EOMr⟩ (8)
+Metric w/o LPen w/o LC w/o LDM All losses
+Obj. L1 ↓ 0.005 0.010 0.018 0.005
+Hand L1 ↓ 0.013 0.023 0.076 0.013
+MPJPE ↓ 0.049 0.052 0.119 0.044
+Pen. (%) ↓ 61.16 34.94 0.00 2.10
+Con. (%) ↑ 98.83 79.48 22.4 92.20
+Table 6: VAE Training on GRAB: Ablation of the geometric loss terms.
+Figure 6: VAE vs VQ-VAE Reconstruction Jitter for ARCTIC: Jerk Analysis for Smoothness Comparison. We plot jerk
+magnitude for ground truth, VAE-reconstructed, and VQ-VAE-reconstructed trajectories of the MANO hand wrist joints and
+object centers.
+B.3 Flow-Matching Details
+Given the linear interpolant xt = αtx0 + σtϵ from the main paper, with αt = 1 − t and σt = t, the velocity field toward which
+the diffusion MLP regresses is defined as
+v(x, t) = ˙αt E[x0 | xt = x] + ˙σt E[ϵ | xt = x], (9)
+where α˙ t and σ˙ t are the derivatives of the interpolation coefficients with respect to t.
+B.4 Training Details
+We train the generation model on 4 H100 GPUs for 100000 iterations with a max learning rate of 2e-4, which is achieved
+through a linear warmup over 1000 iterations. The learning rate then decays with cosine annealing to 1e-4. The VAE is trained
+on 2 H100 GPUs for 6000 epochs with a learning rate of 2e-4, with α = 1, β = 0.5, γ = 0.5, δ = 1. The KL term is internally
+scaled by βKL = 10−4and subsequently weighted by λKL = 0.5. We use this small coefficient because the KL divergence
+is summed over the latent-channel dimension before being averaged over valid temporal tokens. Our VAE operates over short
+temporal sequences, as opposed to static poses. We use a window length of 152 to maximize the temporal context within the
+VAE and have a 4 frames to 1 token (latent) ratio throughout the method.
+The longer window length presents some challenges when dealing with a dataset like ARCTIC, which has many shorter
+atomic motion sequences. For shorter sequences, we pad the last valid frame until the end and also maintain replicate padding
+within the VAE to ensure the network does not see zeros or abrupt signal changes, which could lead to drift-like artifacts during
+decoding. Further, the VAE reconstruction losses are computed over the padded sequences as opposed to the valid-only frames,
+Figure 7: VAE vs VQ-VAE Reconstruction Jitter for GRAB: Jerk Analysis for Smoothness Comparison. We plot jerk
+magnitude for ground truth, VAE-reconstructed, and VQ-VAE-reconstructed trajectories of the MANO hand wrist joints and
+object centers.
+forcing the VAE to learn to reconstruct static hands and objects from idle latents. This design complements the EOM mechanism
+(see main paper Sec. 4.2).
+C Evaluation Pipeline
+We evaluate MAD-HOI with a learned text-motion evaluator adopted from HumanML3D (Guo et al. 2022), following the
+standard practice of measuring generated motions in a semantic embedding space rather than directly in the raw motion
+parameter space. We train an evaluator with real hand-object interaction data to learn aligned representations for text and
+motion.
+The evaluator consists of a motion representation module, a text encoder, and a motion encoder. On the motion side, we first
+compress the full hand-object motion sequence using a temporal convolutional movement encoder. This module reduces the
+temporal resolution and produces a compact latent motion representation that captures the essential dynamics of the sequence.
+A corresponding decoder is used only during pre-training of this motion representation. On the text side, we encode tokenized
+captions using pre-trained Word2Vec embeddings together with POS-style linguistic indicators, which are passed through a
+bidirectional GRU and projected into a shared embedding space. On the motion side, the compact motion latents are processed
+by a second bidirectional GRU and projected into the same embedding space. In the first stage of training, we learn the
+motion representation using an auto-encoding objective on real hand-object motion sequences. The model reconstructs the input
+sequence from its latent representation, while regularization terms encourage sparse and temporally smooth motion latents. This
+stage provides a compact and stable motion representation that is later used for text-motion alignment. In the second stage of
+training, we freeze the motion representation module and train the text encoder and motion encoder jointly with a contrastive
+objective. For each training sample, the caption and its paired motion are treated as a positive pair and are encouraged to have
+similar embeddings. Negative pairs are formed by mismatching captions and motions within the batch, so the evaluator learns
+to distinguish semantically correct interactions from incorrect ones.
+For text to motion evaluation, we generate motions from text prompts from MAD-HOI as well as baselines, and feed them
+to the frozen evaluator to compute all generation metrics. Both generated and real motions are mapped in the evaluators’
+motion embedding space, while captions are mapped in the corresponding text embedding space. We compute retrieval-style
+and distribution-level metrics in this shared space.
+Generation/Distribution-based Metric Definitions: Top-3 Accuracy (R@3) measures how often the correct conditioning
+text is ranked among the three closest matches when retrieving in the shared embedding space between motions and conditions.
+Higher R@3 indicates higher text–motion semantic alignment. FID measures the discrepancy between the distributions of real
+and generated motion embeddings by comparing their means and covariance matrices under a Gaussian approximation. KID
+measures the discrepancy between real and generated motion embeddings using a kernel-based maximum mean discrepancy
+estimator. Unlike FID, it does not assume Gaussian feature distributions and is less biased for small sample sizes. Lower FID
+and KID indicate greater similarity between the generated and real motion distributions. Diversity is the variance within features
+extracted from the generated motions, and Matching Score is the embedding distance between generated motions and their
+conditioning text. Diversity values closer to the ground-truth diversity indicate more realistic coverage of the data distribution
+and lower Matching Scores indicate stronger text–motion semantic alignment. We omit Multimodality because its pairwisedistance formulation can reward unrestricted or implausible variation and lacks a corresponding ground-truth reference; diversity
+is instead assessed alongside distributional, semantic-alignment, physical-plausibility, and human-evaluation metrics. All our
+generation metrics are averaged over 5 evaluation repeats with varying seeds. The standard deviations were negligible and did
+not affect the ranking of methods; therefore, they are omitted for readability.
+Completion and Infilling metrics: Average Displacement Error (ADE) measures how closely the best generated motion
+matches the ground-truth motion over the entire sequence by averaging the displacement error across all time steps. Final
+Displacement Error (FDE) measures the displacement between the final pose of the ground-truth motion and the final pose of
+the closest generated sample. Lower ADE and FDE indicate better agreement with the ground-truth trajectory and endpoint,
+respectively, and are common metrics for evaluating sample accuracy in trajectory forecasting (Yuan and Kitani 2020).
+EOM Metrics: We evaluate End-of-Motion (EOM) prediction using both standard regression metrics and distribution-aware
+tolerance metrics. The mean absolute error (MAE) measures the average absolute difference between the predicted and groundtruth sequence length (number of frames), while the median absolute error (MedAE) captures the typical error and is less
+sensitive to outliers.
+We also report Within-4 and Within-8 %s, which denote the fraction of predictions that fall within tolerance thresholds of
+4 and 8 frames from the ground truth sequence lengths, respectively. Since a single text prompt can correspond to multiple
+valid sequence lengths (from different human demonstrations) in the dataset, we additionally use distribution-aware metrics
+based on an interval [q10, q90] for each unique condition (which is a [action, object, left_use, right_use] tuple). Interval MAE
+measures the distance to this valid range, assigning zero penalty when the prediction lies inside it, while Within Interval reports
+the proportion of predictions that fall within the semantically plausible duration range from the ground truth sequences.
+In reference to Tab. 5, MAD-HOI achieves strong and semantically meaningful EOM performance across both datasets,
+though it does not beat the Text2HOI cVAE. On ARCTIC, MAD-HOI attains an MAE of 12.23±0.88 frames and a Median AE
+of 8.00, showing that its predicted stopping point is typically close to the true end of the motion. On GRAB where the problem
+is more challenging overall, MAD-HOI attains a higher MAE of 20.43 ± 1.09 frames and a Median AE of 14.4. Importantly,
+the distribution-aware metrics are particularly encouraging: an Interval MAE of 2.32 ± 0.50 for ARCTIC and 4.85 ± 0.75
+for GRAB show that when we deviate from the distribution, we observe errors within 2-5 frames. The Within Interval %s of
+78.4% ± 1.3% for ARCTIC 70.5% ± 1.3% for GRAB and show that most MAD-HOI predictions fall inside the valid duration
+range for the corresponding semantic interaction, even when there is substantial natural variability in demonstration length.
+D Experiments
+We visualize more sample motions from the ARCTIC and GRAB datasets with time-progressing grasps for MAD-HOI and
+the baseline methods in Fig. 8. As with the ARCTIC comparison in the main paper, we observe that MAD-HOI maintains
+semantically aligned grasps and motion while having less penetration compared to baseline generations.
+D.1 User Preference
+We conduct a small user-study to evaluate human preferences for our method and the baselines. We evaluate the five generation
+methods (MAD-HOI, DiffH2O, Text2HOI, OpenHOI, LatentHOI) through a forced-ranking study on ARCTIC (articulated
+objects) and GRAB (rigid objects). Each trial presents one text prompt alongside five anonymised, interactive 3D viewers
+labelled A–E, with the slot-to-method assignment randomised independently per trial so that no letter is associated with a
+method. Participants produce two complete 1–5 rankings per trial: motion–text alignment — how faithfully the motion depicts
+the described action — and physical plausibility — naturalness of hand–object contact, penetration and object motion, judged
+independently of the text. All methods are rendered through an identical pipeline, with the same camera treatment, the same
+colour coding for left and right hands, and the same playback rate, so that no method is visually distinguishable from another.
+Each participant completes 50 trials, with prompts drawn without replacement from ARCTIC and GRAB prompts, and we
+collect three raters per dataset.
+MAD-HOI attains the best mean rank on both criteria — 2.26 for motion–text alignment and 2.26 for physical plausibility
+(1 = best of five, 3.0 = chance) — ahead of DiffH2O (2.48 / 2.50), Text2HOI (2.81 / 2.91), OpenHOI (3.51 / 3.58) and
+LatentHOI (3.95 / 3.75), and is ranked first in 43.3% of trials on both axes. Separation from Text2HOI, OpenHOI and LatentHOI
+is substantial, spanning 0.55 to 1.69 rank positions. DiffH2O is the closest competitor: in direct comparison MAD-HOI is
+preferred in 54.0trials for alignment and 55.3% for plausibility. The study therefore indicates that MAD-HOI is preferred over
+three of the four baselines on both criteria, and is competitive with DiffH2O.
+Figure 8: Comparison of time-progressing grasps with baselines. Right hand visualized in blue; Left hand visualized in red.
+D.2 Validating ’Unused Hand’ Motion in MAD-HOI
+In order to quantify the claim of our method learning to ’switch-off’ unused hands, we present Tab. 7. It evaluates the ’generated
+motion’ for inactive hands in prompts specifying a single hand. The wrist and vertex displacement are in m, compounded over
+the entire sequence. The hand accuracy calculates the % of frames where the unsued hand wrist (defined by prompt) moves less
+than 1 cm. Our idle latents corresponding to ’unused hands’ are forced to predict zeros. And since neural networks learn smooth
+approximations, obtaining zero-latents for unused hands inevitably has some noise. This noise does lead to some non-zero
+cumulative joint motion over all the frames of a sequence, and therefore, the displacement errors are not zero. However, the
+smaller inactive hand displacement MAD-HOI has compared to Text2HOI confirms that our method predicts near-zero motion
+for unused hands, and the presence of explicit latents for unused hands in our VAE. We also present a visual depiction of a frame
+from the generated motion for ’Close the waffleiron with right hand’ from MAD-HOI. Here, the unused hand - the left hand -
+shown without any masking is truly inactive, while the right hand completes the desired motion. The generated poses for this
+hand are near-zeros, leading to the twisted MANO hand mesh.
+ARCTIC GRAB
+Idle metric T2H Ours T2H Ours
+Wrist disp. ↓ 0.068 0.030 0.274 0.003
+Vertex disp. ↓ 0.078 0.033 0.331 0.047
+Handedness Acc. ↑ 0.54 0.64 0.36 1.00
+Table 7: Idle-hand comparison between Text2HOI and MAD-HOI. Inactive-hand wrist and vertex displacement and handedness accuracy on ARCTIC and GRAB.
+Learning to independently model single-handed and bimanual motions without post-hoc masking is important when the
+interaction looks very different when being carried out with one hand vs both hands. For example, the grasp that a hand
+might make while opening a box might vary depending on whether a second hand stabilizes the box. Learning to differentiate
+single-handed motions from bimanual ones can create modes in the latent space which could be the difference between stable
+and plausible motions that actually achieve the desired object articulation. This is especially important when such text-to-motion
+models are applied to embodied use cases like robotics.
+Length FID ↓ KID ↓ Div. Top-1 ↑ Top-3 ↑ Match ↓ Pen. % Contact %
+−12 frames 4.240 0.0595 19.087 0.699 0.882 4.616 17.13 79.89
+−8 frames 0.623 0.0119 19.997 0.817 0.975 2.066 17.78 81.37
+−4 frames 0.130 0.0035 20.037 0.837 0.991 1.273 18.08 81.58
+MAD-HOI detected end 0.075 0.0004 20.130 0.837 0.993 1.097 15.25 83.86
+Table 8: Forced EOM sequence-length ablation on ARCTIC. Motions are generated with the supplied length shortened by 4, 8,
+and 12 frames relative to the MAD-HOI detected end-of-motion.
+D.3 Learned EOM vs User-Input Length
+We observed that predicting the EOM token helps MAD-HOI generate better motions. However, we argue that allowing the
+method to jointly estimate sequence length is better than using user-specified length. Our method, like our baselines, is not
+trained to generate motions at varying frame rates, and therefore, if a user input for sequence length is very different from lengths
+the model has seen during training, it could harm the quality of the generated motion. The assumption that the user has greater
+controllability by specifying sequence length hinges on the user being an expert and knowing the details of the training data. To
+demonstrate how ’wrong’ length inputs can harm generation quality, we conduct an experiment where we force the learned EOM
+token to be at -4 frames, -8 frames and -12 frames from the ground truth lengths and compare the generated motions against
+the model-predicted EOM baseline. As seen in Tab. 8, we observe that the farther the user-specified length is from the ground
+truth length, the worse the quality of generated motion. The baseline performance - detected EOM in MAD-HOI - reflects the
+learned natural distribution of motions. When allowed to detect the sequence end, the model is able to generate more natural
+and expressive motions that are semantically aligned with the textual intent.
+E Future Work
+Robust generalization to unseen objects and actions will require pretraining on large datasets. Whether this pretraining would
+be more effective with static grasps (much higher scale of data available but lacks temporal context) or short motion priors
+(temporal data but scarce), is unknown and can be studied in more detail. Perhaps a two-stage generation setup with the first
+stage focusing on static grasps and the second stage focusing on motion could work well. However, as seen in our baselines that
+adopt this type of architecture, such a design is better suited for motions and objects that do not require articulations (DiffH2O
+and LatentHOI work better on GRAB than ARCTIC).
+Supplementary References
+Cho, J.; Kim, J.; Kim, J.; Kim, M.; Kang, M.; Hong, S.; Oh, T.-H.; and Yu, Y. 2025. DisCoRD: Discrete Tokens to Continuous
+Motion via Rectified Flow Decoding. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV),
+14602–14612.
+Guo, C.; Zou, S.; Zuo, X.; Wang, S.; Ji, W.; Li, X.; and Cheng, L. 2022. Generating diverse and natural 3d human motions from
+text. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, 5152–5161.
+Liang, H.; Zhang, W.; Li, W.; Yu, J.; and Xu, L. 2024. Intergen: Diffusion-based multi-human motion generation under complex
+interactions. International Journal of Computer Vision, 132(9): 3463–3483.
+Yuan, Y.; and Kitani, K. 2020. Dlow: Diversifying latent flows for diverse human motion prediction. In European Conference
+on Computer Vision, 346–364. Springer.

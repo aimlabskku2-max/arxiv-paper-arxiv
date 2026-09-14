@@ -1,0 +1,7 @@
+EgoHTR: Egocentric 4D Demonstrations of Human Terrain Traversal
+
+arXiv ID: 2607.13472
+Abstract: https://arxiv.org/abs/2607.13472
+PDF: https://arxiv.org/pdf/2607.13472
+HTML (full text): https://arxiv.org/html/2607.13472v1
+Project page: https://egohtr.github.io
