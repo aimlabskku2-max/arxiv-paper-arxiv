@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arXiv 논문 정리 — 2026-08-24</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']],
+            displayMath: [['$$','$$'],['\\[','\\]']], processEscapes: true },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --bg:#f8fafc; --card:#ffffff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    line-height:1.7; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+  header.top { background:linear-gradient(135deg,#1e293b,#334155); color:#fff; padding:42px 20px 36px; }
+  header.top .inner { max-width:1100px; margin:0 auto; }
+  header.top .home-link { display:inline-block; margin-bottom:14px; color:#cbd5e1; text-decoration:none;
+    font-size:13.5px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+    padding:6px 14px; border-radius:999px; }
+  header.top .home-link:hover { background:rgba(255,255,255,.2); color:#fff; }
+  header.top h1 { margin:0 0 8px; font-size:30px; letter-spacing:-.5px; }
+  header.top .sub { opacity:.85; font-size:15px; }
+  header.top .chips { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  header.top .chip { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    padding:5px 12px; border-radius:999px; font-size:13px; }
+  .layout { display:grid; grid-template-columns:260px 1fr; gap:32px; margin-top:32px; }
+  nav.toc { position:sticky; top:20px; align-self:start; font-size:13.5px; max-height:90vh; overflow:auto; }
+  nav.toc h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 12px; }
+  .toc-group { margin-bottom:16px; }
+  .toc-badge { display:inline-block; color:#fff; font-size:11.5px; padding:3px 9px; border-radius:6px; margin-bottom:6px; font-weight:600; }
+  nav.toc ul { list-style:none; padding:0 0 0 4px; margin:6px 0 0; }
+  nav.toc li { margin:4px 0; }
+  nav.toc a { color:var(--ink); text-decoration:none; }
+  nav.toc a:hover { color:#6366f1; text-decoration:underline; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:26px;
+    overflow:hidden; box-shadow:0 1px 3px rgba(15,23,42,.05); scroll-margin-top:20px; }
+  .card-head { padding:22px 26px 18px; border-left:6px solid; background:#fcfcfd; }
+  .topic-tag { display:inline-block; color:#fff; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:6px; }
+  .card-head h2 { margin:10px 0 6px; font-size:21px; letter-spacing:-.3px; }
+  .lead { margin:6px 0 10px; font-size:14.5px; color:#334155; font-weight:500;
+    border-left:3px solid var(--line); padding-left:12px; }
+  .authors { color:var(--muted); font-size:13px; margin-bottom:10px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { font-size:12.5px; text-decoration:none; color:#475569; background:#f1f5f9; border:1px solid var(--line);
+    padding:3px 10px; border-radius:999px; }
+  .pill.pdf { background:#fee2e2; border-color:#fecaca; color:#b91c1c; }
+  .pill:hover { filter:brightness(.96); }
+  .card-body { padding:8px 26px 24px; }
+  .card-body h3.sec { font-size:16.5px; margin:22px 0 8px; padding-bottom:6px; border-bottom:2px solid var(--line);
+    color:#0f172a; }
+  .card-body h4.subsec { font-size:14.5px; margin:16px 0 6px; color:#334155; }
+  .card-body p { margin:8px 0; }
+  .card-body ul, .card-body ol { margin:8px 0; padding-left:22px; }
+  .card-body li { margin:4px 0; }
+  .card-body code { background:#f1f5f9; padding:1px 6px; border-radius:5px; font-size:13px;
+    font-family:"SF Mono",Menlo,Consolas,monospace; }
+  .card-body strong { color:#0f172a; }
+  .tbl-wrap { overflow-x:auto; margin:12px 0; -webkit-overflow-scrolling:touch; }
+  .card-body table { border-collapse:collapse; width:100%; font-size:13px; min-width:340px; }
+  .card-body thead th { background:#f1f5f9; color:#0f172a; text-align:left; font-weight:700;
+    padding:8px 12px; border-bottom:2px solid #cbd5e1; white-space:nowrap; vertical-align:bottom; }
+  .card-body tbody td { padding:7px 12px; border-bottom:1px solid var(--line); text-align:left;
+    vertical-align:top; }
+  .card-body tbody tr:nth-child(even) { background:#f8fafc; }
+  .card-body th.num, .card-body td.num { text-align:right; font-variant-numeric:tabular-nums;
+    font-family:"SF Mono",Menlo,Consolas,monospace; white-space:nowrap; }
+  .fig { margin:14px 0; text-align:center; }
+  .fig img { max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px;
+    background:#fff; }
+  .fig figcaption { margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .pubinfo { margin:6px 0 2px; font-size:12.5px; color:var(--muted); display:flex;
+    flex-wrap:wrap; gap:4px 12px; }
+  .pubinfo .pub-venue { color:#0f172a; font-weight:600; }
+  footer { text-align:center; color:var(--muted); font-size:13px; margin-top:40px; }
+  @media (max-width:820px) { .layout { grid-template-columns:1fr; } nav.toc { position:static; max-height:none; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="inner">
+  <a class="home-link" href="../../index.html">← 전체 주차 목록(홈)</a>
+  <h1>📚 arXiv 논문 주간 정리</h1>
+  <div class="sub">2026-08-24 · 총 6편 · 주제별 균형 정리</div>
+  <div class="chips">
+    <span class="chip">Egocentric Vision · 2편</span><span class="chip">Hand-Object Interaction · 2편</span><span class="chip">Spatial Audio · 2편</span>
+  </div>
+</div></header>
+<div class="wrap">
+  <div class="layout">
+    <nav class="toc">
+      <h3>목차</h3>
+      <div class="toc-group"><span class="toc-badge" style="background:#0ea5e9">Egocentric Vision</span><ul><li><a href="#paper1">R4DSG: Relative 4D Scene Graph Memory for Object-Centric Question Answering in Long Egocentric Video</a></li><li><a href="#paper2">Ego2Robot: Scalable Robot Data Synthesis from Egocentric Human Data</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#10b981">Hand-Object Interaction</span><ul><li><a href="#paper3">MAD-HOI: Masked Autoregressive Diffusion for Generating Articulated Hand Object Interactions from Text</a></li><li><a href="#paper4">AdaDexGrasp: Adaptive Dexterous Grasping via 3D Visuo-Tactile Representation Fusion</a></li></ul></div><div class="toc-group"><span class="toc-badge" style="background:#6366f1">Spatial Audio</span><ul><li><a href="#paper5">Ambisonics Encoding of Room Impulse Responses using a Device-Agnostic Diffusion Model</a></li><li><a href="#paper6">SonoWorld: From One Image to a 3D Audio-Visual Scene</a></li></ul></div>
+    </nav>
+    <main>
+      
+<article class="card" id="paper1">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>R4DSG: Relative 4D Scene Graph Memory for Object-Centric Question Answering in Long Egocentric Video</h2>
+    <p class="lead">하루치 1인칭(egocentric) 영상을 &quot;고정된 기준 물체(anchor) 대비 상대적인 물체 위치 변화&quot;를 원소로 하는 검색용 메모리로 압축해, &quot;내가 그거 어디 뒀지 / 언제 옮겼지&quot;류 질문에 답하는 프레임워크다.</p>
+    <div class="authors">Ke Ma, Yijie Zhong, Haofen Wang, Meng Wang (Tongji University, College of Design and Innovation) · Yamin Mao, Weiming Li (Samsung R&amp;D Institute China - Beijing) · Hao Chen (Samsung Research America) · Shuai Tan (Shanghai Jiao Tong University)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-11</span> · <span class="pub-venue">🏛 ACM Multimedia 2026 (MM &#x27;26, 11/10–14, Rio de Janeiro)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.11017" target="_blank">arXiv:2608.11017</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.11017" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.11017" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2608.11017v1/figures/Figure1_acm_fallback_600dpi.png" alt="사용자의 물체 관련 질문 → R4DSG 메모리 모듈 → 시공간 씬 그래프로 이어지는 전체 개요" loading="lazy"><figcaption>사용자의 물체 관련 질문 → R4DSG 메모리 모듈 → 시공간 씬 그래프로 이어지는 전체 개요</figcaption></figure>
+<p>왼쪽에서 사용자가 긴 1인칭 영상에 대해 물체 중심 질문을 던지고, 가운데 R4DSG 메모리 모듈이 이를 받아, 오른쪽의 시공간 씬 그래프(spatial-temporal scene graph)로 근거를 되짚는 구조를 보여준다.</p>
+<h3 class="sec">선행 연구</h3>
+<p>1인칭 영상 이해는 행동 인식에서 출발해 장기 메모리와 질의응답으로 옮겨왔다.</p>
+<ul>
+<li><strong>EMQA</strong>: 1인칭 에이전트가 명시적 씬 메모리를 이용해 답하는 episodic memory QA를 초기에 정식화.</li>
+<li><strong>EgoSchema</strong>: 아주 긴 형식의 객관식 QA를 시간 이해 진단용 벤치마크로 확립.</li>
+<li><strong>GroundVQA / Grounded Multi-Hop VideoQA</strong>: 답 생성과 근거 구간의 시간적 위치 찾기(temporal grounding)를 결합하고, 나아가 흩어진 여러 구간을 동시에 참조해야 답이 나오는 다중 홉 문제로 난이도를 올림.</li>
+<li><strong>AMEGO</strong>: 아주 긴 영상을 매번 통째로 처리하지 말고, 반복되는 장소와 물체 상호작용을 담은 재사용 가능한 능동 메모리로 바꾸자고 제안.</li>
+<li><strong>EgoLife</strong>: 이를 생활 보조(life assistant) 시나리오로 확장해 사건 회상, 습관 이해, 관계 추론 등을 핵심 능력으로 제시.</li>
+</ul>
+<p>구조적 표현 쪽에서는 3D 씬 그래프 계열이 있다. 3DSSG(실내 재구성으로부터 의미 씬 그래프 학습), SceneGraphFusion(RGB-D 시퀀스에서 점진적 구축), Wu et al.의 RGB 시퀀스 기반 점진적 구축, VL-SAT(시각-언어 지도 신호 주입), Open3DSG(포인트 클라우드 기반 open-vocabulary), EgoSG(자세 정보 없는 RGB-D에서 학습), OpenFunGraph(기능적 관계), 3DGraphQA(그래프 추론으로 3D QA 개선) 등이다.</p>
+<p>시간축 그래프 쪽으로는 (2.5+1)D spatio-temporal scene graph, situation hyper-graph, HostSG, Action Scene Graphs, GraphVideoAgent, 그리고 파운데이션 모델 조합만으로 주방 영상 씬 그래프를 만드는 SAMJAM이 언급된다.</p>
+<p>RGB만으로 상대적 3D 단서를 뽑는 최근 기반 모델도 이 논문의 토대다. <a href="https://arxiv.org/abs/2511.16719" target="_blank">SAM 3</a>는 개념 인지형 시간 전파(temporal propagation)를 갖춘 promptable video segmentation을, <a href="https://arxiv.org/abs/2511.16624" target="_blank">SAM 3D</a>는 깊이 입력 없이 이미지에서 3D를 얻는 경로를 제공한다. DUSt3R, MASt3R, SAM 2, CoTracker3도 함께 인용된다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>기존 메모리의 원소는 대부분 캡션, 요약, 클립이다. 대충 무슨 일이 있었는지 되짚기에는 충분하지만, <strong>물체 하나의 정체성(identity)을 시간축 전체에서 유지하지 못하고, 물체가 어디로 옮겨졌는지·언제 상태가 바뀌었는지 같은 구조화된 공간 변화를 보존하지 못한다.</strong></p>
+<p>반대편의 3D 씬 그래프 연구는 구조는 잘 갖췄지만 센싱 가정이 너무 세다. 포인트 클라우드, RGB-D, 자세(pose)가 붙은 다시점 관측, 희소 매핑, 재구성된 실내 장면 중 하나 이상을 요구한다. 그런데 실제 웨어러블 촬영은 카메라가 착용자와 함께 자유롭게 움직이고, 관측은 부분적이며, 전역 정렬된 월드 좌표계는 없거나 믿을 수 없거나 애초에 불필요하다.</p>
+<p>저자들은 쓸 만한 1인칭 메모리가 갖춰야 할 성질을 넷으로 정리한다. (1) 시간에 걸쳐 물체 정체성 유지, (2) 국소 외형이 아니라 공간 관계 부호화, (3) 긴 스트림을 검색 가능한 압축 단위로 축약, (4) 그 단위를 다운스트림 QA가 바로 쓸 수 있는 형태로 노출.</p>
+<h3 class="sec">연구 주제</h3>
+<p>긴 1인칭 RGB 영상에서 <strong>물체 중심 장기 QA(where / when / why)</strong> 를 푸는 문제. 입력은 단안(monocular), 맵 없음(map-free), 부분 관측이며 깊이·포인트 클라우드·보정된 자세·전역 좌표계를 일절 가정하지 않는다.</p>
+<p>형식적으로는 메모리 구축 $M=f(X)$ 와 질의응답 $(\hat{y},\hat{e})=g(M,q)$ 로 나뉜다. 여기서 $X=\{I_t\}_{t=1}^{T}$ 는 긴 1인칭 영상, $q$ 는 질문, $\hat{y}$ 는 예측 답, $\hat{e}$ 는 검색된 근거다. 핵심 주장은 답변 모델을 바꾸는 게 아니라 <strong>메모리를 바꾼다</strong>는 것이다.</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">핵심 아이디어: static anchor와 dynamic object의 분리</h4>
+<p>테이블, 선반, 조리대, 서랍, 소파, 냉장고처럼 잘 안 움직이는 것을 <strong>정적 앵커(static anchor)</strong> 로 두고, 가방·컵·휴대폰·도구·식품 포장처럼 들고 다니는 것을 <strong>동적 물체(dynamic object)</strong> 로 둔다. 물체의 상태를 전역 좌표가 아니라 &quot;어느 앵커 곁에 있는가&quot;로 기술한다. 여기서 말하는 &quot;4D&quot;는 전역 일관성을 갖는 4D 재구성이 아니라 <strong>시간 인덱스가 붙은 상대적 3D 씬 그래프 메모리</strong>를 뜻한다.</p>
+<h4 class="subsec">표현</h4>
+<p>프레임마다 그래프 $G_t=(V_t,E_t)$ 를 만든다. 노드 집합은 공간 노드 1개, 활동 노드 1개, 그리고 물체 노드들 $V_t=\{v_t^{space},v_t^{act}\}\cup V_t^{obj}$ 이다. 물체 노드 속성은 $a_t(v)=[c_t,m_t,b^{3d}_t,x^{3d}_t,s_t]$ 로, 각각 의미 클래스, 마스크/크롭 참조, 대략적 3D 크기, 상대 3D 위치, 텍스트 상태 서술이다. 엣지는 in, on, near, 일반 spatial_relation 등을 담는다.</p>
+<p>프레임 노드를 시간축으로 묶어 지속 트랙(persistent track) $p$ 를 만들면 표현이 4D가 된다. 동적 트랙의 앵커 상대 상태는</p>
+<p>$z_t(p)=(a_t,d_t,u_t,s_t)$</p>
+<p>로, 지배적 근접 앵커, 대략적 상대 거리, 상대 방향/배치 단서, 현재 텍스트 상태다. 동적 물체의 지배 앵커가 바뀌고 그 새 상태가 한동안 유지되면 시간 이벤트를 기록한다.</p>
+<p>$e_i=(p,[t_s,t_e],a^{-},a^{+},r_i)$</p>
+<p>여기서 $[t_s,t_e]$ 는 이벤트 구간, $a^{-},a^{+}$ 는 출발·도착 앵커, $r_i$ 는 주변 행동/상호작용 맥락에서 뽑은 짧은 근거 문구다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>구성 요소</th><th>저장 필드와 역할</th></tr></thead><tbody><tr><td>Frame node</td><td>의미 클래스, 마스크/크롭 참조, 상대 3D 박스, 상대 3D 위치, 텍스트 상태, 장소 연결 — $G_t$ 구성</td></tr><tr><td>Frame edge</td><td>주어, 술어, 목적어, 선택적 점수, 상대 공간 단서 — 한 프레임 내 관계 구조 보존</td></tr><tr><td>Persistent track</td><td>지속 ID, 의미 클래스, 시간 구간, static/dynamic 플래그 — 시간축 연결</td></tr><tr><td>Temporal event</td><td>지속 ID, 시간 구간, 출발 앵커, 도착 앵커, 국소 근거 — 앵커 상대 변화 기록</td></tr><tr><td>Retrieval-plus doc</td><td>시간 구간, 장소, 활동, 주요 물체, 물체 상태, 상호작용 요약, 엣지 요약, 어휘 토큰, 선택적 설명 필드 — 검색·QA용</td></tr></tbody></table></div>
+<h4 class="subsec">검색용 메모리 (Retrieval+)</h4>
+<p>프레임 그래프와 이벤트는 하루 단위 영상에 대해 너무 국소적이고 너무 많다. 그래서 활동 중심 구간 $S_k$ 단위로 메모리 문서를 쓴다.</p>
+<p>$m_k=(\tau_k,\ell_k,\alpha_k,\mathcal{O}_k,\mathcal{Z}_k,\mathcal{R}_k,\mathcal{I}_k,\mathcal{T}_k,\mathcal{Y}_k)$</p>
+<p>각각 시간 구간, 장소, 활동, 주요 물체 집합, 앵커 상대 물체 상태, 엣지·관계 요약, 상호작용/어휘 변형 단서, 검색 토큰, why 질문용 선택적 설명 필드다. 문서는 결정론적 쓰기 연산자로 만든다.</p>
+<p>$m_k=h(\{G_t\}_{t\in S_k},\{e_i\}_{e_i\cap S_k\neq\emptyset})$</p>
+<p>이 설계는 질문 유형과 바로 맞물린다. where는 장소·앵커 관계에, when은 시간 구간·앵커 변화에, 물체 상태 질문은 주요 물체·상태·엣지 요약에, why는 설명 필드에 각각 매칭된다.</p>
+<h4 class="subsec">파이프라인 (5단계)</h4>
+<ol>
+<li><strong>의미 에피소드 구성</strong>: 하루치 영상을 활동 축과 장소 축 두 갈래로 분할한다. 각 구간은 $\sigma_k=(\tau_k,\ell_k,\alpha_k,C_k)$ (시간 구간, 장소 라벨, 활동 라벨, 통제된 물체 집합)로 표현된다. 장소 구간은 앵커 발견을 안정시키고, 활동 구간은 메모리를 쓰는 더 촘촘한 시간 단위가 된다.</li>
+<li><strong>2D/3D 비주얼 프론트엔드</strong>: SAM 3 방식의 promptable video segmentation을 쓰되, 프롬프트를 고정 검출기 어휘가 아니라 <strong>에피소드 의미(활동/장소 라벨 + 통제된 물체 집합 $C_k$)</strong> 에서 만든다. 덕분에 open-vocabulary 탐색 공간이 하루 전체가 아니라 에피소드 범위로 제한된다. 이어 SAM 3D 방식으로 location_3d, bounding_box_3d, 쌍별 공간 관계 정도의 최소 3D 증거만 뽑는다(조밀 재구성 아님).</li>
+<li><strong>프레임 그래프 구성과 지속 연결</strong>: 의미 호환성, 대략적 3D 크기 연속성, 상대 3D 위치 연속성, 인근 앵커와의 이웃 일관성으로 노드를 프레임 간에 잇는다. 연결 정책은 보수적이라, 관측이 크게 어긋나면 강제로 합치지 않고 트랙을 쪼갠다. 흐림이나 occlusion(물체가 가려지는 현상)으로 한 프레임에서 물체가 빠지면 새 상태를 지어내는 대신 이웃 트랙 근거를 유지한다. 앵커는 장소가 일관된 구간 안에서 움직임이 적게 반복 등장하는 물체로 추론한다.</li>
+<li><strong>메모리 쓰기</strong>: 시간 이벤트 스트림과 구간 단위 Retrieval+ 문서, 두 뷰를 함께 쓴다.</li>
+<li><strong>QA</strong>: 질문을 원시 프레임이 아니라 메모리 항목에 대한 검색 질의로 바꾸고, 상위 $k=8$ 문서를 뽑아 구조화 필드를 텍스트로 펼쳐 근거로 쓴다. 보수적인 <strong>option-blind retrieval</strong> 프로토콜에서는 답 보기를 검색이 끝난 뒤 최종 객관식 프롬프트에서만 노출한다.</li>
+</ol>
+<p>한 가지 설계 미덕은 무거운 단일 재구성 단계가 없다는 점이다. 오류가 국소에 머문다 — 마스크 하나를 놓치면 에피소드 하나가 영향받지만, 전역 맵이 무너지면 하루 전체로 번진다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p><strong>설정</strong>: EgoLifeQA의 공개 A1_JAKE 단일 피험자 QA 파일(7일치, 4지선다 500문항)에서 who를 제외한 물체 관련 255문항을 추린다. 이 중 when 72문항, why 15문항, 목표 시각 메타데이터 접근 가능 149문항. 평가 지표는 정확도. 답변 모델은 모든 파이프라인이 Qwen3.5-27B로 통일. 정량 실험에 쓴 Day1-A1-JAKE 스트림은 5개 세션, 828개 클립, 유효 06:51:50.52 분량이다.</p>
+<p><strong>주 결과</strong> (Overall은 255문항, When은 72문항 기준, %):</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th>프로토콜</th><th class="num">Overall</th><th class="num">When</th></tr></thead><tbody><tr><td>Plain RAG</td><td>question-only retrieval</td><td class="num">29.4</td><td class="num">27.8</td></tr><tr><td>EgoRAG-Text</td><td>question-only retrieval</td><td class="num">32.9</td><td class="num">30.6</td></tr><tr><td>VLM-only</td><td>question-only retrieval</td><td class="num">29.8</td><td class="num">20.8</td></tr><tr><td><strong>R4DSG Retrieval+</strong></td><td>question-only retrieval</td><td class="num"><strong>39.6</strong></td><td class="num"><strong>43.1</strong></td></tr><tr><td>EMQA-style episodic</td><td>option-blind retrieval</td><td class="num">32.2</td><td class="num">30.6</td></tr><tr><td>AMEGO-inspired active</td><td>option-blind retrieval</td><td class="num">36.1</td><td class="num">37.5</td></tr><tr><td>No-Transition obj.-rel.</td><td>option-blind retrieval</td><td class="num">34.9</td><td class="num">34.7</td></tr><tr><td><strong>R4DSG Retrieval+</strong></td><td>option-blind retrieval / no-why</td><td class="num"><strong>37.3</strong></td><td class="num"><strong>43.1</strong></td></tr></tbody></table></div>
+<p>질문만으로 검색할 때 EgoRAG-Text 대비 전체 6.7점, when에서 12.5점 앞선다. 보수적인 option-blind 조건에서도 AMEGO 스타일 베이스라인을 각각 1.2점, 5.6점 앞선다. 특히 눈여겨볼 것은 <strong>No-Transition 대조군</strong>이다. 이쪽은 R4DSG와 똑같은 캐시된 시각 증거와 국소 관계를 쓰되 구간을 넘는 지속 정체성과 앵커 전이 기록만 뺐는데도 성능이 낮다. 이득이 단순한 물체/관계 나열이 아니라 <strong>지속 정체성 + 앵커 전이 메모리</strong>에서 온다는 뜻이다.</p>
+<p><strong>why 지향 메모리 (탐색적)</strong>: Retrieval+에 reason, purpose, utility, why_summary 네 설명 필드를 추가한다. 이 필드는 정답이나 보기를 보지 않고 국소 구간/활동 맥락에서 QA 이전에 생성된다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>지표</th><th class="num">Retrieval+</th><th class="num">WhyMemory</th></tr></thead><tbody><tr><td>Overall (255문항)</td><td class="num">39.6</td><td class="num">40.0</td></tr><tr><td>Why (15문항)</td><td class="num">33.3</td><td class="num">40.0</td></tr></tbody></table></div>
+<p>why 부분집합이 15문항뿐이라 저자들도 이 결과를 탐색적이라고 못 박는다.</p>
+<p><strong>메모리 압축 단위 비교</strong>:</p>
+<div class="tbl-wrap"><table><thead><tr><th>지표</th><th class="num">Event-only</th><th class="num">Low-compression</th><th class="num">Episodic-only</th><th class="num">Hybrid</th><th class="num">Retrieval+</th></tr></thead><tbody><tr><td>Overall</td><td class="num">33.7</td><td class="num">34.5</td><td class="num">35.7</td><td class="num">34.1</td><td class="num"><strong>39.6</strong></td></tr><tr><td>When</td><td class="num">27.8</td><td class="num">34.7</td><td class="num">34.7</td><td class="num">26.4</td><td class="num"><strong>43.1</strong></td></tr></tbody></table></div>
+<p>이벤트만 남기면 국소 맥락이 부족하고, 에피소드 요약만 쓰면 변화 신호가 희석된다. Retrieval+는 전이 정보와 장소·활동·물체·상호작용 단서를 함께 유지하는 중간 입도라서 가장 잘 맞는다(다만 논문은 이 비교가 인과 기전을 분리한 것은 아니라고 명시한다).</p>
+<p><strong>메모리 규모</strong>:</p>
+<div class="tbl-wrap"><table><thead><tr><th>항목</th><th>값</th></tr></thead><tbody><tr><td>클립 / 프레임 정보 항목</td><td>828 / 2,476</td></tr><tr><td>활동 / 장소 에피소드</td><td>178 / 114</td></tr><tr><td>Retrieval+ 문서 / JSON 크기</td><td>134 / 0.58 MB</td></tr><tr><td>문서당 평균 공백 토큰 수</td><td>158.5</td></tr></tbody></table></div>
+<p>하루치 영상 약 7시간이 문서 134개, 0.58 MB로 줄어든다는 점이 실용적 함의다. 웨어러블 어시스턴트나 AR 시스템이 들고 다닐 만한 크기다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>평가 범위가 매우 좁다.</strong> 공개된 EgoLifeQA A1_JAKE 단일 피험자 분할 255문항이 전부고, 저자들도 다중 피험자 일반화를 주장하지 않는다고 명시한다. why 부분집합은 15문항이라 통계적으로 약하다.</li>
+<li><strong>절대 정확도가 낮다.</strong> 4지선다에서 최고 39.6%로, 우연 수준(25%)보다는 확실히 높지만 실용 수준과는 거리가 있다.</li>
+<li><strong>실패 모드</strong>: 에피소드 누락, 트랙 파편화·중복, 앵커가 뒤엉킨 잡다한 장면, 검색 실패, 인과·사회적 맥락 부족.</li>
+<li>파이프라인 출력이 사람이 검증한 인지 벤치마크가 아니다. 즉 씬 그래프 자체의 정확도는 따로 측정되지 않았다.</li>
+<li>메모리가 <strong>회고적·오프라인</strong>이고 날짜를 넘는 지속성이 제한적이다. 온라인 갱신, 더 강한 정체성 유지, 다중 피험자 검증이 향후 과제.</li>
+<li>의미 에피소드 구성이 EgoLife가 공개한 활동/장소 구간과 통제된 물체 어휘에 기대고 있어, 이 주석이 없는 환경에서의 자립성은 논문에 명시적 언급이 없다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Egocentric Vision</strong> — 이 논문의 진짜 기여는 모델이 아니라 <strong>메모리 표현의 설계 결정</strong>이다. &quot;전역 좌표계를 포기하고 상대 앵커로 간다&quot;는 선택은 웨어러블 데이터의 물리적 현실(자유 이동, 부분 관측, 캘리브레이션 부재)에 정직하게 대응한 것으로, 1인칭 영상을 다루는 어떤 파이프라인에도 이식 가능한 발상이다. 특히 No-Transition 대조군 실험은 &quot;같은 시각 증거를 갖고도 지속 정체성과 전이 기록을 빼면 성능이 떨어진다&quot;는 것을 깔끔하게 보여줘서, 표현 설계의 가치를 분리해내는 실험 구성 자체가 참고할 만하다.</p>
+<p><strong>Hand-Object Interaction</strong> — 앵커 전이 이벤트 $e_i=(p,[t_s,t_e],a^{-},a^{+},r_i)$ 는 사실상 &quot;손이 물체를 A에서 B로 옮긴 사건&quot;의 축약 표현이다. 다만 이 논문은 손을 명시적으로 모델링하지 않고, 전이의 근거 $r_i$ 를 주변 활동/상호작용 맥락에서 텍스트로만 끌어온다. 손-물체 접촉(contact), 파지(grasp) 시점, 조작 유형을 명시적 신호로 넣으면 (a) 전이 이벤트의 시작·종료 시각이 훨씬 날카로워지고, (b) why 질문의 근거가 추측이 아닌 관측이 된다. 실제로 when이 가장 큰 향상 폭(+12.5점)을 보였고 저자들도 &quot;가장 뚜렷한 이득은 when&quot;이라고 인정하는데, 손 상호작용 신호는 정확히 그 축을 더 밀어붙일 수 있는 지점이다. 반대로 이 논문의 앵커/동적 물체 이분법은 HOI 연구에서 &quot;조작 대상 후보&quot;를 값싸게 좁히는 사전 필터로도 쓸 수 있다.</p>
+<p><strong>Spatial Audio</strong> — 논문은 순수 RGB 파이프라인이라 오디오를 전혀 쓰지 않는다. 그런데 실패 모드로 지목한 것들(에피소드 누락, 가려짐으로 인한 트랙 끊김, 잡다한 앵커) 중 상당수는 공간 오디오가 보완해줄 수 있는 영역이다. 냉장고 문 닫히는 소리, 컵을 내려놓는 충격음, 가방 지퍼 소리 같은 접촉·상태 변화 사건은 시각적으로 가려져 있어도 소리로는 잡히고, 양이(binaural) 단서가 있으면 &quot;어느 방향의 앵커에서 났는지&quot;까지 좁힐 수 있다. 즉 오디오는 앵커 전이의 <strong>시각(timing) 정밀도</strong>와 <strong>occlusion 구간 보간</strong>이라는 두 가지로 이 메모리 구조에 자연스럽게 끼워 넣을 수 있다. 메모리 스키마 $m_k$ 에 음향 이벤트 필드를 하나 더 얹는 식의 확장이 곧바로 그려지고, 문서당 평균 158.5 토큰이라는 여유로운 예산도 그런 확장을 감당할 만하다.</p>
+  </div>
+</article>
+<article class="card" id="paper2">
+  <div class="card-head" style="border-left-color:#0ea5e9">
+    <span class="topic-tag" style="background:#0ea5e9">Egocentric Vision</span>
+    <h2>Ego2Robot: Scalable Robot Data Synthesis from Egocentric Human Data</h2>
+    <p class="lead">1인칭(egocentric) 손 조작 영상을 로봇 팔 영상+행동 데이터로 바꿔주는 파이프라인을 대규모로 돌려 15종 로봇 형태에 걸친 18,561시간짜리 합성 데이터셋을 만들고, 이를 실제 로봇 데이터와 섞어 사전학습하면 VLA 정책의 분포 밖(OOD) 일반화가 좋아진다는 것을 처음으로 규모 있게 검증한 연구다.</p>
+    <div class="authors">Ye Wang, Pei Lin, Xiong-Hui Chen, Haoqi Yuan, Zhixuan Liang, Yiyang Huang, Anzhe Chen, Zixing Lei, Jie Zhang, Tao Zhang, Haoyang Li, Tong Zhang, Chenxi Xiao, Ziyuan Jiao, Qin Jin — AIM3 Lab (Renmin University of China), Qwen Team (Alibaba Inc.), ShanghaiTech University, BIGAI, Beihang University</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-03</span> · <span class="pub-venue">🏛 프리프린트 (arXiv, cs.RO / Comments 필드 없음)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.02580" target="_blank">arXiv:2608.02580</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.02580" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.02580" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2608.02580v1/fig1_ego2r_pipeline.png" alt="1인칭 영상을 행동 정렬·시각 정렬·품질 선별 3단계로 통과시켜 15종 로봇용 학습 데이터로 바꾸는 전체 파이프라인" loading="lazy"><figcaption>1인칭 영상을 행동 정렬·시각 정렬·품질 선별 3단계로 통과시켜 15종 로봇용 학습 데이터로 바꾸는 전체 파이프라인</figcaption></figure>
+<p>Figure 1: 사람 손이 나오는 1인칭 영상 → (1) 손 포즈를 그리퍼 궤적으로 리타게팅하는 action alignment, (2) 사람 팔을 지우고 렌더링한 로봇 팔을 합성하는 visual alignment, (3) 3단계 품질 필터링을 거쳐 15종 로봇 형태에 대해 총 18,561시간의 로봇 학습 데이터를 뽑아내는 흐름.</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>로봇 데이터 스케일링</strong>: Open X-Embodiment, <a href="https://arxiv.org/abs/2403.12945" target="_blank">DROID</a>, <a href="https://arxiv.org/abs/2503.06669" target="_blank">AgibotWorld</a> 같은 대규모 로봇 시연 데이터셋과 <a href="https://arxiv.org/abs/2402.10329" target="_blank">UMI</a> 류의 휴대형 수집 장치가 데이터 양을 늘려 왔다. 그래도 수집 비용과 하드웨어 제약 탓에 다양성이 금방 한계에 부딪힌다.</li>
+<li><strong>사람 영상 활용</strong>: 사람 조작 영상으로 시각 표현을 미리 학습하거나(<a href="https://arxiv.org/abs/2203.12601" target="_blank">R3M</a>, <a href="https://arxiv.org/abs/2210.00030" target="_blank">VIP</a>), 보상 함수·모션 prior·포인트 트래킹을 뽑아내는 갈래가 있다. 다만 이들은 결국 embodiment(로봇 몸체) 격차를 메우기 위해 로봇 데이터에 다시 의존한다.</li>
+<li><strong>retarget-and-render 계열</strong>: Phantom, EgoMimic처럼 사람 손 동작을 로봇 기구학으로 리타게팅하고 사람 팔을 렌더링한 로봇 팔로 교체하는 방식이 있다. 태스크 하나짜리 소규모 실험에서는 좋은 성능을 냈다.</li>
+<li><strong>cross-embodiment 증강</strong>: <a href="https://arxiv.org/abs/2409.03403" target="_blank">RoviAug</a>, <a href="https://arxiv.org/abs/2402.19249" target="_blank">Mirage</a>, <a href="https://arxiv.org/abs/2512.13100" target="_blank">OXE-AugE</a>는 inpainting(가려진 영역 채우기)과 이미지 편집으로 &quot;로봇 A → 로봇 B&quot;의 시각 격차를 메운다.</li>
+<li><strong>일반화 벤치마크</strong>: <a href="https://arxiv.org/abs/2506.18088" target="_blank">RoboTwin 2.0</a>, LIBERO, CALVIN, RLBench 등은 여러 교란(perturbation)을 한꺼번에 걸고 하나의 점수만 보고한다. <a href="https://arxiv.org/abs/2402.08191" target="_blank">Colosseum</a>, <a href="https://arxiv.org/abs/2510.13626" target="_blank">LIBERO-Plus</a>처럼 교란 축을 분리한 벤치마크도 나왔지만 단일 팔 설정에 머물러 있다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<ol>
+<li><strong>규모 미검증</strong>: retarget-and-render 방식은 &quot;태스크 하나에 정책 하나&quot;라는 작은 규모에서만 검증됐다. 이렇게 합성한 데이터가 <strong>VLA(vision-language-action) 모델의 사전학습 데이터</strong>로서 값어치가 있는지, 특히 OOD 일반화를 끌어올리는지는 아무도 확인하지 않았다.</li>
+<li><strong>평가 해상도 부족</strong>: 기존 벤치마크는 시각·공간·embodiment·의미 변화를 뒤섞어 하나의 점수로 뭉뚱그린다. 그래서 성능이 올랐을 때 &quot;무엇 덕분에 올랐는지&quot; 짚어낼 수가 없다.</li>
+<li><strong>로봇 베이스가 없다는 근본 문제</strong>: 로봇→로봇 전이와 달리 1인칭 손 궤적에는 참조할 실제 로봇 받침대 위치가 존재하지 않는다. 팔을 어디에 세워야 궤적이 기구학적으로 실현 가능한지부터 새로 풀어야 한다.</li>
+</ol>
+<h3 class="sec">연구 주제</h3>
+<p>&quot;1인칭 사람 조작 영상 → 로봇 학습 데이터&quot; 변환을 <strong>사전학습 규모로 끌어올릴 수 있는가</strong>, 그리고 그렇게 만든 데이터가 <strong>어느 종류의 일반화에 기여하는가</strong>를 규명한다. 저자들의 가설은 간단하다. 몸체가 달라도 1인칭 조작 영상 안에는 옮겨 쓸 수 있는 상호작용 규칙성이 들어 있고, 제대로 정렬만 해주면 로봇 데이터를 보완할 수 있다는 것.</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">파이프라인 입력: 두 갈래</h4>
+<ul>
+<li><strong>Path A</strong>: 손 포즈 주석이 이미 달린 1인칭 데이터셋을 그대로 받는다.</li>
+<li><strong>Path B</strong>: 주석 없는 영상은 WiLoR로 프레임별 손 3D 복원을 하고 DynHaMR로 시간축 최적화를 건다. 긴 영상은 Qwen3.5로 자연어 설명이 붙은 서브태스크 단위로 쪼갠다.</li>
+</ul>
+<p>두 경로 모두 손 포즈를 얻은 뒤에는 동일한 파이프라인을 타고, 15종 로봇 형태에 대해 병렬로 데이터를 생성한다.</p>
+<h4 class="subsec">1단계 — Action Alignment (행동 정렬)</h4>
+<p>손 관절 21개를 평행 그리퍼(parallel-jaw gripper) 표현으로 압축한다.</p>
+<ul>
+<li>가상 손끝: $\mathbf{p}_{\text{vf}}=0.7\cdot\mathbf{p}_{\text{index}}+0.3\cdot\mathbf{p}_{\text{middle}}$</li>
+<li>TCP(tool center point)와 그리퍼 열림 폭: $\mathbf{p}_{\text{tcp}}=\frac{\mathbf{p}_{\text{thumb}}+\mathbf{p}_{\text{vf}}}{2},\quad w=\|\mathbf{p}_{\text{thumb}}-\mathbf{p}_{\text{vf}}\|$</li>
+<li>파지 자세는 오른손 좌표계 $\mathbf{R}=[\mathbf{x}\ \mathbf{y}\ \mathbf{z}]$로 정의하며, $\mathbf{z}=\frac{s\,(\mathbf{p}_{\text{thumb}}-\mathbf{p}_{\text{vf}})}{w}$ (파지 축), $\mathbf{y}=\frac{\mathbf{z}\times\mathbf{d}}{\|\mathbf{z}\times\mathbf{d}\|}$ (그리퍼 법선), $\mathbf{x}=\mathbf{y}\times\mathbf{z}$ (접근 축). 여기서 $\mathbf{d}=\mathbf{p}_{\text{vf}}-\mathbf{p}_{\text{wrist}}$이고 $s=+1$(오른손) / $s=-1$(왼손)이라 좌우 손이 같은 그리퍼 좌표계로 모인다.</li>
+<li><strong>시간 평활화</strong>: 위치·폭에는 Savitzky-Golay 필터, 회전에는 가우시안 가중 SLERP를 걸어 프레임별 검출 노이즈를 없앤다.</li>
+<li><strong>속도 정렬</strong>: 사람 손은 로봇 원격조작보다 훨씬 빠르다. 소스별로 프레임을 솎아내 속도 분포를 맞춘다 — ANT/EgoDex는 원본의 60%(약 1.7배 느리게), EgoVerse는 45%(약 2.2배), ViTRA는 25%(약 4배).</li>
+</ul>
+<h4 class="subsec">2단계 — Visual Alignment (시각 정렬)</h4>
+<ul>
+<li><strong>팔 분할</strong>: <a href="https://arxiv.org/abs/2511.16719" target="_blank">SAM 3</a>로 프레임마다 사람 팔 영역 마스크를 뽑는다(시간축으로 일관).</li>
+<li><strong>손 제거</strong>: ProPainter로 비디오 inpainting을 돌려 사람 팔을 지우고 뒤 배경을 복원한다.</li>
+<li><strong>로봇 베이스 위치 탐색</strong>: 이 논문의 핵심 기술적 기여. 궤적 $\{\mathbf{T}_{i}^{\text{ee}}\}_{i=1}^{N}$이 주어졌을 때, 키프레임 집합 $\mathcal{K}$에서 역기구학(IK)이 풀리는 비율을 최대화하는 베이스 자세를 찾는다.</li>
+<p>$\mathbf{T}_{\text{base}}^{*}=\arg\max_{\mathbf{T}_{\text{base}}}\frac{1}{|\mathcal{K}|}\sum_{k\in\mathcal{K}}\mathbb{1}\left[\text{IK}(\mathbf{T}_{\text{base}}^{-1}\mathbf{T}_{k}^{\text{ee}})\text{ is feasible}\right]$ 키프레임은 궤적의 공간적 극단(변위·회전 변화가 최대인 지점)을 덮도록 고르고, 후보 베이스 위치는 궤적 무게중심 주변 그리드 탐색으로 만들되 형태별 최대 도달거리 $r_{\text{max}}$로 제한한다. IK는 MuJoCo에서 푼다. 팔 길이와 관절 구성이 다르므로 15종 형태마다 따로 탐색한다.</p>
+<li><strong>깊이 인지 합성</strong>: 렌더링한 로봇을 원본 카메라 시점에서 그린 뒤 깊이 순서로 합성한다.</li>
+<p>$I_{\text{final}}(u,v)=I_{\text{robot}}(u,v)$ if $D_{\text{robot}}(u,v)&lt;D_{\text{scene}}(u,v)\land M_{\text{robot}}(u,v)=1$, 아니면 $I_{\text{inpaint}}(u,v)$. 장면 깊이는 깊이 센서 값이나 단안 깊이 추정으로 얻는다.</p>
+<li><strong>지원 형태 15종</strong>: Panda, UR5e, ARX-L5, xArm7, Sawyer, Kinova Gen3, IIWA, Jaco, FR3, UR10e, ViperX, WidowX, Piper, YAM, Aloha-Agilex.</li>
+</ul>
+<h4 class="subsec">3단계 — Quality Curation (3단계 품질 선별)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>레벨</th><th>무엇을 거르나</th></tr></thead><tbody><tr><td>L1 (파이프라인 내부)</td><td>IK 실패, 자기 충돌(self-collision), 행동 이상치, 작업공간 커버리지 부족 프레임</td></tr><tr><td>L2 (통계적)</td><td>극단적 행동값, 급격한 불연속, 무효 프레임 비율이 과도한 궤적</td></tr><tr><td>L3 (VLM 일관성)</td><td>비전-언어 모델이 합성 영상을 감사해 렌더링된 로봇 동작과 원래 조작 의도의 의미적 일치를 확인</td></tr></tbody></table></div>
+<h4 class="subsec">데이터 규모</h4>
+<div class="tbl-wrap"><table><thead><tr><th>1인칭 소스</th><th class="num">분량</th><th>비고</th></tr></thead><tbody><tr><td>ANT</td><td class="num">7h</td><td>저자들의 자체 pick-and-place 데이터셋, 손 포즈 주석 포함</td></tr><tr><td><a href="https://arxiv.org/abs/2505.11709" target="_blank">EgoDex</a></td><td class="num">732h</td><td></td></tr><tr><td><a href="https://arxiv.org/abs/2510.21571" target="_blank">ViTRA</a></td><td class="num">249h</td><td></td></tr><tr><td><a href="https://arxiv.org/abs/2604.07607" target="_blank">EgoVerse</a></td><td class="num">954h</td><td></td></tr><tr><td><strong>합계</strong></td><td class="num"><strong>약 1,940h</strong></td><td>15종 형태 처리 + 품질 선별 후 <strong>18,561시간</strong>의 합성 로봇 학습 데이터</td></tr></tbody></table></div>
+<p>각 샘플은 로봇이 합성된 영상 프레임, 그에 대응하는 <strong>카메라 좌표계 기준 상대 EEF 행동</strong>, 카메라 파라미터, 텍스트 지시문으로 구성된다. 1인칭 영상은 카메라 위치를 알 수 없고 제각각이라 월드 좌표계 행동 표현을 쓰면 영상마다 캘리브레이션이 필요하고 소스 간 행동 공간이 어긋난다. 관찰자 좌표계로 표현하면 서로 다른 카메라 설정과 로봇 형태를 자연스럽게 통합할 수 있다.</p>
+<h4 class="subsec">평가 프레임워크</h4>
+<p>RoboTwin 2.0을 확장해 <strong>독립 교란 설정 11개</strong>와 카메라 좌표계 상대 EEF 지원을 추가하고, 여기에 EBench(Isaac Sim, 정밀 테이블탑 태스크 7개, 카메라가 더 높이 달려 1인칭 시점에 가까움)를 덧붙였다. 총 4개 축, 12개 평가 설정:</p>
+<div class="tbl-wrap"><table><thead><tr><th>축</th><th>세부 설정</th></tr></thead><tbody><tr><td>Visual Appearance</td><td>배경 텍스처, 조명, 로봇 색상(모든 링크에 랜덤 색조 이동)</td></tr><tr><td>Scene Layout</td><td>테이블 높이 $\pm$4cm, 방해 물체(distractor), 카메라 시점 오프셋 $\pm$5cm</td></tr><tr><td>Embodiment</td><td>기본 Aloha-Agilex 대신 UR5-WSG / ARX-X5 / Franka Panda로 zero-shot 교체(초기 EEF 자세는 IK로 정렬)</td></tr><tr><td>Task Semantics</td><td>학습 때 못 본 물체 인스턴스로 50개 태스크 평가, 구어체로 바꿔 쓴 지시문 505개</td></tr></tbody></table></div>
+<h4 class="subsec">모델·학습 설정</h4>
+<p>Qwen3.5-4B를 비전-언어 백본으로, Diffusion Transformer(DiT)를 행동 헤드로 쓴다. 카메라 좌표계 상대 EEF 표현으로 32스텝 행동 청크를 8 diffusion step에 예측한다. 사전학습은 모든 설정이 동일 하이퍼파라미터(GPU 8장, GPU당 배치 12, lr $1\text{e-5}\rightarrow1\text{e-6}$ 코사인 감쇠, bf16, 200K step)로 돌아 <strong>처리하는 샘플 수가 약 19.2M 프레임으로 같다</strong>. 데이터셋 크기 차이가 아니라 데이터 구성 차이만 비교하겠다는 설계다. 파인튜닝은 ColorJitter 증강으로 50K step. 비교 대상은 (i) robot-only(DROID + AgibotWorld + <a href="https://arxiv.org/abs/2511.16651" target="_blank">InternData-A1</a>, 약 6,565h)와 (ii~iv) Ego2R을 로봇 데이터와 1:3, 3:1, 1:1로 섞은 구성. 파인튜닝은 RoboTwin의 clean 설정 50개 태스크(태스크당 시연 50개), 평가는 교란 설정별 태스크당 50 에피소드.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">메인 결과 (성공률 %, Table 1)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>사전학습 구성</th><th class="num">RoboTwin Clean</th><th class="num">Rand</th><th class="num">Visual</th><th class="num">Scene</th><th class="num">Embody</th><th class="num">Task</th><th class="num">EBench Avg</th></tr></thead><tbody><tr><td>Robot-only</td><td class="num">62.2</td><td class="num">50.9</td><td class="num">61.4</td><td class="num">52.9</td><td class="num">23.8</td><td class="num">46.2</td><td class="num">39.6</td></tr><tr><td>Ego2R+Robot (1:3)</td><td class="num">61.4 (−0.8)</td><td class="num">51.0 (+0.1)</td><td class="num">61.2 (−0.2)</td><td class="num">52.5 (−0.4)</td><td class="num">21.9 (−1.9)</td><td class="num">49.5 (+3.3)</td><td class="num">47.4 (+7.8)</td></tr><tr><td>Ego2R+Robot (3:1)</td><td class="num">64.1 (+1.9)</td><td class="num">49.2 (−1.7)</td><td class="num">62.7 (+1.3)</td><td class="num">54.3 (+1.4)</td><td class="num"><strong>28.2 (+4.4)</strong></td><td class="num">51.6 (+5.4)</td><td class="num"><strong>51.7 (+12.1)</strong></td></tr><tr><td>Ego2R+Robot (1:1)</td><td class="num"><strong>68.1 (+5.9)</strong></td><td class="num"><strong>53.5 (+2.6)</strong></td><td class="num"><strong>67.3 (+5.9)</strong></td><td class="num"><strong>56.9 (+4.0)</strong></td><td class="num">27.2 (+3.4)</td><td class="num"><strong>54.1 (+7.9)</strong></td><td class="num">49.8 (+10.2)</td></tr></tbody></table></div>
+<p>1:1 구성이 7개 열 중 5개에서 1위다. 특히 Clean 성능(68.1%)을 희생하지 않으면서 OOD 성능이 같이 올랐다는 점이 중요하다. 반면 1:3(합성 데이터 비중이 낮은 쪽)은 이득이 거의 없어, 합성 데이터를 <strong>충분히 많이</strong> 섞어야 효과가 난다는 신호다.</p>
+<h4 class="subsec">교란별 세부 분해 (성공률 %, Table 2)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>사전학습</th><th class="num">BG</th><th class="num">Light</th><th class="num">Color</th><th class="num">Height</th><th class="num">Clutter</th><th class="num">Camera</th><th class="num">ARX</th><th class="num">UR5</th><th class="num">Franka</th><th class="num">Obj</th><th class="num">Lang</th></tr></thead><tbody><tr><td>Robot-only</td><td class="num">66.6</td><td class="num">58.2</td><td class="num">59.4</td><td class="num">60.1</td><td class="num">48.3</td><td class="num">50.4</td><td class="num">44.1</td><td class="num">20.2</td><td class="num">7.0</td><td class="num">29.3</td><td class="num">63.1</td></tr><tr><td>Ego2R+Robot (1:3)</td><td class="num">65.0</td><td class="num">58.3</td><td class="num">60.3</td><td class="num">58.6</td><td class="num">49.3</td><td class="num">49.6</td><td class="num">43.7</td><td class="num">17.6</td><td class="num">4.5</td><td class="num">36.8</td><td class="num">62.2</td></tr><tr><td>Ego2R+Robot (3:1)</td><td class="num">65.5</td><td class="num">60.9</td><td class="num">61.8</td><td class="num">62.0</td><td class="num">49.2</td><td class="num">51.6</td><td class="num">47.6</td><td class="num"><strong>31.4</strong></td><td class="num">5.6</td><td class="num"><strong>40.0</strong></td><td class="num">63.1</td></tr><tr><td>Ego2R+Robot (1:1)</td><td class="num"><strong>70.3</strong></td><td class="num"><strong>65.8</strong></td><td class="num"><strong>65.8</strong></td><td class="num"><strong>62.4</strong></td><td class="num"><strong>52.0</strong></td><td class="num"><strong>56.3</strong></td><td class="num"><strong>51.2</strong></td><td class="num">25.0</td><td class="num">5.3</td><td class="num">39.6</td><td class="num"><strong>68.5</strong></td></tr></tbody></table></div>
+<ul>
+<li><strong>시각 외형에서 가장 크게 이득</strong>: 1:1이 배경(+3.7), 조명(+7.6), 로봇 색상(+6.4) 세 항목 모두 개선. 배경·조명은 1인칭 영상의 장면 다양성에서, 로봇 색상은 15종 형태를 렌더링한 데서 온다.</li>
+<li><strong>장면 배치는 중간 정도</strong>: 카메라 오프셋 강건성이 1:1에서 +5.9. 1인칭 영상은 원래 머리 자세와 시점이 다양하기 때문이라는 해석.</li>
+<li><strong>embodiment 전이</strong>: ARX가 44.1 → 51.2(1:1), UR5는 3:1에서 31.4로 정점. 다만 <strong>Franka는 7% 아래에 머문다</strong> — 학습 embodiment와의 기구학 격차가 너무 크다.</li>
+<li><strong>태스크 의미</strong>: 못 본 물체 일반화가 29.3 → 40.0(+10.7, 3:1), 바꿔 쓴 지시문 강건성이 68.5%(1:1).</li>
+<li><strong>EBench</strong>: 카메라가 더 높이 달려 1인칭 시점에 가까운 벤치마크에서 3:1이 51.7(+12.1)로 최고. 시점 편향이 부분적으로 맞아떨어질 때 co-training 이득이 증폭된다는 시사점.</li>
+</ul>
+<h4 class="subsec">Ablation — 파이프라인 자체의 값어치 (RoboTwin Randomized 성공률, 로봇 데이터 없이 ego만으로 사전학습)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>구성</th><th class="num">성공률 (%)</th></tr></thead><tbody><tr><td>가공 안 한 raw ego co-training</td><td class="num">28.1</td></tr><tr><td>Ego2R (형태 1종)</td><td class="num">31.7 (+3.6)</td></tr><tr><td>Ego2R (형태 15종)</td><td class="num">33.5</td></tr><tr><td>Ego2R(15종) + raw ego 추가</td><td class="num"><strong>37.3</strong></td></tr></tbody></table></div>
+<p>파이프라인의 시각·행동 정렬만으로 +3.6이 붙고, 형태를 1종에서 15종으로 늘리면 계속 오른다. 흥미롭게도 raw ego 데이터를 15종 Ego2R 옆에 같이 넣으면 37.3까지 뛰는데, 저자들은 raw ego가 &quot;시각 외형과 행동 분포가 약간 다른 16번째 형태&quot;처럼 작동해 사전학습 다양성을 더 풍부하게 만든다고 해석한다.</p>
+<h4 class="subsec">실제 로봇 실험</h4>
+<p>ARX ACone 플랫폼에서 장기 태스크 5개(과일을 바구니에 담기, 블록을 서랍에 넣기, 수건 접기, 쓰레기를 쓰레받기로 쓸어 담기, 나사 삽입)를 평가했다. 태스크당 원격조작 시연 20개를 모으고, 추가로 장면당 약 7분짜리 1인칭 &quot;놀이(play)&quot; 영상을 찍어 파이프라인에 통과시켜 ACone 전용 합성 시연을 만들었다. 세 구성을 비교했다 — Robot-only 사전학습, Mix(Ego2R+Robot 1:1) 사전학습, 그리고 Mix + Ego2R Play(원격조작 시연에 파이프라인이 변환한 ego-play 데이터를 1:1로 섞어 파인튜닝).</p>
+<p>Mix + Ego2R Play가 5개 태스크 전부에서 최고 성적을 냈고, 특히 Put Blocks에서 +14, Insert Screw에서 +13(Robot-only 대비)의 이득을 보였다. <strong>아무렇게나 찍은 1인칭 영상도 파이프라인만 태우면 쓸 만한 학습 신호가 된다</strong>는 것을 보여준 대목이다.</p>
+<h4 class="subsec">연구 의의</h4>
+<p>&quot;소규모 태스크별 정책&quot;에 머물던 retarget-and-render를 <strong>VLA 사전학습 규모</strong>로 처음 밀어붙였고, 교란 축을 분리한 평가로 그 이득이 궤적 커버리지가 넓어져서가 아니라 <strong>불변성(invariance)과 분포 간 강건성</strong>에서 온다는 것을 실증했다. 18,561시간은 현재까지 최대 규모의 ego-to-robot 데이터셋이다.</p>
+<h3 class="sec">한계</h3>
+<p>논문이 스스로 밝힌 세 가지.</p>
+<ol>
+<li><strong>손가락 관절 정보 손실</strong>: 손 포즈를 평행 그리퍼로 리타게팅하면서 세밀한 손가락 관절 움직임을 버린다. 다관절 dexterous hand로 확장하면 옮길 수 있는 스킬 범위가 넓어질 것이다.</li>
+<li><strong>렌더링 아티팩트</strong>: 시각 정렬이 inpainting과 깊이 기반 합성에 기대다 보니 occlusion(물체가 가려지는 현상)이 심하거나 조명이 복잡하면 인공물이 생긴다. 생성 모델로 렌더링 충실도를 높이는 게 다음 과제.</li>
+<li><strong>평가 범위</strong>: RoboTwin2.0의 태스크 범위 안에서만 평가했다.</li>
+</ol>
+<p>측정치가 드러내는 한계도 있다. <strong>Franka Panda로의 zero-shot 전이는 어떤 구성에서도 7% 아래</strong>로, 기구학 격차가 크면 15종 형태 노출만으로는 메워지지 않는다. 또 혼합 비율이 결과를 크게 좌우해서 1:3은 사실상 무효고, RoboTwin에서는 1:1이, EBench에서는 3:1이 최고라 <strong>어떤 비율이 최적인지 벤치마크마다 달라진다</strong> — 이 선택을 원리적으로 정하는 방법은 논문에 명시적 언급이 없다.</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Egocentric Vision 관점</strong></p>
+<ul>
+<li>1인칭 영상을 &quot;인식(recognition)을 위한 데이터&quot;가 아니라 <strong>행동 생성의 supervision 원천</strong>으로 재해석한 사례다. EgoDex, EgoVerse, ViTRA 같은 기존 1인칭 데이터셋이 손 포즈 주석만으로도 로봇 학습 자산이 될 수 있다는 걸 보여준다.</li>
+<li>카메라 좌표계 상대 EEF 표현은 흥미로운 설계다. 1인칭 영상은 카메라(=머리) 위치를 알 수 없으므로 <strong>관찰자 중심 좌표계</strong>로 행동을 표현해 소스 간 이질성을 흡수한다. 이는 1인칭 비전에서 흔히 마주치는 &quot;카메라 pose를 모른다&quot;는 문제에 대한 실용적 대응이며, 우리 쪽에서 1인칭 데이터를 다룰 때도 참고할 만한 정규화 전략이다.</li>
+<li>1인칭 영상의 <strong>머리 움직임 다양성</strong>이 카메라 오프셋 강건성(+5.9)으로 직결됐다는 관찰은, 그동안 노이즈로 취급되던 머리 흔들림이 오히려 유용한 증강 신호라는 뜻이다.</li>
+<li>EBench(카메라를 높이 달아 1인칭 시점에 가까움)에서 이득이 가장 컸다는 점은 <strong>시점 정렬(viewpoint alignment)이 전이 효율을 좌우한다</strong>는 강한 증거다. 1인칭 데이터를 다른 도메인에 옮길 때 시점 편향을 먼저 맞춰야 한다.</li>
+</ul>
+<p><strong>Hand-Object Interaction 관점</strong></p>
+<ul>
+<li>21개 손 키포인트를 그리퍼 표현으로 압축하는 방식(가상 손끝 = 검지 0.7 + 중지 0.3, TCP = 엄지와 가상 손끝의 중점, 열림 폭 = 두 점 사이 거리)은 단순하지만 좌우 손을 하나의 좌표계로 통일하는 $s=\pm1$ 트릭까지 포함해 실용적이다. HOI 표현을 다운스트림 제어로 옮길 때 참고할 만한 최소 표현.</li>
+<li>다만 이 압축은 <strong>손가락 관절(articulation)을 통째로 버린다</strong>. 정밀 파지, 도구 사용, 손 안 조작(in-hand manipulation) 같은 HOI 연구 주제와는 정면으로 어긋나는 지점이라, dexterous hand 리타게팅으로 확장하는 게 자연스러운 후속 방향이다.</li>
+<li>WiLoR + DynHaMR로 in-the-wild 영상에서 손 포즈를 뽑고 SAM 3로 팔을 분할한 뒤 ProPainter로 지우는 조합은, 손-객체 상호작용 영상 전처리 스택으로 그대로 재사용할 수 있다.</li>
+<li><strong>사람 손 속도가 로봇보다 훨씬 빠르다</strong>는 관찰(소스에 따라 1.7~4배 다운샘플링이 필요)은 HOI 데이터의 시간 통계가 로봇 도메인과 근본적으로 다르다는 뜻이다. 시간 정규화를 하지 않으면 전이가 깨진다.</li>
+</ul>
+<p><strong>Spatial Audio 관점</strong></p>
+<ul>
+<li>이 논문은 오디오를 전혀 쓰지 않는다(영상 + 행동 + 텍스트만). 하지만 로봇 베이스 위치 탐색과 깊이 기반 합성이 결국 <strong>1인칭 관찰자를 기준으로 한 3D 공간 정합</strong> 문제라는 점에서, 관찰자 중심 좌표계로 공간 정보를 통일한다는 발상 자체는 공간 음향과 결이 같다.</li>
+<li>확장 여지: 나사 삽입, 쓰레기 쓸어 담기 같은 접촉이 많은 태스크에서는 접촉음이 상태 전이의 강한 단서가 된다. 1인칭 영상의 오디오 트랙을 품질 선별(L3 VLM 감사)이나 서브태스크 분할에 쓰면 지금의 시각 전용 파이프라인을 보완할 수 있을 것이다. 물론 사람 팔을 지우고 로봇을 합성하는 과정에서 시각은 바뀌어도 오디오는 그대로 남으므로, 오디오-비주얼 정합이 깨진다는 새로운 문제도 함께 생긴다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper3">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>MAD-HOI: Masked Autoregressive Diffusion for Generating Articulated Hand Object Interactions from Text</h2>
+    <p class="lead">손·객체 움직임을 이산 토큰이 아닌 <strong>연속 잠재공간</strong>에 물체/왼손/오른손 세 갈래로 분리해 담고, 마스킹 기반 자기회귀 트랜스포머 + 플로우 매칭 헤드로 생성함으로써 접촉 디테일을 지키면서도 가변 길이·합성 동작·완성/중간채움·자동 종료까지 <strong>단일 학습 목표 하나로</strong> 해내는 텍스트-투-HOI 생성 모델이다.</p>
+    <div class="authors">Ananya Bal, Kartik Sharma, Ethan Lai, Samyak Tiwari, Liza Dahiya, Chaitanya Chawla, László A. Jeni (Carnegie Mellon University)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-10</span> · <span class="pub-venue">🏛 프리프린트 (Comments: 17 pages, 9 figures, 8 tables — 발표처 명시 없음)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.10162" target="_blank">arXiv:2608.10162</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.10162" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.10162" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2608.10162v1/images/Arch_MAD-HOI.png" alt="좌: 물체/양손을 분리된 연속 잠재로 만드는 캐스케이드 VAE, 우: 마스킹 자기회귀 트랜스포머가 조건을 만들고 플로우 매칭 헤드가 잠재를 생성하는 구조" loading="lazy"><figcaption>좌: 물체/양손을 분리된 연속 잠재로 만드는 캐스케이드 VAE, 우: 마스킹 자기회귀 트랜스포머가 조건을 만들고 플로우 매칭 헤드가 잠재를 생성하는 구조</figcaption></figure>
+<p>왼쪽은 물체 궤적으로부터 손 궤적을 순차 조건화하는 캐스케이드 VAE, 오른쪽은 마스킹된 위치의 모션 잠재를 플로우 매칭으로 채워 넣는 생성 모듈이다.</p>
+<h3 class="sec">선행 연구</h3>
+<p><strong>확산(diffusion) 계열 HOI 생성.</strong> Text2HOI는 접촉 맵을 먼저 예측하고 그 조건으로 모션을 확산 생성한 뒤 관통(penetration) 보정기를 붙인다. DiffH2O는 잡기(grasp)와 상호작용을 두 단계 확산으로 나누고 물체 중심 좌표계에서 모션을 표현한다. LatentHOI 역시 물체 중심 표현을 쓰면서 손목 궤적 잠재 생성과 손 포즈 디코딩으로 분해한다. OpenHOI는 Text2HOI식 생성기에 멀티모달 어포던스 추론과 물리 기반 보정, 그리고 원자 동작을 이어붙이는 별도 후처리 모듈을 얹는다. 이들은 매끄럽고 사실적인 궤적을 잘 만들지만 구조적으로 <strong>&#x27;원자적(atomic)&#x27;</strong> 이다.</p>
+<p><strong>자기회귀(AR) 계열.</strong> MotionGPT, HOIGPT 같은 방법은 VQ-VAE로 모션을 이산 코드로 바꾸고 LLM에게 &#x27;새로운 언어&#x27;로 학습시킨다. 다음 토큰 예측 덕분에 가변 길이 생성·완성·합성이 자연스럽게 되고, EOS(End of Sequence) 토큰으로 종료도 가능하다.</p>
+<p><strong>전신 모션/HOI 주변 연구.</strong> MDM, MotionDiffuse, MLD는 연속 궤적을 확산으로 모델링하고, TM2T·T2M-GPT·MoMask는 이산 VQ 토큰을 쓴다. MARDM과 MoMADiff는 연속 확산과 마스킹 자기회귀를 결합했다. 이미지 쪽에서는 MAR(Li et al. 2024, &quot;Autoregressive image generation without vector quantization&quot;)이 벡터 양자화 없이 연속 토큰을 확산으로 모델링해 이 논문의 직접적인 뼈대가 됐다. 전신 HOI로는 <a href="https://arxiv.org/abs/2411.18660" target="_blank">OOD-HOI</a>, <a href="https://arxiv.org/abs/2506.15483" target="_blank">GenHOI</a>가 있고, 특히 ARDHOI는 연속 HOI 표현과 인과적(causal) 자기회귀 확산을 결합했다는 점에서 가장 가깝다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>저자들이 짚는 핵심은 <strong>&quot;실용적으로 쓸 만한 HOI 생성기가 갖춰야 할 능력 목록&quot;과 기존 방법의 능력 사이의 간극</strong>이다.</p>
+<p>확산 계열의 한계:</p>
+<ul>
+<li>장기(long-horizon) 모션 사전지식이 없어 짧은 분할 불가능한 동작 프리미티브에 갇힌다. 명령을 여러 개 이어붙인 합성 동작 생성이 아예 정의되지 않는다.</li>
+<li>시퀀스 길이를 <strong>미리 알려줘야 한다</strong>. Text2HOI는 별도 길이 예측기를, DiffH2O/LatentHOI는 사용자 입력을 요구한다.</li>
+<li>&quot;오른손으로 열어라&quot; 같은 한 손 프롬프트에도 항상 양손 궤적을 다 만들고, 안 쓰는 손은 <strong>생성 후에 마스킹으로 지운다</strong>. 즉 손 사용 여부(handedness)가 출력 분포의 일부가 아니다.</li>
+</ul>
+<p>AR 계열의 한계:</p>
+<ul>
+<li>시퀀스 수준 유연성은 얻지만 <strong>양자화가 접촉에 치명적</strong>이다. 손목 포즈나 손가락 관절의 작은 양자화 오차가 곧바로 관통, 접촉 끊김, 지터(jitter)로 이어진다.</li>
+<li>토큰화 시점에 잃은 정보는 아래 단계에서 절대 복구되지 않으므로 생성 품질의 상한이 거기서 정해진다.</li>
+</ul>
+<p>논문은 이 주장을 실측으로 뒷받침한다(Sec. 3). 같은 구조의 VAE와 VQ-VAE를 학습시켜 재구성만 비교했을 때:</p>
+<div class="tbl-wrap"><table><thead><tr><th>토크나이저</th><th class="num">관통 발생 프레임 비율 ↓</th><th class="num">접촉 발생 프레임 비율 ↑</th></tr></thead><tbody><tr><td>VQ-VAE</td><td class="num">24.7%</td><td class="num">77.9%</td></tr><tr><td>VAE (본 논문)</td><td class="num"><strong>2.1%</strong></td><td class="num"><strong>92.2%</strong></td></tr></tbody></table></div>
+<p>저크(jerk, 위치의 3차 미분) 프로파일에서도 VQ-VAE 쪽은 비물리적인 급변 스파이크가 나타나고, 특히 정지 상태가 길게 이어지는 구간의 재구성이 눈에 띄게 튄다.</p>
+<h3 class="sec">연구 주제</h3>
+<p><strong>연속 잠재 표현의 접촉 정밀도를 유지하면서, 자기회귀 모델링의 합성성·가변 길이 이점을 함께 가져올 수 있는가?</strong></p>
+<p>그리고 그 위에서 아래 능력들을 <strong>task별 헤드나 후처리 없이 하나의 학습 목표(마스킹 조건부 플로우 매칭)만으로</strong> 얻을 수 있는가:</p>
+<ol>
+<li>원자 동작 + 관절형(articulated) 물체 상호작용 생성</li>
+<li>프롬프트를 이어붙인 합성(composite) 동작 생성</li>
+<li>조건부 모션 완성(completion)과 중간 채움(infilling)</li>
+<li>EOM(End of Motion) 예측 = 자동 종료 (길이 입력 불필요)</li>
+<li>진짜로 정지해 있는 &#x27;유휴 손(idle hand)&#x27;을 통한 손 사용 제어</li>
+</ol>
+<p>전제 조건: 물체의 기하 형상과 관절 분절 정보는 알고 있다고 가정하고, 상호작용의 의도는 언어 지시로 받는다.</p>
+<p>Table 1의 능력 비교(각 논문과 공개 코드 기준):</p>
+<div class="tbl-wrap"><table><thead><tr><th>능력</th><th>Text2HOI</th><th>DiffH2O</th><th>LatentHOI</th><th>OpenHOI</th><th>HOIGPT</th><th>MAD-HOI</th></tr></thead><tbody><tr><td>연속 표현</td><td>O</td><td>O</td><td>O</td><td>O</td><td>X</td><td>O</td></tr><tr><td>모션 생성</td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr><tr><td>자동 종료</td><td>X</td><td>X</td><td>X</td><td>X</td><td>O</td><td>O</td></tr><tr><td>모션 완성</td><td>X</td><td>O</td><td>O</td><td>X</td><td>O</td><td>O</td></tr><tr><td>모션 중간 채움</td><td>X</td><td>X</td><td>X</td><td>X</td><td>O</td><td>O</td></tr><tr><td>합성 동작</td><td>X</td><td>X</td><td>X</td><td>O</td><td>O</td><td>O</td></tr><tr><td>캡셔닝</td><td>X</td><td>X</td><td>X</td><td>X</td><td>O</td><td>X</td></tr></tbody></table></div>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">데이터와 입출력 표현</h4>
+<ul>
+<li><strong>GRAB</strong>: 강체 물체와의 전신 시퀀스 중 손 상호작용 부분만 사용. 51개 물체, 1.6k 시퀀스.</li>
+<li><strong>ARCTIC</strong>: 관절이 하나 있는(single-joint articulating) 물체. 11개 물체, 4.6k 원자 시퀀스.</li>
+<li>전처리와 텍스트 주석은 Text2HOI 프로토콜을 그대로 따른다. 물체당 궤적 수가 크게 달라 두 데이터셋 실험은 분리해 진행한다.</li>
+</ul>
+<p>물체 궤적: $O = (T_o^t, R_o^t, \alpha_o^t)$ — 정규화된 물체 중심 3D 위치, 6D 회전, 그리고 관절형 물체의 경우 관절 값 $\alpha_o$. 손 궤적(MANO 기반): $H = (\tau_h^t, \phi_h^t)$ — 정규화된 손목 3D 위치와 손목 + 나머지 15개 MANO 관절의 6D 회전. 여기에 좌/우 식별용 이진 값이 별도로 붙는다.</p>
+<h4 class="subsec">1단계: 캐스케이드 VAE (토크나이저)</h4>
+<p>세 모달리티(물체 / 왼손 / 오른손)를 <strong>분리된 잠재 스트림</strong>으로 유지하는 것이 목표다. 인코더·디코더는 1D conv + ResNet 블록.</p>
+<ul>
+<li><strong>물체 분기</strong>: 물체 모션을 512차원 잠재 $z_o$로 인코딩. 디코더는 정준(canonical) 물체 포인트클라우드의 PointNet 특징을 $z_o$와 이어붙여 궤적을 복원한다.</li>
+<li><strong>손 분기</strong>: 인코더/디코더가 <strong>가중치 하나를 공유</strong>하면서 $H_{left}$, $H_{right}$ 두 스트림을 따로 처리해 $z_l$, $z_r$을 만든다. 공유 학습으로 효율을 얻으면서 식별자 값으로 좌우를 구분한다. 물체 잠재 $z_o$를 $z_l, z_r$과 이어붙여 손 디코더에 넣고, 복원된 물체 궤적 $O$는 FiLM 레이어로 추가 조건으로 주입한다. 즉 <strong>손 디코딩이 물체 디코딩에 종속되는 캐스케이드 구조</strong>다.</li>
+<li><strong>유휴 잠재(idle latent)</strong>: 짧은 구간의 정적 포즈를 복원하도록 일부러 강제 학습시킨다. 손이 안 쓰이는 상태를 &#x27;정지 포즈&#x27;로 표현하기 위함이며, 뒤의 EOM 메커니즘과 짝을 이룬다. 짧은 시퀀스는 마지막 유효 프레임을 끝까지 패딩하고(복제 패딩), 재구성 손실도 패딩 구간까지 계산해 정적 손·물체를 유휴 잠재로부터 복원하도록 만든다.</li>
+<li>각 인코더는 사후분포 평균/분산을 내고 재파라미터화 트릭 $z = \mu + \sigma\epsilon$, $\epsilon \sim \mathcal{N}(0, I)$로 샘플링, KL 손실로 단위 가우시안 쪽으로 정규화한다. 이 정규화가 중요한 이유는 <strong>뒷단 플로우 매칭 헤드가 이 잠재공간을 회귀 타깃으로 삼기 때문</strong>이다. 결정론적 오토인코더의 제약 없는 잠재보다 매끄럽게 채워진 유계 공간이 훨씬 안정적인 타깃이 된다.</li>
+</ul>
+<p>윈도우 길이 152프레임, <strong>4프레임 → 잠재 1개</strong> 압축이 전 구간에 일관되게 적용되어 모달리티당 최대 38개 잠재. 잠재 차원은 512.</p>
+<p>학습 손실은 L1 재구성 + 세 가지 기하 손실 + KL:</p>
+<p>$$L = \alpha L_{rec} + \beta L_C + \gamma L_{pen} + \delta L_{DM} + \lambda L_{KL}$$</p>
+<ul>
+<li>$L_C$ (접촉 손실): 손 관절이 물체 표면에서 임계 거리 $\phi$ 이상 벌어지지 않도록 벌점.</li>
+<li>$L_{pen}$ (관통 손실): 물체 메시 내부에 들어간 손 정점 $p \in P_{in}^o$에 대해 가장 가까운 물체 정점까지 거리 제곱의 평균을 최소화.</li>
+<li>$L_{DM}$ (거리 맵 손실, InterGen 계열): 근접 접촉 영역에서 예측/GT 관절-물체 거리 맵을 정렬.</li>
+</ul>
+<p>기하 손실 개별 제거 실험(GRAB, Table 6):</p>
+<div class="tbl-wrap"><table><thead><tr><th>지표</th><th class="num">w/o $L_{pen}$</th><th class="num">w/o $L_C$</th><th class="num">w/o $L_{DM}$</th><th class="num">전체 손실</th></tr></thead><tbody><tr><td>Obj. L1 ↓</td><td class="num">0.005</td><td class="num">0.010</td><td class="num">0.018</td><td class="num"><strong>0.005</strong></td></tr><tr><td>Hand L1 ↓</td><td class="num">0.013</td><td class="num">0.023</td><td class="num">0.076</td><td class="num"><strong>0.013</strong></td></tr><tr><td>MPJPE ↓</td><td class="num">0.049</td><td class="num">0.052</td><td class="num">0.119</td><td class="num"><strong>0.044</strong></td></tr><tr><td>Pen. (%) ↓</td><td class="num">61.16</td><td class="num">34.94</td><td class="num"><strong>0.00</strong></td><td class="num">2.10</td></tr><tr><td>Con. (%) ↑</td><td class="num"><strong>98.83</strong></td><td class="num">79.48</td><td class="num">22.4</td><td class="num">92.20</td></tr></tbody></table></div>
+<p>관통 손실을 빼면 접촉은 높아지지만 관통이 61%로 폭발하고, 접촉 손실을 빼면 접촉률이 떨어진다. 가장 결정적인 건 거리 맵 손실로, 이걸 빼면 접촉률이 22.4%로 무너지고 재구성 오차와 MPJPE까지 함께 나빠진다.</p>
+<h4 class="subsec">2단계: 마스킹 자기회귀 확산 생성기</h4>
+<p>자기회귀 모델은 $p(x^{1:n}|c)$를 연쇄 조건부 $p(x^i|x^{&lt;i}, c)$로 분해한다. 저자들이 지적하는 함정은, 확산 모델을 $\epsilon_\theta$나 $x_0$에 대한 MSE 목표로 AR에 갖다 붙이면 생성이 <strong>가우시안 확률 하의 단순 회귀로 붕괴</strong>해 연쇄 조건부 확률을 제대로 모델링하지 못한다는 점이다. 그래서 MAR을 따라 AR 모델의 출력을 <strong>연속 샘플링 네트워크의 조건 신호</strong>로 쓴다.</p>
+<p>각 자기회귀 반복에서 시퀀스는 VAE로 잠재화된 뒤 <strong>코사인 스케줄</strong>로 마스킹된다. 마스킹되지 않은 잠재는 가시 문맥 $um$, 마스킹된 잠재 $m$이 조건 $c$ 하에서 생성해야 할 &#x27;토큰&#x27;이다. 생성은 $K$번의 언마스킹 반복으로 진행된다:</p>
+<p>$$p(x'_{1:n} \mid c) = \prod_{j=1}^{K} p(m_j \mid um, m_{&lt;j}, c)$$</p>
+<p><strong>마스킹 자기회귀 트랜스포머</strong></p>
+<ul>
+<li>한 타임프레임의 $(z_o, z_l, z_r)$ 세쌍을 $x$로 두고, 세 모달리티 잠재를 <strong>인터리빙</strong>해 배치하며 세쌍 하나당 위치 인코딩을 하나만 붙인다. 각 모달리티 잠재에는 자기 몫의 <strong>학습 가능한 모달리티 임베딩</strong>이 추가된다.</li>
+<li>손 잠재공간이 분리되어 있으므로, 생성 분기가 어떤 손 토큰이 &#x27;유휴&#x27; 상태임을 인식하면 &#x27;유휴에 해당하는 잠재&#x27;를 예측할 수 있다. 즉 Text2HOI/DiffH2O/LatentHOI가 후처리 마스킹으로 지우던 것을 <strong>모델이 실제로 정지 포즈를 예측</strong>하는 것으로 대체한다.</li>
+<li>유효하지 않은 프레임은 인터리빙 구조를 유지한 채 <strong>학습 가능한 ⟨EOM⟩ 토큰</strong>으로 패딩한다. 모델은 이 토큰을 유휴 잠재의 긴 꼬리와 연관 짓도록 학습되며, 결과적으로 <strong>추론 시 시퀀스 길이 입력이 필요 없다</strong>.</li>
+<li>구조는 양방향 어텐션 + 단일 트랜스포머 레이어(16 헤드) + Adaptive LayerNorm. 텍스트 캡션은 CLIP 인코더를 거쳐 선형 사영으로 트랜스포머 잠재공간에 통합된다.</li>
+</ul>
+<p>입력 토큰 시퀀스 예시(최대 18토큰 = 6 타임스텝 × 3 모달리티, 유효 5 타임스텝, 1개 마스킹):</p>
+<p>$$\langle z_o^0\rangle \langle z_l^0\rangle \langle z_r^0\rangle \langle z_o^1\rangle \langle z_l^1\rangle \langle z_r^1\rangle \langle \text{MASK}\rangle\langle \text{MASK}\rangle\langle \text{MASK}\rangle \langle z_o^3\rangle \langle z_l^3\rangle \langle z_r^3\rangle \langle z_o^4\rangle \langle z_l^4\rangle \langle z_r^4\rangle \langle \text{EOM}_o\rangle \langle \text{EOM}_l\rangle \langle \text{EOM}_r\rangle$$</p>
+<p><strong>확산(플로우 매칭) 헤드</strong> 트랜스포머 출력 $s = g(um)$을 조건으로 MLP가 마스킹된 위치 $i$의 잠재 $x'^i$를 역과정 반복으로 만든다. SiT를 따라 선형 보간자 $x_t = \alpha_t x_0 + \sigma_t \epsilon = (1-t)x_0 + t\epsilon$로 GT 잠재를 오염시키고 속도장을 회귀한다:</p>
+<p>$$L_{GB} = \int_0^T \mathbb{E}_{v,t}\left[\left\|v_\theta(x'^i_t \mid t, g(um)) - \dot{\alpha}_t x'^i_0 - \dot{\sigma}_t \epsilon\right\|^2\right] dt$$</p>
+<p>여기서 속도장은 $v(x,t) = \dot{\alpha}_t\,\mathbb{E}[x_0|x_t{=}x] + \dot{\sigma}_t\,\mathbb{E}[\epsilon|x_t{=}x]$로 정의된다. 마스킹은 MoMask의 코사인 스케줄을 따른다.</p>
+<p>추론 시에는 마스크 벡터를 잠재 시퀀스에 삽입하고, <strong>18번의 재마스킹 정제 스텝</strong>에 걸쳐 오일러 스텝 $x^i_{t-1} = x^i_t + \Delta t \cdot v_\theta(x^i_t | t, s^i)$로 ODE 샘플링한다. 헤드는 SiT-XL 플로우 매칭 모델.</p>
+<p><strong>능력이 나오는 경로 두 가지</strong> (저자 정리):</p>
+<ol>
+<li>양방향 AR + 반복적 마스킹 디노이징 → 각 잠재를 생성할 때 마스킹되지 않은 <strong>전체 시간 문맥</strong>을 볼 수 있음 → 마스킹 위치에 따라 완성(뒤쪽 마스킹)과 중간 채움(가운데 마스킹)이 자연히 나온다.</li>
+<li>VAE의 분리된 잠재 구조 → 모달리티 제어와 스트림 단위 생성/완성/채움 → 손 사용 제어 개선, 그리고 유휴 잠재가 EOM 예측의 문맥이 되어 종료 기능이 생긴다.</li>
+</ol>
+<h4 class="subsec">학습 설정</h4>
+<p>생성 모델은 H100 4장에서 100,000 iteration, 최대 학습률 2e-4(1,000 iteration 선형 워밍업 후 코사인 감쇠로 1e-4까지). VAE는 H100 2장에서 6,000 epoch, 학습률 2e-4, $\alpha=1, \beta=0.5, \gamma=0.5, \delta=1$. KL 항은 내부적으로 $\beta_{KL}=10^{-4}$로 스케일 후 $\lambda_{KL}=0.5$ 가중.</p>
+<h4 class="subsec">평가 프로토콜 (기여 중 하나)</h4>
+<p>Guo et al. (2022a) 방식의 텍스트-모션 공동 임베딩 평가기를 쓰되, <strong>기존 연구들이 전신 모션 인코더를 손 궤적에만 적용하고 물체 움직임과 관절 값을 완전히 무시하던 관행을 바꿔</strong>, 손과 물체를 함께 인코딩하도록 평가 파이프라인을 처음부터 재학습했다. 텍스트가 지정하는 &#x27;행동&#x27;의 핵심이 물체 궤적과 관절 변화이기 때문이다. 평가기는 (1) 시간 합성곱 movement encoder로 모션 압축 → 자기부호화 사전학습, (2) 모션 표현 모듈 동결 후 Word2Vec + POS 지표 → biGRU 텍스트 인코더와 biGRU 모션 인코더를 대조 학습으로 정렬, 2단계로 학습한다.</p>
+<p>베이스라인은 공개 코드가 있는 방법으로 한정했고, DiffH2O/LatentHOI는 표현이 달라(MANO PCA, 물체 중심 좌표계) 전역 좌표계 기준으로 재전처리 후 처음부터 재학습했으며, OpenHOI도 감독 스케일 불일치로 재학습했다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">텍스트-투-모션 생성 품질 (Table 2)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Top-3 Acc. ↑</th><th class="num">FID ↓</th><th class="num">KID ↓</th><th class="num">Div. →</th><th class="num">Match. ↓</th></tr></thead><tbody><tr><td><strong>ARCTIC</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Ground Truth</td><td class="num">0.991</td><td class="num">–</td><td class="num">–</td><td class="num">20.235</td><td class="num">1.295</td></tr><tr><td>Text2HOI</td><td class="num">0.926</td><td class="num">0.528</td><td class="num">0.008</td><td class="num">20.110</td><td class="num">2.578</td></tr><tr><td>DiffH2O</td><td class="num">0.715</td><td class="num">1.138</td><td class="num">0.025</td><td class="num">15.246</td><td class="num">9.791</td></tr><tr><td>LatentHOI</td><td class="num">0.941</td><td class="num">1.053</td><td class="num">0.009</td><td class="num">20.264</td><td class="num">3.325</td></tr><tr><td>OpenHOI</td><td class="num">0.946</td><td class="num">0.495</td><td class="num">0.010</td><td class="num">20.159</td><td class="num">2.292</td></tr><tr><td><strong>MAD-HOI (Ours)</strong></td><td class="num"><strong>0.994</strong></td><td class="num"><strong>0.071</strong></td><td class="num"><strong>0.004</strong></td><td class="num">20.312</td><td class="num"><strong>1.353</strong></td></tr><tr><td>*w/o EOM Pred.*</td><td class="num">0.928</td><td class="num">1.132</td><td class="num">0.010</td><td class="num">19.467</td><td class="num">2.944</td></tr><tr><td>*w/o Mod. Tokens*</td><td class="num">0.542</td><td class="num">56.736</td><td class="num">0.787</td><td class="num">17.641</td><td class="num">11.993</td></tr><tr><td><strong>GRAB</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Ground Truth</td><td class="num">0.939</td><td class="num">–</td><td class="num">–</td><td class="num">12.871</td><td class="num">3.188</td></tr><tr><td>Text2HOI</td><td class="num">0.745</td><td class="num">3.661</td><td class="num">0.088</td><td class="num">13.177</td><td class="num">4.941</td></tr><tr><td>DiffH2O</td><td class="num">0.838</td><td class="num">1.923</td><td class="num">0.029</td><td class="num">12.250</td><td class="num">4.746</td></tr><tr><td>LatentHOI</td><td class="num">0.797</td><td class="num">5.616</td><td class="num">0.146</td><td class="num">13.220</td><td class="num">4.698</td></tr><tr><td>OpenHOI</td><td class="num">0.677</td><td class="num">4.502</td><td class="num">0.131</td><td class="num">12.316</td><td class="num">5.429</td></tr><tr><td><strong>MAD-HOI (Ours)</strong></td><td class="num"><strong>0.993</strong></td><td class="num"><strong>1.125</strong></td><td class="num">0.011</td><td class="num">13.218</td><td class="num"><strong>4.041</strong></td></tr><tr><td>*w/o EOM Pred.*</td><td class="num">0.940</td><td class="num">1.471</td><td class="num">0.008</td><td class="num">14.321</td><td class="num">2.923</td></tr><tr><td>*w/o Mod. Tokens*</td><td class="num">0.737</td><td class="num">11.024</td><td class="num">0.292</td><td class="num">11.330</td><td class="num">5.772</td></tr></tbody></table></div>
+<p>두 데이터셋 모두에서 검색 정확도, FID, KID, Matching Score 1위이며 Diversity만 근소하게 뒤진다. ARCTIC의 FID 개선폭이 가장 크다(0.495 → 0.071). ARCTIC에서는 OpenHOI가, GRAB에서는 DiffH2O가 2위다.</p>
+<p><strong>어블레이션 해석</strong>: 모달리티 임베딩은 <strong>수렴 자체에 필수</strong>다. 빼면 ARCTIC FID가 0.071 → 56.7, GRAB이 1.125 → 11.0으로 무너지며 사용 가능한 분포를 아예 학습하지 못한다. EOM 예측을 끄면 상대적으로 완만하지만 여전히 손해다(ARCTIC 0.071 → 1.13, GRAB 1.125 → 1.47). 즉 명시적 종료 학습은 생성에 부담이 되기는커녕 <strong>비슷한 프롬프트의 다양한 길이를 모델이 정리하도록 돕는다</strong>.</p>
+<h4 class="subsec">기하·물리 타당성 (Table 3)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Accel ↓</th><th class="num">Pen.% ↓</th><th class="num">Con.% ↑</th><th class="num">NC ↑</th><th class="num">IV ↓</th><th class="num">ID ↓</th><th class="num">CR ↑</th><th class="num">IVU ↓</th><th class="num">Phy ↑</th></tr></thead><tbody><tr><td><strong>ARCTIC</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Ground Truth</td><td class="num">0.18</td><td class="num">7.86</td><td class="num">80.77</td><td class="num">74.42</td><td class="num">7.41</td><td class="num">0.85</td><td class="num">13.42</td><td class="num">0.13</td><td class="num">98.67</td></tr><tr><td>Text2HOI</td><td class="num">0.19</td><td class="num">22.74</td><td class="num">92.90</td><td class="num">71.77</td><td class="num">7.55</td><td class="num">0.94</td><td class="num">14.32</td><td class="num">0.15</td><td class="num">88.99</td></tr><tr><td>DiffH2O</td><td class="num">0.64</td><td class="num">19.98</td><td class="num">91.64</td><td class="num">73.33</td><td class="num">8.99</td><td class="num">1.03</td><td class="num">13.05</td><td class="num">0.16</td><td class="num">93.13</td></tr><tr><td>LatentHOI</td><td class="num">0.31</td><td class="num">12.37</td><td class="num">65.30</td><td class="num">57.23</td><td class="num">11.24</td><td class="num">1.15</td><td class="num">12.59</td><td class="num">0.18</td><td class="num">60.25</td></tr><tr><td>OpenHOI</td><td class="num">0.40</td><td class="num">20.52</td><td class="num">73.58</td><td class="num">58.48</td><td class="num">9.77</td><td class="num">1.05</td><td class="num">13.48</td><td class="num">0.17</td><td class="num">77.90</td></tr><tr><td><strong>MAD-HOI</strong></td><td class="num"><strong>0.18</strong></td><td class="num">12.89</td><td class="num">84.47</td><td class="num"><strong>73.58</strong></td><td class="num"><strong>7.52</strong></td><td class="num"><strong>0.94</strong></td><td class="num"><strong>14.76</strong></td><td class="num"><strong>0.14</strong></td><td class="num">92.65</td></tr><tr><td><strong>GRAB</strong></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td></tr><tr><td>Ground Truth</td><td class="num">0.31</td><td class="num">30.64</td><td class="num">95.91</td><td class="num">66.52</td><td class="num">5.17</td><td class="num">2.16</td><td class="num">9.45</td><td class="num">0.14</td><td class="num">99.24</td></tr><tr><td>Text2HOI</td><td class="num">0.47</td><td class="num">45.11</td><td class="num"><strong>97.86</strong></td><td class="num">53.72</td><td class="num">9.97</td><td class="num">2.35</td><td class="num"><strong>13.59</strong></td><td class="num">0.19</td><td class="num"><strong>94.49</strong></td></tr><tr><td>DiffH2O</td><td class="num">0.49</td><td class="num"><strong>31.34</strong></td><td class="num">92.71</td><td class="num"><strong>63.66</strong></td><td class="num">8.15</td><td class="num">2.51</td><td class="num">10.41</td><td class="num">0.16</td><td class="num">93.20</td></tr><tr><td>LatentHOI</td><td class="num">0.74</td><td class="num">35.45</td><td class="num">85.35</td><td class="num">55.09</td><td class="num">11.37</td><td class="num">2.49</td><td class="num">11.26</td><td class="num">0.21</td><td class="num">79.55</td></tr><tr><td>OpenHOI</td><td class="num">0.88</td><td class="num">47.11</td><td class="num">92.28</td><td class="num">48.80</td><td class="num">10.76</td><td class="num">2.50</td><td class="num">12.41</td><td class="num">0.20</td><td class="num">86.60</td></tr><tr><td><strong>MAD-HOI</strong></td><td class="num"><strong>0.38</strong></td><td class="num">35.35</td><td class="num">92.30</td><td class="num">59.68</td><td class="num"><strong>8.06</strong></td><td class="num"><strong>2.06</strong></td><td class="num">12.20</td><td class="num"><strong>0.15</strong></td><td class="num">86.71</td></tr></tbody></table></div>
+<p>지표 정의: Accel은 MANO 메시 정점당 평균 가속도 크기(×100), Pen.%는 손 정점이 물체를 1 cm 넘게 파고든 프레임 비율, Con.%는 손 정점이 물체 표면 5 mm 이내인 프레임 비율, <strong>NC(Net Contact)</strong> $= C \times (1-P)$는 접촉과 관통의 트레이드오프를 한 수로 묶은 지표다. IV(관통 부피, cm³), ID(최대 관통 깊이, cm), CR(접촉 비율, %), IVU(접촉 면적당 관통 부피, cm³/cm²), Phy(물체가 1 cm 이상 움직인 프레임 중 손이 동시에 접촉한 비율, %)는 LatentHOI의 세밀한 물리 타당성 지표를 그대로 가져온 것이다.</p>
+<p>ARCTIC에서는 9개 중 6개 지표 1위이고, 물리 타당성·관통률·접촉률에서 2위다. 접촉과 관통은 서로 상충하므로 이를 묶은 NC에서 가장 높다. GRAB은 더 애매한데, 가속도(부드러움)는 여전히 GT에 가장 가깝고 IV/ID/IVU에서 앞서지만 Contact %와 CR에서는 뒤진다. 저자 결론: <strong>어떤 베이스라인도 두 지표군 모두에서 MAD-HOI를 일관되게 이기지 못한다.</strong></p>
+<h4 class="subsec">합성 동작 생성</h4>
+<p>ARCTIC 학습셋에 원자 동작 최대 4개를 이은 합성 동작을 소량 추가해 학습했다. 이는 EOM 확률이 원자 동작 길이에 편향되는 것을 풀어주고 &#x27;and&#x27; 같은 연결어를 생성기에 노출시킨다. 결과(Table 2의 ARCTIC Composite): MAD-HOI Top-3 0.869 / FID 0.142 / KID 0.002 / Div. 20.450 / Match 3.693 대 GT 0.890 / – / – / 20.118 / 3.320 — <strong>품질 저하가 미미하다</strong>. GRAB은 시퀀스가 길어 최대 문맥 윈도우 안에 들어오는 유효 테스트 시퀀스가 거의 없어 이 실험에서 제외했다.</p>
+<h4 class="subsec">조건부 완성과 중간 채움 (Table 4)</h4>
+<p>문맥으로 주는 GT 잠재 개수를 1~5개로 늘려가며 측정. 생성이 문맥 의존적이므로 미터 단위 원시 궤적 오차 대신 <strong>의미적으로 가장 가까운 GT 샘플에 대한 ADE/FDE</strong>를 보고한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Task / Dataset</th><th class="num">ADE(1)</th><th class="num">ADE(2)</th><th class="num">ADE(3)</th><th class="num">ADE(4)</th><th class="num">ADE(5)</th><th class="num">FDE(1)</th><th class="num">FDE(2)</th><th class="num">FDE(3)</th><th class="num">FDE(4)</th><th class="num">FDE(5)</th><th class="num">FID(2)</th><th class="num">Div.(2)</th></tr></thead><tbody><tr><td>Completion / ARCTIC</td><td class="num">0.638</td><td class="num">0.611</td><td class="num">0.618</td><td class="num">0.608</td><td class="num">0.605</td><td class="num">0.811</td><td class="num">0.786</td><td class="num">0.796</td><td class="num">0.737</td><td class="num">0.742</td><td class="num">0.173</td><td class="num">20.325</td></tr><tr><td>Completion / GRAB</td><td class="num">0.791</td><td class="num">0.782</td><td class="num">0.759</td><td class="num">0.765</td><td class="num">0.747</td><td class="num">0.995</td><td class="num">0.965</td><td class="num">1.018</td><td class="num">0.931</td><td class="num">0.863</td><td class="num">1.719</td><td class="num">13.010</td></tr><tr><td>Infilling / ARCTIC</td><td class="num">0.747</td><td class="num">0.678</td><td class="num">0.646</td><td class="num">0.619</td><td class="num">0.612</td><td class="num">0.792</td><td class="num">0.739</td><td class="num">0.700</td><td class="num">0.671</td><td class="num">0.664</td><td class="num">0.182</td><td class="num">19.2136</td></tr><tr><td>Infilling / GRAB</td><td class="num">0.739</td><td class="num">0.586</td><td class="num">0.567</td><td class="num">0.536</td><td class="num">0.505</td><td class="num">0.870</td><td class="num">0.655</td><td class="num">0.615</td><td class="num">0.607</td><td class="num">0.547</td><td class="num">1.931</td><td class="num">13.649</td></tr></tbody></table></div>
+<p>문맥이 늘수록 오차가 단조 감소한다. 조건 잠재 2개일 때 완성 품질은 원자 생성 수준에 근접하고, 중간 채움은 <strong>양쪽 문맥을 동시에 맞춰야 하는 제약</strong> 때문에 더 어렵다.</p>
+<h4 class="subsec">자동 종료 (EOM, Table 5)</h4>
+<p>세 모달리티 모두의 마스킹 토큰에서 학습된 EOM 토큰에 가까운 잠재가 나오면 시퀀스 끝으로 판정하고 뒤쪽 프레임을 버린다. 별도 길이 예측기를 학습하거나 호출할 필요가 없다. Text2HOI의 <strong>전용 cVAE 길이 회귀기</strong>와 간접 비교:</p>
+<div class="tbl-wrap"><table><thead><tr><th>지표</th><th class="num">ARCTIC: Text2HOI cVAE</th><th class="num">ARCTIC: MAD-HOI</th><th class="num">GRAB: Text2HOI cVAE</th><th class="num">GRAB: MAD-HOI</th></tr></thead><tbody><tr><td>MAE (frames) ↓</td><td class="num"><strong>7.92</strong></td><td class="num">12.23</td><td class="num"><strong>14.75</strong></td><td class="num">20.43</td></tr><tr><td>MedAE ↓</td><td class="num"><strong>5.00</strong></td><td class="num">8.00</td><td class="num"><strong>11.20</strong></td><td class="num">14.40</td></tr><tr><td>Within-4 (%) ↑</td><td class="num">44.2</td><td class="num"><strong>44.3</strong></td><td class="num">31.1</td><td class="num"><strong>33.1</strong></td></tr><tr><td>Within-8 (%) ↑</td><td class="num"><strong>67.2</strong></td><td class="num">62.8</td><td class="num"><strong>43.0</strong></td><td class="num">38.3</td></tr><tr><td>Interval MAE ↓</td><td class="num"><strong>0.26</strong></td><td class="num">2.32</td><td class="num"><strong>1.02</strong></td><td class="num">4.85</td></tr><tr><td>Within Interval (%) ↑</td><td class="num"><strong>90.7</strong></td><td class="num">78.4</td><td class="num"><strong>80.0</strong></td><td class="num">70.5</td></tr></tbody></table></div>
+<p>원시 오차에서는 전용 회귀기가 예상대로 더 정확하다. 다만 프롬프트 하나가 여러 타당한 길이에 대응하므로, 조건 튜플 <code>[action, object, left_use, right_use]</code>별 GT 길이의 $[q_{10}, q_{90}]$ 구간 기준으로도 평가했다. MAD-HOI 예측은 ARCTIC 78.4%, GRAB 70.5%가 타당 구간 안에 들어가고, 벗어나도 평균 2~5프레임 차이다. <strong>추가 파라미터나 별도 목적함수 없이 얻은 부산물치고는 합리적인 수준</strong>이라는 것이 저자 주장.</p>
+<h4 class="subsec">학습된 EOM vs 사용자 입력 길이 (Table 8)</h4>
+<p>MAD-HOI가 감지한 종료 시점 대비 길이를 4/8/12프레임 강제로 줄여 생성한 ARCTIC 실험:</p>
+<div class="tbl-wrap"><table><thead><tr><th>Length</th><th class="num">FID ↓</th><th class="num">KID ↓</th><th class="num">Div.</th><th class="num">Top-1 ↑</th><th class="num">Top-3 ↑</th><th class="num">Match ↓</th><th class="num">Pen. %</th><th class="num">Contact %</th></tr></thead><tbody><tr><td>−12 frames</td><td class="num">4.240</td><td class="num">0.0595</td><td class="num">19.087</td><td class="num">0.699</td><td class="num">0.882</td><td class="num">4.616</td><td class="num">17.13</td><td class="num">79.89</td></tr><tr><td>−8 frames</td><td class="num">0.623</td><td class="num">0.0119</td><td class="num">19.997</td><td class="num">0.817</td><td class="num">0.975</td><td class="num">2.066</td><td class="num">17.78</td><td class="num">81.37</td></tr><tr><td>−4 frames</td><td class="num">0.130</td><td class="num">0.0035</td><td class="num">20.037</td><td class="num">0.837</td><td class="num">0.991</td><td class="num">1.273</td><td class="num">18.08</td><td class="num">81.58</td></tr><tr><td>MAD-HOI 감지 종료</td><td class="num"><strong>0.075</strong></td><td class="num"><strong>0.0004</strong></td><td class="num"><strong>20.130</strong></td><td class="num"><strong>0.837</strong></td><td class="num"><strong>0.993</strong></td><td class="num"><strong>1.097</strong></td><td class="num"><strong>15.25</strong></td><td class="num"><strong>83.86</strong></td></tr></tbody></table></div>
+<p>사용자가 지정한 길이가 GT에서 멀어질수록 품질이 급격히 나빠진다. 저자들은 &quot;길이 지정이 사용자에게 통제권을 준다&quot;는 통념이 <strong>사용자가 학습 데이터를 훤히 아는 전문가일 때만 성립한다</strong>고 반박한다.</p>
+<h4 class="subsec">유휴 손 검증 (Table 7)</h4>
+<p>한 손만 지정한 프롬프트에서 <strong>쓰이지 않는 손</strong>의 생성 모션을 측정. 손목/정점 변위는 m 단위 시퀀스 누적, Handedness Acc.는 안 쓰는 손 손목이 1 cm 미만으로 움직인 프레임 비율.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Idle 지표</th><th class="num">ARCTIC: Text2HOI</th><th class="num">ARCTIC: Ours</th><th class="num">GRAB: Text2HOI</th><th class="num">GRAB: Ours</th></tr></thead><tbody><tr><td>Wrist disp. ↓</td><td class="num">0.068</td><td class="num"><strong>0.030</strong></td><td class="num">0.274</td><td class="num"><strong>0.003</strong></td></tr><tr><td>Vertex disp. ↓</td><td class="num">0.078</td><td class="num"><strong>0.033</strong></td><td class="num">0.331</td><td class="num"><strong>0.047</strong></td></tr><tr><td>Handedness Acc. ↑</td><td class="num">0.54</td><td class="num"><strong>0.64</strong></td><td class="num">0.36</td><td class="num"><strong>1.00</strong></td></tr></tbody></table></div>
+<p>유휴 잠재는 0을 예측하도록 강제되지만 신경망이 매끄러운 근사를 학습하는 특성상 잔여 노이즈가 있어 변위가 정확히 0은 아니다. 그럼에도 Text2HOI 대비 확연히 작다. &#x27;Close the waffleiron with right hand&#x27; 예시에서 마스킹 없이 렌더링한 왼손은 실제로 정지 상태이며, 포즈가 0에 가까워 MANO 메시가 뒤틀린 모양으로 나타난다.</p>
+<p>저자들이 강조하는 함의: <strong>한 손으로 하는 동작과 양손으로 하는 동작은 물리적으로 다르다.</strong> 상자를 열 때 다른 손이 상자를 잡아주느냐에 따라 잡는 방식이 달라진다. 이 구분을 잠재공간의 모드로 학습하는 것이 안정적이고 타당한 물체 관절 조작으로 이어지며, 로보틱스 같은 체화(embodied) 응용에서 특히 중요하다.</p>
+<h4 class="subsec">사용자 선호도 조사 (부록 D.1)</h4>
+<p>5개 방법(MAD-HOI, DiffH2O, Text2HOI, OpenHOI, LatentHOI)에 대한 강제 순위 매기기. 동일한 렌더링 파이프라인·카메라·좌우손 색상·재생 속도로 익명화한 A~E 뷰어를 제시하고, 참가자당 50 trial, 데이터셋당 3명의 평가자.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">모션-텍스트 정합 평균 순위 ↓</th><th class="num">물리 타당성 평균 순위 ↓</th></tr></thead><tbody><tr><td>MAD-HOI</td><td class="num"><strong>2.26</strong></td><td class="num"><strong>2.26</strong></td></tr><tr><td>DiffH2O</td><td class="num">2.48</td><td class="num">2.50</td></tr><tr><td>Text2HOI</td><td class="num">2.81</td><td class="num">2.91</td></tr><tr><td>OpenHOI</td><td class="num">3.51</td><td class="num">3.58</td></tr><tr><td>LatentHOI</td><td class="num">3.95</td><td class="num">3.75</td></tr></tbody></table></div>
+<p>(1 = 5개 중 최고, 3.0 = 우연 수준) MAD-HOI는 두 축 모두에서 43.3%의 trial에서 1위였다. Text2HOI/OpenHOI/LatentHOI와는 0.55~1.69 순위만큼 확실히 벌어지고, 가장 가까운 경쟁자 DiffH2O와의 직접 비교에서는 정합 54.0%, 타당성 55.3%로 근소 우위다.</p>
+<h4 class="subsec">응용: 로봇 리타게팅 (Sec. 6)</h4>
+<p>텍스트 기반 생성은 텔레오퍼레이션 기반 인간 시연 수집 의존도를 줄인다. MANO와 손재주 있는 로봇 손 사이 체화 격차는 다단계로 메운다: (1) AnyTeleop(Qin et al. 2023)의 keypose-vector 최적화로 MANO 모션을 로봇 손에 리타게팅 → (2) 역기구학으로 전체 로봇으로 확장 → (3) <a href="https://arxiv.org/abs/2505.24853" target="_blank">DexMachina</a>의 물리 기반 보상을 활용한 기능적 리타게팅으로 정책 미세조정. Unitree G1 + Inspire 핸드에 리타게팅한 궤적이 사실적인 접촉과 잡기 전환을 유지함을 보였다.</p>
+<h4 class="subsec">연구 의의</h4>
+<ol>
+<li><strong>양자화 없는 HOI 자기회귀 생성</strong>을 처음으로 정면 제안하고, 이산화가 접촉 품질을 어떻게 깎는지 정량 실험(관통 2.1% vs 24.7%)으로 논증했다.</li>
+<li>물체/왼손/오른손을 분리한 잠재 구조 + 유휴 잠재라는 설계 하나가 <strong>손 사용 제어, EOM 학습, 스트림 단위 완성/채움을 동시에</strong> 만들어낸다. 기존 확산 HOI 방법 중 이 조합을 가진 것이 없다.</li>
+<li><strong>평가 프로토콜 자체를 고쳤다.</strong> 텍스트가 지시하는 행동의 핵심인 물체 궤적과 관절 값을 평가기가 인코딩하도록 만들어, 손 모션만 보던 기존 관행의 맹점을 지적했다.</li>
+<li>생성 결과가 로봇 조작 정책의 참조 사전지식(prior)으로 실제로 쓰일 수 있음을 보였다.</li>
+</ol>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>미지 물체/행동 일반화</strong>: 저자들이 Future Work에서 직접 인정한다. 대규모 사전학습이 필요하며, 정적 grasp(데이터 많지만 시간 문맥 없음)와 짧은 모션 프라이어(시간 정보 있지만 희소) 중 무엇이 나은지 아직 모른다. 2단계(정적 grasp → 모션) 설계도 후보지만, 그런 구조를 택한 DiffH2O·LatentHOI가 관절 조작이 필요 없는 GRAB에서만 잘 되고 ARCTIC에서는 약한 점을 근거로 회의적이다.</li>
+<li><strong>GRAB에서의 접촉 품질</strong>: Contact %와 CR에서 베이스라인에 뒤진다. 강체 파지 데이터에서 접촉 밀도를 잡는 능력이 상대적으로 약하다.</li>
+<li><strong>EOM 정확도</strong>: 전용 길이 회귀기(Text2HOI cVAE)보다 원시 MAE/MedAE와 Interval 지표에서 뒤진다. GRAB에서 특히 어려워 MAE 20.43프레임, Within Interval 70.5%에 그친다.</li>
+<li><strong>최대 문맥 윈도우 제약</strong>: 152프레임(모달리티당 38 잠재)이 상한이라 합성 동작도 이 안에서만 가능하다. 시퀀스가 긴 GRAB에서는 합성 동작 실험 자체를 포기했다.</li>
+<li><strong>유휴 손의 잔여 노이즈</strong>: 0 잠재를 매끄럽게 근사하다 보니 누적 변위가 정확히 0이 아니고, 안 쓰는 손 메시가 뒤틀린 형태로 나온다.</li>
+<li><strong>전제 조건</strong>: 물체 기하와 관절 분절 정보를 알고 있다고 가정한다. 관절 값 $\alpha_o$도 단일 관절(ARCTIC)만 다룬다.</li>
+<li><strong>프레임 레이트 고정</strong>: 다양한 프레임 레이트로 생성하도록 학습되지 않았다(이 점은 저자들이 길이 강제 실험의 논거로 직접 언급).</li>
+<li><strong>사용자 조사 규모</strong>: 데이터셋당 평가자 3명으로 소규모다(&quot;small user-study&quot;라고 명시).</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Hand-Object Interaction</strong></p>
+<ul>
+<li>접촉 민감 정보를 표현 단계에서 잃지 말라는 주장은 우리 쪽 HOI 파이프라인 설계에 그대로 적용된다. 특히 손목 포즈/손가락 관절의 작은 오차가 관통·접촉 끊김·지터로 증폭된다는 관찰과, 이를 <strong>저크(jerk) 프로파일</strong>로 진단한 방법론은 우리 생성/재구성 결과를 평가할 때 바로 가져다 쓸 만한 도구다. 평균 오차가 숨기는 고주파 지터를 드러내기 때문이다.</li>
+<li><strong>NC(Net Contact) = C × (1−P)</strong> 라는 단일 지표는 접촉률과 관통률을 따로 보고할 때 생기는 &quot;체리피킹&quot; 문제를 깔끔하게 정리한다. Table 6의 손실 어블레이션이 이를 잘 보여준다 — 관통 손실을 빼면 접촉률이 98.83%까지 올라가지만 관통이 61.16%다. 우리 실험 리포팅에도 도입할 가치가 있다.</li>
+<li><strong>거리 맵 손실($L_{DM}$)이 가장 결정적</strong>이라는 발견은 접촉 감독 설계에서 참고할 지점이다. 이걸 빼면 접촉률이 92.2% → 22.4%로 붕괴한다.</li>
+<li>물체/왼손/오른손을 분리된 스트림으로 두는 설계는 <strong>양손 비대칭 상호작용</strong>을 다룰 때 핵심이다. &quot;한 손이 물체를 잡아주느냐에 따라 다른 손의 grasp가 달라진다&quot;는 관찰은 우리가 bimanual 데이터를 다룰 때 단일 손 모델을 두 번 돌리는 접근이 왜 부족한지 설명해준다.</li>
+<li><strong>평가 프로토콜 지적</strong>: 기존 텍스트-모션 평가기가 물체 움직임과 관절 값을 무시했다는 비판은 우리가 HOI 평가 지표를 설계하거나 인용할 때 반드시 확인해야 할 부분이다.</li>
+</ul>
+<p><strong>Egocentric Vision</strong></p>
+<ul>
+<li>이 논문은 3인칭 MoCap 데이터(ARCTIC, GRAB) 기반이고 egocentric 시점 자체를 다루지 않는다. 하지만 <strong>1인칭 영상에서 손이 프레임 밖으로 나가거나 물체에 가려지는 구간</strong>은 정확히 이 논문의 completion/infilling 문제와 같은 형태다. 양방향 마스킹 자기회귀는 인과적(causal) AR과 달리 <strong>가림 구간의 앞뒤 문맥을 모두 보고 채워 넣을 수 있어</strong>, egocentric HOI 복원의 시간적 보완(temporal inpainting) 모듈로 바로 옮겨볼 수 있다.</li>
+<li>Table 4가 보여주듯 조건 잠재 2개(= 8프레임)만 있어도 완성 품질이 원자 생성 수준에 근접한다. 짧은 관측만으로 가림 구간을 메우는 시나리오에 유리한 신호다.</li>
+<li><strong>EOM = 상호작용 종료 감지</strong>로 재해석할 수 있다. Egocentric 스트림에서 &quot;지금 이 조작 행위가 끝났는가&quot;를 판단하는 것은 행동 분할(action segmentation)의 핵심 문제인데, 이 논문은 별도 헤드 없이 유휴 잠재의 긴 꼬리를 학습하는 것만으로 이를 얻었다. 우리 파이프라인에서 세그먼트 경계 예측에 유사한 접근을 시도해볼 수 있다.</li>
+<li><strong>유휴 손 모델링</strong>은 1인칭에서 특히 중요하다. 한 손만 물체를 다루고 다른 손은 놀고 있는 상황이 매우 흔한데, &quot;생성 후 마스킹&quot;으로 처리하면 그 손의 실제 정지 상태를 모델이 표현하지 못한다.</li>
+<li>논문이 인용한 <a href="https://arxiv.org/abs/2507.12440" target="_blank">EgoVLA</a>(1인칭 인간 영상에서 vision-language-action 모델 학습)와 <a href="https://arxiv.org/abs/2503.13441" target="_blank">Humanoid Policy ~ Human Policy</a>는 egocentric 데이터 → 로봇 정책 경로의 참고 문헌이다.</li>
+</ul>
+<p><strong>Spatial Audio</strong></p>
+<ul>
+<li>이 논문은 오디오를 전혀 다루지 않는다(논문에 명시적 언급 없음). 다만 구조적으로 확장 여지가 뚜렷하다. <strong>접촉 이벤트(contact onset)와 물체 관절 변화($\alpha_o$)는 곧 소리 발생 시점</strong>이다. 이 프레임워크가 모달리티를 인터리빙된 스트림으로 다루므로, 오디오 잠재를 네 번째 스트림으로 추가하고 같은 모달리티 임베딩 메커니즘을 적용하는 확장이 자연스럽다.</li>
+<li>반대 방향, 즉 <strong>공간 오디오를 조건으로 한 HOI 생성</strong>도 생각해볼 수 있다. 텍스트 캡션이 CLIP 인코더 → 선형 사영으로 트랜스포머에 주입되는 구조라, 조건 인코더를 오디오 인코더로 바꾸거나 병렬로 붙이는 것은 구조 변경이 크지 않다.</li>
+<li>Phy 지표(물체가 움직인 프레임 중 손이 접촉한 비율)는 &quot;소리가 났어야 할 순간에 실제 접촉이 있었는가&quot;를 검증하는 오디오-비주얼 정합 지표로 재해석할 수 있다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper4">
+  <div class="card-head" style="border-left-color:#10b981">
+    <span class="topic-tag" style="background:#10b981">Hand-Object Interaction</span>
+    <h2>AdaDexGrasp: Adaptive Dexterous Grasping via 3D Visuo-Tactile Representation Fusion</h2>
+    <p class="lead">손가락·손바닥 ID를 촉각 신호에 묶어 물체 point cloud에 직접 새겨 넣는 visuo-tactile 표현을 만들고, 이를 써서 초기 grasp 생성 → 성공 여부 판정 → 실패 시 자세 보정까지 한 루프로 돌리는 dexterous grasping 프레임워크다.</p>
+    <div class="authors">Xirui Liang, Jiaqi Liang\*, Jingkai Xu\*, Yuran Wang\* (Peking University), Ruochong Li (HKUST), Yuanpei Chen (Peking University), Masayoshi Tomizuka, Wei Zhan, Ruihai Wu† (UC Berkeley) — \*공동 1저자, †교신저자</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-06</span> · <span class="pub-venue">🏛 ECCV 2026 (Accepted)</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.07600" target="_blank">arXiv:2608.07600</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.07600" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.07600" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://arxiv.org/html/2608.07600v1/Teaser.png" alt="초기 grasp가 불안정하면 촉각 융합 표현으로 자세를 다시 잡는다" loading="lazy"><figcaption>초기 grasp가 불안정하면 촉각 융합 표현으로 자세를 다시 잡는다</figcaption></figure>
+<p>Figure 1: (왼쪽) 손가락/손바닥 identity가 붙은 contact map을 point cloud에서 예측해 초기 손 자세를 만들고, (오른쪽 위) 그 자세가 접촉이 성기거나 불안정해 실패할 수 있으며, (오른쪽 아래) visuo-tactile 융합 표현으로 자세를 보정해 더 촘촘하고 안정적인 접촉을 만든다.</p>
+<h3 class="sec">선행 연구</h3>
+<p>로봇 grasping 연구는 크게 세 갈래다. 강화학습(RL)은 시행착오로 조작 기술을 얻고, 모방학습(IL)은 사람 시연을 로봇으로 옮기며, object-centric 방식은 로봇의 proprioception(관절 위치 등 자기 상태 감각)과 RGB-D 관측으로 시각 기반 grasp 정책을 배운다. 대표적으로 UniDexGrasp++, DexGraspAnything, DexDiffuser, ContactDexNet, DexGraspVLA 같은 방법들이 있다.</p>
+<p>visuo-tactile(시각-촉각) 융합 쪽은 다시 두 부류로 나뉜다.</p>
+<ul>
+<li><strong>학습 기반 융합</strong>: 각 모달리티를 latent 표현으로 인코딩한 뒤 concat하거나 사전학습으로 정렬한다. 전역(global) feature 정렬에 집중한다.</li>
+<li><strong>원신호 기반 융합</strong>: 시각과 촉각 신호를 신호 수준에서 바로 합친다.</li>
+</ul>
+<p>일부 연구는 dexterous grasping에서 visuo-tactile 일반화를 시도했지만, 대부분 feature-level fusion에 머물렀다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>저자들이 지적하는 빈틈은 세 가지다.</p>
+<ol>
+<li><strong>접촉 이후 적응이 없다.</strong> 기존 grasping 방법 대부분은 RGB나 point cloud 같은 시각 입력만으로 초기 관측 시점에 손 자세를 정하고 끝낸다. 손이 물체에 닿은 뒤 미끄러짐(slipping)이나 구름(rolling)이 생겨도 이를 감지·수정할 수단이 없다. 시각 기하만 보면 멀쩡해 보이는 자세도 실제로는 실패하는 이유다.</li>
+<li><strong>촉각만 쓰는 방법은 비효율적이다.</strong> occlusion(물체가 카메라에 가려지는 현상) 상황에서 촉각만으로 적응적 grasping을 시도한 연구들이 있으나, 여러 번 더듬어 봐야 하고 이미 갖고 있는 시각 정보를 못 쓴다.</li>
+<li><strong>feature-level 융합은 공간 정렬을 놓친다.</strong> 시각과 촉각을 각자 인코딩해 붙이는 방식은 &quot;어느 손가락이 물체의 어느 지점에 닿았는가&quot;라는 <strong>공간적 대응(spatial alignment)</strong> 을 표현하지 못한다. 정밀하고 적응적인 grasp 제어에는 이 대응이 결정적인데도 그렇다.</li>
+</ol>
+<p>덧붙여, 촉각 센서가 달린 dexterous hand용 시뮬레이션 환경이 마땅치 않아 연구 자체가 막혀 있었다는 점도 문제로 든다.</p>
+<h3 class="sec">연구 주제</h3>
+<p><strong>촉각 센서가 달린 다지 손(dexterous hand)으로 안정적이고 적응적인 grasping을 학습하는 문제</strong>를 다룬다.</p>
+<p>형식적으로는, 물체 point cloud $\mathcal{P}_{obj}=\{(x_i,y_i,z_i,r_i,g_i,b_i)\}_{i=1}^{N_0}$ (RGB-D 카메라로 취득)와 촉각 신호 $\tau=\{\tau_i\}_{i=1}^{N_t}$ 가 주어졌을 때, grasp 성공 확률을 최대화하는 손 상태 $s^*$ 를 찾는 것이다.</p>
+<p>$$s^{*}=\arg\max_{s}\; p(y=1 \mid \mathcal{P}_{obj},\tau,s)$$</p>
+<p>여기서 손 상태는 $s=[p,q,\mathbf{j}]$ 로, $p\in\mathbb{R}^{3}$ 는 손바닥 위치, $q\in\mathbb{R}^{4}$ 는 손바닥 방향(쿼터니언), $\mathbf{j}\in\mathbb{R}^{22}$ 는 22개 구동 관절의 각도다. $y\in\{0,1\}$ 은 grasp 성공 여부, $N_t$ 는 촉각 센서 개수로 이 논문 설정에서는 6개(손가락 끝 5개 + 손바닥 1개)다.</p>
+<p>핵심 난제는 <strong>visuo-tactile 관측과 grasp 안정성 사이의 관계를 어떻게 모델링하느냐</strong>다.</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">전체 구조 — 세 모듈 + 폐루프</h4>
+<p>프레임워크는 세 모듈로 구성되고, 이들이 반복 루프로 엮인다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>모듈</th><th>역할</th><th>핵심 입력</th></tr></thead><tbody><tr><td>Contact-Driven Grasp Pose Generator</td><td>초기 grasp 자세 생성</td><td>물체 point cloud</td></tr><tr><td>Grasp Pose Classifier</td><td>grasp 성공 가능성 예측</td><td>촉각이 새겨진 point cloud + 손 자세</td></tr><tr><td>Grasp Pose Adaptation Model</td><td>실패로 판정된 자세를 보정</td><td>실패 상태의 visuo-tactile 표현</td></tr></tbody></table></div>
+<p>Figure 3의 설명에 따르면 초록색 블록(생성)은 PointNet++로 물체 point cloud를 처리해 visuo-tactile contact map과 초기 자세를 뽑고, 노란색 블록(분류)은 손과 visuo-tactile point cloud를 각각 인코딩하는 dual-encoder PointNet++ 뒤에 multi-head attention을 붙여 성공을 예측하며, 파란색 블록(적응)은 diffusion 기반 모듈로 자세를 반복 보정한다.</p>
+<h4 class="subsec">1) 의미가 담긴 contact map으로 초기 자세 만들기</h4>
+<p>기존 contact map은 &quot;여기가 닿는다/안 닿는다&quot;만 표시했다. 이 논문은 여기에 <strong>손가락/손바닥 identity</strong>를 붙인다. 모델 $h_\psi$ 가 물체의 각 점마다 6개 중 하나의 라벨을 예측한다.</p>
+<p>$$\mathcal{M}=\{\mathcal{M}_i \mid \mathcal{M}_i \in \{1,2,3,4,5,6\},\ i=1,\dots,N_0\}=h_{\psi_1}(\mathcal{P}_{obj})$$</p>
+<p>즉 &quot;이 점은 엄지가 닿을 자리, 저 점은 손바닥이 받칠 자리&quot;까지 담는 semantic contact map이다. 이걸 물체 point cloud feature에 합쳐 초기 자세를 디코딩한다.</p>
+<p>$$s^{(0)}=h'_{\psi_2}(\mathcal{P}_{obj},\mathcal{M})$$</p>
+<p>contact map은 cross-entropy $\mathcal{L}_{CE}(\mathcal{M},\mathcal{M}_s)=-\sum_i M_{s,i}\log M_i$ 로, 자세는 MSE $\mathcal{L}_{MSE}=\|s^{(0)}-s^{s}\|_2^2$ 로 학습한다. 이 단계에서는 아직 접촉이 없으므로 촉각 입력은 쓰지 않는다.</p>
+<h4 class="subsec">2) 촉각을 point cloud에 새겨 넣기 (tactile-mapped point cloud)</h4>
+<p>초기 자세 $s_0$ 를 실행한 뒤, 다섯 손가락 끝과 손바닥의 접촉력을 읽어 물체 point cloud에 주석을 단다. 각 접촉 영역에 어느 손 부위가 닿았는지 나타내는 고유 ID를 부여해 $\mathcal{P}_{vt}$ 를 만든다.</p>
+<p>$$\mathcal{P}_{vt}=\{(x_i,y_i,z_i,r_i,g_i,b_i,k_i,\mathbf{c}_i)\mid i=1,\dots,N\}$$</p>
+<p>$k_i\in\mathbb{R}$ 은 손-물체 접촉 상태, $\mathbf{c}_i\in[0,1]^6$ 은 다섯 손가락 끝과 손바닥에 대응하는 6차원 촉각 세기 벡터다.</p>
+<p>논문은 $\mathcal{M}$ 과 $\mathcal{P}_{vt}$ 의 차이를 분명히 구분한다. $\mathcal{M}$ 은 실행 <strong>전에</strong> 물체 point cloud만 보고 <strong>예측한</strong> 사전분포이고, $\mathcal{P}_{vt}$ 는 접촉 <strong>후에</strong> 실제로 <strong>측정한</strong> 촉각 신호를 붙인 것이다. 앞의 것은 계획을 이끌고, 뒤의 것은 판정과 보정에 쓰인다.</p>
+<h4 class="subsec">3) 성공 판정</h4>
+<p>$\hat{y}=f_\theta(\mathcal{P}_{vt},s)$ 로 성공 확률을 예측한다. PointNet 계열 네트워크이며 binary cross-entropy $\mathcal{L}_{cls}=-[y\log\hat{y}+(1-y)\log(1-\hat{y})]$ 로 학습한다.</p>
+<h4 class="subsec">4) 실패 자세 보정</h4>
+<p>보정 모델 $g_\phi$ 는 실패 상태에서 수정량을 낸다.</p>
+<p>$$\Delta s=g_\phi(\mathcal{P}_{vt}^{f},s^{f}),\qquad s^{f,\mathrm{new}}=s^{f}+\Delta s$$</p>
+<p>학습 데이터는 (실패, 성공) 쌍으로 만든다. 물체마다 PPO rollout에서 <strong>들어올리기 직전</strong> 시점의 성공/실패 상태를 모아 같은 상호작용 단계로 맞추고, 물체 중심 좌표계로 옮겨 물체의 절대 배치 의존성을 없앤 뒤, 각 실패 상태를 가장 가까운 성공 상태와 짝짓는다. 거리는 다음과 같이 정의한다.</p>
+<p>$$d(s,s')=10\sqrt{\|p-p'\|_2^2+\theta_{q,q'}^2}+\|\mathbf{j}-\mathbf{j}'\|_2$$</p>
+<p>$\theta_{q,q'}$ 는 두 방향 사이의 geodesic 거리다. 손실은 &quot;성공 자세에 가까워질 것 + 분류기가 매기는 성공 확률을 높일 것&quot; 두 항을 합친다.</p>
+<p>$$\mathcal{L}_{gen}=\|\Delta s-(s^{s}-s^{f})\|_2^2+\lambda\big(1-f_\theta(\mathcal{P}_{vt}^{f},s^{f}+\Delta s)\big)$$</p>
+<h4 class="subsec">5) 폐루프 최적화</h4>
+<p>초기 자세 $s_0$ 에서 시작해 매 스텝 $\hat{y}_k=f_\theta(\mathcal{P}_{vt}^{k},s^{(k)})$ 를 평가하고,</p>
+<p>$$s_{k+1}=\begin{cases}s_k, &amp; \hat{y}_k&gt;\tau_{succ}\\ s_k+g_\phi(\mathcal{P}_k,s_k), &amp; \text{그 외}\end{cases}$$</p>
+<p>로 갱신하며, $\hat{y}_k&gt;\tau_{succ}$ 이거나 최대 반복 $K$ 에 도달하면 멈춘다.</p>
+<h4 class="subsec">6) 학습 데이터 수집</h4>
+<p>UniDexGrasp의 1단계 PPO 설정을 따라 IsaacGym에서 데이터를 모은다. 같은 물체에 대해 다양한 grasp 자세를 만들면서도 최소한의 보정으로 안정적인 grasp을 유지하도록 하는 전략이다. 성공과 실패를 모두 수집해 촉각 데이터의 다양성을 확보한다. 손가락에 걸리는 힘이 임계값(실험에서 0.01N)을 넘으면 그 손가락을 active로 표시하고, 감지된 접촉마다 근처 물체 점들을 골라 해당 라벨을 붙인다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<h4 class="subsec">실험 세팅</h4>
+<ul>
+<li><strong>시뮬레이터</strong>: IsaacGym. 작업은 reaching → grasping → lifting 3단계.</li>
+<li><strong>손</strong>: ShadowHand 기반. 5지 22 DoF, 공간 이동용 6 DoF root pose를 포함하면 총 28 DoF.</li>
+<li><strong>물체</strong>: UniDexGrasp++에서 6개 카테고리 50개 물체. 20개는 학습, 30개는 unseen-category 테스트.</li>
+<li><strong>성공 기준(시뮬)</strong>: 들어올린 뒤 최소 1초 동안 미끄러짐 없이 유지.</li>
+<li><strong>평가 축</strong>: Seen Objects / Unseen Objects(같은 카테고리, 학습에 없던 물체) / Unseen Categories.</li>
+</ul>
+<h4 class="subsec">베이스라인 비교 (Table 1, grasp 성공률)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Seen Objects</th><th class="num">Unseen Objects</th><th class="num">Unseen Categories</th></tr></thead><tbody><tr><td>UniDexGrasp++</td><td class="num">55%</td><td class="num">49%</td><td class="num">42%</td></tr><tr><td>DexGraspAnything</td><td class="num">77%</td><td class="num">72%</td><td class="num">67%</td></tr><tr><td>DexDiffuser</td><td class="num">71%</td><td class="num">69%</td><td class="num">55%</td></tr><tr><td>UniDexGrasp (PPO)</td><td class="num">52%</td><td class="num">46%</td><td class="num">40%</td></tr><tr><td>Robot Synesthesia</td><td class="num">33%</td><td class="num">29%</td><td class="num">22%</td></tr><tr><td>Intuitive Closed-Loop</td><td class="num">76%</td><td class="num">71%</td><td class="num">65%</td></tr><tr><td>ContactDexNet</td><td class="num">72%</td><td class="num">68%</td><td class="num">63%</td></tr><tr><td>DexGraspVLA</td><td class="num">69%</td><td class="num">60%</td><td class="num">58%</td></tr><tr><td>UniDexGrasp-CL</td><td class="num">59%</td><td class="num">52%</td><td class="num">46%</td></tr><tr><td>DexDiffuser-VT</td><td class="num">75%</td><td class="num">71%</td><td class="num">57%</td></tr><tr><td><strong>Ours</strong></td><td class="num"><strong>91%</strong></td><td class="num"><strong>82%</strong></td><td class="num"><strong>83%</strong></td></tr></tbody></table></div>
+<p>세 축 모두에서 앞서고, 특히 unseen category에서 격차가 가장 크게 벌어진다(2위 DexGraspAnything 67% 대비 83%). 저자들은 베이스라인 실패 원인을 넷으로 정리한다. (1) 생성형 방법은 시각 기하만 보고 중간 semantic 대응이 없어 복잡한 물체에 실행 불가능한 자세를 낸다. (2) RGB를 행동으로 직접 매핑하는 end-to-end 모델은 기하 구조 이해가 부정확하다. (3) offline contact 모델링은 정적 예측만 주므로 실제 접촉 상태를 못 보고 2차 폐루프 조정을 못 한다. (4) 보정 단계에서, 순수 RL은 고차원 탐색 노이즈에 시달리고, distillation 모델은 국소 기하 변화에 취약하며, Intuitive Closed-Loop는 기하 인식 없이 무작정 손가락을 조인다. resampling 기반(UniDexGrasp-CL)은 같은 생성 분포 안에 갇혀 실패 모드를 못 벗어나고, DexDiffuser-VT는 Basis Point Set 인코딩이 전역 feature만 잡고 촉각이 의존하는 국소 point cloud 구조를 망가뜨려 융합이 약하다.</p>
+<p>규모를 키워도 이득이 유지된다. DexGrasp Anything 데이터셋(15k개 이상 물체)에서도 87%를 달성했다.</p>
+<h4 class="subsec">Ablation (Table 2)</h4>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Seen Objects</th><th class="num">Unseen Objects</th><th class="num">Unseen Categories</th></tr></thead><tbody><tr><td>w/o contact id in adaptation</td><td class="num">84%</td><td class="num">72%</td><td class="num">73%</td></tr><tr><td>w/o contact id in generation</td><td class="num">79%</td><td class="num">75%</td><td class="num">69%</td></tr><tr><td>w/o adaptation</td><td class="num">81%</td><td class="num">78%</td><td class="num">59%</td></tr><tr><td>Object-only</td><td class="num">72%</td><td class="num">67%</td><td class="num">61%</td></tr><tr><td>Full Point Cloud w/o tactile</td><td class="num">78%</td><td class="num">74%</td><td class="num">67%</td></tr><tr><td>w/o PC (이미지에 촉각 라벨)</td><td class="num">74%</td><td class="num">71%</td><td class="num">64%</td></tr><tr><td><strong>Ours</strong></td><td class="num"><strong>91%</strong></td><td class="num"><strong>82%</strong></td><td class="num"><strong>83%</strong></td></tr></tbody></table></div>
+<ul>
+<li><strong>contact ID의 의미 정보</strong>는 초기 생성과 이후 보정 양쪽에서 모두 필수다.</li>
+<li><strong>adaptation 모듈</strong>의 기여가 가장 극적이다. unseen object는 78% → 82%, unseen category는 <strong>59% → 83%</strong> 로 뛴다. 처음 보는 카테고리일수록 초기 자세가 틀리기 쉬우니, 접촉 후 고쳐 잡는 능력이 일반화를 좌우한다는 뜻이다.</li>
+<li>손 point cloud가 없으면 손-물체 관계를 모델링할 수 없고(Object-only 72/67/61), 촉각이 없으면 보정이 어려워진다(78/74/67).</li>
+<li>point cloud 대신 촉각 라벨이 붙은 이미지를 쓰면 물체의 기하 구조를 충분히 이해하지 못한다(74/71/64).</li>
+</ul>
+<h4 class="subsec">실제 로봇 실험 (Table 3)</h4>
+<p>고해상도 촉각 센서가 달린 Psibot 로봇 손으로, 기하·재질이 서로 다른 20개 이상 물체에 대해 평가했다. 성공 기준은 들어올린 뒤 3초 이상 안정적으로 유지.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Method</th><th class="num">Seen Objects</th><th class="num">Unseen Objects</th><th class="num">Unseen Categories</th></tr></thead><tbody><tr><td>DexGraspAnything</td><td class="num">81%</td><td class="num">71%</td><td class="num">73%</td></tr><tr><td>DexDiffuser</td><td class="num">77%</td><td class="num">65%</td><td class="num">52%</td></tr><tr><td>DexGraspVLA</td><td class="num">64%</td><td class="num">57%</td><td class="num">55%</td></tr><tr><td><strong>Ours</strong></td><td class="num"><strong>90%</strong></td><td class="num"><strong>87%</strong></td><td class="num"><strong>81%</strong></td></tr></tbody></table></div>
+<h4 class="subsec">표현 선택에 대한 분석</h4>
+<p>저자들은 힘의 방향이나 전단력(shear force) 같은 더 촘촘한 촉각 모달리티도 시도했지만, 표현이 조밀해질수록 필요한 데이터가 훨씬 많아졌다고 보고한다. 소규모 데이터 실험에서 이 논문의 표현은 88%, 조밀한 모달리티는 81%였다. 또한 풍부한 모달리티는 실제 하드웨어 요구가 크고 촉각 표현의 sim-to-real gap도 커서, 시뮬레이션과 현실의 설정을 맞추기 어렵다고 밝힌다.</p>
+<h4 class="subsec">의의</h4>
+<p>핵심 메시지는 <strong>&quot;시각과 촉각을 latent에서 붙이지 말고 3D 공간에서 정렬하라&quot;</strong> 는 것이다. 촉각 신호를 손가락 identity와 묶어 물체 point cloud 위에 직접 새기면, 계획 단계에서는 &quot;어느 손가락이 어디에 닿아야 하는가&quot;를 예측할 수 있고 실행 단계에서는 &quot;실제로 어디에 닿았는가&quot;를 같은 좌표계에서 읽을 수 있다. 이 표현의 통일 덕에 생성·판정·보정을 하나의 폐루프로 묶을 수 있었고, 그 결과가 unseen category에서의 큰 성능 격차로 나타났다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>촉각 표현이 의도적으로 단순하다.</strong> 6차원 접촉 세기와 접촉 상태만 쓰고, 힘의 방향이나 전단력은 배제했다. 저자들 스스로 데이터 요구량과 sim-to-real gap 때문에 내린 절충이라고 설명한다. 미끄러짐 방향 판별이나 정밀 조작으로 확장하려면 이 부분이 발목을 잡을 수 있다.</li>
+<li><strong>평가 규모가 작다.</strong> 시뮬레이션은 6개 카테고리 50개 물체(학습 20 / 테스트 30), 실제 실험은 20개 이상 물체 수준이다. 대규모 검증은 DexGrasp Anything 데이터셋에서 87%라는 단일 수치로만 보고된다.</li>
+<li><strong>grasping 자체에 국한된다.</strong> 들어올려 유지하는 데까지가 대상이고, 잡은 뒤의 조작(in-hand manipulation)이나 물체를 사용하는 단계는 다루지 않는다.</li>
+<li><strong>성공 판정 임계값 $\tau_{succ}$ 와 최대 반복 $K$ 의 구체적 값</strong>은 본문에서 확인하지 못했다(부록 &quot;Training and Inference Details&quot;에 있을 가능성이 있으나 본 정리에서는 확인하지 못함).</li>
+<li><strong>보정 반복의 실시간성</strong>에 대해서는 별도 부록(Real-Time Feasibility)이 있으나 구체 수치는 이 정리에서 확인하지 못했다.</li>
+<li>접촉력 임계값 0.01N 같은 하이퍼파라미터가 시뮬레이션 기준으로 정해져 있어, 실제 센서 특성이 다른 하드웨어로 옮길 때의 민감도는 논문에 명시적 언급 없음.</li>
+</ul>
+<p>&gt; 주: 본 정리는 arXiv HTML 전문 중 Section 4.5까지(Abstract, Introduction, Related Work, Method 전체, Experiments 4.1–4.5 및 Table 1–3)를 근거로 작성했다. Section 4.6(Deep Analysis in Tactile Signals), Section 5(Conclusion), References, Supplementary는 페이지 로드가 중간에 잘려 확인하지 못했다.</p>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<h4 class="subsec">Hand-Object Interaction</h4>
+<ul>
+<li><strong>contact map에 &quot;누가 닿는가&quot;를 넣는다는 발상</strong>이 가장 직접적으로 옮겨 붙는다. HOI 연구에서 흔히 쓰는 binary contact map은 접촉 여부만 표시하는데, 이 논문처럼 손가락/손바닥 identity를 per-point 라벨로 확장하면 hand-object 관계를 훨씬 촘촘하게 표현할 수 있다. 사람 손 재구성이나 grasp 합성에서 supervision 신호로 재활용할 여지가 있다.</li>
+<li><strong>실패-성공 쌍 구축 방식</strong>도 참고할 만하다. 들어올리기 직전이라는 동일한 상호작용 단계에서 상태를 모으고, 물체 중심 좌표계로 정규화한 뒤 관절 거리로 최근접 성공 자세를 짝짓는다(식 8). HOI에서 &quot;잘못 잡은 손&quot;을 &quot;제대로 잡은 손&quot;으로 교정하는 refinement 모델을 학습할 때 그대로 쓸 수 있는 페어링 전략이다.</li>
+<li><strong>폐루프 refinement 구조</strong>(생성 → 판정 → 보정 반복)는 단발성 예측이 지배적인 hand pose estimation / grasp synthesis 파이프라인에 붙일 수 있는 일반적 틀이다. 특히 unseen category에서 59% → 83%로 뛴 ablation 결과는, 일반화 성능을 모델 용량이 아니라 &quot;고쳐 잡는 능력&quot;으로 얻을 수 있다는 근거가 된다.</li>
+</ul>
+<h4 class="subsec">Egocentric Vision</h4>
+<ul>
+<li>1인칭 시점에서는 손이 물체를 가려 occlusion이 심하고, 시각만으로는 접촉 여부를 확정하기 어렵다. 이 논문이 &quot;시각 기하만으로는 멀쩡해 보여도 실제 접촉은 실패한다&quot;고 짚은 지점이 egocentric HOI의 고질적 문제와 정확히 겹친다. 촉각 대신 <strong>접촉 상태를 나타내는 latent 채널을 point cloud에 추가</strong>하는 형태로, egocentric 3D hand-object 표현에 접촉 사전정보를 주입하는 설계를 생각해 볼 수 있다.</li>
+<li>다만 egocentric 세팅에는 실제 촉각 센서가 없다. 이 논문의 $\mathcal{M}$(예측된 contact map, 접촉 전)과 $\mathcal{P}_{vt}$(측정된 촉각, 접촉 후)의 구분을 빌려오면, 촉각 센서가 없는 상황에서는 $\mathcal{M}$ 만 쓰되 이를 비디오의 시간적 문맥으로 갱신하는 방향이 자연스러운 대안이 된다.</li>
+<li>표현 형식에 대한 실증도 유용하다. &quot;촉각 라벨이 붙은 이미지&quot;(74/71/64)보다 &quot;촉각 라벨이 붙은 point cloud&quot;(91/82/83)가 뚜렷하게 나았다는 ablation은, egocentric HOI에서도 2D 이미지 위 주석보다 3D 표현이 손-물체 관계 추론에 유리함을 시사한다.</li>
+</ul>
+<h4 class="subsec">Spatial Audio</h4>
+<ul>
+<li>직접적인 접점은 없다. 다만 방법론적으로 옮길 만한 발상은 있다. 이 논문의 기여는 &quot;서로 다른 두 모달리티를 latent에서 concat하지 말고, 공통의 3D 공간 좌표계 위에 정렬하라&quot;는 것이다. spatial audio에서도 소리 원천의 방향 정보를 오디오 embedding으로만 두지 않고 <strong>3D 장면 표현(point cloud나 voxel) 위에 소리 세기/방향을 per-point 채널로 새기는</strong> 대응 설계가 가능하다.</li>
+<li>접촉 순간에 나는 소리는 grasping의 성공/실패나 물체 재질과 상관이 크므로, 촉각 채널 $\mathbf{c}_i$ 자리에 접촉 음향 feature를 넣는 audio-tactile 확장도 상상해 볼 만하다. 이 논문에서 다룬 내용은 아니다.</li>
+</ul>
+  </div>
+</article>
+<article class="card" id="paper5">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>Ambisonics Encoding of Room Impulse Responses using a Device-Agnostic Diffusion Model</h2>
+    <p class="lead">마이크가 적고 배치도 불규칙한 임의의 기기로 측정한 방 임펄스 응답을, HOA(고차 앰비소닉스) RIR의 통계를 학습한 확산 모델을 사전분포로 삼아 최대 12차 앰비소닉스로 복원하는 방법이다.</p>
+    <div class="authors">Eloi Moliner¹², Christoph Hold¹, Juan Azcarreta Ortiz¹, Sebastian Prepeliţă¹, Ishwarya Ananthabhotla¹, Daniel Wong¹, Sanjeel Parekh¹, Sanha Lee¹ (¹ Reality Labs Research, Meta / ² Acoustics Lab, DICE, Aalto University, Espoo, Finland)</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-08-14</span> · <span class="pub-venue">🏛 IWAENC 2026</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2608.14097" target="_blank">arXiv:2608.14097</a> <a class="pill pdf" href="https://arxiv.org/pdf/2608.14097" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2608.14097" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<p>Figure 1은 벡터 다이어그램(TikZ)으로 그려져 있어 arXiv HTML에 별도 이미지 파일이 없다. 깨진 링크를 피하기 위해 그림 대신 내용을 옮기면 다음과 같다.</p>
+<p>노이즈가 섞인 HOA RIR $\mathbf{a}_\tau$가 들어오면 → 스케일 계수 $c_\mathrm{in}$을 곱하고 → Wigner-D 랜덤 회전 $\mathbf{R}_{\phi,\theta}$를 적용한 뒤 → STFT($\mathcal{F}_\mathrm{ST}$)로 시간-주파수 영역으로 옮겨 NCSN++ 네트워크를 통과시키고 → iSTFT로 되돌린다. 여기서 나온 신호의 <strong>late(후기 잔향)</strong> 구간은 그대로 쓰고, <strong>early(초기 반사)</strong> 구간은 입력의 초기 구간과 함께 시간 영역 U-Net으로 한 번 더 다듬는다. 두 구간을 이어 붙인 뒤 역회전 $\mathbf{R}^{-1}_{\phi,\theta}$과 $c_\mathrm{out}$, $c_\mathrm{skip}$ 잔차 결합을 거쳐 디노이즈 추정 $\hat{\mathbf{a}}_0$가 나온다. 한마디로 &quot;잔향은 스펙트로그램에서, 초기 반사는 파형에서&quot; 처리하는 2단 하이브리드 구조다.</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>고전적 앰비소닉스 인코딩</strong>: 마이크 신호에서 구면 조화 함수 계수로의 선형 최소자승(least-squares) 투영을 쓴다. 주파수별로 $\hat{\mathbf{A}}_\mathrm{LS} = \mathbf{H}^{\dagger}\mathbf{X}$ 형태이며, $\mathbf{H}^{\dagger}$는 배열 전달함수(ATF, array transfer function)의 무어-펜로즈 유사역행렬이다.</li>
+<li><strong>모델 가정을 추가한 방법들</strong>: 신호 희소성(sparsity)을 가정하거나, 파라메트릭 공간 오디오(parametric spatial audio) 방식으로 방향 정보를 추정해 역문제에 구조를 넣었다. 다만 이런 방법은 &quot;귀에 그럴듯하게 들리는 것&quot;을 주 목표로 삼기 때문에, 가정이 깨지면 복원 정확도가 떨어진다.</li>
+<li><strong>신경망 기반 앰비소닉스 인코더</strong>: 특정 마이크 배열에 대해 시간에 따라 변하는 인코딩 행렬을 예측한다. 그러나 대부분 1차(FOA)에 머물고 기기 종속적이며, 배열 간 견고성을 높이려는 시도가 있었지만 여전히 제한적이다.</li>
+<li><strong>앰비소닉스 차수 업믹싱(FOA → HOA)</strong>: 파라메트릭 방식, 예측형 신경망, 생성형 확산 모델이 시도됐다. 하지만 모두 장면 기반(scene-based) 오디오 신호를 대상으로 했고, RIR을 정확히 인코딩한 결과는 보여준 적이 없다.</li>
+<li><strong>RIR 생성 모델</strong>: RIR 자체를 생성하는 연구는 여럿 나왔지만, 저자들에 따르면 <strong>HOA RIR을 대상으로 한 생성 모델은 이 논문이 처음</strong>이다.</li>
+</ul>
+<p>&gt; 참고문헌 목록은 arXiv HTML이 본문 중간에서 잘려 확인하지 못해, 위 선행 연구에는 arXiv 링크를 달지 않았다.</p>
+<h3 class="sec">문제 제기</h3>
+<p>앰비소닉스를 정확히 얻으려면 구면을 촘촘히 샘플링하는 마이크 배열이 필요하다. 그런데 웨어러블 기기처럼 마이크가 몇 개뿐이고 배치가 불규칙한 장치는 공간 대역폭(spatial bandwidth)이 부족해 고차 성분을 아예 분해하지 못한다.</p>
+<p>수식으로 보면 문제가 분명하다. 목표 차수 $N$이 커지면 미지수 개수 $(N+1)^2$이 마이크 수 $M$을 크게 넘어서고, 유한한 개구(aperture)와 공간 앨리어싱 때문에 $\mathbf{H}$가 심하게 ill-conditioned해진다. 실무에서는 작은 특이값을 버리는 정규화 역행렬을 쓰지만, 이는 수치적 안정성만 개선할 뿐 <strong>근본적인 모호성 자체를 해소하지 못한다</strong>. 즉 배열이 담아내지 못한 공간 정보는 최소자승으로는 영원히 복원되지 않는다.</p>
+<h3 class="sec">연구 주제</h3>
+<p>이 논문은 &quot;배열 RIR → HOA RIR 인코딩&quot;을 <strong>역문제(inverse problem)이자 베이지안 사후추론(posterior inference)</strong> 으로 다시 세운다. 같은 측정값 $\mathbf{x}$를 설명하는 HOA RIR $\mathbf{a}$가 무수히 많으므로, 하나의 결정론적 해가 아니라 사후분포에서 표본을 뽑자는 발상이다.</p>
+<p>$$p(\mathbf{a}\mid\mathbf{x},\mathbf{h}) \propto p(\mathbf{a})\,p(\mathbf{x}\mid\mathbf{a},\mathbf{h})$$</p>
+<p>여기서 핵심은 구면 조화 영역(SHD) 표현이 <strong>기기와 무관(device-agnostic)</strong> 하다는 점이다. 덕분에 사전분포 $p(\mathbf{a})$는 &quot;그럴듯한 HOA RIR이란 무엇인가&quot;만 학습하면 되고, 기기 특성은 전부 우도항 $p(\mathbf{x}\mid\mathbf{a},\mathbf{h})$ 쪽의 알려진 순방향 모델 $\mathbf{X}[k] = \mathbf{H}[k]\mathbf{A}[k]$에 들어간다. 결과적으로 <strong>모델을 한 번 학습해두면 ATF만 알면 어떤 배열에도 붙일 수 있다</strong>.</p>
+<h3 class="sec">연구 방법</h3>
+<h4 class="subsec">1) 확산 사전분포</h4>
+<p>시간 영역 HOA RIR $\mathbf{a} \in \mathbb{R}^{(N+1)^2 \times T}$의 분포를 확산 모델로 학습한다.</p>
+<ul>
+<li>섭동 과정은 등방성으로 $\mathbf{a}_\tau = \mathbf{a} + \tau\mathbf{z}$, $\mathbf{z}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ (모든 앰비소닉스 계수와 시간 샘플에 같은 분산의 잡음).</li>
+<li>샘플링은 확률흐름 ODE $\mathrm{d}\mathbf{a}_\tau = -\tau\nabla_{\mathbf{a}_\tau}\log p(\mathbf{a}_\tau)\,\mathrm{d}\tau$를 $\tau \to 0$까지 적분해 수행한다.</li>
+<li>스코어는 MMSE 디노이저와 연결된다: $\nabla_{\mathbf{a}_\tau}\log p(\mathbf{a}_\tau) = -(\mathbf{a}_\tau - \mathbb{E}[\mathbf{a}_0\mid\mathbf{a}_\tau])/\tau^2$.</li>
+<li>디노이즈 예측은 잔차 형태 $\hat{\mathbf{a}}_0(\mathbf{a}_\tau) = c_\mathrm{skip}(\tau)\mathbf{a}_\tau + c_\mathrm{out}(\tau)F_\psi(c_\mathrm{in}(\tau)\mathbf{a}_\tau, \tau)$로 파라미터화한다.</li>
+<li>학습은 Karras 방식의 스코어 매칭 대신 <strong>조건부 플로우 매칭(conditional flow matching)</strong> 을 쓴다. 목표는 $\mathbb{E}_{\mathbf{a},\mathbf{z},\tau}\big[\|F_\psi(c_\mathrm{in}(\tau)(\mathbf{a}+\tau\mathbf{z}),\tau) - (\mathbf{z}-\mathbf{a})\|_2^2\big]$이며, 이 설정에서 최적화가 더 빨랐다고 보고한다. 이에 맞춰 $c_\mathrm{in}(\tau)=c_\mathrm{skip}(\tau)=\frac{1}{\tau+1}$, $c_\mathrm{out}(\tau)=\frac{\tau}{\tau+1}$로 둔다.</li>
+</ul>
+<h4 class="subsec">2) 하이브리드 2단 백본</h4>
+<p>RIR은 시간축에 따라 성격이 확 다르다는 점을 설계에 넣었다. 초기 구간은 직접음과 개별 초기 반사로 이루어져 있고 이들의 상대 시각·방향이 <strong>정위감(localization)</strong> 을 결정한다. 반면 후기 잔향은 확산적이고 매끄러워 주파수별 감쇠율을 시간-주파수 영역에서 표현하기 좋다.</p>
+<div class="tbl-wrap"><table><thead><tr><th class="num">단계</th><th>도메인</th><th>네트워크</th><th>담당</th></tr></thead><tbody><tr><td class="num">1단계</td><td>STFT (시간-주파수)</td><td>NCSN++ 기반 2D 네트워크 → 미분 가능한 iSTFT</td><td>전체 RIR, 특히 후기 잔향의 주파수별 감쇠</td></tr><tr><td class="num">2단계</td><td>시간 (파형)</td><td>시간축 컨볼루션 U-Net</td><td>고정 mixing time <strong>70 ms</strong> 이전 초기 반사 정제</td></tr></tbody></table></div>
+<p>최종 출력은 &quot;정제된 early 구간 + 1단계의 late 구간&quot;을 이어 붙인 것이다. 대규모 HOA RIR 데이터셋이 없는 상황에서 도메인 지식을 귀납 편향으로 넣으려는 선택이다.</p>
+<h4 class="subsec">3) 회전 등변성</h4>
+<p>앰비소닉스 RIR은 좌표계 방향이 바뀌어도 결과가 일관돼야 한다. 이를 위해 구면에서 균등하게 뽑은 방위각 $\phi$·천정각 $\theta$의 <strong>Wigner-D 회전 행렬</strong> $\mathbf{R}_{\phi,\theta}$를 네트워크 입력에 적용하고 출력에 역회전을 적용한다. 학습 때는 데이터 다양성을 늘려 과적합을 줄이고, 추론 때는 등변 샘플링(equivariant sampling) 전략으로 적은 추가 비용에 성능을 더 끌어올린다.</p>
+<h4 class="subsec">4) 사후 표본 추출(posterior sampling)</h4>
+<p>추론 시에는 측정값 $\mathbf{x}$와 해당 배열의 ATF $\mathbf{h}$가 주어진다. 사후분포 스코어는</p>
+<p>$$\nabla_{\mathbf{a}_\tau}\log p(\mathbf{a}_\tau\mid\mathbf{x},\mathbf{h}) = \nabla_{\mathbf{a}_\tau}\log p(\mathbf{a}_\tau) + \nabla_{\mathbf{a}_\tau}\log p(\mathbf{x}\mid\mathbf{a}_\tau,\mathbf{h})$$</p>
+<p>로 분해되어, 기기 무관 사전분포와 기기 의존 우도가 깔끔히 갈린다. 우도 스코어는 다루기 어려우므로 <strong>DPS(diffusion posterior sampling)</strong> 방식으로 현재 디노이즈 추정에서 데이터 일치 오차를 미분해 근사한다. 원래 DPS는 측정 도메인에서 $d(\mathbf{X}, \mathbf{H}\hat{\mathbf{A}}_0)$를 쓰지만, 이 논문은 한 걸음 더 나아가 <strong>유사역행렬로 사영한(range-projected) 앰비소닉스 도메인</strong>에서 일치를 강제한다.</p>
+<p>$$\nabla_{\mathbf{a}_\tau}\log p(\mathbf{X}\mid\mathbf{a}_\tau,\mathbf{H}) \approx -\zeta(\tau)\,\nabla_{\mathbf{a}_\tau} d\!\left(\mathbf{H}^{\dagger}\mathbf{X},\; \mathbf{H}^{\dagger}\mathbf{H}\hat{\mathbf{A}}_0(\mathbf{a}_\tau)\right)$$</p>
+<p>$\zeta(\tau) \ge 0$은 샘플링 경로를 따라 데이터 일치 강도를 조절하고, 기울기는 자동미분으로 구한다. 이렇게 하면 배열이 실제로 관측한 부분공간에서는 측정과 일치시키고, 관측하지 못한 나머지 공간 성분은 사전분포가 그럴듯하게 채워 넣는다.</p>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p>&gt; <strong>투명성 고지</strong>: arXiv HTML 전문이 III-C(사후 표본 추출) 도중에서 잘려 있었고, PDF는 반복 시도에도 fetch 제한(HTTP 429)에 걸려 열지 못했다. 따라서 IV장(실험)·V장(결론)의 <strong>구체적 수치와 표는 확인하지 못했다</strong>. 아래는 초록과 서론에서 저자들이 직접 명시한 주장만 옮긴 것이며, 지표 값은 임의로 채워 넣지 않았다.</p>
+<ul>
+<li><strong>객관 평가(시뮬레이션 데이터)</strong>: 고전적 최소자승 인코딩과 신경망 기반 인코더 베이스라인을 모두 앞섰고, <strong>12차 앰비소닉스까지 정확한 HOA RIR 추정</strong>을 달성했다. 개별 지표 값은 확인 불가.</li>
+<li><strong>주관 평가(청취 실험)</strong>: 바이노럴 렌더링으로 정식 청취 실험을 진행했으며, 시뮬레이션 RIR과 <strong>실측 RIR을 모두 포함</strong>했다. 참조 앰비소닉스 RIR과의 지각적 유사도에서 제안 기법이 모든 베이스라인보다 높은 평가를 받았다. 점수·참가자 수 등 세부 수치는 확인 불가.</li>
+</ul>
+<p>방법군을 성격으로 비교하면 이 논문의 위치가 분명해진다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법군</th><th>동작 방식</th><th>기기 일반화</th><th>한계</th></tr></thead><tbody><tr><td>선형 최소자승 인코딩</td><td>주파수별 유사역행렬 $\mathbf{H}^{\dagger}\mathbf{X}$</td><td>ATF만 있으면 가능</td><td>배열이 못 담은 고차 성분은 복원 불가, ill-conditioning</td></tr><tr><td>희소성·파라메트릭 방식</td><td>방향성 가정을 넣어 역문제 정규화</td><td>방식별 상이</td><td>지각적 타당성 위주, 가정이 깨지면 정확도 저하</td></tr><tr><td>신경 앰비소닉스 인코더</td><td>배열 전용 시간 의존 인코딩 행렬 예측</td><td>기기 종속(대개 1차)</td><td>HOA·RIR 인코딩 결과 미검증</td></tr><tr><td><strong>제안 기법</strong></td><td>기기 무관 HOA RIR 확산 사전분포 + DPS 사후 표본 추출</td><td>ATF만 알면 미학습 배열도 가능</td><td>반복 샘플링 비용, 생성적 보완의 물리적 보장 부재</td></tr></tbody></table></div>
+<p><strong>연구 의의</strong>는 세 갈래다. 첫째, HOA RIR을 대상으로 한 생성 사전분포를 처음 제시했다. 둘째, 사전분포와 기기 특성을 분리해 학습 때 본 적 없는 배열에도 그대로 적용할 수 있게 했다. 셋째, 한번 HOA RIR을 얻으면 임의 방향으로 회전·디코딩할 수 있고 다른 배열의 ATF를 씌워 그 기기의 마이크 신호로 되돌릴 수 있으므로, <strong>측정 캠페인을 반복하지 않고도 대규모 음향 시뮬레이션 데이터를 만들고 기기 간 교차 평가·배열 설계 반복을 빠르게 돌릴 수 있다</strong>.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>ATF를 알아야 한다.</strong> 순방향 모델 $\mathbf{H}$가 주어진다는 전제이므로, 새 기기마다 배열 전달함수를 측정하거나 시뮬레이션해야 한다. ATF 오차가 곧 복원 오차로 이어질 여지가 있다.</li>
+<li><strong>추론 비용이 크다.</strong> 확률흐름 ODE를 여러 스텝 적분하면서 매 스텝 자동미분으로 데이터 일치 기울기를 계산하므로, 실시간·온디바이스 적용과는 거리가 있다.</li>
+<li><strong>생성적 보완의 신뢰도.</strong> 관측 불가능한 공간 성분은 사전분포가 &quot;그럴듯하게&quot; 채운 것이지 물리적으로 참인 값이 아니다. 저자들도 &quot;plausibly reconstructing&quot;이라고 표현한다. 다운스트림에서 정량적 음향 분석에 쓸 때는 주의가 필요하다.</li>
+<li><strong>데이터 규모.</strong> 저자들 스스로 대규모 HOA RIR 데이터셋이 없다는 점을 설계 동기로 밝히고 있어, 사전분포의 커버리지(방 종류, 잔향 시간 범위 등)가 제한적일 가능성이 있다.</li>
+<li><strong>고정된 설계 상수.</strong> early/late 경계를 70 ms로 고정했고 RIR을 고정 길이 $T$로 패딩한다. 매우 크거나 매우 건조한 공간에는 최적이 아닐 수 있다.</li>
+<li>객관 평가가 시뮬레이션 기반이고, 실측 RIR은 청취 실험에서만 등장한다(초록 기준).</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<p><strong>Egocentric Vision 관점.</strong> 이 논문이 겨냥하는 &quot;불규칙하고 희소한 웨어러블 마이크 배열&quot;은 곧 스마트글라스·헤드셋처럼 에고센트릭 영상을 찍는 바로 그 기기다. 에고센트릭 AV 데이터는 영상 해상도에 비해 오디오의 공간 정보가 빈약한 경우가 많은데, 이 프레임워크는 그런 기기의 측정에서 고차 공간 음향을 되살리는 경로를 보여준다. 특히 HOA로 올려두면 <strong>머리 회전에 맞춰 음장을 자유롭게 회전</strong>할 수 있으므로, 착용자의 head motion과 정합되는 공간 오디오 렌더링을 만들 수 있다. 이는 audio-visual spatial reasoning 학습 데이터를 만들 때 직접 쓸 수 있는 성질이다.</p>
+<p><strong>데이터 생성 파이프라인 관점.</strong> SHD 표현이 기기 무관이라는 점 덕분에, HOA RIR 하나로 여러 기기의 마이크 신호를 합성할 수 있다. 에고센트릭 오디오-비주얼 모델을 학습할 때 흔히 겪는 &quot;우리 기기 배열에 맞는 공간 오디오 데이터가 없다&quot; 문제를, 측정을 다시 하지 않고 ATF만 갈아 끼워 해결할 여지가 있다. 크로스 디바이스 일반화 평가에도 유용하다.</p>
+<p><strong>Hand-Object Interaction 관점.</strong> 손-물체 접촉음(두드림, 마찰, 파지 순간의 transient)은 짧고 방향성이 뚜렷한 신호라, 초기 반사의 타이밍과 방향이 정확해야 &quot;손이 어디서 무엇을 만졌는지&quot;가 소리에 남는다. 이 논문이 초기 반사만 따로 떼어 시간 영역 U-Net으로 정제하는 2단 구조를 택한 이유가 정확히 그것이고, 접촉음 기반 HOI 인식·정위 연구에서 참고할 만한 설계다.</p>
+<p><strong>방법론 관점.</strong> &quot;관측이 불충분한 역문제 = 생성 사전분포 + 데이터 일치 사후 표본 추출&quot;이라는 틀은 도메인을 가리지 않는다. 소수 뷰 관측, 부분 가림, 채널 부족 같은 우리 쪽 문제에도 그대로 옮길 수 있다. 특히 측정 도메인이 아니라 <strong>유사역행렬로 사영한 공간에서 일치를 강제</strong>하는 트릭은, 순방향 연산자가 rank-deficient한 상황(가려진 손 영역, 희소 센서)에서 기울기가 관측 가능한 부분공간에만 작용하도록 만드는 실용적 아이디어다. Wigner-D 기반 회전 등변성 역시, 시점·자세가 끊임없이 바뀌는 에고센트릭 세팅에서 등변성을 어떻게 학습과 추론 양쪽에 넣을지에 대한 좋은 사례다.</p>
+  </div>
+</article>
+<article class="card" id="paper6">
+  <div class="card-head" style="border-left-color:#6366f1">
+    <span class="topic-tag" style="background:#6366f1">Spatial Audio</span>
+    <h2>SonoWorld: From One Image to a 3D Audio-Visual Scene</h2>
+    <p class="lead">사진 한 장에서 걸어 다닐 수 있는 3D 장면과, 그 장면의 기하·의미에 맞춰 정렬된 공간 음향(ambisonics)을 함께 만들어내는 최초의 학습 없는(training-free) 파이프라인이다.</p>
+    <div class="authors">Derong Jin*, Xiyi Chen*, Ming C. Lin, Ruohan Gao (University of Maryland, College Park) / *공동 1저자</div>
+    <div class="pubinfo"><span class="pub-date">📅 2026-03-30</span> · <span class="pub-venue">🏛 CVPR 2026</span></div>
+    <div class="meta"><a class="pill" href="https://arxiv.org/abs/2603.28757" target="_blank">arXiv:2603.28757</a> <a class="pill pdf" href="https://arxiv.org/pdf/2603.28757" target="_blank">PDF</a> <a class="pill" href="https://arxiv.org/html/2603.28757" target="_blank">전문 HTML</a></div>
+  </div>
+  <div class="card-body">
+    <h3 class="sec">메인 그림</h3>
+<figure class="fig"><img src="https://humathe.github.io/sonoworld/assets/method/ambisonics_encoding.png" alt="마스크로 찾은 사운드 소스를 3D로 올린 뒤 point/cluster/global 세 종류로 나눠 ambisonics 계수로 인코딩하는 과정" loading="lazy"><figcaption>마스크로 찾은 사운드 소스를 3D로 올린 뒤 point/cluster/global 세 종류로 나눠 ambisonics 계수로 인코딩하는 과정</figcaption></figure>
+<p>파노라마 인스턴스 마스크 $\mathbf{M}$ 을 깊이 $\mathcal{D}$ 로 3D에 투영하고, 텍스트-투-오디오(T2A) 모델이 만든 소스별 파형을 이퀄라이제이션한 뒤, 청취자 자세 $\mathbf{p}$ 를 중심으로 ambisonics 계수로 인코딩하는 SonoWorld의 핵심 모듈(논문 Fig. 3의 3단계에 해당). 전체 파이프라인은 ① 파노라마 기반 시각 장면 생성 → ② 360° 의미 그라운딩 → ③ ambisonics 인코딩 → ④ 자유 시점 렌더링의 4단계다.</p>
+<h3 class="sec">선행 연구</h3>
+<ul>
+<li><strong>단일 이미지 3D 장면 생성</strong>: 최근 연구는 크게 세 갈래다. (i) 확산 모델 아웃페인팅과 3D 리프팅을 번갈아 반복해 장면을 키우는 반복형(WonderJourney, WonderWorld, LucidDreamer 등), (ii) 시간적으로 일관된 비디오 생성기와 캐시된 기하를 결합하는 비디오 확산형(<a href="https://arxiv.org/abs/2503.03751" target="_blank">GEN3C</a>, <a href="https://arxiv.org/abs/2506.04225" target="_blank">Voyager</a> 등), (iii) 360° 파노라마를 먼저 완성한 뒤 3D로 올리는 파노라마형(HunyuanWorld-1.0, LayerPano3D, DreamScene360 등). SonoWorld는 세 번째 계열을 따르는데, 360° 전 시야를 한 좌표계에 담아 ambisonics 렌더링의 기준 프레임으로 쓸 수 있기 때문이다.</li>
+<li><strong>공간 음향 생성</strong>: 기존 오디오 생성은 대부분 모노(mono, 한 채널) 음향을 만든다(AudioGen, AudioLDM 계열, <a href="https://arxiv.org/abs/2412.15322" target="_blank">MMAudio</a> 등). 이를 공간화하려면 방의 임펄스 응답(RIR)을 예측해 렌더링하거나(NAF, INRAS, AV-NeRF, Hearing Anything Anywhere), 영상의 구조를 조건으로 모노를 다채널로 변환한다(2.5D Visual Sound 계열).</li>
+<li><strong>직접 공간 음향 합성</strong>: <a href="https://arxiv.org/abs/2406.06612" target="_blank">SEE-2-SOUND</a>, <a href="https://arxiv.org/abs/2506.12199" target="_blank">ViSAGe</a>, OmniAudio(ICML 2025), <a href="https://arxiv.org/abs/2410.10676" target="_blank">Both Ears Wide Open</a> 등이 이미지·비디오·텍스트에서 곧바로 공간 음향을 만든다. 동시기 연구인 <a href="https://arxiv.org/abs/2506.15759" target="_blank">Sonic4D</a>는 4D 동적 장면과 공간 음향을 결합하지만 단일 물체·좁은 시야·오프라인 처리에 머문다.</li>
+<li><strong>시각 장면에서의 소리 위치 찾기</strong>: 오디오-비주얼 상호정보량이나 대응 관계를 이용하는 흐름이 오래 이어져 왔고, 최근에는 오디오-비주얼 LLM이 일반화 성능을 크게 끌어올렸다. SonoWorld는 위치 찾기 자체를 목표로 삼지 않고, 생성한 3D 장면 안에서 소리날 만한 후보를 그라운딩해 이후 공간 음향 생성의 앵커로 쓴다.</li>
+</ul>
+<h3 class="sec">문제 제기</h3>
+<p>지금의 3D 장면 생성 모델은 <strong>걸어 다닐 수는 있지만 들을 수는 없는 무음 세계</strong>를 만든다. 논문의 표현대로 &quot;you can walk through, but not listen to&quot;. 그런데 현실의 몰입감은 본질적으로 다감각적이다. 폭포 소리는 상류에서 울려오고 다가갈수록 커져야 하며, 새소리와 잎사귀 소리는 머리 위 나무에서, 벌레 소리는 화단 근처에서 나야 하고 고개를 돌리면 방향이 바뀌어야 한다. 이런 방향·거리 단서가 없으면 장면은 그럴듯해 <strong>보이지만</strong> 지각적으로는 미완성이다.</p>
+<p>장면 단위로 이 문제를 풀기가 어려운 이유는 세 가지다.</p>
+<ol>
+<li><strong>소리 종류가 이질적이다.</strong> 기존 오디오 합성은 고립된 물체나 이벤트를 겨냥하지만, 장면에는 점 음원(point source, 지저귀는 새), 면 음원(areal source, 흐르는 강), 배경 음향(ambient, 숲의 벌레와 바람)이 섞여 있다. 각각 시간·거리에 따라 다르게 행동하고, 청취자가 움직여도 일관돼야 한다.</li>
+<li><strong>총체적 의미 이해가 필요하다.</strong> 무엇이 소리를 낼지, 어떤 소리일지, 얼마나 클지를 오직 시각 맥락에서 추론해야 한다. 폭포는 크게 울리고 새는 간헐적으로 울며, 나무 다리처럼 조용해야 할 물체는 조용해야 한다.</li>
+<li><strong>소리를 3D에 붙여야 한다.</strong> 생성된 소리마다 이미지에서 추정한 그럴듯한 3D 위치와 공간적 범위를 부여하고, 도래 방향(DoA)과 거리 감쇠 같은 지각적으로 현실적인 공간 효과로 렌더링해야 한다.</li>
+</ol>
+<h3 class="sec">연구 주제</h3>
+<p>논문은 <strong>Image2AVScene</strong>라는 새 과제를 정의한다. 입력은 RGB 이미지 한 장, 출력은 (i) 돌아다닐 수 있는 3D 시각 장면과 (ii) 그 시각 내용과 의미적·기하적으로 정렬된 공간 음장(sound field)이다. 형식적으로는</p>
+<p>$$\mathcal{G}: I \to \{\mathbf{V}, \mathbf{A}\}$$</p>
+<p>이고, 관측자 자세 $\mathbf{p}$ 에 대해 이미지 $\mathbf{V}(\mathbf{p})$ 와 공간 오디오 $\mathbf{A}(\mathbf{p},t)$ 를 함께 렌더링한다. 즉 생성된 장면을 <strong>둘러보는 것에 더해 임의의 위치·시선에서 들을 수 있게</strong> 하는 것이 목표다.</p>
+<p>배경이 되는 ambisonics(구면 조화 함수로 음장을 표현하는 방식)는 방향 함수를 실수 구면 조화 함수 $Y_\ell^m$ 로 전개한다.</p>
+<p>$$a(\theta, \varphi, t) \approx \sum_{\ell=0}^{L}\sum_{m=-\ell}^{\ell} Y_\ell^m(\theta,\varphi)\, a_{\ell,m}(t) = \mathbf{y}_L(\theta,\varphi)^\top \mathbf{a}_L(t)$$</p>
+<p>여기서 $L$ 은 차수이고 채널 수는 $(L+1)^2$ 이다. 실험은 주로 1차 ambisonics(FOA, 4채널)를 쓰지만 렌더링 프레임워크 자체는 차수에 무관하다. 중요한 점: 한 지점에서 녹음한 ambisonics는 머리 회전(3-DoF)만 표현할 수 있고 <strong>이동은 표현하지 못한다</strong>. SonoWorld는 임의의 청취 위치에서 ambisonics를 인코딩할 수 있어 회전+이동, 즉 완전한 6-DoF 탐색이 가능하다.</p>
+<h3 class="sec">연구 방법</h3>
+<p>SonoWorld는 <strong>학습이 전혀 필요 없는(training-free)</strong> 4단계 파이프라인이다.</p>
+<p><strong>1) 파노라마 기반 시각 장면 생성</strong></p>
+<ul>
+<li>*단일 이미지 캘리브레이션*: 기존 파노라마 아웃페인팅은 카메라가 수평이라고 가정해 입력 뷰를 파노라마 적도에 붙이는데, 위/아래로 기울여 찍은 사진에서는 수직 어긋남과 왜곡이 생긴다. GeoCalib으로 중력 방향과 화각을 함께 추정해 $(\varphi, f) = \mathrm{Calib}(I)$ 를 얻는다.</li>
+<li>*아웃페인팅*: 가우시안 피라미드 기반 앤티에일리어싱 워핑 $\mathcal{W}_G$ 로 원근 이미지를 등장방형(equirectangular) 파노라마로 재투영한 뒤, WorldGen의 아웃페인팅 모델로 360°를 채운다. 극점 근처에서 샘플링 밀도가 달라지는 문제는 야코비안으로 국소 확대율 $\rho$ 를 추정해 피라미드 레벨 $s^\star = \mathrm{clip}(\lfloor \log_2 \rho \rceil, 0, S-1)$ 을 고르는 방식으로 완화한다.</li>
+<li>*3D 리프팅*: 완성된 파노라마를 파노라마-투-3D 모델로 올린다. 오픈소스로는 HunyuanWorld-1.0, 상용으로는 World Labs의 Marble을 쓴다. 결과는 3D 가우시안 스플랫 또는 텍스처 메시.</li>
+</ul>
+<p><strong>2) 360° 오디오-비주얼 의미 그라운딩</strong></p>
+<ul>
+<li>*소리 후보 제안*: VLM(GPT-5 또는 오픈소스 LLaVA-Next-34B)에 입력 이미지를 주고, 소리날 만한 카테고리 집합 $\mathcal{C}$ 와 속성(소스 타입 point/area/background, T2A용 텍스트 프롬프트, dB 단위 음량 파라미터)을 JSON으로 받는다. 프롬프트는 &quot;보이는 것에서만 추론&quot;, &quot;화면 밖 주체는 보이는 호스트 물체(나무·덤불·창문)에 매핑&quot;, &quot;사람이나 스피커가 안 보이면 목소리·음악 금지&quot; 같은 규칙을 명시한다.</li>
+<li>*열린 어휘 분할*: OVS 모델은 원근 이미지로 학습되었으므로, 파노라마를 겹치는 FoV 타일로 쪼개 각 타일에 X-Decoder를 $\mathcal{C}$ 조건으로 돌리고 결과를 파노라마 좌표로 되돌린다.</li>
+<li>*파노라마 마스크 정제(핵심 설계)*: 타일별 마스크는 전역적으로 일관되지 않아 하늘·바닥 같은 넓은 영역이 비고 타일 경계에 이음매가 생긴다. 반대로 SAM2는 등장방형 파노라마도 잘 분할하지만 클래스를 모른다. 그래서 SAM2로 파노라마 전역 제안 $\mathbf{M}_\text{pano}$ 를 만들고, 카테고리별 OVS 마스크가 겹치는 SAM2 영역에 <strong>신뢰도 가중 투표</strong>를 던진다(Alg. 1). 투표 점수 $s_i$ 가 임계값 $\tau_\text{vote}$ 를 넘으면 해당 제안을 채택·정제한다. SAM2의 전역 기하 일관성과 X-Decoder의 의미 정밀도를 모두 취하는 셈이다.</li>
+<li>*3D 언프로젝션*: 3D 장면에서 렌더링한 파노라마 깊이 $\mathcal{D}$ 로 각 마스크를 3D로 올려 $\mathcal{P}_i = \mathrm{Lift}(\mathcal{M}_i, \mathcal{D})$ 를 얻는다. 점이 너무 많으면 중요도 가중치</li>
+</ul>
+<p>$$w_j = \frac{d_j^2 \cos e_j}{\max(|\mathbf{n}_j^\top \mathbf{v}_j|, \varepsilon)}$$</p>
+<p>로 최대 $N_\text{max} = 1000$ 개까지 가중 다운샘플링한다.</p>
+<p><strong>3) Ambisonics 인코딩</strong> MMAudio로 소스별 원파형 $a_{i,\text{raw}}$ 와 장면 전체 배경 $a_\text{global}$ 을 합성하고, VLM이 예측한 에너지 $v_i$ (dB)로 $a_i(t) = 10^{v_i/20} a_{i,\text{raw}}(t)$ 처럼 이퀄라이즈한다. 그다음 소스 타입에 따라 세 갈래로 공간화한다(거리 감쇠·공기 흡수는 $\sigma(d) = e^{-\alpha d}/d$).</p>
+<div class="tbl-wrap"><table><thead><tr><th>소스 타입</th><th>처리 방식</th><th>지각적 효과</th></tr></thead><tbody><tr><td>Point (새, 사이렌)</td><td>점군 무게중심 $o_i$ 하나로 근사, $\mathbf{y}_L$ 로 방향 인코딩</td><td>뚜렷한 방향성</td></tr><tr><td>Cluster/Areal (강, 나뭇잎)</td><td>점군 $\mathcal{P}_i$ 전체에 평균해 확산 음장 생성</td><td>청취자를 감싸면 방향 성분이 상쇄돼 머리 회전에 덜 민감</td></tr><tr><td>Global ambience (바람, 먼 교통 소음)</td><td>무지향 성분에만 반영: $\mathbf{A}_\text{global} = a_\text{global}[1,0,\dots,0]^\top$</td><td>공간 변화 없음</td></tr></tbody></table></div>
+<p>최종 음장은 $\mathbf{A} = \mathbf{A}_\text{point} + \mathbf{A}_\text{cluster} + \mathbf{A}_\text{global}$ 이다. <strong>이 인코딩 전체가 오디오 버퍼 $a_i$ 에 대해 미분 가능</strong>하다는 점이 뒤의 응용으로 이어진다.</p>
+<p><strong>4) 자유 시점 렌더링</strong> 시각은 3DGS 렌더링, 오디오는 HRTF(머리 관련 전달 함수) 기반 디코더로 ambisonics를 양이(binaural, 양 귀에 들리는 소리를 각각 재현하는 방식) 신호로 변환한다.</p>
+<p>$$\begin{bmatrix} b_\text{left} \\ b_\text{right}\end{bmatrix}(t) = \sum_{\ell=0}^{L}\sum_{m=-\ell}^{\ell}\begin{bmatrix} h_{\ell,m}^\text{left} * a_{\ell,m} \\ h_{\ell,m}^\text{right} * a_{\ell,m}\end{bmatrix}(t)$$</p>
+<p>ambisonics 도메인 HRIR은 SADIE-II 같은 정규 HRTF 셋으로 미리 계산해 둔다.</p>
+<p><strong>평가용 데이터셋 SonoScene360</strong> 기존 데이터셋에는 &quot;카메라 위치와 다른 청취 위치&quot;에서 녹음한 공간 음향이 없다. 그래서 Insta360 X5(6K 360° 비디오, 캘리브레이션용 12K 이미지)와 RØDE NT-SF1(48 kHz FOA)로 6개 실외/실내 장면(Fountain, Kitchen, Pool, Bridge, Stream, Siren)에서 <strong>총 68개 클립, 마이크 배치 34개</strong>를 수집했다. 마이크에 AprilTag 보드를 붙여 카메라-마이크 외부 파라미터를 초기 추정하고, 사람이 파노라마에서 마이크와 바닥 마커의 방위·고도를 찍어 정밀화한다(마이크 중심보다 바닥 깊이가 더 안정적이라는 관찰에 근거).</p>
+<div class="tbl-wrap"><table><thead><tr><th>장면 (셋업)</th><th class="num">마이크 수</th><th class="num">마이크당 클립</th><th class="num">총 클립</th></tr></thead><tbody><tr><td>Fountain</td><td class="num">10</td><td class="num">2</td><td class="num">20</td></tr><tr><td>Kitchen</td><td class="num">5</td><td class="num">2</td><td class="num">10</td></tr><tr><td>Pool-left</td><td class="num">3</td><td class="num">2</td><td class="num">6</td></tr><tr><td>Pool-right</td><td class="num">2</td><td class="num">2</td><td class="num">4</td></tr><tr><td>Bridge-river</td><td class="num">1</td><td class="num">2</td><td class="num">2</td></tr><tr><td>Bridge-train</td><td class="num">1</td><td class="num">2</td><td class="num">2</td></tr><tr><td>Stream-original</td><td class="num">5</td><td class="num">2</td><td class="num">10</td></tr><tr><td>Stream-human</td><td class="num">5</td><td class="num">2</td><td class="num">10</td></tr><tr><td>Building-siren</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr><tr><td>Building-birds</td><td class="num">1</td><td class="num">3</td><td class="num">3</td></tr><tr><td>합계</td><td class="num">34</td><td class="num">-</td><td class="num">68</td></tr></tbody></table></div>
+<p><strong>평가 지표</strong>는 두 축이다.</p>
+<ul>
+<li>*공간 정확도*: FOA 인텐시티 벡터로 도래 방향(DoA)을 추정해 방위 오차 $\Delta_\text{abs}\theta$, 고도 오차 $\Delta_\text{abs}\varphi$, 측지 각오차 $\Delta_\text{Angular}$ 를 재고, 다중 음원 상황을 위해 구면 에너지 맵의 상관계수(CC)와 AUC를 함께 본다.</li>
+<li>*의미 정합*: 좌/우/앞/뒤 네 방향으로 가상 마이크를 향하게 해 모노 신호를 렌더링한 뒤 CLAP 기반으로 D-CLAP$_T$(오디오-텍스트 유사도), D-CLAP$_A$(예측-정답 오디오 유사도), D-CLAP$_R$(정답 방향이 1등으로 랭크되는 top-1 정확도)를 잰다.</li>
+</ul>
+<h3 class="sec">실험 결과 / 연구 의의</h3>
+<p><strong>SonoScene360 정량 비교 (Table 1)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">$\Delta_\text{abs}\theta$ ↓</th><th class="num">$\Delta_\text{abs}\varphi$ ↓</th><th class="num">$\Delta_\text{Angular}$ ↓</th><th class="num">CC ↑</th><th class="num">AUC ↑</th><th class="num">D-CLAP$_R$ ↑</th><th class="num">D-CLAP$_A$ ↑</th><th class="num">D-CLAP$_T$ ↑</th></tr></thead><tbody><tr><td>MMAudio (모노)</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">33.8%</td><td class="num">0.345</td><td class="num">0.322</td></tr><tr><td>SEE-2-SOUND</td><td class="num">1.354</td><td class="num">0.254</td><td class="num">1.397</td><td class="num">0.194</td><td class="num">0.603</td><td class="num">22.1%</td><td class="num">0.221</td><td class="num">0.156</td></tr><tr><td>ViSAGe</td><td class="num">1.598</td><td class="num">0.426</td><td class="num">1.649</td><td class="num">0.142</td><td class="num">0.624</td><td class="num">22.1%</td><td class="num">0.088</td><td class="num">0.019</td></tr><tr><td>OmniAudio</td><td class="num">1.508</td><td class="num">0.317</td><td class="num">1.449</td><td class="num">0.148</td><td class="num">0.588</td><td class="num">39.7%</td><td class="num">0.101</td><td class="num">0.104</td></tr><tr><td>Ours (Open-source)</td><td class="num">0.976</td><td class="num">0.251</td><td class="num">0.975</td><td class="num">0.491</td><td class="num">0.753</td><td class="num">52.9%</td><td class="num">0.464</td><td class="num">0.413</td></tr><tr><td>Ours (Proprietary)</td><td class="num"><strong>0.672</strong></td><td class="num"><strong>0.216</strong></td><td class="num"><strong>0.728</strong></td><td class="num"><strong>0.658</strong></td><td class="num"><strong>0.838</strong></td><td class="num"><strong>67.6%</strong></td><td class="num"><strong>0.480</strong></td><td class="num"><strong>0.457</strong></td></tr></tbody></table></div>
+<ul>
+<li>모든 지표에서 전 베이스라인을 앞선다. 공간 음향 베이스라인 대비 <strong>DoA 오차 47% 감소, CC 239% 이상 향상, AUC 34% 향상</strong>.</li>
+<li>의미 지표에서는 최신 비디오-투-오디오 모델 MMAudio 대비 <strong>D-CLAP 39% 이상</strong>, 공간 음향 베이스라인 대비 <strong>117% 이상</strong> 개선.</li>
+<li>베이스라인들에는 SonoWorld가 만든 3D 장면 렌더링을 그대로 입력으로 주었고, MMAudio에는 정답 위치로 패닝까지 허용하는 등 <strong>유리한 조건</strong>을 부여했는데도 격차가 유지된다. 오픈소스 구성만으로도 모든 베이스라인을 넘는다.</li>
+<li>95% 신뢰구간: $\Delta_\text{Angular} = 0.728 \pm 0.100$, CC $= 0.658 \pm 0.063$, D-CLAP$_T = 0.457 \pm 0.014$.</li>
+</ul>
+<p><strong>사용자 연구</strong>: 50명이 12개 장면(실제 6 + 합성 6)에서 Ours vs. MMAudio, Ours vs. OmniAudio, OmniAudio vs. MMAudio 세 가지 쌍대 비교를 수행했다. 영상은 모든 조건에서 동일하고 공간 음향만 다르다. 실제·합성 장면 모두에서 제안 방법의 선호율이 가장 높았다(구체적 선호율 수치는 본문에 표기 없음, Fig. 5 그래프로 제시).</p>
+<p><strong>실시간성</strong>: Fountain 장면에서 Apple M3 Pro 노트북 기준 오디오 콜백이 <strong>1 ms 미만</strong>으로, 48 kHz·256 샘플 버퍼의 5.3 ms 지연 예산 안에 넉넉히 들어간다. Three.js + WebAudio API로 만든 브라우저 데모가 일반 노트북 CPU만으로 돌아간다.</p>
+<p><strong>절제 실험 (Table 3, Ours(Proprietary) 기준)</strong></p>
+<div class="tbl-wrap"><table><thead><tr><th>변형</th><th class="num">$\Delta_\text{abs}\theta$ ↓</th><th class="num">$\Delta_\text{abs}\varphi$ ↓</th><th class="num">$\Delta_\text{Angular}$ ↓</th><th class="num">CC ↑</th><th class="num">AUC ↑</th><th class="num">D-CLAP$_R$ ↑</th><th class="num">D-CLAP$_A$ ↑</th><th class="num">D-CLAP$_T$ ↑</th></tr></thead><tbody><tr><td>Ours (Point) — 면 음원을 점으로 대체</td><td class="num">1.264</td><td class="num">0.614</td><td class="num">1.203</td><td class="num">0.273</td><td class="num">0.629</td><td class="num">38.2%</td><td class="num">0.521</td><td class="num">0.419</td></tr><tr><td>Ours (w/o EQ) — 이퀄라이제이션 제거</td><td class="num">0.815</td><td class="num">0.196</td><td class="num">0.814</td><td class="num">0.602</td><td class="num">0.806</td><td class="num">58.8%</td><td class="num">0.467</td><td class="num">0.443</td></tr><tr><td>Ours (No merge) — 타일 마스크 독립 처리</td><td class="num">0.800</td><td class="num">0.359</td><td class="num">0.843</td><td class="num">0.586</td><td class="num">0.807</td><td class="num">39.7%</td><td class="num">0.271</td><td class="num">0.324</td></tr><tr><td>Ours (All merge) — 같은 카테고리 전부 병합</td><td class="num">1.032</td><td class="num">0.331</td><td class="num">1.012</td><td class="num">0.445</td><td class="num">0.719</td><td class="num">45.6%</td><td class="num">0.461</td><td class="num">0.329</td></tr><tr><td>Ours (Boundary perturb) — 마스크 경계 교란</td><td class="num">0.760</td><td class="num">0.228</td><td class="num">0.791</td><td class="num">0.627</td><td class="num">0.824</td><td class="num">69.1%</td><td class="num">0.483</td><td class="num">0.456</td></tr><tr><td>Ours (Depth perturb) — 깊이 교란</td><td class="num">0.732</td><td class="num">0.248</td><td class="num">0.781</td><td class="num">0.628</td><td class="num">0.821</td><td class="num">64.7%</td><td class="num">0.484</td><td class="num">0.450</td></tr><tr><td>Ours (Full)</td><td class="num">0.672</td><td class="num">0.216</td><td class="num">0.728</td><td class="num">0.658</td><td class="num">0.838</td><td class="num">67.6%</td><td class="num">0.480</td><td class="num">0.457</td></tr></tbody></table></div>
+<p>읽어낼 점: (i) 음원을 점이 아니라 <strong>유한한 영역</strong>으로 모델링하는 것이 공간 정확도에 결정적이다(Point 변형이 모든 공간 지표에서 급락). (ii) 소스별 진폭 보정(EQ)은 공간·의미 양쪽에 기여한다. (iii) SAM2 투표 기반 병합이 No-merge(과분할)·All-merge(과병합)보다 확실히 낫다. (iv) 마스크 경계나 깊이를 교란해도 성능 하락이 작아, 그라운딩·재구성 노이즈에 견고하다.</p>
+<p><strong>확장 응용 1 — 원샷 실내 음향 학습 (Table 2)</strong>: 한 마이크 자세에서 녹음한 FOA 한 개에 맞춰 미분 가능 렌더러의 파라미터($\alpha$, 표면 반사 응답 $R[f]$, 소스별 EQ, RT60)를 최적화한다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>방법</th><th class="num">$\Delta_\text{Angular}$ ↓</th><th class="num">MAG ↓</th><th class="num">ENV ↓</th></tr></thead><tbody><tr><td>NAF</td><td class="num">1.76</td><td class="num">3.96</td><td class="num">3.60</td></tr><tr><td>INRAS</td><td class="num">1.64</td><td class="num">5.06</td><td class="num">5.97</td></tr><tr><td>AV-NeRF</td><td class="num">1.58</td><td class="num">4.58</td><td class="num">1.89</td></tr><tr><td>Ours</td><td class="num"><strong>0.22</strong></td><td class="num"><strong>3.46</strong></td><td class="num"><strong>1.22</strong></td></tr></tbody></table></div>
+<p>신경 음향장 계열 대비 전 지표에서 큰 폭으로 앞선다. 미분 가능 공간 음향 렌더러가 데이터 효율이 높은 실내 음향 대리 모델로 쓸 만하다는 뜻이다.</p>
+<p><strong>확장 응용 2 — 오디오-비주얼 공간 음원 분리</strong>: 공간 혼합 녹음과 3D로 위치가 잡힌 음원들이 주어졌을 때, 렌더링한 합이 관측 혼합과 맞도록 소스별 파형을 추정한다. 각 음원이 자기 시각 영역 근처 에너지를 설명하도록 유도하는, 3D에 직접 세워진 분리 목적함수다. 유튜브 360° FOA 영상에서 바이올린과 비트박서를 분리하는 사례를 보인다.</p>
+<p><strong>의의</strong>: 무음 3D 월드 생성과 공간 음향 생성이라는 두 흐름을 처음으로 하나의 장면 단위 표현에서 잇고, 그 표현이 미분 가능하다는 점을 지렛대 삼아 생성 밖의 3D 오디오-비주얼 학습 과제로까지 확장했다.</p>
+<h3 class="sec">한계</h3>
+<ul>
+<li><strong>정적 이미지 입력이라 움직이는 음원을 다루지 못한다.</strong> Fig. 6의 Siren 장면이 전형적인 실패 사례로, 음원(경찰차)이 움직이는데 입력이 정지 이미지 한 장이라 운동 단서가 전혀 없다. 저자들도 결론에서 동적 장면·이동 음원 확장을 향후 과제로 명시한다.</li>
+<li><strong>파운데이션 모델 의존성이 크다.</strong> 캘리브레이션(GeoCalib), 아웃페인팅(WorldGen), 파노라마-투-3D(Marble/HunyuanWorld), VLM(GPT-5/LLaVA-Next), OVS(X-Decoder), 분할(SAM2), T2A(MMAudio)를 조립한 구조라 각 구성 요소의 실패가 그대로 전파된다. 실제로 HunyuanWorld는 근거리 기하에 왜곡·과평활이 생겨 정밀한 오디오 앵커링에 불리하다고 보고하며, 최고 성능 구성은 상용 모델(Marble, GPT-5)에 의존한다.</li>
+<li><strong>음향 모델이 단순하다.</strong> 본 파이프라인의 공간화는 거리 감쇠 $\sigma(d)=e^{-\alpha d}/d$ 와 방향 인코딩 중심이고, 폐색(occlusion)·회절·잔향 같은 전파 효과를 기본 경로에서 명시적으로 다루지 않는다(잔향은 원샷 음향 학습 확장에서만 RIR 형태로 등장한다).</li>
+<li><strong>평가 규모가 작다.</strong> SonoScene360은 6개 장면·68개 클립이며, 정답 공간 음향이 있는 실제 데이터는 그만큼 제한적이다.</li>
+<li><strong>소리 후보가 &quot;보이는 것&quot;에 묶여 있다.</strong> VLM 프롬프트가 화면 밖 주체를 보이는 호스트 물체에 매핑하도록 강제하므로, 시각적으로 드러나지 않는 음원의 실제 위치는 원리적으로 복원할 수 없다.</li>
+</ul>
+<h3 class="sec">우리 연구와 연결되는 점</h3>
+<ul>
+<li><strong>Spatial Audio</strong>: 이 논문의 가장 재사용성 높은 자산은 <strong>미분 가능한 ambisonics 인코더</strong>다. 소스 파형과 3D 위치, 감쇠 파라미터를 통과하는 해석적 그래디언트가 있어서, 관측된 FOA를 손실로 놓고 장면 변수나 소스 오디오를 역으로 최적화할 수 있다. 원샷 실내 음향 학습에서 $\Delta_\text{Angular}$ 0.22로 AV-NeRF(1.58)를 크게 앞선 결과는, 학습 데이터가 부족한 우리 세팅에서도 &quot;신경망 대신 물리 구조를 미분 가능하게 짜는&quot; 접근이 통할 수 있음을 시사한다. 또한 점/면/전역 세 갈래 음원 분류는 우리가 공간 음향을 합성하거나 평가할 때 그대로 쓸 수 있는 실용적 분류 체계다.</li>
+<li><strong>평가 프로토콜</strong>: D-CLAP$_R$(좌/우/앞/뒤 네 방향 중 정답 방향이 1등으로 랭크되는지)은 구현이 간단하면서 &quot;소리가 올바른 쪽에서 나는가&quot;를 의미 수준에서 재는 좋은 지표다. 우리가 spatial audio-visual QA나 공간 추론 과제를 평가할 때 참고할 만하다. 데이터셋과 코드가 공개되어 있어(HuggingFace <code>DerongJin/SonoScene360</code>, GitHub <code>HuMathe/sonoworld</code>) 벤치마크로 바로 붙일 수 있다.</li>
+<li><strong>Egocentric Vision</strong>: 6-DoF 자유 시점에서 시각과 양이 오디오를 동기 렌더링한다는 점은 1인칭 오디오-비주얼 데이터를 값싸게 대량 생성할 수 있는 경로를 연다. 머리 회전 $R \in SO(3)$ 과 위치 $\mathbf{t}$ 를 임의로 바꿔가며 (프레임, binaural) 쌍을 뽑을 수 있으므로, 1인칭 공간 청각 학습이나 사운드 기반 자기 위치 추정 같은 과제의 사전학습 데이터 공장으로 쓸 여지가 있다. 실시간성(콜백 1 ms 미만, 웹 브라우저 구동)도 온라인 데이터 생성에 유리하다.</li>
+<li><strong>Hand-Object Interaction</strong>: 반대로 이 논문의 명확한 빈틈이 우리 관심사와 겹친다. SonoWorld의 음원은 <strong>정적 이미지에서 추론한 항상 켜져 있는 배경 음원</strong>이라, 손이 물체를 치거나 잡거나 끌 때 발생하는 접촉음처럼 상호작용에 의해 촉발되는 소리는 다루지 못한다(저자들도 이동 음원을 한계로 인정한다). 같은 그룹의 후속작 &quot;Objects as Audio-Visual Modal Sound Fields&quot;(ECCV 2026, 물체 충격음을 모달 파라미터로 표현)가 이 방향을 물체 단위로 파고드는데, <strong>장면 수준 공간 음장(SonoWorld) + 물체 수준 접촉음 모델</strong>을 결합해 손-물체 상호작용의 소리를 3D 장면 안에 배치하는 것은 자연스러운 확장이자 우리가 파고들 만한 지점이다.</li>
+</ul>
+  </div>
+</article>
+      <footer>생성: 2026-09-15 00:42 · 적합성은 abstract로 판단, 요약은 논문 전문 기반 작성</footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>
