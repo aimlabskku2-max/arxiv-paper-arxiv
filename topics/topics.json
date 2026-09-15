@@ -1,5 +1,12 @@
 [
   {
+    "slug": "hand-in-wholebody",
+    "title": "Hand-in-Whole-Body 3D Pose — 손 통합 계보",
+    "desc": "전신 3D 포즈 추정에서 손을 통합하는 핵심 계보 (SMPL-X→모듈형→스케일업→손 전문가→CHAM). 도착점 Hand4Whole++(CVPR 2026)",
+    "count": 11,
+    "path": "topics/hand-in-wholebody/hand-in-wholebody_survey.html"
+  },
+  {
     "slug": "video-to-audio",
     "title": "Video-to-Audio Generation — Core Lineage",
     "desc": "Diff-Foley 계보를 중심으로 한 V2A 핵심 논문 계보 서베이",
