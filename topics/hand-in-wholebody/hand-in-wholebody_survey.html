@@ -1,214 +1,280 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>전신 3D 포즈 추정에서의 손 통합 — 핵심 계보 서베이</title>
+<title>전신 3D 포즈에서의 손 통합 — 핵심 계보 서베이</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
-  :root { --bg:#f8fafc; --card:#fff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --accent:#10b981; }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-    line-height:1.7; }
-  header.top { background:linear-gradient(135deg,#064e3b,#10b981); color:#fff; padding:42px 20px 34px; }
-  header.top .wrap { max-width:960px; margin:0 auto; }
-  header.top a.home { display:inline-block; margin-bottom:16px; color:#fff; text-decoration:none;
-    font-size:13.5px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
-    padding:6px 12px; border-radius:8px; }
-  header.top a.home:hover { background:rgba(255,255,255,.22); }
-  header.top h1 { margin:6px 0 8px; font-size:26px; letter-spacing:-.4px; }
-  header.top .sub { opacity:.92; font-size:15px; }
-  header.top .chips { margin-top:14px; }
-  header.top .chip { display:inline-block; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22);
-    padding:4px 11px; border-radius:20px; font-size:12.5px; margin:3px 6px 3px 0; }
-  main { max-width:960px; margin:0 auto; padding:30px 20px 60px; }
-  .intro { background:var(--card); border:1px solid var(--line); border-left:5px solid var(--accent);
-    border-radius:12px; padding:20px 24px; margin-bottom:28px; }
-  .intro h2 { margin:0 0 8px; font-size:18px; }
-  .intro p { margin:8px 0; }
-  .flow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:14px 0 2px; }
-  .flow span.step { background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; border-radius:8px;
-    padding:5px 10px; font-size:12.5px; font-weight:600; }
-  .flow span.arrow { color:var(--muted); font-weight:700; }
-  h2.grp { font-size:19px; margin:34px 0 4px; padding-bottom:8px; border-bottom:2px solid var(--line); }
-  p.grp-desc { color:var(--muted); margin:6px 0 14px; font-size:14px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:13px; margin:14px 0;
-    box-shadow:0 1px 2px rgba(0,0,0,.04); overflow:hidden; }
-  .card.anchor { border:2px solid var(--accent); box-shadow:0 3px 14px rgba(16,185,129,.15); }
-  .c-head { padding:16px 22px 10px; background:#fcfdfc; border-bottom:1px solid var(--line); }
-  .card.anchor .c-head { background:#ecfdf5; }
-  .c-head h3 { margin:4px 0 4px; font-size:17.5px; letter-spacing:-.2px; }
-  .c-head h3 a { color:#0f172a; text-decoration:none; }
-  .c-head h3 a:hover { color:var(--accent); text-decoration:underline; }
-  .c-meta { color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums; }
-  .anchor-badge { display:inline-block; background:var(--accent); color:#fff; font-size:11.5px;
-    font-weight:700; padding:2px 9px; border-radius:12px; }
-  .c-body { padding:12px 22px 18px; }
-  .c-body .oneline { font-size:15px; font-weight:500; color:#0f172a; margin:6px 0 10px; }
-  .c-body h4 { font-size:13.5px; color:#334155; margin:14px 0 4px; text-transform:none; }
-  .c-body ul { margin:6px 0; padding-left:20px; }
-  .c-body li { margin:4px 0; }
-  .c-body a { color:#0369a1; }
-  footer { max-width:960px; margin:0 auto; padding:20px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); }
+*{box-sizing:border-box}
+:root{
+  --bg:#FAFAF9; --surface:#FFFFFF; --surface-2:#F5F5F3;
+  --ink:#171717; --muted:#666A70; --faint:#9A9DA1; --line:#E8E7E3;
+  --smell:#A9662E; --vision:#176F78;
+  --best:rgba(23,111,120,.07); --best-line:#176F78;
+  --shadow:0 1px 2px rgba(0,0,0,.025),0 8px 24px rgba(0,0,0,.035);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131619; --surface:#1B1F23; --surface-2:#22272C;
+  --ink:#ECEFF2; --muted:#A3ADB7; --faint:#6B7580; --line:#2B3138;
+  --smell:#D8945A; --vision:#3FB6C0; --best:rgba(63,182,192,.13); --best-line:#3FB6C0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 22px rgba(0,0,0,.35);
+}}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;
+  line-height:1.62;margin:0;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:60px 28px 110px}
+a{color:var(--vision)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint)}
+.home{font-family:"IBM Plex Mono",monospace;font-size:12px;text-decoration:none;color:var(--muted);
+  display:inline-block;margin-bottom:22px;border:1px solid var(--line);border-radius:7px;padding:5px 11px}
+.home:hover{color:var(--vision);border-color:var(--vision)}
+header{border-bottom:1px solid var(--line);padding-bottom:34px}
+h1{font-size:clamp(30px,5vw,44px);font-weight:650;letter-spacing:-.03em;margin:.55rem 0 .6rem;text-wrap:balance}
+.sub{color:var(--muted);font-size:16px;line-height:1.65;max-width:74ch;margin:0}
+.meta-chips{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:20px;padding:4px 11px;color:var(--muted)}
+section{margin-top:64px;padding-top:4px}
+.sec-head{display:block;margin-bottom:8px}
+.sec-no{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--vision);margin-bottom:5px}
+h2{font-size:clamp(22px,3.4vw,27px);font-weight:620;letter-spacing:-.025em;margin:0}
+.sec-tag{color:var(--muted);font-size:15px;line-height:1.6;margin:8px 0 26px;max-width:74ch}
+/* two-stream schematic */
+.qa-lab{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin:30px 0 10px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:2px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot.v{background:var(--vision)} .dot.s{background:var(--smell)}
+.flow-wrap{overflow-x:auto;padding:8px 0 12px;margin:14px 0 6px}
+.merge,.flow{display:flex;align-items:center;min-width:min-content}
+.streams{display:flex;flex-direction:column;gap:12px}
+.stream{display:flex;align-items:center}
+.node{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:11px 14px;
+  min-width:150px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:3px}
+.node.v{box-shadow:inset 0 2px 0 var(--vision),var(--shadow)}
+.node.s{box-shadow:inset 0 2px 0 var(--smell),var(--shadow)}
+.node .role{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint)}
+.node .nm{font-size:13px;font-weight:600;line-height:1.25}
+.node .tiny{font-size:11px;color:var(--muted)}
+.arrow{padding:0 10px;color:var(--faint);font-size:16px;display:flex;align-items:center}
+.out{background:var(--surface-2);border:1px dashed var(--line);border-radius:9px;padding:11px 15px;
+  min-width:140px;display:flex;flex-direction:column;gap:3px}
+.out .role{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.out .nm{font-size:13.5px;font-weight:700}
+.out .tiny{font-size:11px;color:var(--muted)}
+/* stage rail */
+.rail{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 2px}
+.rail .step{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--ink)}
+.rail .step.s{box-shadow:inset 0 2px 0 var(--smell)} .rail .step.v{box-shadow:inset 0 2px 0 var(--vision)}
+.rail .ar{color:var(--faint);font-weight:700}
+/* paper cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+  padding:20px 22px;margin-top:18px;border-top:3px solid var(--line)}
+.card.v{border-top-color:var(--vision)} .card.s{border-top-color:var(--smell)}
+.card.anchor{border:2px solid var(--best-line);border-top:3px solid var(--best-line);background:var(--best)}
+.card .c-role{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;background:var(--best-line);color:#fff;border-radius:12px;padding:2px 8px}
+.card h3{font-size:18px;font-weight:620;letter-spacing:-.015em;margin:7px 0 5px;line-height:1.3}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--vision);text-decoration:underline}
+.card .cmeta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;margin-bottom:12px}
+.card .oneline{font-size:15px;font-weight:500;color:var(--ink);margin:8px 0 12px}
+.card h4{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin:14px 0 5px}
+.card ul{margin:6px 0;padding-left:19px} .card li{margin:4px 0;font-size:14px}
+.take{margin-top:14px;padding:13px 16px;border-left:2px solid var(--vision);background:var(--surface-2);
+  border-radius:0 8px 8px 0;font-size:14px;line-height:1.6}
+.card.s .take{border-left-color:var(--smell)}
+.take .lab{font-family:"IBM Plex Mono",monospace;font-size:9.8px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--vision);display:block;margin-bottom:4px}
+.card.s .take .lab{color:var(--smell)}
+.closing{margin-top:40px}
+.closing .take{border-left-color:var(--vision);background:var(--surface)}
+.closing .take + .take{margin-top:12px}
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint);line-height:1.6}
+@media(max-width:560px){.wrap{padding:40px 18px 76px}.streams{gap:9px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
+<div class="wrap">
   <a class="home" href="../../index.html">← 메인으로</a>
-  <h1>전신 3D 포즈 추정에서의 손 통합 — 핵심 계보 서베이</h1>
-  <div class="sub">Hand-in-Whole-Body 3D Pose: Integrating Hand Experts into Whole-Body Estimation</div>
-  <div class="chips">
-    <span class="chip">📄 11편</span>
-    <span class="chip">통합 중심 계보</span>
-    <span class="chip">arXiv:2603.14726 (Hand4Whole++, CVPR 2026)를 도착점으로, 그 선행 계보를 통합 관점에서 정리</span>
-  </div>
-</div></header>
-<main>
-  <div class="intro">
-    <h2>왜 이 주제인가 — "손을 몸 안에서" 복원하기</h2>
-    <p>전신(whole-body) 3D 포즈 추정의 오랜 난제는 <strong>손</strong>이다. 전신 추정기는 몸 전체를 보지만 학습 데이터에 손 다양성이 부족해 손가락이 뭉개지고, 손 전용(hand-only) 추정기는 손을 정밀하게 복원하지만 팔·몸통과의 연결(전역 맥락)을 알지 못한다. 이 <strong>지도(supervision) 격차</strong>를 어떻게 메우느냐가 계보 전체를 관통하는 질문이다.</p>
-    <p>아래는 그 질문에 답해 온 흐름을, 도착점 <strong>Hand4Whole++</strong>(고정된 전신·손 전문가를 경량 어댑터 CHAM으로 결합)를 기준으로 되짚은 것이다.</p>
-    <div class="flow">
-      <span class="step">SMPL-X (공통 표현)</span><span class="arrow">→</span>
-      <span class="step">분리 추정 후 통합</span><span class="arrow">→</span>
-      <span class="step">단일 단계·스케일업</span><span class="arrow">→</span>
-      <span class="step">강력한 손 전문가</span><span class="arrow">→</span>
-      <span class="step">어댑터로 결합 (CHAM)</span>
+  <header>
+    <div class="eyebrow">3D whole-body pose · lineage survey</div>
+    <h1>전신 3D 포즈에서의 손 통합 — 핵심 계보 서베이</h1>
+    <p class="sub">전신(whole-body) 추정기는 몸 전체를 보지만 손이 뭉개지고, 손 전용 추정기는 손을 정밀하게 복원하지만 몸 맥락을 모른다. 이 supervision 격차를 어떻게 메워 왔는지를, 도착점 Hand4Whole++(CVPR 2026)를 기준으로 되짚는다.</p>
+    <div class="meta-chips">
+      <span class="chip">11 papers</span>
+      <span class="chip">anchor · arXiv:2603.14726</span>
+      <span class="chip">Hand4Whole++ · CVPR 2026</span>
     </div>
+  </header>
+
+  <div class="sec-head" style="margin-top:48px"><span class="sec-no">System overview</span><h2>두 스트림을 어떻게 합치는가</h2></div>
+  <p class="sec-tag">이 분야의 핵심은 두 전문가 — 전신(whole-body) 추정기와 손 전용 추정기 — 를 하나로 잇는 방법이다.
+    도착점 Hand4Whole++는 둘을 모두 고정한 채 경량 어댑터 CHAM으로 손 특징을 전신 스트림에 주입한다.</p>
+  <div class="qa-lab">Merge schematic</div>
+  <div class="legend"><span><i class="dot v"></i> 전신 스트림 (whole-body)</span><span><i class="dot s"></i> 손 스트림 (hand expert)</span></div>
+  <div class="flow-wrap"><div class="merge">
+    <div class="streams">
+      <div class="stream"><div class="node v"><span class="role">whole-body</span><span class="nm">SMPLer-X (frozen)</span><span class="tiny">전신 SMPL-X 특징</span></div></div>
+      <div class="stream"><div class="node s"><span class="role">hand expert</span><span class="nm">HaMeR / WiLoR (frozen)</span><span class="tiny">정밀 손 특징</span></div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node v"><span class="role">adapter</span><span class="nm">CHAM</span><span class="tiny">손 특징으로 전신 변조</span></div>
+    <div class="arrow">→</div>
+    <div class="out"><span class="role">output</span><span class="nm">Hand4Whole++</span><span class="tiny">몸과 정합된 손·손목</span></div>
+  </div></div>
+  <div class="qa-lab" style="margin-top:26px">Lineage at a glance</div>
+  <div class="rail">
+    <span class="step v">SMPL-X 공통 표현</span><span class="ar">→</span>
+    <span class="step v">분리 추정 후 통합</span><span class="ar">→</span>
+    <span class="step v">단일 단계·스케일업</span><span class="ar">→</span>
+    <span class="step s">강력한 손 전문가</span><span class="ar">→</span>
+    <span class="step v">어댑터로 결합 (CHAM)</span>
   </div>
-  <h2 class="grp">① 표현형 전신 모델의 토대</h2>
-<p class="grp-desc">손·얼굴·몸을 하나의 파라메트릭 모델로 묶어, 이후 모든 계보가 추정할 공통 언어(SMPL-X)를 정의한 출발점.</p>
 
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/1904.05866" target="_blank">Expressive Body Capture: 3D Hands, Face, and Body from a Single Image</a></h3><div class="c-meta">arXiv 1904.05866 · Pavlakos 외 · 2019 · CVPR</div></div>
-      <div class="c-body">
-        <p class="oneline">몸통, 손가락 관절, 얼굴 표정까지 하나로 묶은 전신 파라메트릭 인체 모델 SMPL-X와, 이를 단일 RGB 이미지에 맞춰 넣는 최적화 기법 SMPLify-X를 제안한 논문.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>몸(SMPL)에 완전 관절형 손(MANO)과 표정 있는 얼굴(FLARE 계열)을 결합한 통합 모델 SMPL-X 정의</li><li>OpenPose로 검출한 몸·손·얼굴·발 2D 키포인트에 전신 모델을 한 번에 피팅하는 SMPLify-X</li><li>VAE 기반 신경망 포즈 사전확률(VPoser)과 빠르고 정확한 자기침투(interpenetration) 페널티, PyTorch 구현으로 기존 대비 8배 이상 속도 향상.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 몸과 따로 다루지 않고, 손·얼굴·몸을 하나의 파라메트릭 모델 안에서 동시에 표현할 수 있게 만든 출발점이다. 즉 &quot;전신에 손을 붙이는&quot; 문제를 표현할 공통 언어(SMPL-X 파라미터)를 정의한 셈이며, 이후 FrankMocap, Hand4Whole, PyMAF-X, 그리고 Hand4Whole++(CHAM으로 고정된 전신·손 추정기를 통합)까지 모든 후속 계보가 결국 이 모델의 파라미터를 추정하는 문제로 귀결된다. 다만 본 논문은 이미지별 최적화(fitting) 방식이라 느리고, 이후 회귀 기반·모듈 통합 방식으로 발전하는 계보의 바로 전 단계에 해당한다.</p>
-      </div>
-    </article><h2 class="grp">② 분리 추정 → 통합: 모듈형 계보</h2>
-<p class="grp-desc">손을 전용 모듈로 잘 뽑은 뒤 몸에 이어 붙이는 전략과, 손목·정합을 정교화한 흐름.</p>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2108.06428" target="_blank">FrankMocap: A Monocular 3D Whole-Body Pose Estimation System via Regression and Integration</a></h3><div class="c-meta">arXiv 2108.06428 · Rong 외 · 2021 · ICCVW (ICCV Workshops, ACVR)</div></div>
-      <div class="c-body">
-        <p class="oneline">몸, 손, 얼굴을 각각 따로 회귀(regression)로 추정한 뒤 통합(integration) 모듈로 이어 붙여, 야외 단일 이미지에서 전신 3D 포즈를 빠르고 정확하게 뽑아내는 모듈형 시스템.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>몸·손·얼굴을 독립적으로 추정하는 모듈식 설계로 각 분야의 최신 성능을 그대로 활용</li><li>분리된 출력을 하나의 전신 포즈로 합치는 3종의 통합 모듈을 제안해 지연시간과 정확도 사이 절충을 제공</li><li>최적화 기반 및 종단간(end-to-end) 방식보다 우수한 전신 포즈 성능을 실용적 속도로 달성.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 몸과 별개의 전문 모듈로 추정한 다음 손목 등을 맞춰 몸에 이어 붙이는 &quot;분리 추정 후 통합&quot; 전략을 명확히 세운 대표작이다. 손 전용 추정기의 높은 정확도를 희생하지 않고 전신에 얹는다는 발상은 Hand4Whole++가 고정된 전신·손 추정기를 CHAM으로 결합하는 방향과 직접 이어지며, Hand4Whole++는 이 통합 단계를 손으로 짠 규칙 대신 학습된 정합 모듈로 대체·정교화한 후속으로 볼 수 있다.</p>
-      </div>
+  <section>
+    <div class="sec-head"><span class="sec-no">계보 ①</span><h2>표현형 전신 모델의 토대</h2></div>
+    <p class="sec-tag">손·얼굴·몸을 하나의 파라메트릭 모델로 묶어, 이후 모든 계보가 추정할 공통 언어(SMPL-X)를 정의한 출발점.</p>
+    
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/1904.05866" target="_blank" rel="noopener">Expressive Body Capture: 3D Hands, Face, and Body from a Single Image</a></h3>
+      <div class="cmeta">arXiv 1904.05866 · Pavlakos 외 · 2019 · CVPR</div>
+      <p class="oneline">몸통, 손가락 관절, 얼굴 표정까지 하나로 묶은 전신 파라메트릭 인체 모델 SMPL-X와, 이를 단일 RGB 이미지에 맞춰 넣는 최적화 기법 SMPLify-X를 제안한 논문.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>몸(SMPL)에 완전 관절형 손(MANO)과 표정 있는 얼굴(FLARE 계열)을 결합한 통합 모델 SMPL-X 정의</li><li>OpenPose로 검출한 몸·손·얼굴·발 2D 키포인트에 전신 모델을 한 번에 피팅하는 SMPLify-X</li><li>VAE 기반 신경망 포즈 사전확률(VPoser)과 빠르고 정확한 자기침투(interpenetration) 페널티, PyTorch 구현으로 기존 대비 8배 이상 속도 향상.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 몸과 따로 다루지 않고, 손·얼굴·몸을 하나의 파라메트릭 모델 안에서 동시에 표현할 수 있게 만든 출발점이다. 즉 &quot;전신에 손을 붙이는&quot; 문제를 표현할 공통 언어(SMPL-X 파라미터)를 정의한 셈이며, 이후 FrankMocap, Hand4Whole, PyMAF-X, 그리고 Hand4Whole++(CHAM으로 고정된 전신·손 추정기를 통합)까지 모든 후속 계보가 결국 이 모델의 파라미터를 추정하는 문제로 귀결된다. 다만 본 논문은 이미지별 최적화(fitting) 방식이라 느리고, 이후 회귀 기반·모듈 통합 방식으로 발전하는 계보의 바로 전 단계에 해당한다.</div>
     </article>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2011.11534" target="_blank">Accurate 3D Hand Pose Estimation for Whole-Body 3D Human Mesh Estimation</a></h3><div class="c-meta">arXiv 2011.11534 · Moon 외 · 2022 · CVPRW (CVPR Workshops)</div></div>
-      <div class="c-body">
-        <p class="oneline">전신 3D 메시 복원에서 유독 부정확했던 손을, 인체 운동 사슬(kinematic chain)과 관절별 특징을 제대로 활용해 크게 개선한 종단간(end-to-end) 방법 Hand4Whole.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>관절 특징으로 3D 관절 회전을 예측하는 Pose2Pose 모듈 설계</li><li>손목 회전에 크게 기여하는 손 MCP(손가락 밑마디) 관절 특징을 써서 3D 손목을 예측</li><li>손가락 회전 예측 시 정보가 거의 없는 몸통 특징을 버리고 손 특징만 사용해, 기존 전신 메시 방법보다 훨씬 나은 3D 손 결과를 종단간 학습으로 달성.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>FrankMocap이 몸·손을 완전히 분리했다면, Hand4Whole은 하나의 네트워크 안에서 손목을 몸이 아닌 손 쪽 특징으로 잡아 운동 사슬의 연결부(손목)를 정교하게 다룬 전환점이다. 손 정확도가 전신 품질을 좌우한다는 문제의식을 세웠고, 이 논문이 곧 Hand4Whole++(arXiv 2603.14726)의 직접적 뿌리다. 후속인 ++는 여기서 나아가 이미 잘 학습된 전신·손 추정기를 고정한 채 CHAM으로 통합해, 재학습 없이 손을 몸에 정합시키는 방향으로 계보를 잇는다.</p>
-      </div>
+  </section>
+  <section>
+    <div class="sec-head"><span class="sec-no">계보 ②</span><h2>분리 추정 → 통합: 모듈형 계보</h2></div>
+    <p class="sec-tag">손을 전용 모듈로 잘 뽑은 뒤 몸에 이어 붙이는 전략과, 손목·정합을 정교화한 흐름.</p>
+    
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/2108.06428" target="_blank" rel="noopener">FrankMocap: A Monocular 3D Whole-Body Pose Estimation System via Regression and Integration</a></h3>
+      <div class="cmeta">arXiv 2108.06428 · Rong 외 · 2021 · ICCVW (ICCV Workshops, ACVR)</div>
+      <p class="oneline">몸, 손, 얼굴을 각각 따로 회귀(regression)로 추정한 뒤 통합(integration) 모듈로 이어 붙여, 야외 단일 이미지에서 전신 3D 포즈를 빠르고 정확하게 뽑아내는 모듈형 시스템.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>몸·손·얼굴을 독립적으로 추정하는 모듈식 설계로 각 분야의 최신 성능을 그대로 활용</li><li>분리된 출력을 하나의 전신 포즈로 합치는 3종의 통합 모듈을 제안해 지연시간과 정확도 사이 절충을 제공</li><li>최적화 기반 및 종단간(end-to-end) 방식보다 우수한 전신 포즈 성능을 실용적 속도로 달성.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 몸과 별개의 전문 모듈로 추정한 다음 손목 등을 맞춰 몸에 이어 붙이는 &quot;분리 추정 후 통합&quot; 전략을 명확히 세운 대표작이다. 손 전용 추정기의 높은 정확도를 희생하지 않고 전신에 얹는다는 발상은 Hand4Whole++가 고정된 전신·손 추정기를 CHAM으로 결합하는 방향과 직접 이어지며, Hand4Whole++는 이 통합 단계를 손으로 짠 규칙 대신 학습된 정합 모듈로 대체·정교화한 후속으로 볼 수 있다.</div>
     </article>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2207.06400" target="_blank">PyMAF-X: Towards Well-aligned Full-body Model Regression from Monocular Images</a></h3><div class="c-meta">arXiv 2207.06400 · Zhang 외 · 2023 · IEEE TPAMI</div></div>
-      <div class="c-body">
-        <p class="oneline">예측한 메시가 이미지에 잘 맞았는지(mesh-image alignment)를 되먹임(feedback) 받아 파라미터를 반복 보정하는 회귀 루프로, 정합이 잘 맞는 전신(몸·손·얼굴) 파라메트릭 모델을 복원하는 방법.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>특징 피라미드에서 정합 근거를 뽑아 예측 파라미터를 명시적으로 교정하는 피라미드형 메시 정합 피드백(PyMAF) 루프 제안</li><li>이를 전신으로 확장한 PyMAF-X로 표현력 있는 전신 모델 복원</li><li>조밀한 대응(dense correspondence) 보조 지도와 공간 정합 어텐션으로 이미지-메시 정합을 강화해 몸·손·얼굴·전신 벤치마크에서 최신 성능 달성.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 별도 모듈로 뽑든 함께 회귀하든, 전신에서 손·팔이 이미지와 어긋나 보이는 &quot;정합 불량&quot;이 핵심 병목임을 지적하고, 이를 피드백 보정으로 푸는 방향을 제시했다. 즉 계보의 관심을 &quot;손을 어떻게 추정하나&quot;에서 &quot;추정한 손을 몸·이미지에 어떻게 잘 맞추나&quot;로 옮긴 흐름에 속한다. Hand4Whole++가 고정된 전신·손 추정기를 CHAM으로 정합·통합하는 문제의식과 같은 축에 있으며, PyMAF-X는 그 정합 문제를 반복적 피드백 회귀로 다룬 대표 선행이다.</p>
-      </div>
-    </article><h2 class="grp">③ 단일 단계·스케일업 전신 모델</h2>
-<p class="grp-desc">손을 따로 크롭·재추정하지 않고 하나의 네트워크·대규모 학습으로 전신을 통째로 추정하는 방향.</p>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2303.16160" target="_blank">One-Stage 3D Whole-Body Mesh Recovery with Component Aware Transformer</a></h3><div class="c-meta">arXiv 2303.16160 · Lin 외 · 2023 · CVPR 2023</div></div>
-      <div class="c-body">
-        <p class="oneline">몸통·손·얼굴을 별도 추정기 없이 하나의 컴포넌트 인지 트랜스포머(Component Aware Transformer, CAT)로 한 번에 복원하는 단일 단계(one-stage) 전신 메시 복원 기법.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>전역 몸통 인코더가 몸통 파라미터와 고해상도 특징맵을 산출하고, 국소 얼굴·손 디코더가 이를 받아 부위별 메시를 복원하는 단일 네트워크 구조 제안</li><li>특징 수준의 업샘플-크롭(upsample-crop) 방식으로 작게 잡히는 손·얼굴 영역의 고해상도 부위 특징을 추출</li><li>키포인트 유도 변형 가능 어텐션(keypoint-guided deformable attention)으로 손·얼굴을 정밀 추정하고, 대규모 UBody 벤치마크를 함께 공개.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 몸통과 분리된 크롭 이미지로 다시 처리하는 기존 다단계 방식과 달리, 몸통 인코더가 만든 공유 특징맵에서 손 영역을 특징 수준으로 잘라내 디코더가 정밀화하므로 전신과 손이 하나의 네트워크 안에서 함께 학습된다. 손 통합 계보에서 &quot;분리 추정 후 병합&quot;에서 &quot;단일 단계 공동 추정&quot;으로 넘어가는 전환점에 해당한다. Hand4Whole++는 반대로 이미 잘 학습된 전신·손 추정기를 고정한 채 CHAM 어댑터로 이어 붙이는 방향이라, 처음부터 하나로 합쳐 학습하는 OSX와는 통합 철학이 대비된다.</p>
-      </div>
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/2011.11534" target="_blank" rel="noopener">Accurate 3D Hand Pose Estimation for Whole-Body 3D Human Mesh Estimation</a></h3>
+      <div class="cmeta">arXiv 2011.11534 · Moon 외 · 2022 · CVPRW (CVPR Workshops)</div>
+      <p class="oneline">전신 3D 메시 복원에서 유독 부정확했던 손을, 인체 운동 사슬(kinematic chain)과 관절별 특징을 제대로 활용해 크게 개선한 종단간(end-to-end) 방법 Hand4Whole.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>관절 특징으로 3D 관절 회전을 예측하는 Pose2Pose 모듈 설계</li><li>손목 회전에 크게 기여하는 손 MCP(손가락 밑마디) 관절 특징을 써서 3D 손목을 예측</li><li>손가락 회전 예측 시 정보가 거의 없는 몸통 특징을 버리고 손 특징만 사용해, 기존 전신 메시 방법보다 훨씬 나은 3D 손 결과를 종단간 학습으로 달성.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>FrankMocap이 몸·손을 완전히 분리했다면, Hand4Whole은 하나의 네트워크 안에서 손목을 몸이 아닌 손 쪽 특징으로 잡아 운동 사슬의 연결부(손목)를 정교하게 다룬 전환점이다. 손 정확도가 전신 품질을 좌우한다는 문제의식을 세웠고, 이 논문이 곧 Hand4Whole++(arXiv 2603.14726)의 직접적 뿌리다. 후속인 ++는 여기서 나아가 이미 잘 학습된 전신·손 추정기를 고정한 채 CHAM으로 통합해, 재학습 없이 손을 몸에 정합시키는 방향으로 계보를 잇는다.</div>
     </article>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2309.17448" target="_blank">SMPLer-X: Scaling Up Expressive Human Pose and Shape Estimation</a></h3><div class="c-meta">arXiv 2309.17448 · Cai 외 · 2023 · NeurIPS 2023 (Datasets and Benchmarks)</div></div>
-      <div class="c-body">
-        <p class="oneline">몸통·손·얼굴을 함께 추정하는 표현적 인체 포즈·형상 추정(expressive human pose and shape estimation, EHPS)을 대규모 데이터와 대형 모델로 확장한 최초의 제너럴리스트(generalist) 파운데이션 모델.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>ViT-Huge 백본과 최대 450만 개 인스턴스, 다양한 데이터 소스를 결합해 별도 미세조정 없이도 여러 벤치마크에서 일반화되는 EHPS 파운데이션 모델 구축</li><li>데이터셋·백본 스케일링이 성능·전이성에 미치는 영향을 체계적으로 분석</li><li>AGORA·UBody·EgoBody·EHF 등 7개 벤치마크에서 최고 수준 결과(EHF 62.3mm PVE 등, 미세조정 없이) 달성.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 위한 특별한 모듈을 두기보다, 트랜스포머 백본을 크게 키우고 대규모 다중 데이터로 학습해 전신 SMPL-X 파라미터(손 포즈 포함)를 통째로 회귀한다. 즉 손 통합을 아키텍처가 아니라 데이터·스케일로 끌어올린 계보다. Hand4Whole++는 바로 이 SMPLer-X를 고정된 전신 백본으로 채택하고, 그 위에 CHAM 어댑터를 붙여 손 부분만 보강하는 방식이라, SMPLer-X는 Hand4Whole++가 딛고 서는 토대 역할을 한다.</p>
-      </div>
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/2207.06400" target="_blank" rel="noopener">PyMAF-X: Towards Well-aligned Full-body Model Regression from Monocular Images</a></h3>
+      <div class="cmeta">arXiv 2207.06400 · Zhang 외 · 2023 · IEEE TPAMI</div>
+      <p class="oneline">예측한 메시가 이미지에 잘 맞았는지(mesh-image alignment)를 되먹임(feedback) 받아 파라미터를 반복 보정하는 회귀 루프로, 정합이 잘 맞는 전신(몸·손·얼굴) 파라메트릭 모델을 복원하는 방법.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>특징 피라미드에서 정합 근거를 뽑아 예측 파라미터를 명시적으로 교정하는 피라미드형 메시 정합 피드백(PyMAF) 루프 제안</li><li>이를 전신으로 확장한 PyMAF-X로 표현력 있는 전신 모델 복원</li><li>조밀한 대응(dense correspondence) 보조 지도와 공간 정합 어텐션으로 이미지-메시 정합을 강화해 몸·손·얼굴·전신 벤치마크에서 최신 성능 달성.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 별도 모듈로 뽑든 함께 회귀하든, 전신에서 손·팔이 이미지와 어긋나 보이는 &quot;정합 불량&quot;이 핵심 병목임을 지적하고, 이를 피드백 보정으로 푸는 방향을 제시했다. 즉 계보의 관심을 &quot;손을 어떻게 추정하나&quot;에서 &quot;추정한 손을 몸·이미지에 어떻게 잘 맞추나&quot;로 옮긴 흐름에 속한다. Hand4Whole++가 고정된 전신·손 추정기를 CHAM으로 정합·통합하는 문제의식과 같은 축에 있으며, PyMAF-X는 그 정합 문제를 반복적 피드백 회귀로 다룬 대표 선행이다.</div>
     </article>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2403.17934" target="_blank">AiOS: All-in-One-Stage Expressive Human Pose and Shape Estimation</a></h3><div class="c-meta">arXiv 2403.17934 · Sun 외 · 2024 · CVPR 2024</div></div>
-      <div class="c-body">
-        <p class="oneline">별도의 사람 검출기 없이 다중 인물의 전신 메시를 DETR 기반 집합 예측(set prediction)으로 한 번에 복원하는 진정한 단일 단계(all-in-one-stage) 프레임워크.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>외부 검출 모델 없이 다중 인물 전신 메시 복원을 점진적 집합 예측 문제로 정식화한 DETR 기반 구조 제안</li><li>사람 위치 지역화 → 몸통 특징 추출 → 손·얼굴을 포함한 전신 정밀화로 이어지는 순차적 검출 단계 설계</li><li>크롭에 따른 문맥 손실과 인물·부위 간 연관성 부족 문제를 완화해 혼잡 장면에서 강건성 확보.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 따로 검출·크롭하지 않고, 인물 쿼리에서 몸통을 잡은 뒤 같은 파이프라인 안에서 손·얼굴 토큰을 순차적으로 정밀화하므로 전신 문맥이 손 추정에 그대로 흘러든다. 손 통합 계보에서 OSX의 단일 네트워크 아이디어를 다중 인물·검출기 없는(detector-free) 방향으로 밀어붙인 위치다. Hand4Whole++는 이런 end-to-end 재학습형 단일 단계 모델과 달리, 고정된 전신·손 추정기를 CHAM 어댑터로 이어 붙여 재학습 비용을 줄이는 대안적 통합 경로를 택한다.</p>
-      </div>
-    </article><h2 class="grp">④ 손 전용 전문가 (frozen hand experts)</h2>
-<p class="grp-desc">손 크롭에 집중해 손을 매우 정밀하게 복원하지만 전신 맥락은 갖지 못하는, 통합의 &#x27;손 쪽&#x27; 재료.</p>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2312.05251" target="_blank">Reconstructing Hands in 3D with Transformers (HaMeR)</a></h3><div class="c-meta">arXiv 2312.05251 · Pavlakos 외 · 2023(arXiv) · CVPR 2024</div></div>
-      <div class="c-body">
-        <p class="oneline">대규모 데이터와 대용량 비전 트랜스포머(ViT, Vision Transformer)를 앞세워 단안(monocular) 영상에서 MANO(손 파라메트릭 모델) 기반 3D 손 메시를 강건하게 복원하는 완전 트랜스포머 파이프라인.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>다수의 2D·3D 손 주석 데이터셋을 통합한 대규모 학습셋으로 정확도와 강건성을 크게 끌어올림</li><li>ConvNet 대신 대용량 ViT 백본을 채택해 데이터·모델 용량을 함께 스케일업</li><li>어려운 자세·가림·조명을 포함한 in-the-wild 평가용 HInt 벤치마크를 함께 제안.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>HaMeR는 크롭된 손 이미지에 집중해 손가락 관절과 손 메시를 매우 정밀하게 맞추지만, 입력이 손 주변 크롭이라 전신 맥락(global body context) — 팔·어깨와의 운동학적 연결이나 몸통 대비 손목의 전역 방향 — 정보는 갖지 못한다. Hand4Whole++는 이런 손 전용 모델을 고정(frozen)한 채 그 특징을 전신 스트림에 주입해, 손 자체의 정밀도는 살리면서 몸과 어긋나기 쉬운 손목 방향까지 전신 기준으로 정합시킨다.</p>
-      </div>
+  </section>
+  <section>
+    <div class="sec-head"><span class="sec-no">계보 ③</span><h2>단일 단계·스케일업 전신 모델</h2></div>
+    <p class="sec-tag">손을 따로 크롭·재추정하지 않고 하나의 네트워크·대규모 학습으로 전신을 통째로 추정하는 방향.</p>
+    
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/2303.16160" target="_blank" rel="noopener">One-Stage 3D Whole-Body Mesh Recovery with Component Aware Transformer</a></h3>
+      <div class="cmeta">arXiv 2303.16160 · Lin 외 · 2023 · CVPR 2023</div>
+      <p class="oneline">몸통·손·얼굴을 별도 추정기 없이 하나의 컴포넌트 인지 트랜스포머(Component Aware Transformer, CAT)로 한 번에 복원하는 단일 단계(one-stage) 전신 메시 복원 기법.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>전역 몸통 인코더가 몸통 파라미터와 고해상도 특징맵을 산출하고, 국소 얼굴·손 디코더가 이를 받아 부위별 메시를 복원하는 단일 네트워크 구조 제안</li><li>특징 수준의 업샘플-크롭(upsample-crop) 방식으로 작게 잡히는 손·얼굴 영역의 고해상도 부위 특징을 추출</li><li>키포인트 유도 변형 가능 어텐션(keypoint-guided deformable attention)으로 손·얼굴을 정밀 추정하고, 대규모 UBody 벤치마크를 함께 공개.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 몸통과 분리된 크롭 이미지로 다시 처리하는 기존 다단계 방식과 달리, 몸통 인코더가 만든 공유 특징맵에서 손 영역을 특징 수준으로 잘라내 디코더가 정밀화하므로 전신과 손이 하나의 네트워크 안에서 함께 학습된다. 손 통합 계보에서 &quot;분리 추정 후 병합&quot;에서 &quot;단일 단계 공동 추정&quot;으로 넘어가는 전환점에 해당한다. Hand4Whole++는 반대로 이미 잘 학습된 전신·손 추정기를 고정한 채 CHAM 어댑터로 이어 붙이는 방향이라, 처음부터 하나로 합쳐 학습하는 OSX와는 통합 철학이 대비된다.</div>
     </article>
-
-    <article class="card">
-      <div class="c-head"><h3><a href="https://arxiv.org/abs/2409.12259" target="_blank">WiLoR: End-to-end 3D Hand Localization and Reconstruction in-the-wild</a></h3><div class="c-meta">arXiv 2409.12259 · Potamias 외 · 2024(arXiv) · CVPR 2025</div></div>
-      <div class="c-body">
-        <p class="oneline">실시간 손 검출(localization)과 고정밀 트랜스포머 기반 3D 손 복원을 하나로 묶어, in-the-wild 다중 손 장면에서 MANO(손 파라메트릭 모델) 메시를 끝단간(end-to-end)으로 추정하는 파이프라인.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>실시간 완전 합성곱(fully-convolutional) 손 검출기와 고충실도 트랜스포머 복원기를 결합한 단일 end-to-end 구조로 검출-복원 단절을 해소</li><li>다양한 조명·가림 조건의 200만 장 이상 in-the-wild 손 이미지 대규모 데이터셋 공개</li><li>시간(temporal) 모듈 없이도 단안 영상에서 부드러운 3D 손 추적을 달성하며 2D·3D 벤치마크에서 효율·정확도 모두 개선.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>WiLoR는 검출부터 복원까지 손만을 대상으로 최적화돼 다중 손·in-the-wild 환경에서 빠르고 정밀한 손 메시를 내지만, 손 크롭 단위로 동작하므로 전신 맥락(global body context) — 팔·몸통과의 연결이나 몸 기준 손목의 전역 회전 — 은 알지 못한다. Hand4Whole++는 이런 손 전용 모델을 고정(frozen)한 채 그 특징을 전신 스트림에 주입하는 방식으로, 손 복원의 정밀도를 그대로 활용하면서 전신과 정합된 손목 방향까지 함께 맞춘다.</p>
-      </div>
-    </article><h2 class="grp">⑤ 경량 어댑터로 통합 — CHAM의 이웃과 도착점</h2>
-<p class="grp-desc">고정된 백본 위에 경량 어댑터를 얹어 손·몸을 결합하는 최신 흐름과, 이 서베이의 도착점.</p>
-
-    <article class="card">
-      <div class="c-head"><h3>HMR-Adapter: A Lightweight Adapter with Dual-Path Cross Augmentation for Expressive Human Mesh Recovery</h3><div class="c-meta">arXiv 없음(미확인) · Author 외 · 2024 · ACM MM 2024</div></div>
-      <div class="c-body">
-        <p class="oneline">이미 학습된 대형 전신 메시 복원(human mesh recovery, HMR) 모델에 약 27M 파라미터짜리 경량 어댑터(adapter)를 덧붙여, 몸통과 손이 서로의 정보를 주고받는 양방향 교차 증강(dual-path cross augmentation)으로 표현적 HMR 성능을 끌어올리는 기법.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>대형 HMR 모델 전체를 재학습하지 않고 약 27M 파라미터 어댑터만 미세조정해 목표 데이터셋에서 성능을 높이는 파라미터 효율적(parameter-efficient) 적응 방식 제안</li><li>한 경로는 손 특징을 주입해 몸통 포즈를 정밀화하고 다른 경로는 몸통 가이드를 주입해 손 포즈를 개선하는 이중 경로 교차 증강 설계</li><li>기존 대형 백본을 그대로 활용하면서 손·몸통 상호 보강으로 표현적 HMR을 향상.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>손을 별도 네트워크로 재추정하는 대신, 고정된 대형 전신 모델의 특징 위에 경량 어댑터를 얹어 몸통↔손 특징을 교차 주입한다는 점에서 CHAM과 가장 직접적으로 겹치는 경쟁 기법이다. 두 방법 모두 &quot;고정된 백본 + 경량 어댑터로 손을 통합&quot;한다는 계보에 속한다. 차이는 결합 방식에 있다: HMR-Adapter는 하나의 대형 HMR 모델 내부에 어댑터를 삽입해 몸통과 손을 양방향으로 상호 보강하는 반면, Hand4Whole++의 CHAM은 SMPLer-X 같은 전신 백본과 별도의 전용 손 추정기라는 두 개의 고정 모델을 어댑터로 이어 붙여 통합한다. 즉 HMR-Adapter가 단일 모델 내부의 교차 증강이라면, CHAM은 분리된 전신·손 전문가를 사후에 결합하는 브리지에 가깝다.</p>
-      </div>
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/2309.17448" target="_blank" rel="noopener">SMPLer-X: Scaling Up Expressive Human Pose and Shape Estimation</a></h3>
+      <div class="cmeta">arXiv 2309.17448 · Cai 외 · 2023 · NeurIPS 2023 (Datasets and Benchmarks)</div>
+      <p class="oneline">몸통·손·얼굴을 함께 추정하는 표현적 인체 포즈·형상 추정(expressive human pose and shape estimation, EHPS)을 대규모 데이터와 대형 모델로 확장한 최초의 제너럴리스트(generalist) 파운데이션 모델.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>ViT-Huge 백본과 최대 450만 개 인스턴스, 다양한 데이터 소스를 결합해 별도 미세조정 없이도 여러 벤치마크에서 일반화되는 EHPS 파운데이션 모델 구축</li><li>데이터셋·백본 스케일링이 성능·전이성에 미치는 영향을 체계적으로 분석</li><li>AGORA·UBody·EgoBody·EHF 등 7개 벤치마크에서 최고 수준 결과(EHF 62.3mm PVE 등, 미세조정 없이) 달성.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 위한 특별한 모듈을 두기보다, 트랜스포머 백본을 크게 키우고 대규모 다중 데이터로 학습해 전신 SMPL-X 파라미터(손 포즈 포함)를 통째로 회귀한다. 즉 손 통합을 아키텍처가 아니라 데이터·스케일로 끌어올린 계보다. Hand4Whole++는 바로 이 SMPLer-X를 고정된 전신 백본으로 채택하고, 그 위에 CHAM 어댑터를 붙여 손 부분만 보강하는 방식이라, SMPLer-X는 Hand4Whole++가 딛고 서는 토대 역할을 한다.</div>
     </article>
-
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3><a href="https://arxiv.org/abs/2403.17934" target="_blank" rel="noopener">AiOS: All-in-One-Stage Expressive Human Pose and Shape Estimation</a></h3>
+      <div class="cmeta">arXiv 2403.17934 · Sun 외 · 2024 · CVPR 2024</div>
+      <p class="oneline">별도의 사람 검출기 없이 다중 인물의 전신 메시를 DETR 기반 집합 예측(set prediction)으로 한 번에 복원하는 진정한 단일 단계(all-in-one-stage) 프레임워크.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>외부 검출 모델 없이 다중 인물 전신 메시 복원을 점진적 집합 예측 문제로 정식화한 DETR 기반 구조 제안</li><li>사람 위치 지역화 → 몸통 특징 추출 → 손·얼굴을 포함한 전신 정밀화로 이어지는 순차적 검출 단계 설계</li><li>크롭에 따른 문맥 손실과 인물·부위 간 연관성 부족 문제를 완화해 혼잡 장면에서 강건성 확보.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 따로 검출·크롭하지 않고, 인물 쿼리에서 몸통을 잡은 뒤 같은 파이프라인 안에서 손·얼굴 토큰을 순차적으로 정밀화하므로 전신 문맥이 손 추정에 그대로 흘러든다. 손 통합 계보에서 OSX의 단일 네트워크 아이디어를 다중 인물·검출기 없는(detector-free) 방향으로 밀어붙인 위치다. Hand4Whole++는 이런 end-to-end 재학습형 단일 단계 모델과 달리, 고정된 전신·손 추정기를 CHAM 어댑터로 이어 붙여 재학습 비용을 줄이는 대안적 통합 경로를 택한다.</div>
+    </article>
+  </section>
+  <section>
+    <div class="sec-head"><span class="sec-no">계보 ④</span><h2>손 전용 전문가 (frozen hand experts)</h2></div>
+    <p class="sec-tag">손 크롭에 집중해 손을 매우 정밀하게 복원하지만 전신 맥락은 갖지 못하는, 통합의 ‘손 쪽’ 재료.</p>
+    
+    <article class="card smell">
+      <div class="c-role">손 전용 전문가</div>
+      <h3><a href="https://arxiv.org/abs/2312.05251" target="_blank" rel="noopener">Reconstructing Hands in 3D with Transformers (HaMeR)</a></h3>
+      <div class="cmeta">arXiv 2312.05251 · Pavlakos 외 · 2023(arXiv) · CVPR 2024</div>
+      <p class="oneline">대규모 데이터와 대용량 비전 트랜스포머(ViT, Vision Transformer)를 앞세워 단안(monocular) 영상에서 MANO(손 파라메트릭 모델) 기반 3D 손 메시를 강건하게 복원하는 완전 트랜스포머 파이프라인.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>다수의 2D·3D 손 주석 데이터셋을 통합한 대규모 학습셋으로 정확도와 강건성을 크게 끌어올림</li><li>ConvNet 대신 대용량 ViT 백본을 채택해 데이터·모델 용량을 함께 스케일업</li><li>어려운 자세·가림·조명을 포함한 in-the-wild 평가용 HInt 벤치마크를 함께 제안.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>HaMeR는 크롭된 손 이미지에 집중해 손가락 관절과 손 메시를 매우 정밀하게 맞추지만, 입력이 손 주변 크롭이라 전신 맥락(global body context) — 팔·어깨와의 운동학적 연결이나 몸통 대비 손목의 전역 방향 — 정보는 갖지 못한다. Hand4Whole++는 이런 손 전용 모델을 고정(frozen)한 채 그 특징을 전신 스트림에 주입해, 손 자체의 정밀도는 살리면서 몸과 어긋나기 쉬운 손목 방향까지 전신 기준으로 정합시킨다.</div>
+    </article>
+    <article class="card smell">
+      <div class="c-role">손 전용 전문가</div>
+      <h3><a href="https://arxiv.org/abs/2409.12259" target="_blank" rel="noopener">WiLoR: End-to-end 3D Hand Localization and Reconstruction in-the-wild</a></h3>
+      <div class="cmeta">arXiv 2409.12259 · Potamias 외 · 2024(arXiv) · CVPR 2025</div>
+      <p class="oneline">실시간 손 검출(localization)과 고정밀 트랜스포머 기반 3D 손 복원을 하나로 묶어, in-the-wild 다중 손 장면에서 MANO(손 파라메트릭 모델) 메시를 끝단간(end-to-end)으로 추정하는 파이프라인.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>실시간 완전 합성곱(fully-convolutional) 손 검출기와 고충실도 트랜스포머 복원기를 결합한 단일 end-to-end 구조로 검출-복원 단절을 해소</li><li>다양한 조명·가림 조건의 200만 장 이상 in-the-wild 손 이미지 대규모 데이터셋 공개</li><li>시간(temporal) 모듈 없이도 단안 영상에서 부드러운 3D 손 추적을 달성하며 2D·3D 벤치마크에서 효율·정확도 모두 개선.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>WiLoR는 검출부터 복원까지 손만을 대상으로 최적화돼 다중 손·in-the-wild 환경에서 빠르고 정밀한 손 메시를 내지만, 손 크롭 단위로 동작하므로 전신 맥락(global body context) — 팔·몸통과의 연결이나 몸 기준 손목의 전역 회전 — 은 알지 못한다. Hand4Whole++는 이런 손 전용 모델을 고정(frozen)한 채 그 특징을 전신 스트림에 주입하는 방식으로, 손 복원의 정밀도를 그대로 활용하면서 전신과 정합된 손목 방향까지 함께 맞춘다.</div>
+    </article>
+  </section>
+  <section>
+    <div class="sec-head"><span class="sec-no">계보 ⑤</span><h2>경량 어댑터로 통합 — CHAM의 이웃과 도착점</h2></div>
+    <p class="sec-tag">고정된 백본 위에 경량 어댑터를 얹어 손·몸을 결합하는 최신 흐름과, 이 서베이의 도착점.</p>
+    
+    <article class="card vision">
+      <div class="c-role">전신 계보</div>
+      <h3>HMR-Adapter: A Lightweight Adapter with Dual-Path Cross Augmentation for Expressive Human Mesh Recovery</h3>
+      <div class="cmeta">arXiv 없음(미확인) · Author 외 · 2024 · ACM MM 2024</div>
+      <p class="oneline">이미 학습된 대형 전신 메시 복원(human mesh recovery, HMR) 모델에 약 27M 파라미터짜리 경량 어댑터(adapter)를 덧붙여, 몸통과 손이 서로의 정보를 주고받는 양방향 교차 증강(dual-path cross augmentation)으로 표현적 HMR 성능을 끌어올리는 기법.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>대형 HMR 모델 전체를 재학습하지 않고 약 27M 파라미터 어댑터만 미세조정해 목표 데이터셋에서 성능을 높이는 파라미터 효율적(parameter-efficient) 적응 방식 제안</li><li>한 경로는 손 특징을 주입해 몸통 포즈를 정밀화하고 다른 경로는 몸통 가이드를 주입해 손 포즈를 개선하는 이중 경로 교차 증강 설계</li><li>기존 대형 백본을 그대로 활용하면서 손·몸통 상호 보강으로 표현적 HMR을 향상.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>손을 별도 네트워크로 재추정하는 대신, 고정된 대형 전신 모델의 특징 위에 경량 어댑터를 얹어 몸통↔손 특징을 교차 주입한다는 점에서 CHAM과 가장 직접적으로 겹치는 경쟁 기법이다. 두 방법 모두 &quot;고정된 백본 + 경량 어댑터로 손을 통합&quot;한다는 계보에 속한다. 차이는 결합 방식에 있다: HMR-Adapter는 하나의 대형 HMR 모델 내부에 어댑터를 삽입해 몸통과 손을 양방향으로 상호 보강하는 반면, Hand4Whole++의 CHAM은 SMPLer-X 같은 전신 백본과 별도의 전용 손 추정기라는 두 개의 고정 모델을 어댑터로 이어 붙여 통합한다. 즉 HMR-Adapter가 단일 모델 내부의 교차 증강이라면, CHAM은 분리된 전신·손 전문가를 사후에 결합하는 브리지에 가깝다.</div>
+    </article>
     <article class="card anchor">
-      <div class="c-head"><span class="anchor-badge">이 서베이의 도착점</span><h3><a href="https://arxiv.org/abs/2603.14726" target="_blank">Enhancing Hands in 3D Whole-Body Pose Estimation with Conditional Hands Modulator (Hand4Whole++)</a></h3><div class="c-meta">arXiv 2603.14726 · Moon (Gyeongsik Moon) · 2026 · CVPR</div></div>
-      <div class="c-body">
-        <p class="oneline">잘 학습된 전신(whole-body) 추정기와 손 전용 추정기를 둘 다 고정(frozen)한 채, 경량 어댑터 CHAM으로 손 특징을 전신 특징 스트림에 주입해 재학습 없이 손과 손목을 몸에 정합시키는 모듈형 프레임워크.</p>
-        <h4>핵심 기여</h4>
-        <ul><li>전신 추정기와 손 추정기 사이의 &quot;지도(supervision) 격차&quot; — 전신 데이터엔 손 다양성이 부족하고 손 데이터엔 몸 맥락이 없다 — 를 문제로 정식화</li><li>고정된 전신 특징을 손 전용 특징으로 변조(modulate)해 손목 방향을 상체 운동학과 일치시키는 경량 모듈 CHAM 제안(학습 시 두 추정기는 얼리고 CHAM만 최적화)</li><li>MANO 손 메시를 미분 가능한 강체 정합(differentiable rigid alignment)으로 전신 메시의 손목에 붙여 손가락 관절·손 형상까지 직접 이식.</li></ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>이 서베이의 도착점이자, 손 통합 계보의 최신 종합이다. FrankMocap의 &quot;분리 추정 후 통합&quot;, Hand4Whole의 &quot;손목을 손 특징으로&quot;, PyMAF-X의 &quot;정합 보정&quot;, SMPLer-X의 &quot;스케일업 전신 백본&quot;, HaMeR·WiLoR의 &quot;강력한 손 전문가&quot;, HMR-Adapter의 &quot;경량 어댑터 통합&quot;을 하나로 엮되, 재학습 없이 두 고정 전문가를 사후 결합하는 브리지(CHAM)로 손목 방향의 전신 정합까지 해결한다. 우리 연구실 관심(Hand-Object Interaction, Egocentric Vision) 관점에서는, 1인칭 영상에서 손이 물체·몸과 함께 등장할 때 전신 맥락과 손 정밀도를 동시에 확보하는 실용적 설계로 바로 응용될 수 있다.</p>
-      </div>
+      <div class="c-role">도착점 · anchor<span class="badge">이 서베이의 도착점</span></div>
+      <h3><a href="https://arxiv.org/abs/2603.14726" target="_blank" rel="noopener">Enhancing Hands in 3D Whole-Body Pose Estimation with Conditional Hands Modulator (Hand4Whole++)</a></h3>
+      <div class="cmeta">arXiv 2603.14726 · Moon (Gyeongsik Moon) · 2026 · CVPR</div>
+      <p class="oneline">잘 학습된 전신(whole-body) 추정기와 손 전용 추정기를 둘 다 고정(frozen)한 채, 경량 어댑터 CHAM으로 손 특징을 전신 특징 스트림에 주입해 재학습 없이 손과 손목을 몸에 정합시키는 모듈형 프레임워크.</p>
+      <h4>핵심 기여</h4>
+      <ul><li>전신 추정기와 손 추정기 사이의 &quot;지도(supervision) 격차&quot; — 전신 데이터엔 손 다양성이 부족하고 손 데이터엔 몸 맥락이 없다 — 를 문제로 정식화</li><li>고정된 전신 특징을 손 전용 특징으로 변조(modulate)해 손목 방향을 상체 운동학과 일치시키는 경량 모듈 CHAM 제안(학습 시 두 추정기는 얼리고 CHAM만 최적화)</li><li>MANO 손 메시를 미분 가능한 강체 정합(differentiable rigid alignment)으로 전신 메시의 손목에 붙여 손가락 관절·손 형상까지 직접 이식.</li></ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>이 서베이의 도착점이자, 손 통합 계보의 최신 종합이다. FrankMocap의 &quot;분리 추정 후 통합&quot;, Hand4Whole의 &quot;손목을 손 특징으로&quot;, PyMAF-X의 &quot;정합 보정&quot;, SMPLer-X의 &quot;스케일업 전신 백본&quot;, HaMeR·WiLoR의 &quot;강력한 손 전문가&quot;, HMR-Adapter의 &quot;경량 어댑터 통합&quot;을 하나로 엮되, 재학습 없이 두 고정 전문가를 사후 결합하는 브리지(CHAM)로 손목 방향의 전신 정합까지 해결한다. 우리 연구실 관심(Hand-Object Interaction, Egocentric Vision) 관점에서는, 1인칭 영상에서 손이 물체·몸과 함께 등장할 때 전신 맥락과 손 정밀도를 동시에 확보하는 실용적 설계로 바로 응용될 수 있다.</div>
     </article>
-  <div class="intro" style="margin-top:30px; border-left-color:#0ea5e9;">
-    <h2>우리 연구실 관심과의 연결</h2>
-    <p><strong>Hand-Object Interaction</strong>: 손·물체·몸이 함께 등장하는 조작 장면에서, 손 전용 정밀도와 전신 맥락을 동시에 확보하는 CHAM식 통합은 접촉·파지 추정의 안정적 전신 사전(prior)으로 쓸 수 있다.</p>
-    <p><strong>Egocentric Vision</strong>: 1인칭 영상은 손이 크게 잡히고 몸은 거의 안 보이는 극단적 조건이라, "고정된 전문가 + 어댑터"로 손을 몸 맥락에 정합시키는 접근이 특히 유효하다.</p>
-  </div>
-</main>
-<footer>자동 생성 · topics/hand-in-wholebody/build_survey.py · 수치·링크는 각 논문 원문/arXiv에서 검증한 것만 포함.</footer>
+  </section>
+
+  <section class="closing">
+    <div class="sec-head"><span class="sec-no">Takeaways</span><h2>우리 연구실 관심과의 연결</h2></div>
+    <div class="take"><span class="lab">Hand-Object Interaction</span>손·물체·몸이 함께 등장하는 조작 장면에서, 손 전용 정밀도와 전신 맥락을 동시에 확보하는 CHAM식 통합은 접촉·파지 추정의 안정적 전신 사전(prior)으로 쓸 수 있다.</div>
+    <div class="take"><span class="lab">Egocentric Vision</span>1인칭 영상은 손이 크게 잡히고 몸은 거의 안 보이는 극단적 조건이라, ‘고정된 전문가 + 어댑터’로 손을 몸 맥락에 정합시키는 접근이 특히 유효하다.</div>
+  </section>
+
+  <footer>자동 생성 · topics/hand-in-wholebody/build_survey.py · 스타일: scientific-report(IBM Plex, light/dark) · 수치·링크는 각 논문 원문/arXiv에서 검증한 것만 포함.</footer>
+</div>
 </body>
 </html>

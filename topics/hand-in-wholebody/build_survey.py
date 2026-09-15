@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build the hand-in-wholebody survey HTML from cards/*.md."""
+"""Build the hand-in-wholebody survey HTML (scientific-report style) from cards/*.md."""
 import os, re, html, glob
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CARDS = os.path.join(HERE, "cards")
 OUT = os.path.join(HERE, "hand-in-wholebody_survey.html")
 
-SLUG = "hand-in-wholebody"
-TITLE = "전신 3D 포즈 추정에서의 손 통합 — 핵심 계보 서베이"
-SUBTITLE = "Hand-in-Whole-Body 3D Pose: Integrating Hand Experts into Whole-Body Estimation"
-ANCHOR = "arXiv:2603.14726 (Hand4Whole++, CVPR 2026)를 도착점으로, 그 선행 계보를 통합 관점에서 정리"
+TITLE = "전신 3D 포즈에서의 손 통합 — 핵심 계보 서베이"
+SUBTITLE = ("전신(whole-body) 추정기는 몸 전체를 보지만 손이 뭉개지고, 손 전용 추정기는 손을 정밀하게 "
+            "복원하지만 몸 맥락을 모른다. 이 supervision 격차를 어떻게 메워 왔는지를, 도착점 "
+            "Hand4Whole++(CVPR 2026)를 기준으로 되짚는다.")
 
 def parse_card(path):
     d = {"title": "", "meta": "", "link": "", "oneline": "", "contrib": "", "integration": ""}
@@ -26,156 +26,227 @@ def parse_card(path):
 def esc(t):
     t = html.escape(t)
     t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
-    # linkify bare arxiv abs urls inside text
-    t = re.sub(r"(?<![\">=])(https?://[^\s<)]+)", r'<a href="\1" target="_blank">\1</a>', t)
+    t = re.sub(r"(?<![\">=])(https?://[^\s<)]+)", r'<a href="\1" target="_blank" rel="noopener">\1</a>', t)
     return t
 
 def contrib_items(t):
     return [c.strip() for c in re.split(r"[;；]", t) if c.strip()]
 
-# narrative structure: (group heading, description, [card stems])
+# (section no label, heading, tag, [(stem, stream)])  stream: 'vision'(whole-body) | 'smell'(hand) | 'anchor'
 GROUPS = [
-    ("① 표현형 전신 모델의 토대",
+    ("계보 ①", "표현형 전신 모델의 토대",
      "손·얼굴·몸을 하나의 파라메트릭 모델로 묶어, 이후 모든 계보가 추정할 공통 언어(SMPL-X)를 정의한 출발점.",
-     ["01_SMPL-X"]),
-    ("② 분리 추정 → 통합: 모듈형 계보",
+     [("01_SMPL-X", "vision")]),
+    ("계보 ②", "분리 추정 → 통합: 모듈형 계보",
      "손을 전용 모듈로 잘 뽑은 뒤 몸에 이어 붙이는 전략과, 손목·정합을 정교화한 흐름.",
-     ["02_FrankMocap", "03_Hand4Whole", "04_PyMAF-X"]),
-    ("③ 단일 단계·스케일업 전신 모델",
+     [("02_FrankMocap", "vision"), ("03_Hand4Whole", "vision"), ("04_PyMAF-X", "vision")]),
+    ("계보 ③", "단일 단계·스케일업 전신 모델",
      "손을 따로 크롭·재추정하지 않고 하나의 네트워크·대규모 학습으로 전신을 통째로 추정하는 방향.",
-     ["05_OSX", "06_SMPLer-X", "09_AiOS"]),
-    ("④ 손 전용 전문가 (frozen hand experts)",
-     "손 크롭에 집중해 손을 매우 정밀하게 복원하지만 전신 맥락은 갖지 못하는, 통합의 '손 쪽' 재료.",
-     ["07_HaMeR", "08_WiLoR"]),
-    ("⑤ 경량 어댑터로 통합 — CHAM의 이웃과 도착점",
+     [("05_OSX", "vision"), ("06_SMPLer-X", "vision"), ("09_AiOS", "vision")]),
+    ("계보 ④", "손 전용 전문가 (frozen hand experts)",
+     "손 크롭에 집중해 손을 매우 정밀하게 복원하지만 전신 맥락은 갖지 못하는, 통합의 ‘손 쪽’ 재료.",
+     [("07_HaMeR", "smell"), ("08_WiLoR", "smell")]),
+    ("계보 ⑤", "경량 어댑터로 통합 — CHAM의 이웃과 도착점",
      "고정된 백본 위에 경량 어댑터를 얹어 손·몸을 결합하는 최신 흐름과, 이 서베이의 도착점.",
-     ["10_HMR-Adapter", "00_Hand4Whole++"]),
+     [("10_HMR-Adapter", "vision"), ("00_Hand4Whole++", "anchor")]),
 ]
 
 cards = {os.path.splitext(os.path.basename(p))[0]: parse_card(p)
          for p in glob.glob(os.path.join(CARDS, "*.md"))}
+n_papers = sum(len(g[3]) for g in GROUPS)
 
-sections = []
-for gi, (gtitle, gdesc, stems) in enumerate(GROUPS, 1):
-    body = [f'<h2 class="grp">{html.escape(gtitle)}</h2>',
-            f'<p class="grp-desc">{esc(gdesc)}</p>']
-    for stem in stems:
-        c = cards.get(stem)
-        if not c:
-            continue
-        anchor = stem == "00_Hand4Whole++"
-        cls = "card anchor" if anchor else "card"
-        meta = html.escape(c["meta"])
-        link = c["link"].strip()
-        title_html = html.escape(c["title"])
-        if link.startswith("http"):
-            title_html = f'<a href="{link}" target="_blank">{title_html}</a>'
-        items = "".join(f"<li>{esc(x)}</li>" for x in contrib_items(c["contrib"]))
-        badge = '<span class="anchor-badge">이 서베이의 도착점</span>' if anchor else ""
-        sections.append("")  # spacer
-        body.append(f'''
+CSS = """
+*{box-sizing:border-box}
+:root{
+  --bg:#FAFAF9; --surface:#FFFFFF; --surface-2:#F5F5F3;
+  --ink:#171717; --muted:#666A70; --faint:#9A9DA1; --line:#E8E7E3;
+  --smell:#A9662E; --vision:#176F78;
+  --best:rgba(23,111,120,.07); --best-line:#176F78;
+  --shadow:0 1px 2px rgba(0,0,0,.025),0 8px 24px rgba(0,0,0,.035);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131619; --surface:#1B1F23; --surface-2:#22272C;
+  --ink:#ECEFF2; --muted:#A3ADB7; --faint:#6B7580; --line:#2B3138;
+  --smell:#D8945A; --vision:#3FB6C0; --best:rgba(63,182,192,.13); --best-line:#3FB6C0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 22px rgba(0,0,0,.35);
+}}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;
+  line-height:1.62;margin:0;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:60px 28px 110px}
+a{color:var(--vision)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint)}
+.home{font-family:"IBM Plex Mono",monospace;font-size:12px;text-decoration:none;color:var(--muted);
+  display:inline-block;margin-bottom:22px;border:1px solid var(--line);border-radius:7px;padding:5px 11px}
+.home:hover{color:var(--vision);border-color:var(--vision)}
+header{border-bottom:1px solid var(--line);padding-bottom:34px}
+h1{font-size:clamp(30px,5vw,44px);font-weight:650;letter-spacing:-.03em;margin:.55rem 0 .6rem;text-wrap:balance}
+.sub{color:var(--muted);font-size:16px;line-height:1.65;max-width:74ch;margin:0}
+.meta-chips{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:20px;padding:4px 11px;color:var(--muted)}
+section{margin-top:64px;padding-top:4px}
+.sec-head{display:block;margin-bottom:8px}
+.sec-no{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--vision);margin-bottom:5px}
+h2{font-size:clamp(22px,3.4vw,27px);font-weight:620;letter-spacing:-.025em;margin:0}
+.sec-tag{color:var(--muted);font-size:15px;line-height:1.6;margin:8px 0 26px;max-width:74ch}
+/* two-stream schematic */
+.qa-lab{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin:30px 0 10px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:2px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot.v{background:var(--vision)} .dot.s{background:var(--smell)}
+.flow-wrap{overflow-x:auto;padding:8px 0 12px;margin:14px 0 6px}
+.merge,.flow{display:flex;align-items:center;min-width:min-content}
+.streams{display:flex;flex-direction:column;gap:12px}
+.stream{display:flex;align-items:center}
+.node{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:11px 14px;
+  min-width:150px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:3px}
+.node.v{box-shadow:inset 0 2px 0 var(--vision),var(--shadow)}
+.node.s{box-shadow:inset 0 2px 0 var(--smell),var(--shadow)}
+.node .role{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint)}
+.node .nm{font-size:13px;font-weight:600;line-height:1.25}
+.node .tiny{font-size:11px;color:var(--muted)}
+.arrow{padding:0 10px;color:var(--faint);font-size:16px;display:flex;align-items:center}
+.out{background:var(--surface-2);border:1px dashed var(--line);border-radius:9px;padding:11px 15px;
+  min-width:140px;display:flex;flex-direction:column;gap:3px}
+.out .role{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.out .nm{font-size:13.5px;font-weight:700}
+.out .tiny{font-size:11px;color:var(--muted)}
+/* stage rail */
+.rail{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 2px}
+.rail .step{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--ink)}
+.rail .step.s{box-shadow:inset 0 2px 0 var(--smell)} .rail .step.v{box-shadow:inset 0 2px 0 var(--vision)}
+.rail .ar{color:var(--faint);font-weight:700}
+/* paper cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+  padding:20px 22px;margin-top:18px;border-top:3px solid var(--line)}
+.card.v{border-top-color:var(--vision)} .card.s{border-top-color:var(--smell)}
+.card.anchor{border:2px solid var(--best-line);border-top:3px solid var(--best-line);background:var(--best)}
+.card .c-role{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;background:var(--best-line);color:#fff;border-radius:12px;padding:2px 8px}
+.card h3{font-size:18px;font-weight:620;letter-spacing:-.015em;margin:7px 0 5px;line-height:1.3}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--vision);text-decoration:underline}
+.card .cmeta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;margin-bottom:12px}
+.card .oneline{font-size:15px;font-weight:500;color:var(--ink);margin:8px 0 12px}
+.card h4{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin:14px 0 5px}
+.card ul{margin:6px 0;padding-left:19px} .card li{margin:4px 0;font-size:14px}
+.take{margin-top:14px;padding:13px 16px;border-left:2px solid var(--vision);background:var(--surface-2);
+  border-radius:0 8px 8px 0;font-size:14px;line-height:1.6}
+.card.s .take{border-left-color:var(--smell)}
+.take .lab{font-family:"IBM Plex Mono",monospace;font-size:9.8px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--vision);display:block;margin-bottom:4px}
+.card.s .take .lab{color:var(--smell)}
+.closing{margin-top:40px}
+.closing .take{border-left-color:var(--vision);background:var(--surface)}
+.closing .take + .take{margin-top:12px}
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint);line-height:1.6}
+@media(max-width:560px){.wrap{padding:40px 18px 76px}.streams{gap:9px}}
+"""
+
+def card_html(stem, stream):
+    c = cards.get(stem)
+    if not c:
+        return ""
+    is_anchor = stream == "anchor"
+    cls = "card anchor" if is_anchor else f"card {stream}"
+    role = "도착점 · anchor" if is_anchor else ("손 전용 전문가" if stream == "smell" else "전신 계보")
+    badge = '<span class="badge">이 서베이의 도착점</span>' if is_anchor else ""
+    title = html.escape(c["title"])
+    link = c["link"].strip()
+    if link.startswith("http"):
+        title = f'<a href="{link}" target="_blank" rel="noopener">{title}</a>'
+    items = "".join(f"<li>{esc(x)}</li>" for x in contrib_items(c["contrib"]))
+    return f"""
     <article class="{cls}">
-      <div class="c-head">{badge}<h3>{title_html}</h3><div class="c-meta">{meta}</div></div>
-      <div class="c-body">
-        <p class="oneline">{esc(c["oneline"])}</p>
-        <h4>핵심 기여</h4>
-        <ul>{items}</ul>
-        <h4>통합 관점에서의 위치</h4>
-        <p>{esc(c["integration"])}</p>
-      </div>
-    </article>''')
-    sections.append("\n".join(body))
+      <div class="c-role">{role}{badge}</div>
+      <h3>{title}</h3>
+      <div class="cmeta">{html.escape(c['meta'])}</div>
+      <p class="oneline">{esc(c['oneline'])}</p>
+      <h4>핵심 기여</h4>
+      <ul>{items}</ul>
+      <div class="take"><span class="lab">통합 관점에서의 위치</span>{esc(c['integration'])}</div>
+    </article>"""
 
-n_papers = len([s for g in GROUPS for s in g[2]])
+secs = []
+for label, heading, tag, members in GROUPS:
+    body = "".join(card_html(stem, stream) for stem, stream in members)
+    secs.append(f"""
+  <section>
+    <div class="sec-head"><span class="sec-no">{html.escape(label)}</span><h2>{html.escape(heading)}</h2></div>
+    <p class="sec-tag">{esc(tag)}</p>
+    {body}
+  </section>""")
 
-doc = f'''<!DOCTYPE html>
+doc = f"""<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(TITLE)}</title>
-<style>
-  :root {{ --bg:#f8fafc; --card:#fff; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --accent:#10b981; }}
-  * {{ box-sizing:border-box; }}
-  body {{ margin:0; background:var(--bg); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-    line-height:1.7; }}
-  header.top {{ background:linear-gradient(135deg,#064e3b,#10b981); color:#fff; padding:42px 20px 34px; }}
-  header.top .wrap {{ max-width:960px; margin:0 auto; }}
-  header.top a.home {{ display:inline-block; margin-bottom:16px; color:#fff; text-decoration:none;
-    font-size:13.5px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
-    padding:6px 12px; border-radius:8px; }}
-  header.top a.home:hover {{ background:rgba(255,255,255,.22); }}
-  header.top h1 {{ margin:6px 0 8px; font-size:26px; letter-spacing:-.4px; }}
-  header.top .sub {{ opacity:.92; font-size:15px; }}
-  header.top .chips {{ margin-top:14px; }}
-  header.top .chip {{ display:inline-block; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22);
-    padding:4px 11px; border-radius:20px; font-size:12.5px; margin:3px 6px 3px 0; }}
-  main {{ max-width:960px; margin:0 auto; padding:30px 20px 60px; }}
-  .intro {{ background:var(--card); border:1px solid var(--line); border-left:5px solid var(--accent);
-    border-radius:12px; padding:20px 24px; margin-bottom:28px; }}
-  .intro h2 {{ margin:0 0 8px; font-size:18px; }}
-  .intro p {{ margin:8px 0; }}
-  .flow {{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:14px 0 2px; }}
-  .flow span.step {{ background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; border-radius:8px;
-    padding:5px 10px; font-size:12.5px; font-weight:600; }}
-  .flow span.arrow {{ color:var(--muted); font-weight:700; }}
-  h2.grp {{ font-size:19px; margin:34px 0 4px; padding-bottom:8px; border-bottom:2px solid var(--line); }}
-  p.grp-desc {{ color:var(--muted); margin:6px 0 14px; font-size:14px; }}
-  .card {{ background:var(--card); border:1px solid var(--line); border-radius:13px; margin:14px 0;
-    box-shadow:0 1px 2px rgba(0,0,0,.04); overflow:hidden; }}
-  .card.anchor {{ border:2px solid var(--accent); box-shadow:0 3px 14px rgba(16,185,129,.15); }}
-  .c-head {{ padding:16px 22px 10px; background:#fcfdfc; border-bottom:1px solid var(--line); }}
-  .card.anchor .c-head {{ background:#ecfdf5; }}
-  .c-head h3 {{ margin:4px 0 4px; font-size:17.5px; letter-spacing:-.2px; }}
-  .c-head h3 a {{ color:#0f172a; text-decoration:none; }}
-  .c-head h3 a:hover {{ color:var(--accent); text-decoration:underline; }}
-  .c-meta {{ color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums; }}
-  .anchor-badge {{ display:inline-block; background:var(--accent); color:#fff; font-size:11.5px;
-    font-weight:700; padding:2px 9px; border-radius:12px; }}
-  .c-body {{ padding:12px 22px 18px; }}
-  .c-body .oneline {{ font-size:15px; font-weight:500; color:#0f172a; margin:6px 0 10px; }}
-  .c-body h4 {{ font-size:13.5px; color:#334155; margin:14px 0 4px; text-transform:none; }}
-  .c-body ul {{ margin:6px 0; padding-left:20px; }}
-  .c-body li {{ margin:4px 0; }}
-  .c-body a {{ color:#0369a1; }}
-  footer {{ max-width:960px; margin:0 auto; padding:20px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); }}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>{CSS}</style>
 </head>
 <body>
-<header class="top"><div class="wrap">
+<div class="wrap">
   <a class="home" href="../../index.html">← 메인으로</a>
-  <h1>{html.escape(TITLE)}</h1>
-  <div class="sub">{html.escape(SUBTITLE)}</div>
-  <div class="chips">
-    <span class="chip">📄 {n_papers}편</span>
-    <span class="chip">통합 중심 계보</span>
-    <span class="chip">{html.escape(ANCHOR)}</span>
-  </div>
-</div></header>
-<main>
-  <div class="intro">
-    <h2>왜 이 주제인가 — "손을 몸 안에서" 복원하기</h2>
-    <p>전신(whole-body) 3D 포즈 추정의 오랜 난제는 <strong>손</strong>이다. 전신 추정기는 몸 전체를 보지만 학습 데이터에 손 다양성이 부족해 손가락이 뭉개지고, 손 전용(hand-only) 추정기는 손을 정밀하게 복원하지만 팔·몸통과의 연결(전역 맥락)을 알지 못한다. 이 <strong>지도(supervision) 격차</strong>를 어떻게 메우느냐가 계보 전체를 관통하는 질문이다.</p>
-    <p>아래는 그 질문에 답해 온 흐름을, 도착점 <strong>Hand4Whole++</strong>(고정된 전신·손 전문가를 경량 어댑터 CHAM으로 결합)를 기준으로 되짚은 것이다.</p>
-    <div class="flow">
-      <span class="step">SMPL-X (공통 표현)</span><span class="arrow">→</span>
-      <span class="step">분리 추정 후 통합</span><span class="arrow">→</span>
-      <span class="step">단일 단계·스케일업</span><span class="arrow">→</span>
-      <span class="step">강력한 손 전문가</span><span class="arrow">→</span>
-      <span class="step">어댑터로 결합 (CHAM)</span>
+  <header>
+    <div class="eyebrow">3D whole-body pose · lineage survey</div>
+    <h1>{html.escape(TITLE)}</h1>
+    <p class="sub">{html.escape(SUBTITLE)}</p>
+    <div class="meta-chips">
+      <span class="chip">{n_papers} papers</span>
+      <span class="chip">anchor · arXiv:2603.14726</span>
+      <span class="chip">Hand4Whole++ · CVPR 2026</span>
     </div>
+  </header>
+
+  <div class="sec-head" style="margin-top:48px"><span class="sec-no">System overview</span><h2>두 스트림을 어떻게 합치는가</h2></div>
+  <p class="sec-tag">이 분야의 핵심은 두 전문가 — 전신(whole-body) 추정기와 손 전용 추정기 — 를 하나로 잇는 방법이다.
+    도착점 Hand4Whole++는 둘을 모두 고정한 채 경량 어댑터 CHAM으로 손 특징을 전신 스트림에 주입한다.</p>
+  <div class="qa-lab">Merge schematic</div>
+  <div class="legend"><span><i class="dot v"></i> 전신 스트림 (whole-body)</span><span><i class="dot s"></i> 손 스트림 (hand expert)</span></div>
+  <div class="flow-wrap"><div class="merge">
+    <div class="streams">
+      <div class="stream"><div class="node v"><span class="role">whole-body</span><span class="nm">SMPLer-X (frozen)</span><span class="tiny">전신 SMPL-X 특징</span></div></div>
+      <div class="stream"><div class="node s"><span class="role">hand expert</span><span class="nm">HaMeR / WiLoR (frozen)</span><span class="tiny">정밀 손 특징</span></div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node v"><span class="role">adapter</span><span class="nm">CHAM</span><span class="tiny">손 특징으로 전신 변조</span></div>
+    <div class="arrow">→</div>
+    <div class="out"><span class="role">output</span><span class="nm">Hand4Whole++</span><span class="tiny">몸과 정합된 손·손목</span></div>
+  </div></div>
+  <div class="qa-lab" style="margin-top:26px">Lineage at a glance</div>
+  <div class="rail">
+    <span class="step v">SMPL-X 공통 표현</span><span class="ar">→</span>
+    <span class="step v">분리 추정 후 통합</span><span class="ar">→</span>
+    <span class="step v">단일 단계·스케일업</span><span class="ar">→</span>
+    <span class="step s">강력한 손 전문가</span><span class="ar">→</span>
+    <span class="step v">어댑터로 결합 (CHAM)</span>
   </div>
-  {"".join(sections)}
-  <div class="intro" style="margin-top:30px; border-left-color:#0ea5e9;">
-    <h2>우리 연구실 관심과의 연결</h2>
-    <p><strong>Hand-Object Interaction</strong>: 손·물체·몸이 함께 등장하는 조작 장면에서, 손 전용 정밀도와 전신 맥락을 동시에 확보하는 CHAM식 통합은 접촉·파지 추정의 안정적 전신 사전(prior)으로 쓸 수 있다.</p>
-    <p><strong>Egocentric Vision</strong>: 1인칭 영상은 손이 크게 잡히고 몸은 거의 안 보이는 극단적 조건이라, "고정된 전문가 + 어댑터"로 손을 몸 맥락에 정합시키는 접근이 특히 유효하다.</p>
-  </div>
-</main>
-<footer>자동 생성 · topics/{SLUG}/build_survey.py · 수치·링크는 각 논문 원문/arXiv에서 검증한 것만 포함.</footer>
+{''.join(secs)}
+
+  <section class="closing">
+    <div class="sec-head"><span class="sec-no">Takeaways</span><h2>우리 연구실 관심과의 연결</h2></div>
+    <div class="take"><span class="lab">Hand-Object Interaction</span>손·물체·몸이 함께 등장하는 조작 장면에서, 손 전용 정밀도와 전신 맥락을 동시에 확보하는 CHAM식 통합은 접촉·파지 추정의 안정적 전신 사전(prior)으로 쓸 수 있다.</div>
+    <div class="take"><span class="lab">Egocentric Vision</span>1인칭 영상은 손이 크게 잡히고 몸은 거의 안 보이는 극단적 조건이라, ‘고정된 전문가 + 어댑터’로 손을 몸 맥락에 정합시키는 접근이 특히 유효하다.</div>
+  </section>
+
+  <footer>자동 생성 · topics/hand-in-wholebody/build_survey.py · 스타일: scientific-report(IBM Plex, light/dark) · 수치·링크는 각 논문 원문/arXiv에서 검증한 것만 포함.</footer>
+</div>
 </body>
-</html>'''
+</html>"""
 
 open(OUT, "w", encoding="utf-8").write(doc)
 print(f"WROTE {OUT}  ({n_papers} papers, {len(GROUPS)} groups)")
