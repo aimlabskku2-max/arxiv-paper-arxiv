@@ -13,7 +13,7 @@ SUBTITLE = ("전신(whole-body) 추정기는 몸 전체를 보지만 손이 뭉�
             "Hand4Whole++(CVPR 2026)를 기준으로 되짚는다.")
 
 def parse_card(path):
-    d = {"title": "", "meta": "", "link": "", "oneline": "", "contrib": "", "integration": ""}
+    d = {"title": "", "meta": "", "link": "", "oneline": "", "contrib": "", "hand": "", "integration": ""}
     for line in open(path, encoding="utf-8"):
         s = line.rstrip("\n")
         if s.startswith("## "):
@@ -32,42 +32,52 @@ def esc(t):
 def contrib_items(t):
     return [c.strip() for c in re.split(r"[;；]", t) if c.strip()]
 
-# (section no label, heading, tag, [(stem, stream)])  stream: 'vision'(whole-body) | 'smell'(hand) | 'anchor'
+# (kind, section label, heading, tag, [(stem, stream)])
+#   kind: 'stage' = 본류(하나의 계보를 이루는 단계) | 'branch' = 별도로 발전해 합류하는 병렬 계열
+#   stream: 'vision'(whole-body) | 'smell'(hand) | 'anchor'
 GROUPS = [
-    ("계보 ①", "표현형 전신 모델의 토대",
-     "손·얼굴·몸을 하나의 파라메트릭 모델로 묶어, 이후 모든 계보가 추정할 공통 언어(SMPL-X)를 정의한 출발점.",
+    ("stage", "단계 01", "공통 표현의 토대",
+     "손·얼굴·몸을 하나의 파라메트릭 모델로 묶어, 이후 이 계보 전체가 추정할 공통 언어(SMPL-X)를 정의한 출발점.",
      [("01_SMPL-X", "vision")]),
-    ("계보 ②", "분리 추정 → 통합: 모듈형 계보",
+    ("stage", "단계 02", "분리 추정 → 통합 (모듈형)",
      "손을 전용 모듈로 잘 뽑은 뒤 몸에 이어 붙이는 전략과, 손목·정합을 정교화한 흐름.",
      [("02_FrankMocap", "vision"), ("03_Hand4Whole", "vision"), ("04_PyMAF-X", "vision")]),
-    ("계보 ③", "단일 단계·스케일업 전신 모델",
+    ("stage", "단계 03", "단일 단계·스케일업 전신 모델",
      "손을 따로 크롭·재추정하지 않고 하나의 네트워크·대규모 학습으로 전신을 통째로 추정하는 방향.",
      [("05_OSX", "vision"), ("06_SMPLer-X", "vision"), ("09_AiOS", "vision")]),
-    ("계보 ④", "손 전용 전문가 (frozen hand experts)",
-     "손 크롭에 집중해 손을 매우 정밀하게 복원하지만 전신 맥락은 갖지 못하는, 통합의 ‘손 쪽’ 재료.",
+    ("branch", "병렬 계열 · 손 전문가", "따로 발전해 온 손 전용 복원",
+     "이 줄기의 단계가 아니라, 손만을 대상으로 따로 발전해 온 별도 계열이다. 손은 매우 정밀하게 복원하지만 "
+     "전신 맥락은 갖지 못하며, 아래 단계 04에서 ‘재료’로 합류한다.",
      [("07_HaMeR", "smell"), ("08_WiLoR", "smell")]),
-    ("계보 ⑤", "경량 어댑터로 통합 — CHAM의 이웃과 도착점",
-     "고정된 백본 위에 경량 어댑터를 얹어 손·몸을 결합하는 최신 흐름과, 이 서베이의 도착점.",
+    ("stage", "단계 04", "어댑터로 결합 — 두 계열의 합류점",
+     "본류(전신)와 병렬 계열(손 전문가)이 만나는 지점. 고정된 백본 위에 경량 어댑터를 얹어 둘을 잇는 최신 흐름이자, "
+     "이 서베이의 도착점.",
      [("10_HMR-Adapter", "vision"), ("00_Hand4Whole++", "anchor")]),
+    ("next", "이후 · 2026~", "갈라지는 후속 흐름 — 시간축 · 도메인 · 데이터",
+     "도착점 이후 나온 흐름은 하나의 다음 단계가 아니라 세 갈래로 갈린다. Hand4Whole++는 supervision 격차를 "
+     "‘어댑터로 잇기’로 풀었는데, 이들은 각각 **시간축으로 메우기**(DanceHMR), "
+     "**도메인을 1인칭으로 옮겨 다시 묻기**(ICIP 2026), **데이터로 정면 공략하기**(Human4K)로 답한다. "
+     "다만 셋 다 2026년 9월 기준 Hand4Whole++를 인용하지는 않는다 — 직접 계승이 아니라 같은 격차에 대한 병렬 응답으로 읽어야 한다.",
+     [("11_DanceHMR", "next"), ("12_EgoWholeBodyHMR", "next"), ("13_Human4K", "next")]),
 ]
 
 cards = {os.path.splitext(os.path.basename(p))[0]: parse_card(p)
          for p in glob.glob(os.path.join(CARDS, "*.md"))}
-n_papers = sum(len(g[3]) for g in GROUPS)
+n_papers = sum(len(g[4]) for g in GROUPS)
 
 CSS = """
 *{box-sizing:border-box}
 :root{
   --bg:#FAFAF9; --surface:#FFFFFF; --surface-2:#F5F5F3;
   --ink:#171717; --muted:#666A70; --faint:#9A9DA1; --line:#E8E7E3;
-  --smell:#A9662E; --vision:#176F78;
+  --smell:#A9662E; --vision:#176F78; --next:#5B4B8A;
   --best:rgba(23,111,120,.07); --best-line:#176F78;
   --shadow:0 1px 2px rgba(0,0,0,.025),0 8px 24px rgba(0,0,0,.035);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#131619; --surface:#1B1F23; --surface-2:#22272C;
   --ink:#ECEFF2; --muted:#A3ADB7; --faint:#6B7580; --line:#2B3138;
-  --smell:#D8945A; --vision:#3FB6C0; --best:rgba(63,182,192,.13); --best-line:#3FB6C0;
+  --smell:#D8945A; --vision:#3FB6C0; --next:#A79AD8; --best:rgba(63,182,192,.13); --best-line:#3FB6C0;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 22px rgba(0,0,0,.35);
 }}
 body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;
@@ -89,6 +99,13 @@ section{margin-top:64px;padding-top:4px}
 .sec-head{display:block;margin-bottom:8px}
 .sec-no{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
   text-transform:uppercase;color:var(--vision);margin-bottom:5px}
+.sec-no.branch{color:var(--smell)} .sec-no.next{color:var(--next)}
+.branch-note,.next-note{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em;
+  border-radius:20px;padding:1px 8px;display:inline-block;margin-bottom:6px}
+.branch-note{color:var(--smell);border:1px solid var(--smell)}
+.next-note{color:var(--next);border:1px solid var(--next)}
+section.branch{border-left:2px dashed var(--smell);padding-left:22px;margin-left:2px}
+section.next{border-top:1px solid var(--line);margin-top:72px;padding-top:34px}
 h2{font-size:clamp(22px,3.4vw,27px);font-weight:620;letter-spacing:-.025em;margin:0}
 .sec-tag{color:var(--muted);font-size:15px;line-height:1.6;margin:8px 0 26px;max-width:74ch}
 /* two-stream schematic */
@@ -121,11 +138,19 @@ h2{font-size:clamp(22px,3.4vw,27px);font-weight:620;letter-spacing:-.025em;margi
 .rail .step{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;background:var(--surface-2);
   border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--ink)}
 .rail .step.s{box-shadow:inset 0 2px 0 var(--smell)} .rail .step.v{box-shadow:inset 0 2px 0 var(--vision)}
+.rail .step.n{box-shadow:inset 0 2px 0 var(--next)}
 .rail .ar{color:var(--faint);font-weight:700}
+.rail.sub{margin-top:8px;padding-left:2px}
+.rail .merge-note{font-size:12px;color:var(--muted)}
 /* paper cards */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
   padding:20px 22px;margin-top:18px;border-top:3px solid var(--line)}
 .card.v{border-top-color:var(--vision)} .card.s{border-top-color:var(--smell)}
+.card.next{border-top-color:var(--next)}
+.card.next .take{border-left-color:var(--next)}
+.card.next .take .lab{color:var(--next)}
+.handnote{font-size:13.5px;color:var(--muted);margin:6px 0 0;padding:10px 13px;
+  background:var(--surface-2);border-radius:8px}
 .card.anchor{border:2px solid var(--best-line);border-top:3px solid var(--best-line);background:var(--best)}
 .card .c-role{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--faint);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -159,13 +184,17 @@ def card_html(stem, stream):
         return ""
     is_anchor = stream == "anchor"
     cls = "card anchor" if is_anchor else f"card {stream}"
-    role = "도착점 · anchor" if is_anchor else ("손 전용 전문가" if stream == "smell" else "전신 계보")
+    role = {"anchor": "도착점 · anchor", "smell": "손 전용 전문가",
+            "next": "후속 흐름 · 2026~", "vision": "전신 계보"}.get(stream, "전신 계보")
     badge = '<span class="badge">이 서베이의 도착점</span>' if is_anchor else ""
     title = html.escape(c["title"])
     link = c["link"].strip()
     if link.startswith("http"):
         title = f'<a href="{link}" target="_blank" rel="noopener">{title}</a>'
     items = "".join(f"<li>{esc(x)}</li>" for x in contrib_items(c["contrib"]))
+    hand_block = (f'<h4>손 주석 관련</h4><p class="handnote">{esc(c["hand"])}</p>'
+                  if c.get("hand") else "")
+    take_lab = "후속 흐름에서의 위치" if stream == "next" else "통합 관점에서의 위치"
     return f"""
     <article class="{cls}">
       <div class="c-role">{role}{badge}</div>
@@ -174,15 +203,23 @@ def card_html(stem, stream):
       <p class="oneline">{esc(c['oneline'])}</p>
       <h4>핵심 기여</h4>
       <ul>{items}</ul>
-      <div class="take"><span class="lab">통합 관점에서의 위치</span>{esc(c['integration'])}</div>
+      {hand_block}
+      <div class="take"><span class="lab">{take_lab}</span>{esc(c['integration'])}</div>
     </article>"""
 
 secs = []
-for label, heading, tag, members in GROUPS:
+for kind, label, heading, tag, members in GROUPS:
     body = "".join(card_html(stem, stream) for stem, stream in members)
+    cls = f"section {kind}" if kind in ("branch", "next") else "section"
+    no_cls = f"sec-no {kind}" if kind in ("branch", "next") else "sec-no"
+    note = ""
+    if kind == "branch":
+        note = '<span class="branch-note">본류의 단계가 아닌 별도 계열</span>'
+    elif kind == "next":
+        note = '<span class="next-note">도착점 이후 · 직접 계승 아님</span>'
     secs.append(f"""
-  <section>
-    <div class="sec-head"><span class="sec-no">{html.escape(label)}</span><h2>{html.escape(heading)}</h2></div>
+  <section class="{cls}">
+    <div class="sec-head"><span class="{no_cls}">{html.escape(label)}</span>{note}<h2>{html.escape(heading)}</h2></div>
     <p class="sec-tag">{esc(tag)}</p>
     {body}
   </section>""")
@@ -209,6 +246,7 @@ doc = f"""<!doctype html>
       <span class="chip">{n_papers} papers</span>
       <span class="chip">anchor · arXiv:2603.14726</span>
       <span class="chip">Hand4Whole++ · CVPR 2026</span>
+      <span class="chip">후속 흐름 3편 포함 (2026-09 기준)</span>
     </div>
   </header>
 
@@ -229,11 +267,20 @@ doc = f"""<!doctype html>
   </div></div>
   <div class="qa-lab" style="margin-top:26px">Lineage at a glance</div>
   <div class="rail">
-    <span class="step v">SMPL-X 공통 표현</span><span class="ar">→</span>
-    <span class="step v">분리 추정 후 통합</span><span class="ar">→</span>
-    <span class="step v">단일 단계·스케일업</span><span class="ar">→</span>
-    <span class="step s">강력한 손 전문가</span><span class="ar">→</span>
-    <span class="step v">어댑터로 결합 (CHAM)</span>
+    <span class="step v">01 · 공통 표현 (SMPL-X)</span><span class="ar">→</span>
+    <span class="step v">02 · 분리 추정 후 통합</span><span class="ar">→</span>
+    <span class="step v">03 · 단일 단계·스케일업</span><span class="ar">→</span>
+    <span class="step v">04 · 어댑터로 결합 (CHAM)</span>
+  </div>
+  <div class="rail sub">
+    <span class="step s">병렬 계열 · 손 전용 전문가</span>
+    <span class="ar">↗</span><span class="merge-note">따로 발전하다 단계 04에서 합류</span>
+  </div>
+  <div class="rail sub">
+    <span class="merge-note">단계 04 이후 세 갈래로 분기 →</span>
+    <span class="step n">시간축 · DanceHMR</span>
+    <span class="step n">1인칭 · ICIP 2026</span>
+    <span class="step n">데이터 · Human4K</span>
   </div>
 {''.join(secs)}
 

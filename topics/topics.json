@@ -1,9 +1,16 @@
 [
   {
+    "slug": "gyeongsik-moon",
+    "title": "Gyeongsik Moon 연구 계보 — 실패 서사로 읽기",
+    "desc": "Hand4Whole++ 저자의 8년 연구를 '문제정의→나이브→실패→가설→검증' 5단계로 재구성. 핵심 11편 정독 + 전체 연표 36편",
+    "count": 11,
+    "path": "topics/gyeongsik-moon/gyeongsik-moon_survey.html"
+  },
+  {
     "slug": "hand-in-wholebody",
     "title": "Hand-in-Whole-Body 3D Pose — 손 통합 계보",
-    "desc": "전신 3D 포즈 추정에서 손을 통합하는 핵심 계보 (SMPL-X→모듈형→스케일업→손 전문가→CHAM). 도착점 Hand4Whole++(CVPR 2026)",
-    "count": 11,
+    "desc": "전신 3D 포즈 추정에서 손을 통합하는 계보 (SMPL-X→모듈형→스케일업→손 전문가→CHAM), 도착점 Hand4Whole++(CVPR 2026) + 이후 갈라진 후속 흐름 3편",
+    "count": 14,
     "path": "topics/hand-in-wholebody/hand-in-wholebody_survey.html"
   },
   {
