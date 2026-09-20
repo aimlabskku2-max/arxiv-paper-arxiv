@@ -2,8 +2,8 @@
   {
     "slug": "smplx-landscape",
     "title": "SMPL-X 생태계 지도 — 어디서 갈라지는가",
-    "desc": "추정·데이터·아바타·생성·상호작용 5갈래로 나눈 3D 인체 연구 전체 지도. 갈래 간 교차점 5개 + 갈래별 논문 63편",
-    "count": 63,
+    "desc": "Estimation·Data·Avatar·Generation·Interaction(in)·Simulation(out) 6갈래 지도 + 두 번째 허브(world model)로 가는 다리. 분기마다 '무엇을 축으로 왜'를 기록. 83 entries / 62 unique",
+    "count": 62,
     "path": "topics/smplx-landscape/smplx-landscape_survey.html"
   },
   {
